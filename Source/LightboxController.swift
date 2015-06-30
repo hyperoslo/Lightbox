@@ -1,9 +1,22 @@
 import UIKit
 
+public protocol LightboxControllerDelegate: class {
+
+  func lightboxControllerDidMoveToPage(controller: LightboxController, page: Int)
+}
+
 public class LightboxController: UIViewController {
 
   var images = [UIImage]()
-  var page = 0
+
+  public var delegate: LightboxControllerDelegate?
+
+  public private(set) var page = 0 {
+    didSet {
+      delegate?.lightboxControllerDidMoveToPage(self, page: page)
+      println(page)
+    }
+  }
 
   public lazy var dataSource: LightboxDataSource = { [unowned self] in
     let dataSource = LightboxDataSource(data: self.images)
@@ -16,7 +29,7 @@ public class LightboxController: UIViewController {
 
     collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
     collectionView.pagingEnabled = true
-    collectionView.backgroundColor = .redColor()
+    collectionView.backgroundColor = .blackColor()
     collectionView.dataSource = self.dataSource
     collectionView.delegate = self
 
@@ -37,8 +50,10 @@ public class LightboxController: UIViewController {
 
   // MARK: Initializers
 
-  public required init(images: [UIImage]) {
+  public required init(images: [UIImage], delegate: LightboxControllerDelegate? = nil) {
     self.images = images
+    self.delegate = delegate
+
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -53,6 +68,8 @@ public class LightboxController: UIViewController {
 
     view.addSubview(collectionView)
     setupConstraints()
+
+    page = 0
   }
 
   // MARK: - Autolayout
@@ -73,18 +90,17 @@ public class LightboxController: UIViewController {
     if page >= 0 && page < images.count {
       var offset = collectionView.contentOffset
       offset.x = CGFloat(page) * collectionView.frame.size.width
+
       collectionView.setContentOffset(offset, animated: animated)
     }
   }
 
   public func next(animated: Bool = true) {
-    page++
-    goTo(page, animated: animated)
+    goTo(page + 1, animated: animated)
   }
 
   public func previous(animated: Bool = true) {
-    page--
-    goTo(page, animated: animated)
+    goTo(page - 1, animated: animated)
   }
 }
 
@@ -109,6 +125,9 @@ extension LightboxController: UIScrollViewDelegate {
 
   public func scrollViewDidScroll(scrollView: UIScrollView) {
     let pageWidth = collectionView.frame.size.width
-    page = Int(floor((collectionView.contentOffset.x - pageWidth / 2) / pageWidth) + 1)
+    let currentPage = Int(floor((collectionView.contentOffset.x - pageWidth / 2) / pageWidth) + 1)
+    if currentPage != page {
+      page = currentPage
+    }
   }
 }

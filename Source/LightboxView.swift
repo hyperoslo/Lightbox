@@ -28,6 +28,8 @@ public class LightboxView: UIView {
   var imageConstraintTop: NSLayoutConstraint!
   var imageConstraintBottom: NSLayoutConstraint!
 
+  var constraintsAdded = false
+
   // MARK: - Initialization
 
   public init(frame: CGRect, image: UIImage) {
@@ -55,44 +57,48 @@ public class LightboxView: UIView {
   // MARK: - Autolayout
 
   public func setUpConstraints() {
-    addConstraint(NSLayoutConstraint(item: scrollView, attribute: .Leading,
-      relatedBy: .Equal, toItem: self, attribute: .Leading,
-      multiplier: 1, constant: 0))
+    if !constraintsAdded {
+      addConstraint(NSLayoutConstraint(item: scrollView, attribute: .Leading,
+        relatedBy: .Equal, toItem: self, attribute: .Leading,
+        multiplier: 1, constant: 0))
 
-    addConstraint(NSLayoutConstraint(item: scrollView, attribute: .Trailing,
-      relatedBy: .Equal, toItem: self, attribute: .Trailing,
-      multiplier: 1, constant: 0))
+      addConstraint(NSLayoutConstraint(item: scrollView, attribute: .Trailing,
+        relatedBy: .Equal, toItem: self, attribute: .Trailing,
+        multiplier: 1, constant: 0))
 
-    addConstraint(NSLayoutConstraint(item: scrollView, attribute: .Top,
-      relatedBy: .Equal, toItem: self, attribute: .Top,
-      multiplier: 1, constant: 0))
+      addConstraint(NSLayoutConstraint(item: scrollView, attribute: .Top,
+        relatedBy: .Equal, toItem: self, attribute: .Top,
+        multiplier: 1, constant: 0))
 
-    addConstraint(NSLayoutConstraint(item: scrollView, attribute: .Bottom,
-      relatedBy: .Equal, toItem: self, attribute: .Bottom,
-      multiplier: 1, constant: 0))
+      addConstraint(NSLayoutConstraint(item: scrollView, attribute: .Bottom,
+        relatedBy: .Equal, toItem: self, attribute: .Bottom,
+        multiplier: 1, constant: 0))
 
-    imageConstraintLeading = NSLayoutConstraint(item: imageView, attribute: .Leading,
-      relatedBy: .Equal, toItem: scrollView, attribute: .Leading,
-      multiplier: 1, constant: 0)
+      imageConstraintLeading = NSLayoutConstraint(item: imageView, attribute: .Leading,
+        relatedBy: .Equal, toItem: scrollView, attribute: .Leading,
+        multiplier: 1, constant: 0)
 
-    imageConstraintTrailing = NSLayoutConstraint(item: imageView, attribute: .Trailing,
-      relatedBy: .Equal, toItem: scrollView, attribute: .Trailing,
-      multiplier: 1, constant: 0)
+      imageConstraintTrailing = NSLayoutConstraint(item: imageView, attribute: .Trailing,
+        relatedBy: .Equal, toItem: scrollView, attribute: .Trailing,
+        multiplier: 1, constant: 0)
 
-    imageConstraintTop = NSLayoutConstraint(item: imageView, attribute: .Top,
-      relatedBy: .Equal, toItem: scrollView, attribute: .Top,
-      multiplier: 1, constant: 0)
+      imageConstraintTop = NSLayoutConstraint(item: imageView, attribute: .Top,
+        relatedBy: .Equal, toItem: scrollView, attribute: .Top,
+        multiplier: 1, constant: 0)
 
-    imageConstraintBottom = NSLayoutConstraint(item: imageView, attribute: .Bottom,
-      relatedBy: .Equal, toItem: scrollView, attribute: .Bottom,
-      multiplier: 1, constant: 0)
+      imageConstraintBottom = NSLayoutConstraint(item: imageView, attribute: .Bottom,
+        relatedBy: .Equal, toItem: scrollView, attribute: .Bottom,
+        multiplier: 1, constant: 0)
 
-    addConstraints([imageConstraintLeading, imageConstraintTrailing,
-      imageConstraintTop, imageConstraintBottom])
+      addConstraints([imageConstraintLeading, imageConstraintTrailing,
+        imageConstraintTop, imageConstraintBottom])
 
-    layoutIfNeeded()
+      layoutIfNeeded()
 
-    scrollView.contentSize = CGSize(width: frame.size.width, height: frame.size.height)
+      scrollView.contentSize = CGSize(width: frame.size.width, height: frame.size.height)
+
+      constraintsAdded = true
+    }
   }
 
   public func updateImageConstraints() {

@@ -2,6 +2,10 @@ import UIKit
 
 public class LightboxView: UIView {
 
+  public var minimumZoomScale: CGFloat = 1
+  public var maximumZoomScale: CGFloat = 3
+  var lastZoomScale: CGFloat = -1
+
   lazy var imageView: UIImageView = {
     let imageView = UIImageView(frame: CGRectZero)
     imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -12,10 +16,10 @@ public class LightboxView: UIView {
     let scrollView = UIScrollView(frame: CGRectZero)
     scrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
     scrollView.multipleTouchEnabled = true
-    scrollView.minimumZoomScale = 1
-    scrollView.maximumZoomScale = 3
-
+    scrollView.minimumZoomScale = self.minimumZoomScale
+    scrollView.maximumZoomScale = self.maximumZoomScale
     scrollView.delegate = self
+
     return scrollView
   }()
 
@@ -24,8 +28,6 @@ public class LightboxView: UIView {
   var imageConstraintTop: NSLayoutConstraint!
   var imageConstraintBottom: NSLayoutConstraint!
 
-  var lastZoomScale: CGFloat = -1
-
   // MARK: - Initialization
 
   public init(frame: CGRect, image: UIImage) {
@@ -33,9 +35,6 @@ public class LightboxView: UIView {
 
     imageView.image = image
     backgroundColor = .blackColor()
-
-    userInteractionEnabled = true
-    multipleTouchEnabled = true
 
     scrollView.addSubview(self.imageView)
     addSubview(scrollView)
@@ -72,7 +71,6 @@ public class LightboxView: UIView {
       relatedBy: .Equal, toItem: self, attribute: .Bottom,
       multiplier: 1, constant: 0))
 
-
     imageConstraintLeading = NSLayoutConstraint(item: imageView, attribute: .Leading,
       relatedBy: .Equal, toItem: scrollView, attribute: .Leading,
       multiplier: 1, constant: 0)
@@ -99,18 +97,22 @@ public class LightboxView: UIView {
 
   public func updateImageConstraints() {
     if let image = imageView.image {
-      let imageWidth = image.size.width
-      let imageHeight = image.size.height
-
       let viewWidth = bounds.size.width
       let viewHeight = bounds.size.height
 
-      // Center image if it is smaller than screen
+      let imageWidth = image.size.width
+      let imageHeight = image.size.height
+
+      // Center image
       var hPadding = (viewWidth - scrollView.zoomScale * imageWidth) / 2
-      if hPadding < 0 { hPadding = 0 }
+      if hPadding < 0 {
+        hPadding = 0
+      }
 
       var vPadding = (viewHeight - scrollView.zoomScale * imageHeight) / 2
-      if vPadding < 0 { vPadding = 0 }
+      if vPadding < 0 {
+        vPadding = 0
+      }
 
       imageConstraintLeading.constant = hPadding
       imageConstraintTrailing.constant = hPadding
@@ -126,22 +128,22 @@ public class LightboxView: UIView {
 
   public func updateZoom() {
     if let image = imageView.image {
-      var minZoom = min(
+      var minimumZoom = min(
         bounds.size.width / image.size.width,
         bounds.size.height / image.size.height)
 
-      if minZoom > 1 {
-        minZoom = 1
+      if minimumZoom > 1 {
+        minimumZoom = 1
       }
 
-      scrollView.minimumZoomScale = minZoom
+      scrollView.minimumZoomScale = minimumZoom
 
-      if minZoom == lastZoomScale {
-        minZoom += 0.000001
+      if minimumZoom == lastZoomScale {
+        minimumZoom += 0.000001
       }
 
-      scrollView.zoomScale = minZoom
-      lastZoomScale = minZoom
+      scrollView.zoomScale = minimumZoom
+      lastZoomScale = minimumZoom
     }
   }
 }
@@ -151,7 +153,6 @@ public class LightboxView: UIView {
 extension LightboxView: UIScrollViewDelegate {
 
   public func scrollViewDidZoom(scrollView: UIScrollView) {
-    println("Zoom")
     updateImageConstraints()
   }
 

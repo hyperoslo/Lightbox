@@ -66,6 +66,26 @@ public class LightboxController: UIViewController {
         multiplier: 1, constant: 0))
     }
   }
+
+  // MARK: - Pagination
+
+  public func goTo(page: Int, animated: Bool = true) {
+    if page >= 0 && page < images.count {
+      var offset = collectionView.contentOffset
+      offset.x = CGFloat(page) * collectionView.frame.size.width
+      collectionView.setContentOffset(offset, animated: animated)
+    }
+  }
+
+  public func next(animated: Bool = true) {
+    page++
+    goTo(page, animated: animated)
+  }
+
+  public func previous(animated: Bool = true) {
+    page--
+    goTo(page, animated: animated)
+  }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

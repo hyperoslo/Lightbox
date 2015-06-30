@@ -4,13 +4,18 @@ public class LightboxView: UIView {
 
   lazy var imageView: UIImageView = {
     let imageView = UIImageView(frame: CGRectZero)
+    imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
     return imageView
   }()
 
   lazy var scrollView: UIScrollView = { [unowned self] in
     let scrollView = UIScrollView(frame: CGRectZero)
+    scrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    scrollView.multipleTouchEnabled = true
+    scrollView.minimumZoomScale = 1
+    scrollView.maximumZoomScale = 3
+
     scrollView.delegate = self
-    scrollView.addSubview(self.imageView)
     return scrollView
   }()
 
@@ -27,6 +32,13 @@ public class LightboxView: UIView {
     super.init(frame: frame)
 
     imageView.image = image
+    backgroundColor = .blackColor()
+
+    userInteractionEnabled = true
+    multipleTouchEnabled = true
+
+    scrollView.addSubview(self.imageView)
+    addSubview(scrollView)
   }
 
   public required init(coder aDecoder: NSCoder) {
@@ -37,11 +49,13 @@ public class LightboxView: UIView {
 
   public override func didMoveToSuperview() {
     setUpConstraints()
+    updateImageConstraints()
+    updateZoom()
   }
 
   // MARK: - Autolayout
 
-  func setUpConstraints() {
+  public func setUpConstraints() {
     addConstraint(NSLayoutConstraint(item: scrollView, attribute: .Leading,
       relatedBy: .Equal, toItem: self, attribute: .Leading,
       multiplier: 1, constant: 0))
@@ -57,6 +71,7 @@ public class LightboxView: UIView {
     addConstraint(NSLayoutConstraint(item: scrollView, attribute: .Bottom,
       relatedBy: .Equal, toItem: self, attribute: .Bottom,
       multiplier: 1, constant: 0))
+
 
     imageConstraintLeading = NSLayoutConstraint(item: imageView, attribute: .Leading,
       relatedBy: .Equal, toItem: scrollView, attribute: .Leading,
@@ -78,6 +93,8 @@ public class LightboxView: UIView {
       imageConstraintTop, imageConstraintBottom])
 
     layoutIfNeeded()
+
+    scrollView.contentSize = CGSize(width: frame.size.width, height: frame.size.height)
   }
 
   public func updateImageConstraints() {
@@ -134,6 +151,7 @@ public class LightboxView: UIView {
 extension LightboxView: UIScrollViewDelegate {
 
   public func scrollViewDidZoom(scrollView: UIScrollView) {
+    println("Zoom")
     updateImageConstraints()
   }
 

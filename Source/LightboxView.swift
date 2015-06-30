@@ -1,14 +1,16 @@
 import UIKit
 
-class LightboxView: UIView {
+public class LightboxView: UIView {
 
   lazy var imageView: UIImageView = {
     let imageView = UIImageView(frame: CGRectZero)
     return imageView
   }()
 
-  var scrollView: UIScrollView = {
+  lazy var scrollView: UIScrollView = { [unowned self] in
     let scrollView = UIScrollView(frame: CGRectZero)
+    scrollView.delegate = self
+    scrollView.addSubview(self.imageView)
     return scrollView
   }()
 
@@ -19,18 +21,25 @@ class LightboxView: UIView {
 
   var lastZoomScale: CGFloat = -1
 
-  init(frame: CGRect, image: UIImage) {
+  // MARK: - Initialization
+
+  public init(frame: CGRect, image: UIImage) {
     super.init(frame: frame)
+
     imageView.image = image
   }
 
-  required init(coder aDecoder: NSCoder) {
+  public required init(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  override func didMoveToSuperview() {
+  // MARK: - View lifecycle
+
+  public override func didMoveToSuperview() {
     setUpConstraints()
   }
+
+  // MARK: - Autolayout
 
   func setUpConstraints() {
     addConstraint(NSLayoutConstraint(item: scrollView, attribute: .Leading,
@@ -71,7 +80,7 @@ class LightboxView: UIView {
     layoutIfNeeded()
   }
 
-  func updateImageConstraints() {
+  public func updateImageConstraints() {
     if let image = imageView.image {
       let imageWidth = image.size.width
       let imageHeight = image.size.height
@@ -94,5 +103,41 @@ class LightboxView: UIView {
 
       layoutIfNeeded()
     }
+  }
+
+  // MARK: - Zoom
+
+  public func updateZoom() {
+    if let image = imageView.image {
+      var minZoom = min(
+        bounds.size.width / image.size.width,
+        bounds.size.height / image.size.height)
+
+      if minZoom > 1 {
+        minZoom = 1
+      }
+
+      scrollView.minimumZoomScale = minZoom
+
+      if minZoom == lastZoomScale {
+        minZoom += 0.000001
+      }
+
+      scrollView.zoomScale = minZoom
+      lastZoomScale = minZoom
+    }
+  }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension LightboxView: UIScrollViewDelegate {
+
+  public func scrollViewDidZoom(scrollView: UIScrollView) {
+    updateImageConstraints()
+  }
+
+  public func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    return imageView
   }
 }

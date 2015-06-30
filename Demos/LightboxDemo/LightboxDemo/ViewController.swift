@@ -1,25 +1,18 @@
-//
-//  ViewController.swift
-//  LightboxDemo
-//
-//  Created by Vadym Markov on 30/06/15.
-//  Copyright (c) 2015 Hyper. All rights reserved.
-//
-
 import UIKit
+import Lightbox
 
 class ViewController: UIViewController {
 
+  lazy var lightboxView: LightboxView = { [unowned self] in
+    let image = UIImage(named: "photo1")!
+    let view = LightboxView(frame: self.view.frame, image: image)
+
+    return view
+  }()
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
+    view.addSubview(lightboxView)
   }
-
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
-
-
 }
 

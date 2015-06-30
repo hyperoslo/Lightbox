@@ -1,10 +1,10 @@
 import UIKit
 
-class LightboxDataSource: NSObject {
+public class LightboxDataSource: NSObject {
 
-  var data: [UIImage]
+  public var data: [UIImage]
 
-  required init(data: [UIImage]) {
+  public required init(data: [UIImage]) {
     self.data = data
     super.init()
   }
@@ -14,15 +14,15 @@ class LightboxDataSource: NSObject {
 
 extension LightboxDataSource: UICollectionViewDataSource {
 
-  func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+  public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
     return 1
   }
 
-  func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return data.count
   }
 
-  func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+  public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cellIdentifier = LightboxViewCell.reuseIdentifier
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier,
       forIndexPath: indexPath) as! LightboxViewCell

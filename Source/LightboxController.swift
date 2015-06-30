@@ -3,6 +3,7 @@ import UIKit
 public class LightboxController: UIViewController {
 
   var images = [UIImage]()
+  var page = 0
 
   public lazy var dataSource: LightboxDataSource = { [unowned self] in
     let dataSource = LightboxDataSource(data: self.images)
@@ -13,12 +14,14 @@ public class LightboxController: UIViewController {
     let collectionView = UICollectionView(frame: CGRectZero,
       collectionViewLayout: self.collectionViewLayout)
 
-    collectionView.registerClass(LightboxViewCell.self,
-      forCellWithReuseIdentifier: LightboxViewCell.reuseIdentifier)
-
-    collectionView.backgroundColor = .blackColor()
+    collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    collectionView.pagingEnabled = true
+    collectionView.backgroundColor = .redColor()
     collectionView.dataSource = self.dataSource
     collectionView.delegate = self
+
+    collectionView.registerClass(LightboxViewCell.self,
+      forCellWithReuseIdentifier: LightboxViewCell.reuseIdentifier)
 
     return collectionView
     }()
@@ -26,9 +29,9 @@ public class LightboxController: UIViewController {
   lazy var collectionViewLayout: UICollectionViewLayout = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .Horizontal
-    layout.minimumLineSpacing = 10
-    layout.minimumInteritemSpacing = 2
-    layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    layout.minimumInteritemSpacing = 0
+    layout.minimumLineSpacing = 0
+    layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     return layout
     }()
 
@@ -79,3 +82,13 @@ extension LightboxController: UICollectionViewDelegateFlowLayout {
 // MARK: - UICollectionViewDelegate
 
 extension LightboxController: UICollectionViewDelegate { }
+
+// MARK: - UIScrollViewDelegate
+
+extension LightboxController: UIScrollViewDelegate {
+
+  public func scrollViewDidScroll(scrollView: UIScrollView) {
+    let pageWidth = collectionView.frame.size.width
+    page = Int(floor((collectionView.contentOffset.x - pageWidth / 2) / pageWidth) + 1)
+  }
+}

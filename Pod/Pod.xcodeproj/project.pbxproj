@@ -22,7 +22,6 @@
 		14C136521AB784B200B7B07A /* CONTRIBUTING.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CONTRIBUTING.md; path = ../CONTRIBUTING.md; sourceTree = "<group>"; };
 		14C136541AB784B200B7B07A /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		14C136551AB784B200B7B07A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		14C1365C1AB784BC00B7B07A /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		D5C0BDEA1B42C449009E6446 /* LightboxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxView.swift; sourceTree = "<group>"; };
 		D5C0BE201B43253F009E6446 /* LightboxViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxViewCell.swift; sourceTree = "<group>"; };
 		D5C0BE221B432996009E6446 /* LightboxDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxDataSource.swift; sourceTree = "<group>"; };
@@ -92,7 +91,6 @@
 			isa = PBXGroup;
 			children = (
 				D5C0BE221B432996009E6446 /* LightboxDataSource.swift */,
-				14C1365C1AB784BC00B7B07A /* .gitkeep */,
 				D5C0BDEA1B42C449009E6446 /* LightboxView.swift */,
 				D5C0BE201B43253F009E6446 /* LightboxViewCell.swift */,
 			);

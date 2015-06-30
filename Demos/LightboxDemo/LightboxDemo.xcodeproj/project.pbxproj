@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0C9AD201C04B66C0716FF73F /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8728C35FD683AF84D7CC1A5D /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D5C0BDFB1B42CCBC009E6446 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C0BDFA1B42CCBC009E6446 /* AppDelegate.swift */; };
-		D5C0BDFD1B42CCBC009E6446 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C0BDFC1B42CCBC009E6446 /* ViewController.swift */; };
 		D5C0BE021B42CCBC009E6446 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5C0BE011B42CCBC009E6446 /* Images.xcassets */; };
 		D5C0BE051B42CCBC009E6446 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5C0BE031B42CCBC009E6446 /* LaunchScreen.xib */; };
 		D5C0BE1B1B42CF62009E6446 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = D5C0BE1A1B42CF62009E6446 /* Podfile */; };
@@ -22,7 +21,6 @@
 		D5C0BDF51B42CCBC009E6446 /* LightboxDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LightboxDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C0BDF91B42CCBC009E6446 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5C0BDFA1B42CCBC009E6446 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D5C0BDFC1B42CCBC009E6446 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D5C0BE011B42CCBC009E6446 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D5C0BE041B42CCBC009E6446 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		D5C0BE1A1B42CF62009E6446 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
@@ -80,7 +78,6 @@
 			isa = PBXGroup;
 			children = (
 				D5C0BDFA1B42CCBC009E6446 /* AppDelegate.swift */,
-				D5C0BDFC1B42CCBC009E6446 /* ViewController.swift */,
 				D5C0BE011B42CCBC009E6446 /* Images.xcassets */,
 				D5C0BE031B42CCBC009E6446 /* LaunchScreen.xib */,
 				D5C0BDF81B42CCBC009E6446 /* Supporting Files */,
@@ -217,7 +214,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5C0BDFD1B42CCBC009E6446 /* ViewController.swift in Sources */,
 				D5C0BDFB1B42CCBC009E6446 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

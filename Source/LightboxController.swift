@@ -14,7 +14,6 @@ public class LightboxController: UIViewController {
   public private(set) var page = 0 {
     didSet {
       delegate?.lightboxControllerDidMoveToPage(self, page: page)
-      println(page)
     }
   }
 

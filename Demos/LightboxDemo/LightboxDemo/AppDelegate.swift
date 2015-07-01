@@ -1,4 +1,5 @@
 import UIKit
+import Lightbox
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -8,14 +9,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return window
     }()
 
-  lazy var viewController: UIViewController = {
-    let controller = ViewController()
-    return controller
-    }()
-
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-    window!.rootViewController = viewController
+    let images = ["photo1", "photo2", "photo3"].map { UIImage(named: $0)! }
+    let controller = LightboxController(images: images)
+
+    window!.rootViewController = controller
     window!.backgroundColor = UIColor.whiteColor()
     window!.makeKeyAndVisible()
 

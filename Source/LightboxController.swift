@@ -11,8 +11,7 @@ public class LightboxController: UIViewController {
 
   public var delegate: LightboxControllerDelegate?
 
-  var portraitSize = CGSizeZero
-  var landscapeSize = CGSizeZero
+  var collectionSize = CGSizeZero
 
   public private(set) var page = 0 {
     didSet {
@@ -71,12 +70,9 @@ public class LightboxController: UIViewController {
     let width = CGRectGetWidth(view.frame)
     let height = CGRectGetHeight(view.frame)
 
-    portraitSize = CGSize(
+    collectionSize = CGSize(
       width: width < height ? width : height,
       height: height > width ? height : width)
-    landscapeSize = CGSize(
-      width: portraitSize.height,
-      height: portraitSize.width)
 
     view.addSubview(collectionView)
     setupConstraints()
@@ -103,12 +99,12 @@ public class LightboxController: UIViewController {
 
   // MARK: - Orientation
 
-  public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-    super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+  public override func shouldAutorotate() -> Bool {
+    return false
+  }
 
-    collectionView.reloadData()
-    collectionView.collectionViewLayout.invalidateLayout()
-    goTo(page, animated: false)
+  public override func supportedInterfaceOrientations() -> Int {
+    return Int(UIInterfaceOrientationMask.Portrait.rawValue)
   }
 
   // MARK: - Pagination
@@ -117,13 +113,8 @@ public class LightboxController: UIViewController {
     if page >= 0 && page < images.count {
       var offset = collectionView.contentOffset
 
-      let size = UIDevice.currentDevice().orientation == .Portrait ||
-        UIDevice.currentDevice().orientation == .PortraitUpsideDown
-        ? portraitSize
-        : landscapeSize
-
-      offset.x = CGFloat(page) * size.width
-      offset.y = CGFloat(page) * size.height
+      offset.x = CGFloat(page) * collectionSize.width
+      offset.y = CGFloat(page) * collectionSize.height
 
       collectionView.setContentOffset(offset, animated: animated)
     }
@@ -145,11 +136,7 @@ extension LightboxController: UICollectionViewDelegateFlowLayout {
   public func collectionView(collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-      let orientation = UIDevice.currentDevice().orientation.isPortrait
-      return UIDevice.currentDevice().orientation == .Portrait ||
-        UIDevice.currentDevice().orientation == .PortraitUpsideDown
-          ? portraitSize
-          : landscapeSize
+      return collectionSize
   }
 }
 
@@ -162,7 +149,7 @@ extension LightboxController: UICollectionViewDelegate { }
 extension LightboxController: UIScrollViewDelegate {
 
   public func scrollViewDidScroll(scrollView: UIScrollView) {
-    let pageWidth = collectionView.frame.size.width
+    let pageWidth = collectionSize.width
     let currentPage = Int(floor((collectionView.contentOffset.x - pageWidth / 2) / pageWidth) + 1)
     if currentPage != page {
       page = currentPage

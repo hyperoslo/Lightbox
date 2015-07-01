@@ -119,14 +119,9 @@ public class LightboxController: UIViewController {
     let attributes: [NSLayoutAttribute] = [.Leading, .Trailing, .Top, .Bottom]
 
     attributes.map {
-      self.view.addConstraint(NSLayoutConstraint(
-        item: self.collectionView,
-        attribute: $0,
-        relatedBy: .Equal,
-        toItem: self.view,
-        attribute: $0,
-        multiplier: 1,
-        constant: 0))
+      self.view.addConstraint(NSLayoutConstraint(item: self.collectionView,
+        attribute: $0, relatedBy: .Equal, toItem: self.view, attribute: $0,
+        multiplier: 1, constant: 0))
     }
     
     let config = LightboxConfig.sharedInstance.config

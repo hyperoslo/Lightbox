@@ -16,6 +16,12 @@ public class LightboxController: UIViewController {
   public private(set) var page = 0 {
     didSet {
       delegate?.lightboxControllerDidMoveToPage(self, page: page)
+      let config = LightboxConfig.sharedInstance.config.pageIndicator
+      let text = "\(page + 1)/\(images.count)"
+      pageLabel.attributedText = NSAttributedString(
+        string: text,
+        attributes: config.textAttributes)
+      pageLabel.sizeToFit()
     }
   }
 
@@ -49,6 +55,14 @@ public class LightboxController: UIViewController {
     return layout
     }()
 
+  lazy var pageLabel: UILabel = { [unowned self] in
+    let label = UILabel(frame: CGRectZero)
+    label.setTranslatesAutoresizingMaskIntoConstraints(false)
+    let config = LightboxConfig.sharedInstance.config.pageIndicator
+    label.hidden = !config.enabled
+    return label
+  }()
+
   // MARK: Initializers
 
   public required init(images: [UIImage], delegate: LightboxControllerDelegate? = nil) {
@@ -75,6 +89,7 @@ public class LightboxController: UIViewController {
       height: height > width ? height : width)
 
     view.addSubview(collectionView)
+    view.addSubview(pageLabel)
     setupConstraints()
 
     page = 0
@@ -95,6 +110,20 @@ public class LightboxController: UIViewController {
         multiplier: 1,
         constant: 0))
     }
+    
+    let config = LightboxConfig.sharedInstance.config.pageIndicator
+
+    view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Leading,
+      relatedBy: .Equal, toItem: view, attribute: .Leading,
+      multiplier: 1, constant: 0))
+
+    view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Trailing,
+      relatedBy: .Equal, toItem: view, attribute: .Trailing,
+      multiplier: 1, constant: 0))
+
+    view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
+      relatedBy: .Equal, toItem: view, attribute: .Bottom,
+      multiplier: 1, constant: -20))
   }
 
   // MARK: - Orientation

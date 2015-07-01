@@ -17,16 +17,26 @@ public struct Config {
   public struct PageIndicator {
     public var enabled = true
     public var textAttributes = [
-      NSFontAttributeName: UIFont.systemFontOfSize(12),
-      NSForegroundColorAttributeName: UIColor.lightGrayColor()
+      NSFontAttributeName: UIFont.systemFontOfSize(18),
+      NSForegroundColorAttributeName: UIColor.lightGrayColor(),
+      NSParagraphStyleAttributeName: {
+        var style = NSMutableParagraphStyle()
+        style.alignment = .Center
+        return style
+        }()
     ]
   }
 
   public struct CloseButton {
     public var enabled = true
     public var textAttributes = [
-      NSFontAttributeName: UIFont.systemFontOfSize(12),
-      NSForegroundColorAttributeName: UIColor.lightGrayColor()
+      NSFontAttributeName: UIFont.boldSystemFontOfSize(12),
+      NSForegroundColorAttributeName: UIColor.lightGrayColor(),
+      NSParagraphStyleAttributeName: {
+        var style = NSMutableParagraphStyle()
+        style.alignment = .Center
+        return style
+        }()
     ]
     public var text = NSLocalizedString("Close", comment: "")
     public var borderColor = UIColor.whiteColor()

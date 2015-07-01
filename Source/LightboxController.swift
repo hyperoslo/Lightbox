@@ -79,7 +79,7 @@ public class LightboxController: UIViewController {
       string: config.text, attributes: config.textAttributes)
     
     return button
-  }()
+    }()
 
   // MARK: Initializers
 
@@ -108,6 +108,8 @@ public class LightboxController: UIViewController {
 
     view.addSubview(collectionView)
     view.addSubview(pageLabel)
+    view.addSubview(closeButton)
+    
     setupConstraints()
 
     page = 0

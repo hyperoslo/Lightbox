@@ -19,6 +19,8 @@ public class LightboxView: UIView {
     scrollView.minimumZoomScale = self.minimumZoomScale
     scrollView.maximumZoomScale = self.maximumZoomScale
     scrollView.delegate = self
+    scrollView.showsVerticalScrollIndicator = false
+    scrollView.showsHorizontalScrollIndicator = false
 
     return scrollView
   }()

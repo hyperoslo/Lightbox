@@ -7,8 +7,6 @@ public class LightboxViewCell: UICollectionViewCell {
   var lightboxView: LightboxView?
 
   public func configureCell(image: UIImage) {
-    backgroundColor = .redColor()
-
     if let lightboxView = lightboxView where lightboxView.superview != nil  {
       lightboxView.removeFromSuperview()
     }

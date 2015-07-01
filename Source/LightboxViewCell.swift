@@ -9,10 +9,8 @@ public class LightboxViewCell: UICollectionViewCell {
   public func configureCell(image: UIImage) {
     backgroundColor = .redColor()
 
-    if let lightboxView = lightboxView {
-      if lightboxView.superview != nil {
-        lightboxView.removeFromSuperview()
-      }
+    if let lightboxView = lightboxView where lightboxView.superview != nil  {
+      lightboxView.removeFromSuperview()
     }
 
     lightboxView = LightboxView(frame: bounds,

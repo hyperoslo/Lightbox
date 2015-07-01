@@ -28,7 +28,7 @@ extension LightboxDataSource: UICollectionViewDataSource {
       forIndexPath: indexPath) as! LightboxViewCell
     let image = data[indexPath.row]
 
-    cell.configureCell(image)
+    cell.lightboxView.image = image
 
     return cell
   }

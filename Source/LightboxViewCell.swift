@@ -4,16 +4,10 @@ public class LightboxViewCell: UICollectionViewCell {
 
   public static let reuseIdentifier: String = "LightboxViewCell"
 
-  var lightboxView: LightboxView?
+  public lazy var lightboxView: LightboxView = { [unowned self] in
+    let lightboxView = LightboxView(frame: self.bounds)
+    self.contentView.addSubview(lightboxView)
 
-  public func configureCell(image: UIImage) {
-    if lightboxView == nil {
-      lightboxView = LightboxView(frame: bounds, image: image)
-      contentView.addSubview(lightboxView!)
-    }
-
-    if let lightboxView = lightboxView {
-      lightboxView.image = image
-    }
-  }
+    return lightboxView
+  }()
 }

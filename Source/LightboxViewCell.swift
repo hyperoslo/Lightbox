@@ -7,13 +7,13 @@ public class LightboxViewCell: UICollectionViewCell {
   var lightboxView: LightboxView?
 
   public func configureCell(image: UIImage) {
-    if let lightboxView = lightboxView where lightboxView.superview != nil  {
-      lightboxView.removeFromSuperview()
+    if lightboxView == nil {
+      lightboxView = LightboxView(frame: bounds, image: image)
+      contentView.addSubview(lightboxView!)
     }
 
-    lightboxView = LightboxView(frame: bounds,
-      image: image)
-
-    contentView.addSubview(lightboxView!)
+    if let lightboxView = lightboxView {
+      lightboxView.image = image
+    }
   }
 }

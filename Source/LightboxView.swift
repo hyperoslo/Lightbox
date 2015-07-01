@@ -2,6 +2,16 @@ import UIKit
 
 public class LightboxView: UIView {
 
+  public var image: UIImage? {
+    didSet {
+      imageView.image = image
+      if constraintsAdded {
+        updateImageConstraints()
+        updateZoom()
+      }
+    }
+  }
+
   public var minimumZoomScale: CGFloat = 1
   public var maximumZoomScale: CGFloat = 3
   var lastZoomScale: CGFloat = -1
@@ -34,7 +44,7 @@ public class LightboxView: UIView {
 
   // MARK: - Initialization
 
-  public init(frame: CGRect, image: UIImage) {
+  public init(frame: CGRect, image: UIImage? = nil) {
     super.init(frame: frame)
 
     imageView.image = image

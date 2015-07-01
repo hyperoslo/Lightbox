@@ -11,8 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-    let imageNames = ["photo1", "photo2", "photo3"]
-    let images = imageNames.map { UIImage(named: $0)! }
+    let images = ["photo1", "photo2", "photo3"].map { UIImage(named: $0)! }
     let controller = LightboxController(images: images)
 
     window!.rootViewController = controller

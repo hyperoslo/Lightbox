@@ -9,7 +9,10 @@ class LightboxConfig {
 
 public struct Config {
 
-  public var background = UIColor.blackColor()
+  public var backgroundColor = UIColor.blackColor()
+  public var pageIndicator = PageIndicator()
+  public var closeButton = CloseButton()
+  public var zoom = Zoom()
 
   public struct PageIndicator {
     public var enabled = true
@@ -30,7 +33,6 @@ public struct Config {
   }
 
   public struct Zoom {
-    public var enabled = true
     public var minimumScale: CGFloat = 1.0
     public var maximumScale: CGFloat = 3.0
   }

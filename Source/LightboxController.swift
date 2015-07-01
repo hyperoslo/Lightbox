@@ -142,6 +142,22 @@ public class LightboxController: UIViewController {
     view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
       relatedBy: .Equal, toItem: view, attribute: .Bottom,
       multiplier: 1, constant: -20))
+    
+    view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Top,
+      relatedBy: .Equal, toItem: view, attribute: .Top,
+      multiplier: 1, constant: 16))
+    
+    view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Trailing,
+      relatedBy: .Equal, toItem: view, attribute: .Trailing,
+      multiplier: 1, constant: 17))
+    
+    view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Width,
+      relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
+      multiplier: 1, constant: config.closeButton.size.width))
+    
+    view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Height,
+      relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
+      multiplier: 1, constant: config.closeButton.size.height))
   }
 
   // MARK: - Orientation

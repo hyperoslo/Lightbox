@@ -3,6 +3,7 @@ import UIKit
 public protocol LightboxControllerDelegate: class {
 
   func lightboxControllerDidMoveToPage(controller: LightboxController, page: Int)
+  func lightboxControllerDidDismiss(controller: LightboxController)
 }
 
 public class LightboxController: UIViewController {
@@ -69,14 +70,17 @@ public class LightboxController: UIViewController {
   
   lazy var closeButton: UIButton = {
     let config = LightboxConfig.sharedInstance.config.closeButton
-    let button = UIButton(frame: CGRectZero)
+    let title = NSAttributedString(
+      string: config.text, attributes: config.textAttributes)
+    let button = UIButton.buttonWithType(.System) as! UIButton
     
     button.setTranslatesAutoresizingMaskIntoConstraints(false)
     button.layer.borderColor = config.borderColor.CGColor
-    button.layer.cornerRadius = 5
+    button.layer.cornerRadius = 2
     button.layer.borderWidth = 1
-    button.titleLabel?.attributedText = NSAttributedString(
-      string: config.text, attributes: config.textAttributes)
+    button.setAttributedTitle(title, forState: .Normal)
+    button.addTarget(self, action: "closeButtonDidTouchUpInside:",
+      forControlEvents: .TouchUpInside)
     
     return button
     }()
@@ -146,7 +150,7 @@ public class LightboxController: UIViewController {
     
     view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Trailing,
       relatedBy: .Equal, toItem: view, attribute: .Trailing,
-      multiplier: 1, constant: 17))
+      multiplier: 1, constant: -17))
     
     view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Width,
       relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
@@ -186,6 +190,12 @@ public class LightboxController: UIViewController {
 
   public func previous(animated: Bool = true) {
     goTo(page - 1, animated: animated)
+  }
+  
+  // MARK: - Actions
+  
+  func closeButtonDidTouchUpInside(sender: UIButton) {
+    delegate?.lightboxControllerDidDismiss(self)
   }
 }
 

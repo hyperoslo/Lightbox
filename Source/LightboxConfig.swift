@@ -31,7 +31,7 @@ public struct Config {
     public var enabled = true
     public var textAttributes = [
       NSFontAttributeName: UIFont.boldSystemFontOfSize(12),
-      NSForegroundColorAttributeName: UIColor.lightGrayColor(),
+      NSForegroundColorAttributeName: UIColor.whiteColor(),
       NSParagraphStyleAttributeName: {
         var style = NSMutableParagraphStyle()
         style.alignment = .Center

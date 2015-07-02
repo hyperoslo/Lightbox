@@ -65,10 +65,14 @@ public class LightboxController: UIViewController {
 
   // MARK: Initializers
 
-  public required init(images: [UIImage], delegate: LightboxControllerDelegate? = nil) {
+  public required init(images: [UIImage], config: Config? = nil, delegate: LightboxControllerDelegate? = nil) {
     self.images = images
     self.delegate = delegate
 
+    if let config = config {
+      LightboxConfig.sharedInstance.config = config
+    }
+    
     super.init(nibName: nil, bundle: nil)
   }
 

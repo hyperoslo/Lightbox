@@ -3,6 +3,7 @@ import UIKit
 public protocol LightboxControllerDelegate: class {
 
   func lightboxControllerDidMoveToPage(controller: LightboxController, page: Int)
+  func lightboxControllerDidDismiss(controller: LightboxController)
 }
 
 public class LightboxController: UIViewController {
@@ -18,11 +19,10 @@ public class LightboxController: UIViewController {
       let config = LightboxConfig.sharedInstance.config.pageIndicator
       let text = "\(page + 1)/\(images.count)"
       
-      pageLabel.attributedText = NSAttributedString(
-        string: text,
+      pageLabel.attributedText = NSAttributedString(string: text,
         attributes: config.textAttributes)
       pageLabel.sizeToFit()
-      
+
       delegate?.lightboxControllerDidMoveToPage(self, page: page)
     }
   }
@@ -68,6 +68,23 @@ public class LightboxController: UIViewController {
     
     return label
     }()
+  
+  lazy var closeButton: UIButton = {
+    let config = LightboxConfig.sharedInstance.config.closeButton
+    let title = NSAttributedString(
+      string: config.text, attributes: config.textAttributes)
+    let button = UIButton.buttonWithType(.System) as! UIButton
+    
+    button.setTranslatesAutoresizingMaskIntoConstraints(false)
+    button.layer.borderColor = config.borderColor.CGColor
+    button.layer.cornerRadius = 2
+    button.layer.borderWidth = 1
+    button.setAttributedTitle(title, forState: .Normal)
+    button.addTarget(self, action: "closeButtonDidTouchUpInside:",
+      forControlEvents: .TouchUpInside)
+    
+    return button
+    }()
 
   // MARK: Initializers
 
@@ -100,6 +117,8 @@ public class LightboxController: UIViewController {
 
     view.addSubview(collectionView)
     view.addSubview(pageLabel)
+    view.addSubview(closeButton)
+    
     setupConstraints()
 
     page = 0
@@ -111,17 +130,12 @@ public class LightboxController: UIViewController {
     let attributes: [NSLayoutAttribute] = [.Leading, .Trailing, .Top, .Bottom]
 
     attributes.map {
-      self.view.addConstraint(NSLayoutConstraint(
-        item: self.collectionView,
-        attribute: $0,
-        relatedBy: .Equal,
-        toItem: self.view,
-        attribute: $0,
-        multiplier: 1,
-        constant: 0))
+      self.view.addConstraint(NSLayoutConstraint(item: self.collectionView,
+        attribute: $0, relatedBy: .Equal, toItem: self.view, attribute: $0,
+        multiplier: 1, constant: 0))
     }
     
-    let config = LightboxConfig.sharedInstance.config.pageIndicator
+    let config = LightboxConfig.sharedInstance.config
 
     view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Leading,
       relatedBy: .Equal, toItem: view, attribute: .Leading,
@@ -134,6 +148,22 @@ public class LightboxController: UIViewController {
     view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
       relatedBy: .Equal, toItem: view, attribute: .Bottom,
       multiplier: 1, constant: -20))
+    
+    view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Top,
+      relatedBy: .Equal, toItem: view, attribute: .Top,
+      multiplier: 1, constant: 16))
+    
+    view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Trailing,
+      relatedBy: .Equal, toItem: view, attribute: .Trailing,
+      multiplier: 1, constant: -17))
+    
+    view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Width,
+      relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
+      multiplier: 1, constant: config.closeButton.size.width))
+    
+    view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Height,
+      relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
+      multiplier: 1, constant: config.closeButton.size.height))
   }
 
   // MARK: - Orientation
@@ -165,6 +195,12 @@ public class LightboxController: UIViewController {
 
   public func previous(animated: Bool = true) {
     goTo(page - 1, animated: animated)
+  }
+  
+  // MARK: - Actions
+  
+  func closeButtonDidTouchUpInside(sender: UIButton) {
+    delegate?.lightboxControllerDidDismiss(self)
   }
 }
 

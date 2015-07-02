@@ -15,6 +15,14 @@ public class LightboxController: UIViewController {
 
   public private(set) var page = 0 {
     didSet {
+      let config = LightboxConfig.sharedInstance.config.pageIndicator
+      let text = "\(page + 1)/\(images.count)"
+      
+      pageLabel.attributedText = NSAttributedString(
+        string: text,
+        attributes: config.textAttributes)
+      pageLabel.sizeToFit()
+      
       delegate?.lightboxControllerDidMoveToPage(self, page: page)
     }
   }
@@ -42,19 +50,35 @@ public class LightboxController: UIViewController {
 
   lazy var collectionViewLayout: UICollectionViewLayout = {
     let layout = UICollectionViewFlowLayout()
+    
     layout.scrollDirection = .Horizontal
     layout.minimumInteritemSpacing = 0
     layout.minimumLineSpacing = 0
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    
     return layout
+    }()
+
+  lazy var pageLabel: UILabel = { [unowned self] in
+    let config = LightboxConfig.sharedInstance.config.pageIndicator
+    let label = UILabel(frame: CGRectZero)
+    
+    label.setTranslatesAutoresizingMaskIntoConstraints(false)
+    label.hidden = !config.enabled
+    
+    return label
     }()
 
   // MARK: Initializers
 
-  public required init(images: [UIImage], delegate: LightboxControllerDelegate? = nil) {
+  public required init(images: [UIImage], config: Config? = nil, delegate: LightboxControllerDelegate? = nil) {
     self.images = images
     self.delegate = delegate
 
+    if let config = config {
+      LightboxConfig.sharedInstance.config = config
+    }
+    
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -75,6 +99,7 @@ public class LightboxController: UIViewController {
       height: height > width ? height : width)
 
     view.addSubview(collectionView)
+    view.addSubview(pageLabel)
     setupConstraints()
 
     page = 0
@@ -95,6 +120,20 @@ public class LightboxController: UIViewController {
         multiplier: 1,
         constant: 0))
     }
+    
+    let config = LightboxConfig.sharedInstance.config.pageIndicator
+
+    view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Leading,
+      relatedBy: .Equal, toItem: view, attribute: .Leading,
+      multiplier: 1, constant: 0))
+
+    view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Trailing,
+      relatedBy: .Equal, toItem: view, attribute: .Trailing,
+      multiplier: 1, constant: 0))
+
+    view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
+      relatedBy: .Equal, toItem: view, attribute: .Bottom,
+      multiplier: 1, constant: -20))
   }
 
   // MARK: - Orientation

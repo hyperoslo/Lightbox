@@ -48,7 +48,11 @@ public class LightboxView: UIView {
     super.init(frame: frame)
 
     imageView.image = image
-    backgroundColor = .blackColor()
+
+    let config = LightboxConfig.sharedInstance.config
+    backgroundColor = config.backgroundColor
+    minimumZoomScale = config.zoom.minimumScale
+    maximumZoomScale = config.zoom.maximumScale
 
     scrollView.addSubview(self.imageView)
     addSubview(scrollView)

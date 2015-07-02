@@ -15,13 +15,15 @@ public class LightboxController: UIViewController {
 
   public private(set) var page = 0 {
     didSet {
-      delegate?.lightboxControllerDidMoveToPage(self, page: page)
       let config = LightboxConfig.sharedInstance.config.pageIndicator
       let text = "\(page + 1)/\(images.count)"
+      
       pageLabel.attributedText = NSAttributedString(
         string: text,
         attributes: config.textAttributes)
       pageLabel.sizeToFit()
+      
+      delegate?.lightboxControllerDidMoveToPage(self, page: page)
     }
   }
 
@@ -48,20 +50,24 @@ public class LightboxController: UIViewController {
 
   lazy var collectionViewLayout: UICollectionViewLayout = {
     let layout = UICollectionViewFlowLayout()
+    
     layout.scrollDirection = .Horizontal
     layout.minimumInteritemSpacing = 0
     layout.minimumLineSpacing = 0
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    
     return layout
     }()
 
   lazy var pageLabel: UILabel = { [unowned self] in
-    let label = UILabel(frame: CGRectZero)
-    label.setTranslatesAutoresizingMaskIntoConstraints(false)
     let config = LightboxConfig.sharedInstance.config.pageIndicator
+    let label = UILabel(frame: CGRectZero)
+    
+    label.setTranslatesAutoresizingMaskIntoConstraints(false)
     label.hidden = !config.enabled
+    
     return label
-  }()
+    }()
 
   // MARK: Initializers
 

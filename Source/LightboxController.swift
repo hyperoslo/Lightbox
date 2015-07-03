@@ -8,7 +8,7 @@ public protocol LightboxControllerDelegate: class {
 
 public class LightboxController: UIViewController {
 
-  var images = [UIImage]()
+  var images = [String]()
 
   public var delegate: LightboxControllerDelegate?
 
@@ -88,7 +88,7 @@ public class LightboxController: UIViewController {
 
   // MARK: Initializers
 
-  public required init(images: [UIImage], config: Config? = nil, delegate: LightboxControllerDelegate? = nil) {
+  public required init(images: [String], config: Config? = nil, delegate: LightboxControllerDelegate? = nil) {
     self.images = images
     self.delegate = delegate
 

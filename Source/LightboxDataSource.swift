@@ -2,9 +2,9 @@ import UIKit
 
 public class LightboxDataSource: NSObject {
 
-  public var data: [UIImage]
+  public var data: [String]
 
-  public required init(data: [UIImage]) {
+  public required init(data: [String]) {
     self.data = data
     super.init()
   }

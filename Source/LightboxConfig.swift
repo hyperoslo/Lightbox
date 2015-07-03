@@ -13,6 +13,7 @@ public struct Config {
   public var pageIndicator = PageIndicator()
   public var closeButton = CloseButton()
   public var zoom = Zoom()
+  public var remoteImages = false
   
   public var loadImage: (imageView: UIImageView, URL: NSURL) -> Void = {
     imageView, URL in

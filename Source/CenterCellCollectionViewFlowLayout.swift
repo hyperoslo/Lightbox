@@ -7,18 +7,15 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
     if let collectionView = self.collectionView {
       
       let collectionViewBounds = collectionView.bounds
-      let halfWidth = collectionViewBounds.size.width / 2;
+      let halfWidth = collectionViewBounds.size.width / 2
       let proposedContentOffsetCenterX = proposedContentOffset.x + halfWidth;
       
       if let attributesForVisibleCells = self.layoutAttributesForElementsInRect(collectionViewBounds) as? [UICollectionViewLayoutAttributes] {
         
         var candidateAttributes : UICollectionViewLayoutAttributes?
         
-        for attributes in attributesForVisibleCells {
-          // Skip comparison with non-cell items (headers and footers)
-          if attributes.representedElementCategory != UICollectionElementCategory.Cell {
-            continue
-          }
+        for attributes in attributesForVisibleCells.filter({
+          $0.representedElementCategory != UICollectionElementCategory.Cell}) {
           
           if let candAttrs = candidateAttributes {
             let a = attributes.center.x - proposedContentOffsetCenterX

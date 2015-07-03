@@ -8,7 +8,7 @@ public protocol LightboxControllerDelegate: class {
 
 public class LightboxController: UIViewController {
 
-  var images = [UIImage]()
+  var images = [String]()
 
   public var delegate: LightboxControllerDelegate?
 
@@ -37,10 +37,10 @@ public class LightboxController: UIViewController {
       collectionViewLayout: self.collectionViewLayout)
 
     collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
-    collectionView.pagingEnabled = true
     collectionView.backgroundColor = .blackColor()
     collectionView.dataSource = self.dataSource
     collectionView.delegate = self
+    collectionView.decelerationRate = UIScrollViewDecelerationRateFast
 
     collectionView.registerClass(LightboxViewCell.self,
       forCellWithReuseIdentifier: LightboxViewCell.reuseIdentifier)
@@ -49,11 +49,11 @@ public class LightboxController: UIViewController {
     }()
 
   lazy var collectionViewLayout: UICollectionViewLayout = {
-    let layout = UICollectionViewFlowLayout()
+    let layout = CenterCellCollectionViewFlowLayout()
     
     layout.scrollDirection = .Horizontal
-    layout.minimumInteritemSpacing = 0
-    layout.minimumLineSpacing = 0
+    layout.minimumInteritemSpacing = 20
+    layout.minimumLineSpacing = 20
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
     return layout
@@ -88,7 +88,7 @@ public class LightboxController: UIViewController {
 
   // MARK: Initializers
 
-  public required init(images: [UIImage], config: Config? = nil, delegate: LightboxControllerDelegate? = nil) {
+  public required init(images: [String], config: Config? = nil, delegate: LightboxControllerDelegate? = nil) {
     self.images = images
     self.delegate = delegate
 

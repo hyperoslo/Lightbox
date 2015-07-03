@@ -13,6 +13,26 @@ public struct Config {
   public var pageIndicator = PageIndicator()
   public var closeButton = CloseButton()
   public var zoom = Zoom()
+  public var remoteImages = false
+  
+  public typealias LoadImageCompletion = (error: NSError?) -> Void
+  
+  public var loadImage: (imageView: UIImageView, URL: NSURL, completion: LoadImageCompletion?) -> Void = {
+    imageView, URL, completion in
+    let imageRequest: NSURLRequest = NSURLRequest(URL: URL)
+    
+    NSURLConnection.sendAsynchronousRequest(imageRequest,
+      queue: NSOperationQueue.mainQueue(),
+      completionHandler: { response, data, error in
+        if let data = data, image = UIImage(data: data) {
+          imageView.image = image
+        }
+
+        completion?(error: error)
+    })
+  }
+  
+  public init() { }
 
   public struct PageIndicator {
     public var enabled = true

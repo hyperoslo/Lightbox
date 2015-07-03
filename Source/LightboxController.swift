@@ -8,19 +8,19 @@ public protocol LightboxControllerDelegate: class {
 
 public class LightboxController: UIViewController {
 
-  var images = [String]()
-
   public var delegate: LightboxControllerDelegate?
-
+  var images = [String]()
   var collectionSize = CGSizeZero
+  var config: Config {
+    return LightboxConfig.sharedInstance.config
+  }
 
   public private(set) var page = 0 {
     didSet {
-      let config = LightboxConfig.sharedInstance.config.pageIndicator
       let text = "\(page + 1)/\(images.count)"
       
       pageLabel.attributedText = NSAttributedString(string: text,
-        attributes: config.textAttributes)
+        attributes: config.pageIndicator.textAttributes)
       pageLabel.sizeToFit()
 
       delegate?.lightboxControllerDidMoveToPage(self, page: page)
@@ -48,39 +48,37 @@ public class LightboxController: UIViewController {
     return collectionView
     }()
 
-  lazy var collectionViewLayout: UICollectionViewLayout = {
-    let config = LightboxConfig.sharedInstance.config
+  lazy var collectionViewLayout: UICollectionViewLayout = { [unowned self] in
     let layout = CenterCellCollectionViewFlowLayout()
     
     layout.scrollDirection = .Horizontal
-    layout.minimumInteritemSpacing = config.spacing
-    layout.minimumLineSpacing = config.spacing
+    layout.minimumInteritemSpacing = self.config.spacing
+    layout.minimumLineSpacing = self.config.spacing
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
     return layout
     }()
 
   lazy var pageLabel: UILabel = { [unowned self] in
-    let config = LightboxConfig.sharedInstance.config.pageIndicator
     let label = UILabel(frame: CGRectZero)
     
     label.setTranslatesAutoresizingMaskIntoConstraints(false)
-    label.hidden = !config.enabled
+    label.hidden = !self.config.pageIndicator.enabled
     
     return label
     }()
   
-  lazy var closeButton: UIButton = {
-    let config = LightboxConfig.sharedInstance.config.closeButton
+  lazy var closeButton: UIButton = { [unowned self] in
     let title = NSAttributedString(
-      string: config.text, attributes: config.textAttributes)
+      string: self.config.closeButton.text,
+      attributes: self.config.closeButton.textAttributes)
     let button = UIButton.buttonWithType(.System) as! UIButton
     
     button.setTranslatesAutoresizingMaskIntoConstraints(false)
     button.setAttributedTitle(title, forState: .Normal)
     button.addTarget(self, action: "closeButtonDidTouchUpInside:",
       forControlEvents: .TouchUpInside)
-    if let image = config.image {
+    if let image = self.config.closeButton.image {
       button.setImage(image, forState: .Normal)
     }
     
@@ -127,7 +125,6 @@ public class LightboxController: UIViewController {
   
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(true)
-    let config = LightboxConfig.sharedInstance.config
     
     if config.hideStatusBar {
       UIApplication.sharedApplication().setStatusBarHidden(true,
@@ -146,8 +143,6 @@ public class LightboxController: UIViewController {
         multiplier: 1, constant: 0))
     }
     
-    let config = LightboxConfig.sharedInstance.config
-
     view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Leading,
       relatedBy: .Equal, toItem: view, attribute: .Leading,
       multiplier: 1, constant: 0))

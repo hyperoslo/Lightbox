@@ -27,9 +27,8 @@ public struct Config {
         if let data = data, image = UIImage(data: data) {
           imageView.image = image
         }
-        if let completion = completion {
-          completion(error: error)
-        }
+
+        completion?(error: error)
     })
   }
   

@@ -15,7 +15,7 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
         var candidateAttributes : UICollectionViewLayoutAttributes?
         
         for attributes in attributesForVisibleCells.filter({
-          $0.representedElementCategory != UICollectionElementCategory.Cell}) {
+          $0.representedElementCategory == UICollectionElementCategory.Cell}) {
           
           if let candAttrs = candidateAttributes {
             let a = attributes.center.x - proposedContentOffsetCenterX

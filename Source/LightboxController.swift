@@ -1,8 +1,12 @@
 import UIKit
 
-public protocol LightboxControllerDelegate: class {
+public protocol LightboxControllerPageDelegate: class {
 
   func lightboxControllerDidMoveToPage(controller: LightboxController, page: Int)
+}
+
+public protocol LightboxControllerDismissalDelegate: class {
+  
   func lightboxControllerDidDismiss(controller: LightboxController)
 }
 
@@ -10,7 +14,7 @@ public class LightboxController: UIViewController {
 
   var images = [String]()
 
-  public var delegate: LightboxControllerDelegate?
+  public var pageDelegate: LightboxControllerPageDelegate?
 
   var collectionSize = CGSizeZero
 
@@ -23,7 +27,7 @@ public class LightboxController: UIViewController {
         attributes: config.textAttributes)
       pageLabel.sizeToFit()
 
-      delegate?.lightboxControllerDidMoveToPage(self, page: page)
+      pageDelegate?.lightboxControllerDidMoveToPage(self, page: page)
     }
   }
 
@@ -89,9 +93,9 @@ public class LightboxController: UIViewController {
 
   // MARK: Initializers
 
-  public required init(images: [String], config: Config? = nil, delegate: LightboxControllerDelegate? = nil) {
+  public required init(images: [String], config: Config? = nil, pageDelegate: LightboxControllerPageDelegate? = nil) {
     self.images = images
-    self.delegate = delegate
+    self.pageDelegate = pageDelegate
 
     if let config = config {
       LightboxConfig.sharedInstance.config = config
@@ -201,7 +205,7 @@ public class LightboxController: UIViewController {
   // MARK: - Actions
   
   func closeButtonDidTouchUpInside(sender: UIButton) {
-    delegate?.lightboxControllerDidDismiss(self)
+    //delegate?.lightboxControllerDidDismiss(self)
   }
 }
 

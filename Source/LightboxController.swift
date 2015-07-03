@@ -15,7 +15,8 @@ public class LightboxController: UIViewController {
   var images = [String]()
 
   public var pageDelegate: LightboxControllerPageDelegate?
-
+  public var dismissalDelegate: LightboxControllerDismissalDelegate?
+  
   var collectionSize = CGSizeZero
 
   public private(set) var page = 0 {
@@ -93,15 +94,19 @@ public class LightboxController: UIViewController {
 
   // MARK: Initializers
 
-  public required init(images: [String], config: Config? = nil, pageDelegate: LightboxControllerPageDelegate? = nil) {
-    self.images = images
-    self.pageDelegate = pageDelegate
+  public required init(images: [String], config: Config? = nil,
+    pageDelegate: LightboxControllerPageDelegate? = nil,
+    dismissalDelegate: LightboxControllerDismissalDelegate? = nil) {
+      
+      self.images = images
+      self.pageDelegate = pageDelegate
+      self.dismissalDelegate = dismissalDelegate
 
-    if let config = config {
-      LightboxConfig.sharedInstance.config = config
-    }
+      if let config = config {
+        LightboxConfig.sharedInstance.config = config
+      }
     
-    super.init(nibName: nil, bundle: nil)
+      super.init(nibName: nil, bundle: nil)
   }
 
   public required init(coder aDecoder: NSCoder) {
@@ -205,7 +210,7 @@ public class LightboxController: UIViewController {
   // MARK: - Actions
   
   func closeButtonDidTouchUpInside(sender: UIButton) {
-    //delegate?.lightboxControllerDidDismiss(self)
+    dismissalDelegate?.lightboxControllerDidDismiss(self)
   }
 }
 

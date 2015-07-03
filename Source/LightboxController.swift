@@ -79,6 +79,9 @@ public class LightboxController: UIViewController {
     button.setAttributedTitle(title, forState: .Normal)
     button.addTarget(self, action: "closeButtonDidTouchUpInside:",
       forControlEvents: .TouchUpInside)
+    if let image = config.image {
+      button.setImage(image, forState: .Normal)
+    }
     
     return button
     }()

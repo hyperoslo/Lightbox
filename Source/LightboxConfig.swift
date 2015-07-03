@@ -60,6 +60,7 @@ public struct Config {
     ]
     public var size = CGSize(width: 60, height: 25)
     public var text = NSLocalizedString("Close", comment: "")
+    public var image: UIImage?
   }
 
   public struct Zoom {

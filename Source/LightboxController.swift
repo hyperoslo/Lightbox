@@ -37,7 +37,6 @@ public class LightboxController: UIViewController {
       collectionViewLayout: self.collectionViewLayout)
 
     collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
-    //collectionView.pagingEnabled = true
     collectionView.backgroundColor = .blackColor()
     collectionView.dataSource = self.dataSource
     collectionView.delegate = self
@@ -229,7 +228,6 @@ extension LightboxController: UIScrollViewDelegate {
     let currentPage = Int(floor((collectionView.contentOffset.x - pageWidth / 2) / pageWidth) + 1)
     if currentPage != page {
       page = currentPage
-      println("\(page)")
     }
   }
 }

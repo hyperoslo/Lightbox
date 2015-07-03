@@ -17,9 +17,9 @@ public class LightboxController: UIViewController {
   
   var images = [String]()
   var collectionSize = CGSizeZero
-  var config: Config {
+  lazy var config: Config = {
     return LightboxConfig.sharedInstance.config
-  }
+  }()
 
   public private(set) var page = 0 {
     didSet {

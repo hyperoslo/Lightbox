@@ -49,11 +49,12 @@ public class LightboxController: UIViewController {
     }()
 
   lazy var collectionViewLayout: UICollectionViewLayout = {
+    let config = LightboxConfig.sharedInstance.config
     let layout = CenterCellCollectionViewFlowLayout()
     
     layout.scrollDirection = .Horizontal
-    layout.minimumInteritemSpacing = 20
-    layout.minimumLineSpacing = 20
+    layout.minimumInteritemSpacing = config.spacing
+    layout.minimumLineSpacing = config.spacing
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
     return layout

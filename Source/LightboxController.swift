@@ -124,6 +124,16 @@ public class LightboxController: UIViewController {
 
     page = 0
   }
+  
+  public override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(true)
+    let config = LightboxConfig.sharedInstance.config
+    
+    if config.hideStatusBar {
+      UIApplication.sharedApplication().setStatusBarHidden(true,
+        withAnimation: UIStatusBarAnimation.Fade)
+    }
+  }
 
   // MARK: - Autolayout
 

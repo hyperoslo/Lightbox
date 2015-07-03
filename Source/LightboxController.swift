@@ -1,14 +1,20 @@
 import UIKit
 
-public protocol LightboxControllerDelegate: class {
+public protocol LightboxControllerPageDelegate: class {
 
   func lightboxControllerDidMoveToPage(controller: LightboxController, page: Int)
+}
+
+public protocol LightboxControllerDismissalDelegate: class {
+  
   func lightboxControllerDidDismiss(controller: LightboxController)
 }
 
 public class LightboxController: UIViewController {
 
-  public var delegate: LightboxControllerDelegate?
+  public var pageDelegate: LightboxControllerPageDelegate?
+  public var dismissalDelegate: LightboxControllerDismissalDelegate?
+  
   var images = [String]()
   var collectionSize = CGSizeZero
   var config: Config {
@@ -23,7 +29,7 @@ public class LightboxController: UIViewController {
         attributes: config.pageIndicator.textAttributes)
       pageLabel.sizeToFit()
 
-      delegate?.lightboxControllerDidMoveToPage(self, page: page)
+      pageDelegate?.lightboxControllerDidMoveToPage(self, page: page)
     }
   }
 
@@ -74,12 +80,14 @@ public class LightboxController: UIViewController {
       attributes: self.config.closeButton.textAttributes)
     let button = UIButton.buttonWithType(.System) as! UIButton
     
+    //button.tintColor = config.textAttributes[NSForegroundColorAttributeName] as? UIColor
     button.setTranslatesAutoresizingMaskIntoConstraints(false)
     button.setAttributedTitle(title, forState: .Normal)
     button.addTarget(self, action: "closeButtonDidTouchUpInside:",
       forControlEvents: .TouchUpInside)
-    if let image = self.config.closeButton.image {
-      button.setImage(image, forState: .Normal)
+
+    if let image = config.image {
+      button.setBackgroundImage(image, forState: .Normal)
     }
     
     return button
@@ -87,15 +95,19 @@ public class LightboxController: UIViewController {
 
   // MARK: Initializers
 
-  public required init(images: [String], config: Config? = nil, delegate: LightboxControllerDelegate? = nil) {
-    self.images = images
-    self.delegate = delegate
+  public required init(images: [String], config: Config? = nil,
+    pageDelegate: LightboxControllerPageDelegate? = nil,
+    dismissalDelegate: LightboxControllerDismissalDelegate? = nil) {
+      
+      self.images = images
+      self.pageDelegate = pageDelegate
+      self.dismissalDelegate = dismissalDelegate
 
-    if let config = config {
-      LightboxConfig.sharedInstance.config = config
-    }
+      if let config = config {
+        LightboxConfig.sharedInstance.config = config
+      }
     
-    super.init(nibName: nil, bundle: nil)
+      super.init(nibName: nil, bundle: nil)
   }
 
   public required init(coder aDecoder: NSCoder) {
@@ -206,7 +218,7 @@ public class LightboxController: UIViewController {
   // MARK: - Actions
   
   func closeButtonDidTouchUpInside(sender: UIButton) {
-    delegate?.lightboxControllerDidDismiss(self)
+    dismissalDelegate?.lightboxControllerDidDismiss(self)
   }
 }
 

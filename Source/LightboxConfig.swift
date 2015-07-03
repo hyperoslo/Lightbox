@@ -14,6 +14,7 @@ public struct Config {
   public var closeButton = CloseButton()
   public var zoom = Zoom()
   public var remoteImages = false
+  public var spacing: CGFloat = 20
   
   public typealias LoadImageCompletion = (error: NSError?) -> Void
   

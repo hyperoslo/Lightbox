@@ -60,7 +60,6 @@ public struct Config {
     ]
     public var size = CGSize(width: 60, height: 25)
     public var text = NSLocalizedString("Close", comment: "")
-    public var borderColor = UIColor.whiteColor()
   }
 
   public struct Zoom {

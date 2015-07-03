@@ -81,12 +81,13 @@ public class LightboxController: UIViewController {
       string: config.text, attributes: config.textAttributes)
     let button = UIButton.buttonWithType(.System) as! UIButton
     
+    button.tintColor = config.textAttributes[NSForegroundColorAttributeName] as? UIColor
     button.setTranslatesAutoresizingMaskIntoConstraints(false)
     button.setAttributedTitle(title, forState: .Normal)
     button.addTarget(self, action: "closeButtonDidTouchUpInside:",
       forControlEvents: .TouchUpInside)
     if let image = config.image {
-      button.setImage(image, forState: .Normal)
+      button.setBackgroundImage(image, forState: .Normal)
     }
     
     return button

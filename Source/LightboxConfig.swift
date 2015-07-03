@@ -15,18 +15,25 @@ public struct Config {
   public var zoom = Zoom()
   public var remoteImages = false
   
-  public var loadImage: (imageView: UIImageView, URL: NSURL) -> Void = {
-    imageView, URL in
+  public typealias LoadImageCompletion = (error: NSError?) -> Void
+  
+  public var loadImage: (imageView: UIImageView, URL: NSURL, completion: LoadImageCompletion?) -> Void = {
+    imageView, URL, completion in
     let imageRequest: NSURLRequest = NSURLRequest(URL: URL)
     
     NSURLConnection.sendAsynchronousRequest(imageRequest,
       queue: NSOperationQueue.mainQueue(),
       completionHandler: { response, data, error in
-        if let data = data {
-          imageView.image = UIImage(data: data)
+        if let data = data, image = UIImage(data: data) {
+          imageView.image = image
+        }
+        if let completion = completion {
+          completion(error: error)
         }
     })
   }
+  
+  public init() { }
 
   public struct PageIndicator {
     public var enabled = true

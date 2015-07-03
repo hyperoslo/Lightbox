@@ -57,16 +57,17 @@ public class LightboxView: UIView {
   public override func didMoveToSuperview() {
     setUpConstraints()
   }
-
-  // MARK: - Autolayout
-
-  public override func layoutSubviews() {
-    super.layoutSubviews()
+  
+  // MARK: - Public methods
+  
+  public func updateViewLayout() {
     if constraintsAdded {
       updateImageConstraints()
       updateZoom()
     }
   }
+
+  // MARK: - Autolayout
 
   public func setUpConstraints() {
     if !constraintsAdded {

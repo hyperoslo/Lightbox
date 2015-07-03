@@ -37,10 +37,11 @@ public class LightboxController: UIViewController {
       collectionViewLayout: self.collectionViewLayout)
 
     collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
-    collectionView.pagingEnabled = true
+    //collectionView.pagingEnabled = true
     collectionView.backgroundColor = .blackColor()
     collectionView.dataSource = self.dataSource
     collectionView.delegate = self
+    collectionView.decelerationRate = UIScrollViewDecelerationRateFast
 
     collectionView.registerClass(LightboxViewCell.self,
       forCellWithReuseIdentifier: LightboxViewCell.reuseIdentifier)
@@ -49,11 +50,11 @@ public class LightboxController: UIViewController {
     }()
 
   lazy var collectionViewLayout: UICollectionViewLayout = {
-    let layout = UICollectionViewFlowLayout()
+    let layout = CenterCellCollectionViewFlowLayout()
     
     layout.scrollDirection = .Horizontal
-    layout.minimumInteritemSpacing = 0
-    layout.minimumLineSpacing = 0
+    layout.minimumInteritemSpacing = 10
+    layout.minimumLineSpacing = 10
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
     return layout
@@ -228,6 +229,7 @@ extension LightboxController: UIScrollViewDelegate {
     let currentPage = Int(floor((collectionView.contentOffset.x - pageWidth / 2) / pageWidth) + 1)
     if currentPage != page {
       page = currentPage
+      println("\(page)")
     }
   }
 }

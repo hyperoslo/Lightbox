@@ -140,7 +140,7 @@ public class LightboxController: UIViewController {
     
     if config.hideStatusBar {
       UIApplication.sharedApplication().setStatusBarHidden(true,
-        withAnimation: UIStatusBarAnimation.Fade)
+        withAnimation: .Fade)
     }
   }
 

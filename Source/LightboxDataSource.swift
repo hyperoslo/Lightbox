@@ -27,8 +27,15 @@ extension LightboxDataSource: UICollectionViewDataSource {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier,
       forIndexPath: indexPath) as! LightboxViewCell
     let image = data[indexPath.row]
+    let config = LightboxConfig.sharedInstance.config
 
-    cell.lightboxView.image = image
+    if config.remoteImages {
+      if let imageURL = NSURL(string: image) {
+        config.loadImage(imageView: cell.lightboxView.imageView, URL: imageURL)
+      }
+    } else {
+      cell.lightboxView.imageView.image = UIImage(named: image)
+    }
 
     return cell
   }

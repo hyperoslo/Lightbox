@@ -2,16 +2,6 @@ import UIKit
 
 public class LightboxView: UIView {
 
-  public var image: UIImage? {
-    didSet {
-      imageView.image = image
-      if constraintsAdded {
-        updateImageConstraints()
-        updateZoom()
-      }
-    }
-  }
-
   public var minimumZoomScale: CGFloat = 1
   public var maximumZoomScale: CGFloat = 3
   var lastZoomScale: CGFloat = -1

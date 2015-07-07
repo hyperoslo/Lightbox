@@ -38,18 +38,13 @@ public class LightboxController: UIViewController {
 
   public private(set) var seen = false
 
-  public lazy var dataSource: LightboxDataSource = { [unowned self] in
-    let dataSource = LightboxDataSource(data: self.images)
-    return dataSource
-    }()
-
   lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRectZero,
       collectionViewLayout: self.collectionViewLayout)
 
     collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
     collectionView.backgroundColor = .blackColor()
-    collectionView.dataSource = self.dataSource
+    collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.decelerationRate = UIScrollViewDecelerationRateFast
 

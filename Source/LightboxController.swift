@@ -29,9 +29,14 @@ public class LightboxController: UIViewController {
         attributes: config.pageIndicator.textAttributes)
       pageLabel.sizeToFit()
 
+      if page == images.count - 1 {
+        seen = true
+      }
       pageDelegate?.lightboxControllerDidMoveToPage(self, page: page)
     }
   }
+
+  public private(set) var seen = false
 
   public lazy var dataSource: LightboxDataSource = { [unowned self] in
     let dataSource = LightboxDataSource(data: self.images)

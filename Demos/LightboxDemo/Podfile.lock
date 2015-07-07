@@ -6,7 +6,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Lightbox:
-    :path: "../../"
+    :path: ../../
 
 SPEC CHECKSUMS:
   Lightbox: 4f31e0609376469443c9b0df85efe1c737209aa5

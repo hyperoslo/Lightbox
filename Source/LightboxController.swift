@@ -29,14 +29,14 @@ public class LightboxController: UIViewController {
         attributes: config.pageIndicator.textAttributes)
       pageLabel.sizeToFit()
 
+      if page == images.count - 1 {
+        seen = true
+      }
       pageDelegate?.lightboxControllerDidMoveToPage(self, page: page)
     }
   }
 
-  public lazy var dataSource: LightboxDataSource = { [unowned self] in
-    let dataSource = LightboxDataSource(data: self.images)
-    return dataSource
-    }()
+  public private(set) var seen = false
 
   lazy var collectionView: UICollectionView = { [unowned self] in
     let collectionView = UICollectionView(frame: CGRectZero,
@@ -44,7 +44,7 @@ public class LightboxController: UIViewController {
 
     collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
     collectionView.backgroundColor = .blackColor()
-    collectionView.dataSource = self.dataSource
+    collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.decelerationRate = UIScrollViewDecelerationRateFast
 

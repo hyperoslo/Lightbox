@@ -1,32 +1,20 @@
 import UIKit
 
-public class LightboxDataSource: NSObject {
-
-  public var data: [String]
-
-  public required init(data: [String]) {
-    self.data = data
-    super.init()
-  }
-}
-
-// MARK: - UICollectionViewDataSource
-
-extension LightboxDataSource: UICollectionViewDataSource {
+extension LightboxController: UICollectionViewDataSource {
 
   public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
     return 1
   }
 
   public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return data.count
+    return images.count
   }
 
   public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cellIdentifier = LightboxViewCell.reuseIdentifier
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier,
       forIndexPath: indexPath) as! LightboxViewCell
-    let image = data[indexPath.row]
+    let image = images[indexPath.row]
     let config = LightboxConfig.sharedInstance.config
 
     if config.remoteImages {

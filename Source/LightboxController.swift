@@ -18,10 +18,15 @@ public class LightboxController: UIViewController {
   var images = [String]()
 
   var collectionSize = CGSizeZero
+  var pageLabelBottom: NSLayoutConstraint?
 
   lazy var config: Config = {
     return LightboxConfig.sharedInstance.config
   }()
+
+  var pageLabelBottomConstant: CGFloat {
+    return collectionSize.width < collectionSize.height ? -20 : -2
+  }
 
   var rotating = false
 
@@ -165,9 +170,10 @@ public class LightboxController: UIViewController {
       relatedBy: .Equal, toItem: view, attribute: .Trailing,
       multiplier: 1, constant: 0))
 
-    view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
+    pageLabelBottom = NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
       relatedBy: .Equal, toItem: view, attribute: .Bottom,
-      multiplier: 1, constant: -20))
+      multiplier: 1, constant: pageLabelBottomConstant)
+    view.addConstraint(pageLabelBottom!)
     
     view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Top,
       relatedBy: .Equal, toItem: view, attribute: .Top,
@@ -197,19 +203,19 @@ public class LightboxController: UIViewController {
   }
 
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-    println("BLO")
     rotating = true
     collectionSize = size
     collectionView.collectionViewLayout.invalidateLayout()
 
     coordinator.animateAlongsideTransition({ _ in
       self.collectionView.collectionViewLayout.invalidateLayout()
+      self.pageLabelBottom?.constant = self.pageLabelBottomConstant
       }, completion: { _ in
         let indexPath = NSIndexPath(forItem: self.page, inSection: 0)
         self.view.layoutIfNeeded()
         self.collectionView.scrollToItemAtIndexPath(indexPath,
-          atScrollPosition:UICollectionViewScrollPosition.CenteredHorizontally,
-          animated:false)
+          atScrollPosition: .CenteredHorizontally,
+          animated: false)
         self.rotating = false
     });
   }
@@ -221,7 +227,6 @@ public class LightboxController: UIViewController {
       var offset = collectionView.contentOffset
 
       offset.x = CGFloat(page) * collectionSize.width
-
       collectionView.setContentOffset(offset, animated: animated)
     }
   }

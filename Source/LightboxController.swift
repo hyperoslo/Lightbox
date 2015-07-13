@@ -16,10 +16,14 @@ public class LightboxController: UIViewController {
   public var dismissalDelegate: LightboxControllerDismissalDelegate?
   
   var images = [String]()
+
   var collectionSize = CGSizeZero
+
   lazy var config: Config = {
     return LightboxConfig.sharedInstance.config
   }()
+
+  var rotating = false
 
   public private(set) var page = 0 {
     didSet {
@@ -32,6 +36,7 @@ public class LightboxController: UIViewController {
       if page == images.count - 1 {
         seen = true
       }
+
       pageDelegate?.lightboxControllerDidMoveToPage(self, page: page)
     }
   }
@@ -122,10 +127,7 @@ public class LightboxController: UIViewController {
     let width = CGRectGetWidth(view.frame)
     let height = CGRectGetHeight(view.frame)
 
-    collectionSize = CGSize(
-      width: width < height ? width : height,
-      height: height > width ? height : width)
-
+    collectionSize = view.bounds.size
     view.addSubview(collectionView)
     view.addSubview(pageLabel)
     view.addSubview(closeButton)
@@ -187,11 +189,29 @@ public class LightboxController: UIViewController {
   // MARK: - Orientation
 
   public override func shouldAutorotate() -> Bool {
-    return false
+    return true
   }
 
   public override func supportedInterfaceOrientations() -> Int {
-    return Int(UIInterfaceOrientationMask.Portrait.rawValue)
+    return Int(UIInterfaceOrientationMask.All.rawValue)
+  }
+
+  public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    println("BLO")
+    rotating = true
+    collectionSize = size
+    collectionView.collectionViewLayout.invalidateLayout()
+
+    coordinator.animateAlongsideTransition({ _ in
+      self.collectionView.collectionViewLayout.invalidateLayout()
+      }, completion: { _ in
+        let indexPath = NSIndexPath(forItem: self.page, inSection: 0)
+        self.view.layoutIfNeeded()
+        self.collectionView.scrollToItemAtIndexPath(indexPath,
+          atScrollPosition:UICollectionViewScrollPosition.CenteredHorizontally,
+          animated:false)
+        self.rotating = false
+    });
   }
 
   // MARK: - Pagination
@@ -201,7 +221,6 @@ public class LightboxController: UIViewController {
       var offset = collectionView.contentOffset
 
       offset.x = CGFloat(page) * collectionSize.width
-      offset.y = CGFloat(page) * collectionSize.height
 
       collectionView.setContentOffset(offset, animated: animated)
     }
@@ -242,10 +261,12 @@ extension LightboxController: UICollectionViewDelegate { }
 extension LightboxController: UIScrollViewDelegate {
 
   public func scrollViewDidScroll(scrollView: UIScrollView) {
-    let pageWidth = collectionSize.width
-    let currentPage = Int(floor((collectionView.contentOffset.x - pageWidth / 2) / pageWidth) + 1)
-    if currentPage != page {
-      page = currentPage
+    if !rotating {
+      let pageWidth = collectionSize.width
+      let currentPage = Int(floor((collectionView.contentOffset.x - pageWidth / 2) / pageWidth) + 1)
+      if currentPage != page {
+        page = currentPage
+      }
     }
   }
 }

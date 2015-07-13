@@ -16,10 +16,19 @@ public class LightboxController: UIViewController {
   public var dismissalDelegate: LightboxControllerDismissalDelegate?
   
   var images = [String]()
+
   var collectionSize = CGSizeZero
+  var pageLabelBottom: NSLayoutConstraint?
+
   lazy var config: Config = {
     return LightboxConfig.sharedInstance.config
   }()
+
+  var pageLabelBottomConstant: CGFloat {
+    return collectionSize.width < collectionSize.height ? -20 : -2
+  }
+
+  var rotating = false
 
   public private(set) var page = 0 {
     didSet {
@@ -32,6 +41,7 @@ public class LightboxController: UIViewController {
       if page == images.count - 1 {
         seen = true
       }
+
       pageDelegate?.lightboxControllerDidMoveToPage(self, page: page)
     }
   }
@@ -122,10 +132,7 @@ public class LightboxController: UIViewController {
     let width = CGRectGetWidth(view.frame)
     let height = CGRectGetHeight(view.frame)
 
-    collectionSize = CGSize(
-      width: width < height ? width : height,
-      height: height > width ? height : width)
-
+    collectionSize = view.bounds.size
     view.addSubview(collectionView)
     view.addSubview(pageLabel)
     view.addSubview(closeButton)
@@ -163,9 +170,10 @@ public class LightboxController: UIViewController {
       relatedBy: .Equal, toItem: view, attribute: .Trailing,
       multiplier: 1, constant: 0))
 
-    view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
+    pageLabelBottom = NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
       relatedBy: .Equal, toItem: view, attribute: .Bottom,
-      multiplier: 1, constant: -20))
+      multiplier: 1, constant: pageLabelBottomConstant)
+    view.addConstraint(pageLabelBottom!)
     
     view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Top,
       relatedBy: .Equal, toItem: view, attribute: .Top,
@@ -187,11 +195,29 @@ public class LightboxController: UIViewController {
   // MARK: - Orientation
 
   public override func shouldAutorotate() -> Bool {
-    return false
+    return true
   }
 
   public override func supportedInterfaceOrientations() -> Int {
-    return Int(UIInterfaceOrientationMask.Portrait.rawValue)
+    return Int(UIInterfaceOrientationMask.All.rawValue)
+  }
+
+  public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    rotating = true
+    collectionSize = size
+    collectionView.collectionViewLayout.invalidateLayout()
+
+    coordinator.animateAlongsideTransition({ _ in
+      self.collectionView.collectionViewLayout.invalidateLayout()
+      self.pageLabelBottom?.constant = self.pageLabelBottomConstant
+      }, completion: { _ in
+        let indexPath = NSIndexPath(forItem: self.page, inSection: 0)
+        self.view.layoutIfNeeded()
+        self.collectionView.scrollToItemAtIndexPath(indexPath,
+          atScrollPosition: .CenteredHorizontally,
+          animated: false)
+        self.rotating = false
+    });
   }
 
   // MARK: - Pagination
@@ -201,8 +227,6 @@ public class LightboxController: UIViewController {
       var offset = collectionView.contentOffset
 
       offset.x = CGFloat(page) * collectionSize.width
-      offset.y = CGFloat(page) * collectionSize.height
-
       collectionView.setContentOffset(offset, animated: animated)
     }
   }
@@ -242,10 +266,12 @@ extension LightboxController: UICollectionViewDelegate { }
 extension LightboxController: UIScrollViewDelegate {
 
   public func scrollViewDidScroll(scrollView: UIScrollView) {
-    let pageWidth = collectionSize.width
-    let currentPage = Int(floor((collectionView.contentOffset.x - pageWidth / 2) / pageWidth) + 1)
-    if currentPage != page {
-      page = currentPage
+    if !rotating {
+      let pageWidth = collectionSize.width
+      let currentPage = Int(floor((collectionView.contentOffset.x - pageWidth / 2) / pageWidth) + 1)
+      if currentPage != page {
+        page = currentPage
+      }
     }
   }
 }

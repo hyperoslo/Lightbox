@@ -13,6 +13,8 @@ class LightboxTransition: NSObject {
     controller.view.alpha = 0
     controller.collectionView.alpha = 0
     controller.collectionView.transform = CGAffineTransformMakeScale(0.5, 0.5)
+    controller.pageLabel.transform = CGAffineTransformMakeTranslation(0, 100)
+    controller.closeButton.transform = CGAffineTransformMakeTranslation(0, -100)
   }
 
   func showLightbox(controller: LightboxController) {
@@ -20,6 +22,8 @@ class LightboxTransition: NSObject {
     controller.view.alpha = 1
     controller.collectionView.alpha = 1
     controller.collectionView.transform = CGAffineTransformIdentity
+    controller.pageLabel.transform = CGAffineTransformIdentity
+    controller.closeButton.transform = CGAffineTransformIdentity
   }
 }
 

@@ -10,7 +10,7 @@ class LightboxConfig {
 public struct Config {
 
   public var hideStatusBar = true
-  public var backgroundColor = UIColor.blackColor()
+  public var backgroundColor = UIColor.clearColor()
   public var pageIndicator = PageIndicator()
   public var closeButton = CloseButton()
   public var zoom = Zoom()

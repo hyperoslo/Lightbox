@@ -14,11 +14,12 @@ public class LightboxController: UIViewController {
 
   public var pageDelegate: LightboxControllerPageDelegate?
   public var dismissalDelegate: LightboxControllerDismissalDelegate?
-  
-  var images = [String]()
 
+  let transitionManager = LightboxTransition()
+  var images = [String]()
   var collectionSize = CGSizeZero
   var pageLabelBottom: NSLayoutConstraint?
+  var physics = true
 
   lazy var config: Config = {
     return LightboxConfig.sharedInstance.config
@@ -53,7 +54,7 @@ public class LightboxController: UIViewController {
       collectionViewLayout: self.collectionViewLayout)
 
     collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
-    collectionView.backgroundColor = .blackColor()
+    collectionView.backgroundColor = .clearColor()
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.decelerationRate = UIScrollViewDecelerationRateFast
@@ -66,7 +67,6 @@ public class LightboxController: UIViewController {
 
   lazy var collectionViewLayout: UICollectionViewLayout = { [unowned self] in
     let layout = CenterCellCollectionViewFlowLayout()
-    
     layout.scrollDirection = .Horizontal
     layout.minimumInteritemSpacing = self.config.spacing
     layout.minimumLineSpacing = self.config.spacing
@@ -136,7 +136,8 @@ public class LightboxController: UIViewController {
     view.addSubview(collectionView)
     view.addSubview(pageLabel)
     view.addSubview(closeButton)
-    
+
+    transitioningDelegate = transitionManager
     setupConstraints()
 
     page = 0
@@ -144,7 +145,7 @@ public class LightboxController: UIViewController {
   
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(true)
-    
+
     if config.hideStatusBar {
       UIApplication.sharedApplication().setStatusBarHidden(true,
         withAnimation: .Fade)

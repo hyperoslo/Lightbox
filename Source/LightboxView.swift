@@ -9,6 +9,7 @@ public class LightboxView: UIView {
   lazy var imageView: UIImageView = {
     let imageView = UIImageView(frame: CGRectZero)
     imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    imageView.userInteractionEnabled = true
     return imageView
   }()
 

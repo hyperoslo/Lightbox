@@ -16,6 +16,7 @@ extension LightboxController: UICollectionViewDataSource {
       forIndexPath: indexPath) as! LightboxViewCell
     let image = images[indexPath.row]
     let config = LightboxConfig.sharedInstance.config
+    cell.parentViewController = self
 
     if config.remoteImages {
       if let imageURL = NSURL(string: image) {

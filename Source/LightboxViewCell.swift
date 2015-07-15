@@ -1,6 +1,6 @@
 import UIKit
 
-public class LightboxViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
+public class LightboxViewCell: UICollectionViewCell {
 
   public static let reuseIdentifier: String = "LightboxViewCell"
 
@@ -17,7 +17,6 @@ public class LightboxViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
 
   lazy var panGestureRecognizer: UIPanGestureRecognizer = {
     let panGestureRecognizer = UIPanGestureRecognizer()
-    panGestureRecognizer.delegate = self
     panGestureRecognizer.addTarget(self, action: "handlePanGesture:")
     
     return panGestureRecognizer
@@ -36,6 +35,33 @@ public class LightboxViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
   var gravityBehaviour: UIGravityBehavior!
   var snapBehavior: UISnapBehavior!
   var parentViewController: LightboxController!
+
+  private func setupConstraints() {
+    if !constraintsAdded {
+      addConstraint(NSLayoutConstraint(item: lightboxView, attribute: .Leading,
+        relatedBy: .Equal, toItem: contentView, attribute: .Leading,
+        multiplier: 1, constant: 0))
+
+      addConstraint(NSLayoutConstraint(item: lightboxView, attribute: .Trailing,
+        relatedBy: .Equal, toItem: contentView, attribute: .Trailing,
+        multiplier: 1, constant: 0))
+
+      addConstraint(NSLayoutConstraint(item: lightboxView, attribute: .Top,
+        relatedBy: .Equal, toItem: contentView, attribute: .Top,
+        multiplier: 1, constant: 0))
+
+      addConstraint(NSLayoutConstraint(item: lightboxView, attribute: .Bottom,
+        relatedBy: .Equal, toItem: contentView, attribute: .Bottom,
+        multiplier: 1, constant: 0))
+
+      constraintsAdded = true
+    }
+  }
+}
+
+// MARK: Pangesture handler
+
+extension LightboxViewCell {
 
   func handlePanGesture(panGestureRecognizer: UIPanGestureRecognizer) {
     let imageView = lightboxView.imageView
@@ -65,70 +91,40 @@ public class LightboxViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
         animator.removeBehavior(attachmentBehavior)
         snapBehavior = UISnapBehavior(item: imageView, snapToPoint: lightboxView.center)
         animator.addBehavior(snapBehavior)
-
-        if translation.y > 150 || translation.y < -150 {
-          animator.removeAllBehaviors()
-          var gravity = UIGravityBehavior(items: [lightboxView])
-          gravity.gravityDirection = CGVectorMake(0, translation.y/30)
-          animator.addBehavior(gravity)
-
-          parentViewController.dismissViewControllerAnimated(true, completion: { [unowned self] in
-            self.animator.removeAllBehaviors()
-            self.lightboxView.center = self.superview!.center
-            self.snapBehavior = UISnapBehavior(item: imageView, snapToPoint: self.lightboxView.center)
-            self.animator.addBehavior(self.snapBehavior)
-            })
-        } else {
-          UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.parentViewController.view.alpha = 1
-            self.parentViewController.pageLabel.transform = CGAffineTransformIdentity
-            self.parentViewController.closeButton.transform = CGAffineTransformIdentity
-          })
-        }
+        panGestureEnded(translation, imageView: imageView)
       }
     } else {
       if panGestureRecognizer.state == .Began || panGestureRecognizer.state == .Changed {
         imageView.center = CGPointMake(imageView.center.x, UIScreen.mainScreen().bounds.height/2 + translation.y)
       } else {
-        if translation.y > 150 || translation.y < -150 {
-          UIView.animateWithDuration(0.3, animations: {
-            imageView.center = CGPointMake(imageView.center.x, 10 * translation.y)
-          })
-
-          parentViewController.dismissViewControllerAnimated(true, completion: { [unowned self] in
-            imageView.center = self.lightboxView.center
-            })
-        } else {
-          UIView.animateWithDuration(0.3, animations: {
-            self.parentViewController.view.alpha = 1
-            self.parentViewController.pageLabel.transform = CGAffineTransformIdentity
-            self.parentViewController.closeButton.transform = CGAffineTransformIdentity
-            imageView.center = CGPointMake(imageView.center.x, UIScreen.mainScreen().bounds.height/2)
-          })
-        }
+        panGestureEnded(translation, imageView: imageView)
       }
     }
   }
 
-  private func setupConstraints() {
-    if !constraintsAdded {
-      addConstraint(NSLayoutConstraint(item: lightboxView, attribute: .Leading,
-        relatedBy: .Equal, toItem: contentView, attribute: .Leading,
-        multiplier: 1, constant: 0))
-
-      addConstraint(NSLayoutConstraint(item: lightboxView, attribute: .Trailing,
-        relatedBy: .Equal, toItem: contentView, attribute: .Trailing,
-        multiplier: 1, constant: 0))
-
-      addConstraint(NSLayoutConstraint(item: lightboxView, attribute: .Top,
-        relatedBy: .Equal, toItem: contentView, attribute: .Top,
-        multiplier: 1, constant: 0))
-
-      addConstraint(NSLayoutConstraint(item: lightboxView, attribute: .Bottom,
-        relatedBy: .Equal, toItem: contentView, attribute: .Bottom,
-        multiplier: 1, constant: 0))
-
-      constraintsAdded = true
+  private func panGestureEnded(translation: CGPoint, imageView: UIView) {
+    if translation.y > 150 || translation.y < -150 {
+      UIView.animateWithDuration(0.3, animations: {
+        imageView.center = CGPointMake(imageView.center.x, 10 * translation.y)
+        imageView.alpha = 0
+      })
+      parentViewController.dismissViewControllerAnimated(true, completion: { [unowned self] in
+        if self.parentViewController.physics {
+          self.animator.removeAllBehaviors()
+          self.snapBehavior = UISnapBehavior(item: imageView, snapToPoint: self.lightboxView.center)
+          self.animator.addBehavior(self.snapBehavior)
+        } else {
+          imageView.center = self.lightboxView.center
+        }
+        imageView.alpha = 1
+        })
+    } else {
+      UIView.animateWithDuration(0.3, animations: { [unowned self] in
+        self.parentViewController.view.alpha = 1
+        self.parentViewController.pageLabel.transform = CGAffineTransformIdentity
+        self.parentViewController.closeButton.transform = CGAffineTransformIdentity
+        imageView.center = CGPointMake(imageView.center.x, UIScreen.mainScreen().bounds.height/2)
+      })
     }
   }
 }

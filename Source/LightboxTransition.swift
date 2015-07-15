@@ -3,7 +3,7 @@ import UIKit
 class LightboxTransition: NSObject {
 
   struct Timing {
-    static let Transition: NSTimeInterval = 0.5
+    static let transition: NSTimeInterval = 0.5
   }
 
   var presentingViewController = false
@@ -23,7 +23,7 @@ class LightboxTransition: NSObject {
 extension LightboxTransition : UIViewControllerAnimatedTransitioning {
 
   func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
-    return Timing.Transition
+    return Timing.transition
   }
 
   func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
@@ -49,7 +49,7 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
       transition(lightboxViewController, show: false)
     }
 
-    UIView.animateWithDuration(Timing.Transition, animations: { [unowned self] in
+    UIView.animateWithDuration(Timing.transition, animations: { [unowned self] in
       self.transition(lightboxViewController, show: self.presentingViewController)
       }, completion: { _ in
         transitionContext.completeTransition(true)

@@ -3,7 +3,7 @@ import Lightbox
 
 class MainViewController: UIViewController {
 
-  lazy var galleryButton: UIButton = {
+  lazy var galleryButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.setTitle("Show the gallery", forState: .Normal)
     button.setTitleColor(UIColor(red:0.98, green:0.18, blue:0.36, alpha:1), forState: .Normal)

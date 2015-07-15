@@ -58,11 +58,11 @@ public class LightboxViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
       snapBehavior = UISnapBehavior(item: myView, snapToPoint: lightboxView.center)
       animator.addBehavior(snapBehavior)
       let translation = panGestureRecognizer.translationInView(lightboxView)
-      if translation.y > 100 {
+      if translation.y > 225 || translation.y < -225 {
         animator.removeAllBehaviors()
 
         var gravity = UIGravityBehavior(items: [lightboxView])
-        gravity.gravityDirection = CGVectorMake(0, 10)
+        gravity.gravityDirection = CGVectorMake(0, translation.y/30)
         animator.addBehavior(gravity)
 
         parentViewController.dismissViewControllerAnimated(true, completion: { [unowned self] in

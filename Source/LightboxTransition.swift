@@ -9,11 +9,13 @@ class LightboxTransition: NSObject {
   private var presentingViewController = false
 
   private func dismissLightbox(controller: UIViewController) {
-
+    controller.view.transform = CGAffineTransformMakeScale(0, 0)
+    controller.view.alpha = 0
   }
 
   private func showLightbox(controller: UIViewController) {
-
+    controller.view.transform = CGAffineTransformIdentity
+    controller.view.alpha = 1
   }
 }
 
@@ -45,11 +47,14 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
     containerView.addSubview(lightboxViewController.view)
 
     if presentingViewController {
-      transition(campaignReadyViewController, show: false)
+      dismissLightbox(lightboxViewController)
     }
 
     UIView.animateWithDuration(0.7, animations: { [unowned self] in
-      self.transition(campaignReadyViewController, show: self.presentingViewController)
+      self.presentingViewController
+        ? self.showLightbox(lightboxViewController)
+        : self.dismissLightbox(lightboxViewController)
+
       }, completion: { _ in
         transitionContext.completeTransition(true)
         UIApplication.sharedApplication().keyWindow!.addSubview(screens.to.view)

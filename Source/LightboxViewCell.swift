@@ -38,29 +38,32 @@ public class LightboxViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
   var parentViewController: LightboxController!
 
   func handlePanGesture(panGestureRecognizer: UIPanGestureRecognizer) {
-    let myView = lightboxView.imageView
+    let imageView = lightboxView.imageView
     let location = panGestureRecognizer.locationInView(lightboxView)
-    let boxLocation = panGestureRecognizer.locationInView(myView)
+    let boxLocation = panGestureRecognizer.locationInView(imageView)
     let translation = panGestureRecognizer.translationInView(lightboxView)
     let maximumValue = UIScreen.mainScreen().bounds.height
-    let alphaValue = 1 - (abs(translation.y)/maximumValue)
+    let calculation = abs(translation.y) / maximumValue
+    let alphaValue = 1 - calculation
 
     parentViewController.view.alpha = alphaValue
-    parentViewController.pageLabel.transform = CGAffineTransformMakeTranslation(0, (abs(translation.y)/maximumValue) * 100)
-    parentViewController.closeButton.transform = CGAffineTransformMakeTranslation(0, -((abs(translation.y)/maximumValue) * 100))
+    parentViewController.pageLabel.transform =
+      CGAffineTransformMakeTranslation(0, calculation * 100)
+    parentViewController.closeButton.transform =
+      CGAffineTransformMakeTranslation(0, -(calculation * 100))
 
-    if !parentViewController.physics {
+    if parentViewController.physics {
       if panGestureRecognizer.state == UIGestureRecognizerState.Began {
         animator.removeBehavior(snapBehavior)
-        let centerOffset = UIOffsetMake(boxLocation.x - CGRectGetMidX(myView.bounds), boxLocation.y - CGRectGetMidY(myView.bounds));
-        attachmentBehavior = UIAttachmentBehavior(item: myView, offsetFromCenter: centerOffset, attachedToAnchor: location)
+        let centerOffset = UIOffsetMake(boxLocation.x - CGRectGetMidX(imageView.bounds), boxLocation.y - CGRectGetMidY(imageView.bounds));
+        attachmentBehavior = UIAttachmentBehavior(item: imageView, offsetFromCenter: centerOffset, attachedToAnchor: location)
         attachmentBehavior.frequency = 0
         animator.addBehavior(attachmentBehavior)
       } else if panGestureRecognizer.state == UIGestureRecognizerState.Changed {
         attachmentBehavior.anchorPoint = location
       } else if panGestureRecognizer.state == UIGestureRecognizerState.Ended {
         animator.removeBehavior(attachmentBehavior)
-        snapBehavior = UISnapBehavior(item: myView, snapToPoint: lightboxView.center)
+        snapBehavior = UISnapBehavior(item: imageView, snapToPoint: lightboxView.center)
         animator.addBehavior(snapBehavior)
 
         if translation.y > 150 || translation.y < -150 {
@@ -72,7 +75,7 @@ public class LightboxViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
           parentViewController.dismissViewControllerAnimated(true, completion: { [unowned self] in
             self.animator.removeAllBehaviors()
             self.lightboxView.center = self.superview!.center
-            self.snapBehavior = UISnapBehavior(item: myView, snapToPoint: self.lightboxView.center)
+            self.snapBehavior = UISnapBehavior(item: imageView, snapToPoint: self.lightboxView.center)
             self.animator.addBehavior(self.snapBehavior)
             })
         } else {
@@ -85,22 +88,22 @@ public class LightboxViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
       }
     } else {
       if panGestureRecognizer.state == .Began || panGestureRecognizer.state == .Changed {
-        myView.center = CGPointMake(myView.center.x, UIScreen.mainScreen().bounds.height/2 + translation.y)
+        imageView.center = CGPointMake(imageView.center.x, UIScreen.mainScreen().bounds.height/2 + translation.y)
       } else {
         if translation.y > 150 || translation.y < -150 {
           UIView.animateWithDuration(0.3, animations: {
-            myView.center = CGPointMake(myView.center.x, 10 * translation.y)
+            imageView.center = CGPointMake(imageView.center.x, 10 * translation.y)
           })
 
           parentViewController.dismissViewControllerAnimated(true, completion: { [unowned self] in
-            myView.center = self.lightboxView.center
+            imageView.center = self.lightboxView.center
             })
         } else {
           UIView.animateWithDuration(0.3, animations: {
             self.parentViewController.view.alpha = 1
             self.parentViewController.pageLabel.transform = CGAffineTransformIdentity
             self.parentViewController.closeButton.transform = CGAffineTransformIdentity
-            myView.center = CGPointMake(myView.center.x, UIScreen.mainScreen().bounds.height/2)
+            imageView.center = CGPointMake(imageView.center.x, UIScreen.mainScreen().bounds.height/2)
           })
         }
       }

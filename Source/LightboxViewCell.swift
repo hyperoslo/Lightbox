@@ -35,12 +35,19 @@ public class LightboxViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
   var attachmentBehavior: UIAttachmentBehavior!
   var gravityBehaviour: UIGravityBehavior!
   var snapBehavior: UISnapBehavior!
-  var parentViewController: UIViewController!
+  var parentViewController: LightboxController!
 
   func handlePanGesture(panGestureRecognizer: UIPanGestureRecognizer) {
     let myView = lightboxView.imageView
     let location = panGestureRecognizer.locationInView(lightboxView)
     let boxLocation = panGestureRecognizer.locationInView(myView)
+    let translation = panGestureRecognizer.translationInView(lightboxView)
+    let maximumValue = UIScreen.mainScreen().bounds.height
+    let alphaValue = 1 - (abs(translation.y)/maximumValue)
+
+    parentViewController.view.alpha = alphaValue
+    parentViewController.pageLabel.transform = CGAffineTransformMakeTranslation(0, (abs(translation.y)/maximumValue) * 100)
+    parentViewController.closeButton.transform = CGAffineTransformMakeTranslation(0, -((abs(translation.y)/maximumValue) * 100))
 
     if panGestureRecognizer.state == UIGestureRecognizerState.Began {
       animator.removeBehavior(snapBehavior)
@@ -54,13 +61,11 @@ public class LightboxViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
       attachmentBehavior.anchorPoint = location
     } else if panGestureRecognizer.state == UIGestureRecognizerState.Ended {
       animator.removeBehavior(attachmentBehavior)
-
       snapBehavior = UISnapBehavior(item: myView, snapToPoint: lightboxView.center)
       animator.addBehavior(snapBehavior)
-      let translation = panGestureRecognizer.translationInView(lightboxView)
-      if translation.y > 225 || translation.y < -225 {
-        animator.removeAllBehaviors()
 
+      if translation.y > 150 || translation.y < -150 {
+        animator.removeAllBehaviors()
         var gravity = UIGravityBehavior(items: [lightboxView])
         gravity.gravityDirection = CGVectorMake(0, translation.y/30)
         animator.addBehavior(gravity)
@@ -71,6 +76,12 @@ public class LightboxViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
           
           self.snapBehavior = UISnapBehavior(item: myView, snapToPoint: self.lightboxView.center)
           self.animator.addBehavior(self.snapBehavior)
+        })
+      } else {
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+          self.parentViewController.view.alpha = 1
+          self.parentViewController.pageLabel.transform = CGAffineTransformIdentity
+          self.parentViewController.closeButton.transform = CGAffineTransformIdentity
         })
       }
     }

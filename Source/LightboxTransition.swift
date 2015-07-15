@@ -3,7 +3,7 @@ import UIKit
 class LightboxTransition: NSObject {
 
   struct Timing {
-    static let Transition: NSTimeInterval = 0.4
+    static let Transition: NSTimeInterval = 0.5
   }
 
   var presentingViewController = false

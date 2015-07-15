@@ -30,6 +30,6 @@ class MainViewController: UIViewController {
   // MARK: Action handlers
 
   func galleryButtonDidPress(button: UIButton) {
-    
+    presentViewController(lightboxController, animated: true, completion: nil)
   }
 }

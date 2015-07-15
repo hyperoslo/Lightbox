@@ -31,10 +31,11 @@ public class LightboxViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
     lightboxView.updateViewLayout()
   }
 
-  var animator : UIDynamicAnimator!
-  var attachmentBehavior : UIAttachmentBehavior!
-  var gravityBehaviour : UIGravityBehavior!
-  var snapBehavior : UISnapBehavior!
+  var animator: UIDynamicAnimator!
+  var attachmentBehavior: UIAttachmentBehavior!
+  var gravityBehaviour: UIGravityBehavior!
+  var snapBehavior: UISnapBehavior!
+  var parentViewController: UIViewController!
 
   func handlePanGesture(panGestureRecognizer: UIPanGestureRecognizer) {
     let myView = lightboxView.imageView
@@ -63,6 +64,8 @@ public class LightboxViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
         var gravity = UIGravityBehavior(items: [lightboxView])
         gravity.gravityDirection = CGVectorMake(0, 10)
         animator.addBehavior(gravity)
+
+        parentViewController.dismissViewControllerAnimated(true, completion: nil)
       }
     }
   }

@@ -144,7 +144,7 @@ public class LightboxController: UIViewController {
   
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(true)
-    
+
     if config.hideStatusBar {
       UIApplication.sharedApplication().setStatusBarHidden(true,
         withAnimation: .Fade)

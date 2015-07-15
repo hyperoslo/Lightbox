@@ -7,7 +7,7 @@ class MainViewController: UIViewController {
     let button = UIButton()
     button.setTitle("Show the gallery", forState: .Normal)
     button.setTitleColor(UIColor(red:0.98, green:0.18, blue:0.36, alpha:1), forState: .Normal)
-    button.titleLabel!.font = UIFont(name: "AvenirNextCondensed-DemiBold ", size: 24)
+    button.titleLabel!.font = UIFont(name: "AvenirNextCondensed-DemiBold", size: 24)
     button.addTarget(self, action: "galleryButtonDidPress:", forControlEvents: .TouchUpInside)
     button.frame = CGRectMake(0, 0,
       UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height)

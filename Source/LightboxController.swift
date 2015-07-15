@@ -14,9 +14,9 @@ public class LightboxController: UIViewController {
 
   public var pageDelegate: LightboxControllerPageDelegate?
   public var dismissalDelegate: LightboxControllerDismissalDelegate?
-  
-  var images = [String]()
 
+  let transitionManager = LightboxTransition()
+  var images = [String]()
   var collectionSize = CGSizeZero
   var pageLabelBottom: NSLayoutConstraint?
 
@@ -53,7 +53,7 @@ public class LightboxController: UIViewController {
       collectionViewLayout: self.collectionViewLayout)
 
     collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
-    collectionView.backgroundColor = .blackColor()
+    collectionView.backgroundColor = .clearColor()
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.decelerationRate = UIScrollViewDecelerationRateFast
@@ -136,7 +136,8 @@ public class LightboxController: UIViewController {
     view.addSubview(collectionView)
     view.addSubview(pageLabel)
     view.addSubview(closeButton)
-    
+
+    transitioningDelegate = transitionManager
     setupConstraints()
 
     page = 0

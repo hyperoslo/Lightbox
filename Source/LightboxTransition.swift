@@ -3,19 +3,23 @@ import UIKit
 class LightboxTransition: NSObject {
 
   struct Timing {
-    static let Transition: NSTimeInterval = 1
+    static let Transition: NSTimeInterval = 0.4
   }
 
   var presentingViewController = false
 
-  func dismissLightbox(controller: UIViewController) {
-    controller.view.transform = CGAffineTransformMakeScale(0, 0)
+  func dismissLightbox(controller: LightboxController) {
+    controller.view.backgroundColor = UIColor.clearColor()
     controller.view.alpha = 0
+    controller.collectionView.alpha = 0
+    controller.collectionView.transform = CGAffineTransformMakeScale(0.5, 0.5)
   }
 
-  func showLightbox(controller: UIViewController) {
-    controller.view.transform = CGAffineTransformIdentity
+  func showLightbox(controller: LightboxController) {
+    controller.view.backgroundColor = UIColor.blackColor()
     controller.view.alpha = 1
+    controller.collectionView.alpha = 1
+    controller.collectionView.transform = CGAffineTransformIdentity
   }
 }
 
@@ -36,8 +40,8 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
       transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!)
 
     let lightboxViewController = !presentingViewController
-      ? screens.from as UIViewController
-      : screens.to as UIViewController
+      ? screens.from as! LightboxController
+      : screens.to as! LightboxController
 
     let viewController = !presentingViewController
       ? screens.to as UIViewController
@@ -50,7 +54,7 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
       dismissLightbox(lightboxViewController)
     }
 
-    UIView.animateWithDuration(0.7, animations: { [unowned self] in
+    UIView.animateWithDuration(Timing.Transition, animations: { [unowned self] in
       self.presentingViewController
         ? self.showLightbox(lightboxViewController)
         : self.dismissLightbox(lightboxViewController)

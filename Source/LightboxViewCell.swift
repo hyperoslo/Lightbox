@@ -18,7 +18,7 @@ public class LightboxViewCell: UICollectionViewCell {
   lazy var panGestureRecognizer: UIPanGestureRecognizer = {
     let panGestureRecognizer = UIPanGestureRecognizer()
     panGestureRecognizer.addTarget(self, action: "handlePanGesture:")
-    
+
     return panGestureRecognizer
     }()
 
@@ -123,8 +123,10 @@ extension LightboxViewCell {
         self.parentViewController.view.alpha = 1
         self.parentViewController.pageLabel.transform = CGAffineTransformIdentity
         self.parentViewController.closeButton.transform = CGAffineTransformIdentity
-        imageView.center = CGPointMake(imageView.center.x, UIScreen.mainScreen().bounds.height/2)
-      })
+        if !self.parentViewController.physics {
+          imageView.center = CGPointMake(imageView.center.x, UIScreen.mainScreen().bounds.height/2)
+        }
+        })
     }
   }
 }

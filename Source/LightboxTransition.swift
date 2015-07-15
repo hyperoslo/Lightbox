@@ -8,22 +8,13 @@ class LightboxTransition: NSObject {
 
   var presentingViewController = false
 
-  func dismissLightbox(controller: LightboxController) {
-    controller.view.backgroundColor = UIColor.clearColor()
-    controller.view.alpha = 0
-    controller.collectionView.alpha = 0
-    controller.collectionView.transform = CGAffineTransformMakeScale(0.5, 0.5)
-    controller.pageLabel.transform = CGAffineTransformMakeTranslation(0, 100)
-    controller.closeButton.transform = CGAffineTransformMakeTranslation(0, -100)
-  }
-
-  func showLightbox(controller: LightboxController) {
-    controller.view.backgroundColor = UIColor.blackColor()
-    controller.view.alpha = 1
-    controller.collectionView.alpha = 1
-    controller.collectionView.transform = CGAffineTransformIdentity
-    controller.pageLabel.transform = CGAffineTransformIdentity
-    controller.closeButton.transform = CGAffineTransformIdentity
+  func transition(controller: LightboxController, show: Bool) {
+    controller.view.backgroundColor = show ? UIColor.blackColor() : UIColor.clearColor()
+    controller.view.alpha = show ? 1 : 0
+    controller.collectionView.alpha = show ? 1 : 0
+    controller.collectionView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.5, 0.5)
+    controller.pageLabel.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 100)
+    controller.closeButton.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -100)
   }
 }
 
@@ -55,14 +46,11 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
     containerView.addSubview(lightboxViewController.view)
 
     if presentingViewController {
-      dismissLightbox(lightboxViewController)
+      transition(lightboxViewController, show: false)
     }
 
     UIView.animateWithDuration(Timing.Transition, animations: { [unowned self] in
-      self.presentingViewController
-        ? self.showLightbox(lightboxViewController)
-        : self.dismissLightbox(lightboxViewController)
-
+      self.transition(lightboxViewController, show: self.presentingViewController)
       }, completion: { _ in
         transitionContext.completeTransition(true)
         UIApplication.sharedApplication().keyWindow!.addSubview(screens.to.view)

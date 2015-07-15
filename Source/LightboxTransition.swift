@@ -2,18 +2,18 @@ import UIKit
 
 class LightboxTransition: NSObject {
 
-  private struct Timing {
+  struct Timing {
     static let Transition: NSTimeInterval = 1
   }
 
-  private var presentingViewController = false
+  var presentingViewController = false
 
-  private func dismissLightbox(controller: UIViewController) {
+  func dismissLightbox(controller: UIViewController) {
     controller.view.transform = CGAffineTransformMakeScale(0, 0)
     controller.view.alpha = 0
   }
 
-  private func showLightbox(controller: UIViewController) {
+  func showLightbox(controller: UIViewController) {
     controller.view.transform = CGAffineTransformIdentity
     controller.view.alpha = 1
   }
@@ -23,11 +23,11 @@ class LightboxTransition: NSObject {
 
 extension LightboxTransition : UIViewControllerAnimatedTransitioning {
 
-  private func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
+  func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
     return Timing.Transition
   }
 
-  private func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+  func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
     let containerView = transitionContext.containerView()
     let duration = transitionDuration(transitionContext)
 
@@ -64,16 +64,16 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
 
 // MARK: Transition delegate
 
-extension TransitionManager : UIViewControllerTransitioningDelegate {
+extension LightboxTransition : UIViewControllerTransitioningDelegate {
 
-  private func animationControllerForPresentedController(presented: UIViewController,
+  func animationControllerForPresentedController(presented: UIViewController,
     presentingController presenting: UIViewController,
     sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
       presentingViewController = true
       return self
   }
 
-  private func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+  func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     presentingViewController = false
     return self
   }

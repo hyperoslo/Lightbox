@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C9AD201C04B66C0716FF73F /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8728C35FD683AF84D7CC1A5D /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		298CC3D01B5685B300BA502F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298CC3CF1B5685B300BA502F /* MainViewController.swift */; };
 		D5C0BDFB1B42CCBC009E6446 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C0BDFA1B42CCBC009E6446 /* AppDelegate.swift */; };
 		D5C0BE021B42CCBC009E6446 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5C0BE011B42CCBC009E6446 /* Images.xcassets */; };
 		D5C0BE051B42CCBC009E6446 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5C0BE031B42CCBC009E6446 /* LaunchScreen.xib */; };
@@ -16,6 +17,7 @@
 
 /* Begin PBXFileReference section */
 		23BFEEC636035C79B9D935A8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		298CC3CF1B5685B300BA502F /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		76BF2975E45497D931B2B9C8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8728C35FD683AF84D7CC1A5D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C0BDF51B42CCBC009E6446 /* LightboxDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LightboxDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				D5C0BDFA1B42CCBC009E6446 /* AppDelegate.swift */,
+				298CC3CF1B5685B300BA502F /* MainViewController.swift */,
 				D5C0BE011B42CCBC009E6446 /* Images.xcassets */,
 				D5C0BE031B42CCBC009E6446 /* LaunchScreen.xib */,
 				D5C0BDF81B42CCBC009E6446 /* Supporting Files */,
@@ -215,6 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5C0BDFB1B42CCBC009E6446 /* AppDelegate.swift in Sources */,
+				298CC3D01B5685B300BA502F /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

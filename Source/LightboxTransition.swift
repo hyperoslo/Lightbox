@@ -9,7 +9,7 @@ class LightboxTransition: NSObject {
   var presentingViewController = false
 
   func transition(controller: LightboxController, show: Bool) {
-    controller.view.backgroundColor = show ? UIColor.blackColor() : UIColor.clearColor()
+    controller.view.backgroundColor = show ? .blackColor() : .clearColor()
     controller.view.alpha = show ? 1 : 0
     controller.collectionView.alpha = show ? 1 : 0
     controller.collectionView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.5, 0.5)

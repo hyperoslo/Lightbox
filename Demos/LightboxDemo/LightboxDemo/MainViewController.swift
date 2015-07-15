@@ -1,4 +1,5 @@
 import UIKit
+import Lightbox
 
 class MainViewController: UIViewController {
 
@@ -11,6 +12,14 @@ class MainViewController: UIViewController {
 
     return button
     }()
+
+  lazy var lightboxController: LightboxController = { [unowned self] in
+    let controller = LightboxController(images: self.images)
+
+    return controller
+    }()
+
+  let images = ["photo1", "photo2", "photo3"]
 
   override func viewDidLoad() {
     super.viewDidLoad()

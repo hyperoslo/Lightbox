@@ -1,6 +1,6 @@
 import UIKit
 
-class LightboxTransition: NSObject {
+private class LightboxTransition: NSObject {
 
   struct Timing {
     static let Transition: NSTimeInterval = 0.4
@@ -25,7 +25,7 @@ class LightboxTransition: NSObject {
 
 // MARK: Transitioning delegate
 
-extension LightboxTransition : UIViewControllerAnimatedTransitioning {
+private extension LightboxTransition : UIViewControllerAnimatedTransitioning {
 
   func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
     return Timing.Transition
@@ -68,7 +68,7 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
 
 // MARK: Transition delegate
 
-extension LightboxTransition : UIViewControllerTransitioningDelegate {
+private extension LightboxTransition : UIViewControllerTransitioningDelegate {
 
   func animationControllerForPresentedController(presented: UIViewController,
     presentingController presenting: UIViewController,

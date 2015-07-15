@@ -61,11 +61,16 @@ public class LightboxViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
       if translation.y > 100 {
         animator.removeAllBehaviors()
 
-        var gravity = UIGravityBehavior(items: [lightboxView])
+        var gravity = UIGravityBehavior(items: [lightboxView.imageView])
         gravity.gravityDirection = CGVectorMake(0, 10)
         animator.addBehavior(gravity)
 
-        parentViewController.dismissViewControllerAnimated(true, completion: nil)
+        parentViewController.dismissViewControllerAnimated(true, completion: { [unowned self] in
+          self.animator.removeBehavior(self.attachmentBehavior)
+
+          self.snapBehavior = UISnapBehavior(item: myView, snapToPoint: self.lightboxView.center)
+          self.animator.addBehavior(self.snapBehavior)
+        })
       }
     }
   }

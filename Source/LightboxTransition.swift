@@ -42,8 +42,7 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
       ? screens.to as UIViewController
       : screens.from as UIViewController
 
-    containerView.addSubview(viewController.view)
-    containerView.addSubview(lightboxViewController.view)
+    [viewController, lightboxViewController].map { containerView.addSubview($0.view) }
 
     if presentingViewController {
       transition(lightboxViewController, show: false)

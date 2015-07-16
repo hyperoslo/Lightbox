@@ -117,28 +117,19 @@ public class LightboxView: UIView {
 
   public func updateImageConstraints() {
     if let image = imageView.image {
-      let viewWidth = bounds.size.width
-      let viewHeight = bounds.size.height
-
-      let imageWidth = image.size.width
-      let imageHeight = image.size.height
-
       // Center image
-      var hPadding = (viewWidth - scrollView.zoomScale * imageWidth) / 2
+      var hPadding = (bounds.size.width - scrollView.zoomScale * image.size.width) / 2
       if hPadding < 0 {
         hPadding = 0
       }
 
-      var vPadding = (viewHeight - scrollView.zoomScale * imageHeight) / 2
+      var vPadding = (bounds.size.height - scrollView.zoomScale * image.size.height) / 2
       if vPadding < 0 {
         vPadding = 0
       }
 
-      imageConstraintLeading.constant = hPadding
-      imageConstraintTrailing.constant = hPadding
-
-      imageConstraintTop.constant = vPadding
-      imageConstraintBottom.constant = vPadding
+      [imageConstraintLeading, imageConstraintTrailing].map{ $0.constant = hPadding }
+      [imageConstraintTop, imageConstraintBottom].map{ $0.constant = vPadding }
 
       layoutIfNeeded()
     }
@@ -149,7 +140,7 @@ public class LightboxView: UIView {
   public func updateZoom() {
     if let image = imageView.image {
       var minimumZoom = min(
-        bounds.size.width / image.size.width,
+        bounds.size.width  / image.size.width,
         bounds.size.height / image.size.height)
 
       if minimumZoom > 1 {

@@ -18,9 +18,7 @@ extension LightboxController: UICollectionViewDataSource {
     if let imageURL = NSURL(string: image) where config.remoteImages {
       config.loadImage(
         imageView: cell.lightboxView.imageView, URL: imageURL) { error in
-          if error == nil {
-            cell.lightboxView.updateViewLayout()
-          }
+          if error == nil { cell.lightboxView.updateViewLayout() }
       }
     } else {
       cell.lightboxView.imageView.image = UIImage(named: image)

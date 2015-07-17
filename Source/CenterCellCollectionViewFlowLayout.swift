@@ -5,13 +5,11 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
   override func targetContentOffsetForProposedContentOffset(proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
     
     if let collectionView = self.collectionView {
-      
       let collectionViewBounds = collectionView.bounds
       let halfWidth = collectionViewBounds.size.width / 2
-      let proposedContentOffsetCenterX = proposedContentOffset.x + halfWidth;
+      let proposedContentOffsetCenterX = proposedContentOffset.x + halfWidth
       
       if let attributesForVisibleCells = self.layoutAttributesForElementsInRect(collectionViewBounds) as? [UICollectionViewLayoutAttributes] {
-        
         var candidateAttributes : UICollectionViewLayoutAttributes?
         
         for attributes in attributesForVisibleCells.filter({
@@ -30,11 +28,13 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
             }
             
           } else { // First time in the loop
-            candidateAttributes = attributes;
-            continue;
+            candidateAttributes = attributes
+            continue
           }
         }
-        return CGPoint(x : candidateAttributes!.center.x - halfWidth, y : proposedContentOffset.y);
+        return CGPoint(
+          x: candidateAttributes!.center.x - halfWidth,
+          y: proposedContentOffset.y)
       }
     }
 

@@ -38,21 +38,13 @@ public class LightboxViewCell: UICollectionViewCell {
 
   private func setupConstraints() {
     if !constraintsAdded {
-      addConstraint(NSLayoutConstraint(item: lightboxView, attribute: .Leading,
-        relatedBy: .Equal, toItem: contentView, attribute: .Leading,
-        multiplier: 1, constant: 0))
 
-      addConstraint(NSLayoutConstraint(item: lightboxView, attribute: .Trailing,
-        relatedBy: .Equal, toItem: contentView, attribute: .Trailing,
-        multiplier: 1, constant: 0))
-
-      addConstraint(NSLayoutConstraint(item: lightboxView, attribute: .Top,
-        relatedBy: .Equal, toItem: contentView, attribute: .Top,
-        multiplier: 1, constant: 0))
-
-      addConstraint(NSLayoutConstraint(item: lightboxView, attribute: .Bottom,
-        relatedBy: .Equal, toItem: contentView, attribute: .Bottom,
-        multiplier: 1, constant: 0))
+      let layoutAttributes: [NSLayoutAttribute] = [.Leading, .Trailing, .Top, .Bottom]
+      for layoutAttribute in layoutAttributes {
+        addConstraint(NSLayoutConstraint(item: lightboxView, attribute: layoutAttribute,
+          relatedBy: .Equal, toItem: contentView, attribute: layoutAttribute,
+          multiplier: 1, constant: 0))
+      }
 
       constraintsAdded = true
     }
@@ -81,17 +73,21 @@ extension LightboxViewCell {
     if parentViewController.physics {
       if panGestureRecognizer.state == UIGestureRecognizerState.Began {
         animator.removeBehavior(snapBehavior)
-        let centerOffset = UIOffsetMake(boxLocation.x - CGRectGetMidX(imageView.bounds), boxLocation.y - CGRectGetMidY(imageView.bounds));
-        attachmentBehavior = UIAttachmentBehavior(item: imageView, offsetFromCenter: centerOffset, attachedToAnchor: location)
+        let centerOffset = UIOffsetMake(boxLocation.x - CGRectGetMidX(imageView.bounds),
+          boxLocation.y - CGRectGetMidY(imageView.bounds))
+        attachmentBehavior = UIAttachmentBehavior(item: imageView,
+          offsetFromCenter: centerOffset, attachedToAnchor: location)
         attachmentBehavior.frequency = 0
         animator.addBehavior(attachmentBehavior)
       } else if panGestureRecognizer.state == UIGestureRecognizerState.Changed {
         attachmentBehavior.anchorPoint = location
       } else if panGestureRecognizer.state == UIGestureRecognizerState.Ended {
         animator.removeBehavior(attachmentBehavior)
-        snapBehavior = UISnapBehavior(item: imageView, snapToPoint: lightboxView.center)
+        snapBehavior = UISnapBehavior(item: imageView,
+          snapToPoint: lightboxView.center)
         animator.addBehavior(snapBehavior)
-        panGestureEnded(translation, imageView: imageView)
+        panGestureEnded(translation,
+          imageView: imageView)
       }
     } else {
       if panGestureRecognizer.state == .Began || panGestureRecognizer.state == .Changed {
@@ -111,7 +107,8 @@ extension LightboxViewCell {
       parentViewController.dismissViewControllerAnimated(true, completion: { [unowned self] in
         if self.parentViewController.physics {
           self.animator.removeAllBehaviors()
-          self.snapBehavior = UISnapBehavior(item: imageView, snapToPoint: self.lightboxView.center)
+          self.snapBehavior = UISnapBehavior(item: imageView,
+            snapToPoint: self.lightboxView.center)
           self.animator.addBehavior(self.snapBehavior)
         } else {
           imageView.center = self.lightboxView.center

@@ -67,6 +67,7 @@ public class LightboxController: UIViewController {
 
   lazy var collectionViewLayout: UICollectionViewLayout = { [unowned self] in
     let layout = CenterCellCollectionViewFlowLayout()
+
     layout.scrollDirection = .Horizontal
     layout.minimumInteritemSpacing = self.config.spacing
     layout.minimumLineSpacing = self.config.spacing
@@ -108,7 +109,6 @@ public class LightboxController: UIViewController {
   public required init(images: [String], config: Config? = nil,
     pageDelegate: LightboxControllerPageDelegate? = nil,
     dismissalDelegate: LightboxControllerDismissalDelegate? = nil) {
-      
       self.images = images
       self.pageDelegate = pageDelegate
       self.dismissalDelegate = dismissalDelegate
@@ -129,13 +129,8 @@ public class LightboxController: UIViewController {
   public override func viewDidLoad() {
     super.viewDidLoad()
 
-    let width = CGRectGetWidth(view.frame)
-    let height = CGRectGetHeight(view.frame)
-
     collectionSize = view.bounds.size
-    view.addSubview(collectionView)
-    view.addSubview(pageLabel)
-    view.addSubview(closeButton)
+    [collectionView, pageLabel, closeButton].map { self.view.addSubview($0) }
 
     transitioningDelegate = transitionManager
     setupConstraints()
@@ -213,12 +208,13 @@ public class LightboxController: UIViewController {
       self.pageLabelBottom?.constant = self.pageLabelBottomConstant
       }, completion: { _ in
         let indexPath = NSIndexPath(forItem: self.page, inSection: 0)
+
         self.view.layoutIfNeeded()
         self.collectionView.scrollToItemAtIndexPath(indexPath,
           atScrollPosition: .CenteredHorizontally,
           animated: false)
         self.rotating = false
-    });
+    })
   }
 
   // MARK: - Pagination
@@ -228,7 +224,8 @@ public class LightboxController: UIViewController {
       var offset = collectionView.contentOffset
 
       offset.x = CGFloat(page) * collectionSize.width
-      collectionView.setContentOffset(offset, animated: animated)
+      collectionView.setContentOffset(offset,
+        animated: animated)
     }
   }
 
@@ -270,9 +267,7 @@ extension LightboxController: UIScrollViewDelegate {
     if !rotating {
       let pageWidth = collectionSize.width
       let currentPage = Int(floor((collectionView.contentOffset.x - pageWidth / 2) / pageWidth) + 1)
-      if currentPage != page {
-        page = currentPage
-      }
+      if currentPage != page { page = currentPage }
     }
   }
 }

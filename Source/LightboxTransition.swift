@@ -1,6 +1,6 @@
 import UIKit
 
-class LightboxTransition: NSObject {
+class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   struct Timing {
     static let transition: NSTimeInterval = 0.5
@@ -9,6 +9,7 @@ class LightboxTransition: NSObject {
   lazy var panGestureRecognizer: UIPanGestureRecognizer = {
     let panGestureRecognizer = UIPanGestureRecognizer()
     panGestureRecognizer.addTarget(self, action: "handlePanGesture:")
+    panGestureRecognizer.delegate = self
 
     return panGestureRecognizer
     }()
@@ -19,6 +20,7 @@ class LightboxTransition: NSObject {
   var attachmentBehavior: UIAttachmentBehavior!
   var gravityBehaviour: UIGravityBehavior!
   var snapBehavior: UISnapBehavior!
+  var sourceViewController: LightboxController!
 
   var sourceViewCell: LightboxViewCell! {
     didSet {
@@ -102,7 +104,7 @@ extension LightboxTransition : UIViewControllerTransitioningDelegate {
 
 // MARK: Interactive transition delegate
 
-extension LightboxTransition : UIPercentDrivenInteractiveTransition {
+extension LightboxTransition {
   
   func handlePanGesture(panGestureRecognizer: UIPanGestureRecognizer) {
     let imageView = sourceViewCell.lightboxView.imageView
@@ -112,6 +114,7 @@ extension LightboxTransition : UIPercentDrivenInteractiveTransition {
     let maximumValue = UIScreen.mainScreen().bounds.height
     let calculation = abs(translation.y) / maximumValue
     let alphaValue = 1 - calculation
+    let percentage = translation.y * 2 / UIScreen.mainScreen().bounds.height
 
     sourceViewCell.parentViewController.view.alpha = alphaValue
     sourceViewCell.parentViewController.pageLabel.transform =
@@ -121,6 +124,8 @@ extension LightboxTransition : UIPercentDrivenInteractiveTransition {
 
     if !sourceViewCell.parentViewController.physics {
       if panGestureRecognizer.state == UIGestureRecognizerState.Began {
+        interactive = true
+        sourceViewController.dismissViewControllerAnimated(true, completion: nil)
         animator.removeBehavior(snapBehavior)
         let centerOffset = UIOffsetMake(boxLocation.x - CGRectGetMidX(imageView.bounds),
           boxLocation.y - CGRectGetMidY(imageView.bounds))
@@ -129,8 +134,10 @@ extension LightboxTransition : UIPercentDrivenInteractiveTransition {
         attachmentBehavior.frequency = 0
         animator.addBehavior(attachmentBehavior)
       } else if panGestureRecognizer.state == UIGestureRecognizerState.Changed {
+        updateInteractiveTransition(percentage)
         attachmentBehavior.anchorPoint = location
       } else if panGestureRecognizer.state == UIGestureRecognizerState.Ended {
+        finishInteractiveTransition()
         animator.removeBehavior(attachmentBehavior)
         snapBehavior = UISnapBehavior(item: imageView,
           snapToPoint: sourceViewCell.lightboxView.center)
@@ -181,9 +188,9 @@ extension LightboxTransition : UIPercentDrivenInteractiveTransition {
 
 extension LightboxTransition : UIGestureRecognizerDelegate {
 
-  public override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+  func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
     if let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer {
-      let translation = panGestureRecognizer.translationInView(superview!)
+      let translation = panGestureRecognizer.translationInView(sourceViewCell.superview!)
       if fabs(translation.x) < fabs(translation.y) {
         return true
       }

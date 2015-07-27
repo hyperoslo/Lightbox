@@ -26,7 +26,7 @@ public class LightboxViewCell: UICollectionViewCell {
   public override func layoutSubviews() {
     super.layoutSubviews()
     animator = UIDynamicAnimator(referenceView: lightboxView)
-    lightboxView.imageView.addGestureRecognizer(panGestureRecognizer)
+    //lightboxView.imageView.addGestureRecognizer(panGestureRecognizer)
     setupConstraints()
     lightboxView.updateViewLayout()
   }

@@ -29,7 +29,6 @@ public class LightboxViewCell: UICollectionViewCell {
 
   private func setupConstraints() {
     if !constraintsAdded {
-
       let layoutAttributes: [NSLayoutAttribute] = [.Leading, .Trailing, .Top, .Bottom]
       for layoutAttribute in layoutAttributes {
         addConstraint(NSLayoutConstraint(item: lightboxView, attribute: layoutAttribute,

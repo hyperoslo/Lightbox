@@ -37,7 +37,9 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
     controller.closeButton.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -100)
 
     if sourceViewCell != nil {
-      sourceViewCell.lightboxView.imageView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -100)
+      //sourceViewCell.lightboxView.imageView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -100)
+      self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
+        UIScreen.mainScreen().bounds.width/2, UIScreen.mainScreen().bounds.height/2)
     }
   }
 }
@@ -157,13 +159,12 @@ extension LightboxTransition {
         interactive = false
         if percentage > 0.25 {
           finishInteractiveTransition()
-          // TODO: Add the animation
         } else {
-          cancelInteractiveTransition()
-          UIView.animateWithDuration(Timing.transition/2, animations: { () -> Void in
+          UIView.animateWithDuration(Timing.transition, animations: { () -> Void in
             self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
               UIScreen.mainScreen().bounds.width/2, UIScreen.mainScreen().bounds.height/2)
           })
+          cancelInteractiveTransition()
         }
       }
     }

@@ -276,4 +276,11 @@ extension LightboxController: UIScrollViewDelegate {
       if currentPage != page { page = currentPage }
     }
   }
+
+  public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    let cell = collectionView.visibleCells().first as! LightboxViewCell
+
+    cell.parentViewController = self
+    cell.setupTransitionManager()
+  }
 }

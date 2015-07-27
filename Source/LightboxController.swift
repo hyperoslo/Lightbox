@@ -25,7 +25,7 @@ public class LightboxController: UIViewController {
   var images = [String]()
   var collectionSize = CGSizeZero
   var pageLabelBottom: NSLayoutConstraint?
-  var physics = true
+  var physics = false
 
   lazy var config: Config = {
     return LightboxConfig.sharedInstance.config

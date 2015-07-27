@@ -14,6 +14,7 @@ extension LightboxController: UICollectionViewDataSource {
     let config = LightboxConfig.sharedInstance.config
 
     cell.parentViewController = self
+    cell.setupTransitionManager()
 
     if let imageURL = NSURL(string: image) where config.remoteImages {
       config.loadImage(

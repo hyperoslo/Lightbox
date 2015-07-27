@@ -5,6 +5,7 @@ public class LightboxViewCell: UICollectionViewCell {
   public static let reuseIdentifier: String = "LightboxViewCell"
 
   var constraintsAdded = false
+  var parentViewController: LightboxController!
 
   public lazy var lightboxView: LightboxView = { [unowned self] in
     let lightboxView = LightboxView(frame: self.bounds)
@@ -17,13 +18,14 @@ public class LightboxViewCell: UICollectionViewCell {
 
   public override func layoutSubviews() {
     super.layoutSubviews()
-    parentViewController.transitionManager.sourceViewCell = self
-    parentViewController.transitionManager.animator = UIDynamicAnimator(referenceView: lightboxView)
     setupConstraints()
     lightboxView.updateViewLayout()
   }
-  
-  var parentViewController: LightboxController!
+
+  public func setupTransitionManager() {
+    parentViewController.transitionManager.sourceViewCell = self
+    parentViewController.transitionManager.animator = UIDynamicAnimator(referenceView: lightboxView)
+  }
 
   private func setupConstraints() {
     if !constraintsAdded {

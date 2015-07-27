@@ -18,6 +18,7 @@ public class LightboxViewCell: UICollectionViewCell {
   lazy var panGestureRecognizer: UIPanGestureRecognizer = {
     let panGestureRecognizer = UIPanGestureRecognizer()
     panGestureRecognizer.addTarget(self, action: "handlePanGesture:")
+    panGestureRecognizer.delegate = self
 
     return panGestureRecognizer
     }()
@@ -51,7 +52,7 @@ public class LightboxViewCell: UICollectionViewCell {
   }
 }
 
-// MARK: Pangesture handler
+// MARK: Pan gesture handler
 
 extension LightboxViewCell {
 
@@ -125,5 +126,20 @@ extension LightboxViewCell {
         }
         })
     }
+  }
+}
+
+// MARK: Gesture recognizer delegate methods
+
+extension LightboxViewCell: UIGestureRecognizerDelegate {
+
+  public override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    if let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer {
+      let translation = panGestureRecognizer.translationInView(superview!)
+      if fabs(translation.x) < fabs(translation.y) {
+        return true
+      }
+    }
+    return false
   }
 }

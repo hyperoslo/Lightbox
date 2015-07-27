@@ -32,9 +32,13 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
     controller.view.backgroundColor = show ? .blackColor() : .clearColor()
     controller.view.alpha = show ? 1 : 0
     controller.collectionView.alpha = show ? 1 : 0
-    controller.collectionView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.5, 0.5)
+    //controller.collectionView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.5, 0.5)
     controller.pageLabel.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 100)
     controller.closeButton.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -100)
+
+    if sourceViewCell != nil {
+      sourceViewCell.lightboxView.imageView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -100)
+    }
   }
 }
 
@@ -71,8 +75,13 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
     UIView.animateWithDuration(Timing.transition, animations: { [unowned self] in
       self.transition(lightboxViewController, show: self.presentingViewController)
       }, completion: { _ in
-        transitionContext.completeTransition(true)
-        UIApplication.sharedApplication().keyWindow!.addSubview(screens.to.view)
+        if transitionContext.transitionWasCancelled() {
+          transitionContext.completeTransition(false)
+          UIApplication.sharedApplication().keyWindow?.addSubview(screens.from.view)
+        } else {
+          transitionContext.completeTransition(true)
+          UIApplication.sharedApplication().keyWindow?.addSubview(screens.to.view)
+        }
     })
   }
 }
@@ -114,13 +123,7 @@ extension LightboxTransition {
     let maximumValue = UIScreen.mainScreen().bounds.height
     let calculation = abs(translation.y) / maximumValue
     let alphaValue = 1 - calculation
-    let percentage = translation.y * 2 / UIScreen.mainScreen().bounds.height
-
-    sourceViewCell.parentViewController.view.alpha = alphaValue
-    sourceViewCell.parentViewController.pageLabel.transform =
-      CGAffineTransformMakeTranslation(0, calculation * 100)
-    sourceViewCell.parentViewController.closeButton.transform =
-      CGAffineTransformMakeTranslation(0, -(calculation * 100))
+    let percentage = fabs(translation.y / UIScreen.mainScreen().bounds.height)
 
     if !sourceViewCell.parentViewController.physics {
       if panGestureRecognizer.state == UIGestureRecognizerState.Began {
@@ -142,44 +145,27 @@ extension LightboxTransition {
         snapBehavior = UISnapBehavior(item: imageView,
           snapToPoint: sourceViewCell.lightboxView.center)
         animator.addBehavior(snapBehavior)
-        panGestureEnded(translation,
-          imageView: imageView)
       }
     } else {
-      if panGestureRecognizer.state == .Began || panGestureRecognizer.state == .Changed {
+      if panGestureRecognizer.state == .Began {
+        interactive = true
+        sourceViewController.dismissViewControllerAnimated(true, completion: nil)
+      } else if panGestureRecognizer.state == .Changed {
         imageView.center = CGPointMake(imageView.center.x, UIScreen.mainScreen().bounds.height/2 + translation.y)
+        updateInteractiveTransition(percentage)
       } else {
-        panGestureEnded(translation, imageView: imageView)
-      }
-    }
-  }
-
-  private func panGestureEnded(translation: CGPoint, imageView: UIView) {
-    if translation.y > 150 || translation.y < -150 {
-      UIView.animateWithDuration(0.3, animations: {
-        imageView.center = CGPointMake(imageView.center.x, 10 * translation.y)
-        imageView.alpha = 0
-      })
-      sourceViewCell.parentViewController.dismissViewControllerAnimated(true, completion: { [unowned self] in
-        if self.sourceViewCell.parentViewController.physics {
-          self.animator.removeAllBehaviors()
-          self.snapBehavior = UISnapBehavior(item: imageView,
-            snapToPoint: self.sourceViewCell.lightboxView.center)
-          self.animator.addBehavior(self.snapBehavior)
+        interactive = false
+        if percentage > 0.25 {
+          finishInteractiveTransition()
+          // TODO: Add the animation
         } else {
-          imageView.center = self.sourceViewCell.lightboxView.center
+          cancelInteractiveTransition()
+          UIView.animateWithDuration(Timing.transition/2, animations: { () -> Void in
+            self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
+              UIScreen.mainScreen().bounds.width/2, UIScreen.mainScreen().bounds.height/2)
+          })
         }
-        imageView.alpha = 1
-        })
-    } else {
-      UIView.animateWithDuration(0.3, animations: { [unowned self] in
-        self.sourceViewCell.parentViewController.view.alpha = 1
-        self.sourceViewCell.parentViewController.pageLabel.transform = CGAffineTransformIdentity
-        self.sourceViewCell.parentViewController.closeButton.transform = CGAffineTransformIdentity
-        if !self.sourceViewCell.parentViewController.physics {
-          imageView.center = CGPointMake(imageView.center.x, UIScreen.mainScreen().bounds.height/2)
-        }
-        })
+      }
     }
   }
 }

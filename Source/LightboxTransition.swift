@@ -80,8 +80,14 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
       self.transition(lightboxViewController, show: self.presentingViewController)
       }, completion: { _ in
         if transitionContext.transitionWasCancelled() {
-          transitionContext.completeTransition(false)
-          UIApplication.sharedApplication().keyWindow?.addSubview(screens.from.view)
+          UIView.animateWithDuration(Timing.transition/2, animations: { [unowned self] in
+            self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
+              UIScreen.mainScreen().bounds.width/2, UIScreen.mainScreen().bounds.height/2)
+            self.transition(lightboxViewController, show: true)
+            }, completion: { finished in
+              transitionContext.completeTransition(false)
+              UIApplication.sharedApplication().keyWindow?.addSubview(screens.from.view)
+          })
         } else {
           transitionContext.completeTransition(true)
           UIApplication.sharedApplication().keyWindow?.addSubview(screens.to.view)
@@ -170,11 +176,6 @@ extension LightboxTransition {
           finishInteractiveTransition()
         } else {
           cancelInteractiveTransition()
-
-          UIView.animateWithDuration(Timing.transition, animations: { [unowned self] in
-            self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
-              UIScreen.mainScreen().bounds.width/2, UIScreen.mainScreen().bounds.height/2)
-            })
         }
       }
     }

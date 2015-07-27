@@ -32,14 +32,16 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
     controller.view.backgroundColor = show ? .blackColor() : .clearColor()
     controller.view.alpha = show ? 1 : 0
     controller.collectionView.alpha = show ? 1 : 0
-    //controller.collectionView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.5, 0.5)
-    controller.pageLabel.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 100)
-    controller.closeButton.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -100)
+    controller.pageLabel.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 250)
+    controller.closeButton.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -250)
 
     if sourceViewCell != nil {
-      //sourceViewCell.lightboxView.imageView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -100)
       self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
         UIScreen.mainScreen().bounds.width/2, UIScreen.mainScreen().bounds.height/2)
+    }
+
+    if presentingViewController {
+      controller.collectionView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.5, 0.5)
     }
   }
 }
@@ -160,14 +162,30 @@ extension LightboxTransition {
         if percentage > 0.25 {
           finishInteractiveTransition()
         } else {
-          UIView.animateWithDuration(Timing.transition, animations: { () -> Void in
-            self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
-              UIScreen.mainScreen().bounds.width/2, UIScreen.mainScreen().bounds.height/2)
-          })
           cancelInteractiveTransition()
         }
       }
     }
+  }
+
+  override func finishInteractiveTransition() {
+    super.finishInteractiveTransition()
+    
+    let point = (sourceViewCell.lightboxView.imageView.center.y - UIScreen.mainScreen().bounds.width/2) * 10
+
+    UIView.animateWithDuration(Timing.transition/2, animations: { [unowned self] in
+      self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
+        UIScreen.mainScreen().bounds.width/2, point)
+      })
+  }
+
+  override func cancelInteractiveTransition() {
+    super.cancelInteractiveTransition()
+
+    UIView.animateWithDuration(Timing.transition, animations: { [unowned self] in
+      self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
+        UIScreen.mainScreen().bounds.width/2, UIScreen.mainScreen().bounds.height/2)
+      })
   }
 }
 

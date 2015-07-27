@@ -17,16 +17,12 @@ public class LightboxViewCell: UICollectionViewCell {
 
   public override func layoutSubviews() {
     super.layoutSubviews()
-    animator = UIDynamicAnimator(referenceView: lightboxView)
     parentViewController.transitionManager.sourceViewCell = self
+    parentViewController.transitionManager.animator = UIDynamicAnimator(referenceView: lightboxView)
     setupConstraints()
     lightboxView.updateViewLayout()
   }
-
-  var animator: UIDynamicAnimator!
-  var attachmentBehavior: UIAttachmentBehavior!
-  var gravityBehaviour: UIGravityBehavior!
-  var snapBehavior: UISnapBehavior!
+  
   var parentViewController: LightboxController!
 
   private func setupConstraints() {

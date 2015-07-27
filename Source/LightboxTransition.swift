@@ -129,7 +129,7 @@ extension LightboxTransition {
     let alphaValue = 1 - calculation
     let percentage = fabs(translation.y / UIScreen.mainScreen().bounds.height)
 
-    if !sourceViewCell.parentViewController.physics {
+    if sourceViewCell.parentViewController.physics {
       if panGestureRecognizer.state == UIGestureRecognizerState.Began {
         interactive = true
         sourceViewController.dismissViewControllerAnimated(true, completion: nil)
@@ -141,14 +141,21 @@ extension LightboxTransition {
         attachmentBehavior.frequency = 0
         animator.addBehavior(attachmentBehavior)
       } else if panGestureRecognizer.state == UIGestureRecognizerState.Changed {
-        updateInteractiveTransition(percentage)
         attachmentBehavior.anchorPoint = location
+        updateInteractiveTransition(percentage)
       } else if panGestureRecognizer.state == UIGestureRecognizerState.Ended {
-        finishInteractiveTransition()
-        animator.removeBehavior(attachmentBehavior)
-        snapBehavior = UISnapBehavior(item: imageView,
-          snapToPoint: sourceViewCell.lightboxView.center)
-        animator.addBehavior(snapBehavior)
+        interactive = false
+
+        if percentage > 0.25 {
+          finishInteractiveTransition()
+        } else {
+          cancelInteractiveTransition()
+
+          animator.removeBehavior(attachmentBehavior)
+          snapBehavior = UISnapBehavior(item: imageView,
+            snapToPoint: sourceViewCell.lightboxView.center)
+          animator.addBehavior(snapBehavior)
+        }
       }
     } else {
       if panGestureRecognizer.state == .Began {
@@ -163,6 +170,11 @@ extension LightboxTransition {
           finishInteractiveTransition()
         } else {
           cancelInteractiveTransition()
+
+          UIView.animateWithDuration(Timing.transition, animations: { [unowned self] in
+            self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
+              UIScreen.mainScreen().bounds.width/2, UIScreen.mainScreen().bounds.height/2)
+            })
         }
       }
     }
@@ -170,22 +182,18 @@ extension LightboxTransition {
 
   override func finishInteractiveTransition() {
     super.finishInteractiveTransition()
-    
-    let point = (sourceViewCell.lightboxView.imageView.center.y - UIScreen.mainScreen().bounds.width/2) * 10
 
-    UIView.animateWithDuration(Timing.transition/2, animations: { [unowned self] in
-      self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
-        UIScreen.mainScreen().bounds.width/2, point)
-      })
-  }
-
-  override func cancelInteractiveTransition() {
-    super.cancelInteractiveTransition()
+    let point = (sourceViewCell.lightboxView.imageView.center.y - UIScreen.mainScreen().bounds.height/2) * 10
 
     UIView.animateWithDuration(Timing.transition, animations: { [unowned self] in
       self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
-        UIScreen.mainScreen().bounds.width/2, UIScreen.mainScreen().bounds.height/2)
-      })
+        UIScreen.mainScreen().bounds.width/2, point)
+      }, completion: { _ in
+        self.animator.removeBehavior(self.attachmentBehavior)
+        self.snapBehavior = UISnapBehavior(item: self.sourceViewCell.lightboxView.imageView,
+          snapToPoint: self.sourceViewCell.lightboxView.center)
+        self.animator.addBehavior(self.snapBehavior)
+    })
   }
 }
 

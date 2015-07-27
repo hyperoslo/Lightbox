@@ -15,7 +15,13 @@ public class LightboxController: UIViewController {
   public var pageDelegate: LightboxControllerPageDelegate?
   public var dismissalDelegate: LightboxControllerDismissalDelegate?
 
-  let transitionManager = LightboxTransition()
+  lazy var transitionManager: LightboxTransition = {
+    let manager = LightboxTransition()
+    manager.sourceViewController = self
+
+    return manager
+    }()
+
   var images = [String]()
   var collectionSize = CGSizeZero
   var pageLabelBottom: NSLayoutConstraint?

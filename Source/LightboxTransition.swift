@@ -94,11 +94,11 @@ extension LightboxTransition : UIViewControllerTransitioningDelegate {
   }
 
   func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-    return self.interactive ? self : nil
+    return interactive ? self : nil
   }
 
   func interactionControllerForPresentation(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-    return self.interactive ? self : nil
+    return interactive ? self : nil
   }
 }
 

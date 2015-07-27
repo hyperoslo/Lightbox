@@ -71,7 +71,7 @@ extension LightboxViewCell {
     parentViewController.closeButton.transform =
       CGAffineTransformMakeTranslation(0, -(calculation * 100))
 
-    if parentViewController.physics {
+    if !parentViewController.physics {
       if panGestureRecognizer.state == UIGestureRecognizerState.Began {
         animator.removeBehavior(snapBehavior)
         let centerOffset = UIOffsetMake(boxLocation.x - CGRectGetMidX(imageView.bounds),

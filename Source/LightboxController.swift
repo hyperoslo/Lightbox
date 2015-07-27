@@ -15,11 +15,17 @@ public class LightboxController: UIViewController {
   public var pageDelegate: LightboxControllerPageDelegate?
   public var dismissalDelegate: LightboxControllerDismissalDelegate?
 
-  let transitionManager = LightboxTransition()
+  lazy var transitionManager: LightboxTransition = {
+    let manager = LightboxTransition()
+    manager.sourceViewController = self
+
+    return manager
+    }()
+
   var images = [String]()
   var collectionSize = CGSizeZero
   var pageLabelBottom: NSLayoutConstraint?
-  var physics = true
+  var physics = false
 
   lazy var config: Config = {
     return LightboxConfig.sharedInstance.config
@@ -269,5 +275,12 @@ extension LightboxController: UIScrollViewDelegate {
       let currentPage = Int(floor((collectionView.contentOffset.x - pageWidth / 2) / pageWidth) + 1)
       if currentPage != page { page = currentPage }
     }
+  }
+
+  public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    let cell = collectionView.visibleCells().first as! LightboxViewCell
+
+    cell.parentViewController = self
+    cell.setupTransitionManager()
   }
 }

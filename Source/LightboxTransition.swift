@@ -190,11 +190,17 @@ extension LightboxTransition {
       self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
         UIScreen.mainScreen().bounds.width/2, point)
       }, completion: { _ in
-        self.animator.removeBehavior(self.attachmentBehavior)
-        self.snapBehavior = UISnapBehavior(item: self.sourceViewCell.lightboxView.imageView,
-          snapToPoint: self.sourceViewCell.lightboxView.center)
-        self.animator.addBehavior(self.snapBehavior)
+        if self.sourceViewCell.parentViewController.physics {
+          self.animator.removeBehavior(self.attachmentBehavior)
+          self.snapBehavior = UISnapBehavior(item: self.sourceViewCell.lightboxView.imageView,
+            snapToPoint: self.sourceViewCell.lightboxView.center)
+          self.animator.addBehavior(self.snapBehavior)
+        }
     })
+
+    sourceViewController.collectionView.scrollRectToVisible(
+      CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height),
+      animated: false)
   }
 }
 

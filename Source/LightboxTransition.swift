@@ -1,5 +1,10 @@
 import UIKit
 
+protocol LightboxTransitionDelegate {
+
+  func transitionDidDismissController(controller: LightboxController)
+}
+
 class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   struct Timing {
@@ -21,6 +26,8 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
   var gravityBehaviour: UIGravityBehavior!
   var snapBehavior: UISnapBehavior!
   var sourceViewController: LightboxController!
+  var delegate: LightboxTransitionDelegate?
+  var lightboxController: LightboxController!
 
   var sourceViewCell: LightboxViewCell! {
     didSet {
@@ -34,6 +41,7 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
     controller.collectionView.alpha = show ? 1 : 0
     controller.pageLabel.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 250)
     controller.closeButton.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -250)
+    lightboxController = controller
 
     if sourceViewCell != nil {
       self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
@@ -154,6 +162,7 @@ extension LightboxTransition {
 
         if percentage > 0.25 {
           finishInteractiveTransition()
+          delegate?.transitionDidDismissController(lightboxController)
         } else {
           cancelInteractiveTransition()
 
@@ -174,6 +183,7 @@ extension LightboxTransition {
         interactive = false
         if percentage > 0.25 {
           finishInteractiveTransition()
+          delegate?.transitionDidDismissController(lightboxController)
         } else {
           cancelInteractiveTransition()
         }

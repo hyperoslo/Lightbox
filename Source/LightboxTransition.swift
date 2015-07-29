@@ -26,7 +26,7 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
   var gravityBehaviour: UIGravityBehavior!
   var snapBehavior: UISnapBehavior!
   var sourceViewController: LightboxController!
-  var lightboxTransitionDelegate: LightboxTransitionDelegate?
+  var delegate: LightboxTransitionDelegate?
   var lightboxController: LightboxController!
 
   var sourceViewCell: LightboxViewCell! {
@@ -162,7 +162,7 @@ extension LightboxTransition {
 
         if percentage > 0.25 {
           finishInteractiveTransition()
-          lightboxTransitionDelegate?.transitionDidDismissController(lightboxController)
+          delegate?.transitionDidDismissController(lightboxController)
         } else {
           cancelInteractiveTransition()
 
@@ -183,7 +183,7 @@ extension LightboxTransition {
         interactive = false
         if percentage > 0.25 {
           finishInteractiveTransition()
-          lightboxTransitionDelegate?.transitionDidDismissController(lightboxController)
+          delegate?.transitionDidDismissController(lightboxController)
         } else {
           cancelInteractiveTransition()
         }

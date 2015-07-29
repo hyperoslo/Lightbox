@@ -139,7 +139,7 @@ public class LightboxController: UIViewController {
     [collectionView, pageLabel, closeButton].map { self.view.addSubview($0) }
 
     transitioningDelegate = transitionManager
-    transitionManager.lightboxTransitionDelegate = self
+    transitionManager.delegate = self
 
     setupConstraints()
 

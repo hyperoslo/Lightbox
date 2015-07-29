@@ -36,8 +36,8 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
   }
 
   func transition(controller: LightboxController, show: Bool) {
-    controller.view.backgroundColor = show ? .blackColor() : .clearColor()
-    controller.view.alpha = show ? 1 : 0
+    controller.view.backgroundColor = .blackColor()
+    controller.view.alpha = show ? 1 : 0.95
     controller.collectionView.alpha = show ? 1 : 0
     controller.pageLabel.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 250)
     controller.closeButton.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -250)
@@ -97,8 +97,16 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
               UIApplication.sharedApplication().keyWindow?.addSubview(screens.from.view)
           })
         } else {
-          transitionContext.completeTransition(true)
-          UIApplication.sharedApplication().keyWindow?.addSubview(screens.to.view)
+          if self.lightboxController.view.alpha < 0.97 && !self.presentingViewController {
+            UIView.animateWithDuration(0.6, animations: { () -> Void in
+              self.lightboxController.view.alpha = 0
+              }, completion: { _ in
+                transitionContext.completeTransition(true)
+            })
+          } else {
+            transitionContext.completeTransition(true)
+            UIApplication.sharedApplication().keyWindow?.addSubview(screens.to.view)
+          }
         }
     })
   }
@@ -132,7 +140,7 @@ extension LightboxTransition : UIViewControllerTransitioningDelegate {
 // MARK: Interactive transition delegate
 
 extension LightboxTransition {
-  
+
   func handlePanGesture(panGestureRecognizer: UIPanGestureRecognizer) {
     let imageView = sourceViewCell.lightboxView.imageView
     let location = panGestureRecognizer.locationInView(sourceViewCell.lightboxView)

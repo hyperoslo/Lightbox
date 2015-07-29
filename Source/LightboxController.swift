@@ -139,6 +139,8 @@ public class LightboxController: UIViewController {
     [collectionView, pageLabel, closeButton].map { self.view.addSubview($0) }
 
     transitioningDelegate = transitionManager
+    transitionManager.delegate = self
+
     setupConstraints()
 
     page = 0
@@ -282,5 +284,12 @@ extension LightboxController: UIScrollViewDelegate {
 
     cell.parentViewController = self
     cell.setupTransitionManager()
+  }
+}
+
+extension LightboxController: LightboxTransitionDelegate {
+
+  func transitionDidDismissController(controller: LightboxController) {
+    dismissalDelegate?.lightboxControllerDidDismiss(controller)
   }
 }

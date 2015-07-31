@@ -12,6 +12,7 @@ public protocol LightboxControllerDismissalDelegate: class {
 
 public class LightboxController: UIViewController {
 
+  public var isPresented = true
   public var pageDelegate: LightboxControllerPageDelegate?
   public var dismissalDelegate: LightboxControllerDismissalDelegate?
 
@@ -138,8 +139,8 @@ public class LightboxController: UIViewController {
     collectionSize = view.bounds.size
     [collectionView, pageLabel, closeButton].map { self.view.addSubview($0) }
 
-    transitioningDelegate = transitionManager
-    transitionManager.delegate = self
+//    transitioningDelegate = transitionManager
+//    transitionManager.delegate = self
 
     setupConstraints()
 
@@ -248,6 +249,7 @@ public class LightboxController: UIViewController {
   // MARK: - Actions
   
   func closeButtonDidTouchUpInside(sender: UIButton) {
+    isPresented = false
     dismissalDelegate?.lightboxControllerDidDismiss(self)
   }
 }

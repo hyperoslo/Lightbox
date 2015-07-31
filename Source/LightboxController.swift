@@ -12,6 +12,7 @@ public protocol LightboxControllerDismissalDelegate: class {
 
 public class LightboxController: UIViewController {
 
+  public var isPresented = true
   public var pageDelegate: LightboxControllerPageDelegate?
   public var dismissalDelegate: LightboxControllerDismissalDelegate?
 
@@ -248,6 +249,7 @@ public class LightboxController: UIViewController {
   // MARK: - Actions
   
   func closeButtonDidTouchUpInside(sender: UIButton) {
+    isPresented = false
     dismissalDelegate?.lightboxControllerDidDismiss(self)
   }
 }

@@ -139,8 +139,8 @@ public class LightboxController: UIViewController {
     collectionSize = view.bounds.size
     [collectionView, pageLabel, closeButton].map { self.view.addSubview($0) }
 
-    transitioningDelegate = transitionManager
-    transitionManager.delegate = self
+//    transitioningDelegate = transitionManager
+//    transitionManager.delegate = self
 
     setupConstraints()
 

@@ -209,7 +209,7 @@ public class LightboxController: UIViewController {
     }
 
     if UIDevice.currentDevice().orientation != UIDeviceOrientation.PortraitUpsideDown {
-      UIView.animateWithDuration(0.5, animations: { () -> Void in
+      UIView.animateWithDuration(0.5, animations: { [unowned self] in
         self.collectionView.transform = transform
         self.closeButton.transform = transform
         self.pageLabel.transform = transform

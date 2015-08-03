@@ -148,11 +148,16 @@ public class LightboxController: UIViewController {
 
     view.backgroundColor = UIColor.blackColor()
 
-    NSNotificationCenter.defaultCenter().addObserver(
-      self,
-      selector: "deviceDidRotate",
-      name: UIDeviceOrientationDidChangeNotification,
-      object: nil)
+    let orientationsSupported: [String] = NSBundle.mainBundle().objectForInfoDictionaryKey("UISupportedInterfaceOrientations") as! [String]
+
+    if orientationsSupported.first == "UIInterfaceOrientationPortrait"
+      && orientationsSupported.count == 1 {
+      NSNotificationCenter.defaultCenter().addObserver(
+        self,
+        selector: "deviceDidRotate",
+        name: UIDeviceOrientationDidChangeNotification,
+        object: nil)
+    }
 
     setupConstraints()
 
@@ -167,9 +172,14 @@ public class LightboxController: UIViewController {
         withAnimation: .Fade)
     }
 
-    if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft
-      || UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight {
-        deviceDidRotate()
+    let orientationsSupported: [String] = NSBundle.mainBundle().objectForInfoDictionaryKey("UISupportedInterfaceOrientations") as! [String]
+
+    if orientationsSupported.first == "UIInterfaceOrientationPortrait"
+      && orientationsSupported.count == 1 {
+        if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft
+          || UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight {
+            deviceDidRotate()
+        }
     }
   }
 
@@ -203,7 +213,11 @@ public class LightboxController: UIViewController {
         self.collectionView.transform = transform
         self.closeButton.transform = transform
         self.pageLabel.transform = transform
-        })
+        }, completion: { _ in
+          let indexPath = NSIndexPath(forItem: self.page, inSection: 0)
+          self.collectionView.scrollToItemAtIndexPath(indexPath,
+            atScrollPosition: UICollectionViewScrollPosition.allZeros, animated: true)
+      })
     }
   }
 
@@ -413,10 +427,10 @@ extension LightboxController {
     closeButtonTop = left
       ? NSLayoutConstraint(item: closeButton, attribute: .Bottom,
         relatedBy: .Equal, toItem: view, attribute: .Bottom,
-        multiplier: 1, constant: -20)
+        multiplier: 1, constant: -35)
       : NSLayoutConstraint(item: closeButton, attribute: .Top,
         relatedBy: .Equal, toItem: view, attribute: .Top,
-        multiplier: 1, constant: 20)
+        multiplier: 1, constant: 35)
 
     pageLabelBottom = left
       ? NSLayoutConstraint(item: pageLabel, attribute: .Left,
@@ -433,7 +447,6 @@ extension LightboxController {
       : NSLayoutConstraint(item: pageLabel, attribute: .Right,
         relatedBy: .Equal, toItem: view, attribute: .Right,
         multiplier: 1, constant: -20)
-
 
     [closeButtonTop!, closeButtonRight!,
       pageLabelAlternative!, pageLabelBottom!].map { self.view.addConstraint($0) }

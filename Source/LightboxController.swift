@@ -199,11 +199,15 @@ public class LightboxController: UIViewController {
     }
 
     if UIDevice.currentDevice().orientation != UIDeviceOrientation.PortraitUpsideDown {
-      UIView.animateWithDuration(0.5, animations: { [unowned self] in
+      UIView.animateWithDuration(0.5, animations: { () -> Void in
         self.collectionView.transform = transform
         self.closeButton.transform = transform
         self.pageLabel.transform = transform
-        })
+        }, completion: { _ in
+          let indexPath = NSIndexPath(forItem: self.page, inSection: 0)
+          self.collectionView.scrollToItemAtIndexPath(indexPath,
+            atScrollPosition: UICollectionViewScrollPosition.allZeros, animated: false)
+      })
     }
   }
 
@@ -433,7 +437,6 @@ extension LightboxController {
       : NSLayoutConstraint(item: pageLabel, attribute: .Right,
         relatedBy: .Equal, toItem: view, attribute: .Right,
         multiplier: 1, constant: -20)
-
 
     [closeButtonTop!, closeButtonRight!,
       pageLabelAlternative!, pageLabelBottom!].map { self.view.addConstraint($0) }

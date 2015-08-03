@@ -206,7 +206,7 @@ public class LightboxController: UIViewController {
         }, completion: { _ in
           let indexPath = NSIndexPath(forItem: self.page, inSection: 0)
           self.collectionView.scrollToItemAtIndexPath(indexPath,
-            atScrollPosition: UICollectionViewScrollPosition.allZeros, animated: false)
+            atScrollPosition: UICollectionViewScrollPosition.allZeros, animated: true)
       })
     }
   }
@@ -417,10 +417,10 @@ extension LightboxController {
     closeButtonTop = left
       ? NSLayoutConstraint(item: closeButton, attribute: .Bottom,
         relatedBy: .Equal, toItem: view, attribute: .Bottom,
-        multiplier: 1, constant: -20)
+        multiplier: 1, constant: -35)
       : NSLayoutConstraint(item: closeButton, attribute: .Top,
         relatedBy: .Equal, toItem: view, attribute: .Top,
-        multiplier: 1, constant: 20)
+        multiplier: 1, constant: 35)
 
     pageLabelBottom = left
       ? NSLayoutConstraint(item: pageLabel, attribute: .Left,

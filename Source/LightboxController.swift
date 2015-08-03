@@ -25,6 +25,7 @@ public class LightboxController: UIViewController {
   var images = [String]()
   public var collectionSize = CGSizeZero
   var pageLabelBottom: NSLayoutConstraint?
+  var pageLabelAlternative: NSLayoutConstraint?
   var collectionViewHeight: NSLayoutConstraint?
   var collectionViewWidth: NSLayoutConstraint?
   var closeButtonTop: NSLayoutConstraint?
@@ -193,6 +194,20 @@ public class LightboxController: UIViewController {
       view.addConstraint(closeButtonTop!)
       view.addConstraint(closeButtonRight!)
       transitionManager.panGestureRecognizer.enabled = false
+
+      view.removeConstraint(pageLabelAlternative!)
+      view.removeConstraint(pageLabelBottom!)
+
+      pageLabelAlternative = NSLayoutConstraint(item: pageLabel, attribute: .Left,
+        relatedBy: .Equal, toItem: view, attribute: .Left,
+        multiplier: 1, constant: 20)
+
+      pageLabelBottom = NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
+        relatedBy: .Equal, toItem: view, attribute: .Bottom,
+        multiplier: 1, constant: -20)
+
+      view.addConstraint(pageLabelAlternative!)
+      view.addConstraint(pageLabelBottom!)
     } else if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight {
       transform = moveCollectionView(false)
       view.removeConstraint(closeButtonTop!)
@@ -209,6 +224,20 @@ public class LightboxController: UIViewController {
       view.addConstraint(closeButtonTop!)
       view.addConstraint(closeButtonRight!)
       transitionManager.panGestureRecognizer.enabled = false
+
+      view.removeConstraint(pageLabelAlternative!)
+      view.removeConstraint(pageLabelBottom!)
+
+      pageLabelAlternative = NSLayoutConstraint(item: pageLabel, attribute: .Top,
+        relatedBy: .Equal, toItem: view, attribute: .Top,
+        multiplier: 1, constant: 20)
+
+      pageLabelBottom = NSLayoutConstraint(item: pageLabel, attribute: .Right,
+        relatedBy: .Equal, toItem: view, attribute: .Right,
+        multiplier: 1, constant: -20)
+
+      view.addConstraint(pageLabelAlternative!)
+      view.addConstraint(pageLabelBottom!)
     } else if UIDevice.currentDevice().orientation == UIDeviceOrientation.Portrait {
       view.removeConstraint(collectionViewHeight!)
       view.removeConstraint(collectionViewWidth!)
@@ -241,13 +270,27 @@ public class LightboxController: UIViewController {
       view.addConstraint(closeButtonTop!)
       view.addConstraint(closeButtonRight!)
       transitionManager.panGestureRecognizer.enabled = true
+
+      view.removeConstraint(pageLabelAlternative!)
+      view.removeConstraint(pageLabelBottom!)
+
+      pageLabelAlternative = NSLayoutConstraint(item: pageLabel, attribute: .CenterX,
+        relatedBy: .Equal, toItem: view, attribute: .CenterX,
+        multiplier: 1, constant: 0)
+
+      pageLabelBottom = NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
+        relatedBy: .Equal, toItem: view, attribute: .Bottom,
+        multiplier: 1, constant: pageLabelBottomConstant)
+
+      view.addConstraint(pageLabelAlternative!)
+      view.addConstraint(pageLabelBottom!)
     }
 
     if UIDevice.currentDevice().orientation != UIDeviceOrientation.PortraitUpsideDown {
       UIView.animateWithDuration(0.5, animations: { [unowned self] in
         self.collectionView.transform = transform
         self.closeButton.transform = transform
-        //self.pageLabel.transform = transform
+        self.pageLabel.transform = transform
         })
     }
   }
@@ -297,17 +340,15 @@ public class LightboxController: UIViewController {
     view.addConstraint(collectionViewHeight!)
     view.addConstraint(collectionViewWidth!)
     
-    view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Leading,
-      relatedBy: .Equal, toItem: view, attribute: .Leading,
-      multiplier: 1, constant: 0))
-
-    view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Trailing,
-      relatedBy: .Equal, toItem: view, attribute: .Trailing,
-      multiplier: 1, constant: 0))
+    pageLabelAlternative = NSLayoutConstraint(item: pageLabel, attribute: .CenterX,
+      relatedBy: .Equal, toItem: view, attribute: .CenterX,
+      multiplier: 1, constant: 0)
 
     pageLabelBottom = NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
       relatedBy: .Equal, toItem: view, attribute: .Bottom,
       multiplier: 1, constant: pageLabelBottomConstant)
+
+    view.addConstraint(pageLabelAlternative!)
     view.addConstraint(pageLabelBottom!)
 
     closeButtonTop = NSLayoutConstraint(item: closeButton, attribute: .Top,

@@ -180,64 +180,12 @@ public class LightboxController: UIViewController {
 
     if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft {
       transform = moveCollectionView(true)
-      view.removeConstraint(closeButtonTop!)
-      view.removeConstraint(closeButtonRight!)
-
-      closeButtonTop = NSLayoutConstraint(item: closeButton, attribute: .Bottom,
-        relatedBy: .Equal, toItem: view, attribute: .Bottom,
-        multiplier: 1, constant: -20)
-
-      closeButtonRight = NSLayoutConstraint(item: closeButton, attribute: .Right,
-        relatedBy: .Equal, toItem: view, attribute: .Right,
-        multiplier: 1, constant: 0)
-
-      view.addConstraint(closeButtonTop!)
-      view.addConstraint(closeButtonRight!)
+      moveViews(true)
       transitionManager.panGestureRecognizer.enabled = false
-
-      view.removeConstraint(pageLabelAlternative!)
-      view.removeConstraint(pageLabelBottom!)
-
-      pageLabelAlternative = NSLayoutConstraint(item: pageLabel, attribute: .Left,
-        relatedBy: .Equal, toItem: view, attribute: .Left,
-        multiplier: 1, constant: 20)
-
-      pageLabelBottom = NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
-        relatedBy: .Equal, toItem: view, attribute: .Bottom,
-        multiplier: 1, constant: -20)
-
-      view.addConstraint(pageLabelAlternative!)
-      view.addConstraint(pageLabelBottom!)
     } else if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight {
       transform = moveCollectionView(false)
-      view.removeConstraint(closeButtonTop!)
-      view.removeConstraint(closeButtonRight!)
-
-      closeButtonTop = NSLayoutConstraint(item: closeButton, attribute: .Left,
-        relatedBy: .Equal, toItem: view, attribute: .Left,
-        multiplier: 1, constant: 0)
-
-      closeButtonRight = NSLayoutConstraint(item: closeButton, attribute: .Top,
-        relatedBy: .Equal, toItem: view, attribute: .Top,
-        multiplier: 1, constant: 20)
-
-      view.addConstraint(closeButtonTop!)
-      view.addConstraint(closeButtonRight!)
+      moveViews(false)
       transitionManager.panGestureRecognizer.enabled = false
-
-      view.removeConstraint(pageLabelAlternative!)
-      view.removeConstraint(pageLabelBottom!)
-
-      pageLabelAlternative = NSLayoutConstraint(item: pageLabel, attribute: .Top,
-        relatedBy: .Equal, toItem: view, attribute: .Top,
-        multiplier: 1, constant: 20)
-
-      pageLabelBottom = NSLayoutConstraint(item: pageLabel, attribute: .Right,
-        relatedBy: .Equal, toItem: view, attribute: .Right,
-        multiplier: 1, constant: -20)
-
-      view.addConstraint(pageLabelAlternative!)
-      view.addConstraint(pageLabelBottom!)
     } else if UIDevice.currentDevice().orientation == UIDeviceOrientation.Portrait {
       [collectionViewHeight!, collectionViewWidth!,
         closeButtonTop!, closeButtonRight!,
@@ -302,11 +250,15 @@ public class LightboxController: UIViewController {
       relatedBy: .Equal, toItem: view, attribute: .Width,
       multiplier: 1, constant: 0)
 
+    collectionViewHeight = NSLayoutConstraint(item: collectionView, attribute: .Height,
+      relatedBy: .Equal, toItem: view, attribute: .Height,
+      multiplier: 1, constant: 0)
+
     collectionSize = CGSizeMake(view.frame.width, view.frame.height)
     collectionView.reloadData()
 
-    view.addConstraint(collectionViewHeight!)
     view.addConstraint(collectionViewWidth!)
+    view.addConstraint(collectionViewHeight!)
   }
 
   private func standardCloseButtonConstraints() {
@@ -320,6 +272,51 @@ public class LightboxController: UIViewController {
 
     view.addConstraint(closeButtonTop!)
     view.addConstraint(closeButtonRight!)
+  }
+
+  private func moveViews(left: Bool) {
+    view.removeConstraint(closeButtonTop!)
+    view.removeConstraint(closeButtonRight!)
+    view.removeConstraint(pageLabelAlternative!)
+    view.removeConstraint(pageLabelBottom!)
+
+    closeButtonRight = left ?
+      NSLayoutConstraint(item: closeButton, attribute: .Right,
+      relatedBy: .Equal, toItem: view, attribute: .Right,
+      multiplier: 1, constant: 0) :
+      NSLayoutConstraint(item: closeButton, attribute: .Left,
+      relatedBy: .Equal, toItem: view, attribute: .Left,
+      multiplier: 1, constant: 0)
+
+    closeButtonTop = left
+      ? NSLayoutConstraint(item: closeButton, attribute: .Bottom,
+      relatedBy: .Equal, toItem: view, attribute: .Bottom,
+      multiplier: 1, constant: -20)
+      : NSLayoutConstraint(item: closeButton, attribute: .Top,
+      relatedBy: .Equal, toItem: view, attribute: .Top,
+      multiplier: 1, constant: 20)
+
+    pageLabelBottom = left
+      ? NSLayoutConstraint(item: pageLabel, attribute: .Left,
+      relatedBy: .Equal, toItem: view, attribute: .Left,
+      multiplier: 1, constant: 20)
+      : NSLayoutConstraint(item: pageLabel, attribute: .Top,
+      relatedBy: .Equal, toItem: view, attribute: .Top,
+      multiplier: 1, constant: 20)
+
+    pageLabelAlternative = left
+      ? NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
+      relatedBy: .Equal, toItem: view, attribute: .Bottom,
+      multiplier: 1, constant: -20)
+      : NSLayoutConstraint(item: pageLabel, attribute: .Right,
+      relatedBy: .Equal, toItem: view, attribute: .Right,
+      multiplier: 1, constant: -20)
+
+
+    view.addConstraint(closeButtonTop!)
+    view.addConstraint(closeButtonRight!)
+    view.addConstraint(pageLabelAlternative!)
+    view.addConstraint(pageLabelBottom!)
   }
 
   // MARK: - Autolayout

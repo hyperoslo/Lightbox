@@ -239,51 +239,15 @@ public class LightboxController: UIViewController {
       view.addConstraint(pageLabelAlternative!)
       view.addConstraint(pageLabelBottom!)
     } else if UIDevice.currentDevice().orientation == UIDeviceOrientation.Portrait {
-      view.removeConstraint(collectionViewHeight!)
-      view.removeConstraint(collectionViewWidth!)
+      [collectionViewHeight!, collectionViewWidth!,
+        closeButtonTop!, closeButtonRight!,
+        pageLabelAlternative!, pageLabelBottom!].map { self.view.removeConstraint($0) }
 
-      collectionViewHeight = NSLayoutConstraint(item: collectionView, attribute: .Height,
-        relatedBy: .Equal, toItem: view, attribute: .Height,
-        multiplier: 1, constant: 0)
+      standardCollectionViewConstraints()
+      standardCloseButtonConstraints()
+      standardPageLabelConstraints()
 
-      collectionViewWidth = NSLayoutConstraint(item: collectionView, attribute: .Width,
-        relatedBy: .Equal, toItem: view, attribute: .Width,
-        multiplier: 1, constant: 0)
-
-      collectionSize = CGSizeMake(view.frame.width, view.frame.height)
-      collectionView.reloadData()
-
-      view.addConstraint(collectionViewHeight!)
-      view.addConstraint(collectionViewWidth!)
-
-      view.removeConstraint(closeButtonTop!)
-      view.removeConstraint(closeButtonRight!)
-
-      closeButtonTop = NSLayoutConstraint(item: closeButton, attribute: .Top,
-        relatedBy: .Equal, toItem: view, attribute: .Top,
-        multiplier: 1, constant: 16)
-
-      closeButtonRight = NSLayoutConstraint(item: closeButton, attribute: .Right,
-        relatedBy: .Equal, toItem: view, attribute: .Right,
-        multiplier: 1, constant: -17)
-
-      view.addConstraint(closeButtonTop!)
-      view.addConstraint(closeButtonRight!)
       transitionManager.panGestureRecognizer.enabled = true
-
-      view.removeConstraint(pageLabelAlternative!)
-      view.removeConstraint(pageLabelBottom!)
-
-      pageLabelAlternative = NSLayoutConstraint(item: pageLabel, attribute: .CenterX,
-        relatedBy: .Equal, toItem: view, attribute: .CenterX,
-        multiplier: 1, constant: 0)
-
-      pageLabelBottom = NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
-        relatedBy: .Equal, toItem: view, attribute: .Bottom,
-        multiplier: 1, constant: pageLabelBottomConstant)
-
-      view.addConstraint(pageLabelAlternative!)
-      view.addConstraint(pageLabelBottom!)
     }
 
     if UIDevice.currentDevice().orientation != UIDeviceOrientation.PortraitUpsideDown {
@@ -320,26 +284,7 @@ public class LightboxController: UIViewController {
     return transform
   }
 
-  // MARK: - Autolayout
-
-  func setupConstraints() {
-    let attributes: [NSLayoutAttribute] = [.CenterX, .CenterY]
-
-    attributes.map { self.view.addConstraint(NSLayoutConstraint(item: self.collectionView, attribute: $0,
-      relatedBy: .Equal, toItem: self.view, attribute: $0,
-      multiplier: 1, constant: 0)) }
-
-    collectionViewHeight = NSLayoutConstraint(item: collectionView, attribute: .Height,
-      relatedBy: .Equal, toItem: view, attribute: .Height,
-      multiplier: 1, constant: 0)
-
-    collectionViewWidth = NSLayoutConstraint(item: collectionView, attribute: .Width,
-      relatedBy: .Equal, toItem: view, attribute: .Width,
-      multiplier: 1, constant: 0)
-
-    view.addConstraint(collectionViewHeight!)
-    view.addConstraint(collectionViewWidth!)
-    
+  private func standardPageLabelConstraints() {
     pageLabelAlternative = NSLayoutConstraint(item: pageLabel, attribute: .CenterX,
       relatedBy: .Equal, toItem: view, attribute: .CenterX,
       multiplier: 1, constant: 0)
@@ -350,7 +295,21 @@ public class LightboxController: UIViewController {
 
     view.addConstraint(pageLabelAlternative!)
     view.addConstraint(pageLabelBottom!)
+  }
 
+  private func standardCollectionViewConstraints() {
+    collectionViewWidth = NSLayoutConstraint(item: collectionView, attribute: .Width,
+      relatedBy: .Equal, toItem: view, attribute: .Width,
+      multiplier: 1, constant: 0)
+
+    collectionSize = CGSizeMake(view.frame.width, view.frame.height)
+    collectionView.reloadData()
+
+    view.addConstraint(collectionViewHeight!)
+    view.addConstraint(collectionViewWidth!)
+  }
+
+  private func standardCloseButtonConstraints() {
     closeButtonTop = NSLayoutConstraint(item: closeButton, attribute: .Top,
       relatedBy: .Equal, toItem: view, attribute: .Top,
       multiplier: 1, constant: 16)
@@ -361,6 +320,20 @@ public class LightboxController: UIViewController {
 
     view.addConstraint(closeButtonTop!)
     view.addConstraint(closeButtonRight!)
+  }
+
+  // MARK: - Autolayout
+
+  func setupConstraints() {
+    let attributes: [NSLayoutAttribute] = [.CenterX, .CenterY]
+
+    attributes.map { self.view.addConstraint(NSLayoutConstraint(item: self.collectionView, attribute: $0,
+      relatedBy: .Equal, toItem: self.view, attribute: $0,
+      multiplier: 1, constant: 0)) }
+
+    standardCollectionViewConstraints()
+    standardPageLabelConstraints()
+    standardCloseButtonConstraints()
     
     view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Width,
       relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,

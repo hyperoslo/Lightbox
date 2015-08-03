@@ -39,14 +39,9 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
     controller.view.backgroundColor = .blackColor()
     controller.view.alpha = show ? 1 : 0.95
     controller.collectionView.alpha = show ? 1 : 0
-    controller.pageLabel.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 250)
-    controller.closeButton.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -250)
+    controller.pageLabel.alpha = show ? 1 : 0
+    controller.closeButton.alpha = show ? 1 : 0
     lightboxController = controller
-
-    if sourceViewCell != nil {
-      self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
-        UIScreen.mainScreen().bounds.width/2, UIScreen.mainScreen().bounds.height/2)
-    }
 
     if presentingViewController {
       controller.collectionView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.5, 0.5)

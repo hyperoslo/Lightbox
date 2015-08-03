@@ -204,12 +204,27 @@ public class LightboxController: UIViewController {
       standardCollectionViewConstraints()
       standardCloseButtonConstraints()
       standardPageLabelConstraints()
+      collectionView.alpha = 0
 
       transitionManager.panGestureRecognizer.enabled = true
     }
 
     if UIDevice.currentDevice().orientation != UIDeviceOrientation.PortraitUpsideDown {
-      UIView.animateWithDuration(0.5, animations: { [unowned self] in
+      UIView.animateWithDuration(0.1, animations: { [unowned self] in
+        [self.collectionView, self.closeButton, self.pageLabel].map { $0.alpha = 0 }
+        }, completion: { finished in
+          [self.collectionView, self.closeButton, self.pageLabel].map { $0.transform = transform }
+          let indexPath = NSIndexPath(forItem: self.page, inSection: 0)
+          self.collectionView.scrollToItemAtIndexPath(indexPath,
+            atScrollPosition: UICollectionViewScrollPosition.allZeros, animated: false)
+          UIView.animateWithDuration(0.3, animations: { [unowned self] in
+            [self.collectionView, self.closeButton, self.pageLabel].map { $0.alpha = 1 }
+          })
+      })
+    }
+
+    if UIDevice.currentDevice().orientation != UIDeviceOrientation.PortraitUpsideDown {
+      UIView.animateWithDuration(0.3, animations: { [unowned self] in
         self.collectionView.transform = transform
         self.closeButton.transform = transform
         self.pageLabel.transform = transform
@@ -366,6 +381,11 @@ extension LightboxController {
 
     collectionSize = size
     collectionView.reloadData()
+    collectionView.alpha = 0
+
+    let indexPath = NSIndexPath(forItem: page, inSection: 0)
+    collectionView.scrollToItemAtIndexPath(indexPath,
+      atScrollPosition: UICollectionViewScrollPosition.allZeros, animated: false)
 
     return transform
   }

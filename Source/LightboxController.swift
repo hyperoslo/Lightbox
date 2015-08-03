@@ -143,6 +143,8 @@ public class LightboxController: UIViewController {
     //transitioningDelegate = transitionManager
     transitionManager.delegate = self
 
+    view.backgroundColor = UIColor.blackColor()
+
     NSNotificationCenter.defaultCenter().addObserver(
       self,
       selector: "deviceDidRotate",
@@ -191,6 +193,9 @@ public class LightboxController: UIViewController {
 
       view.addConstraint(collectionViewHeight!)
       view.addConstraint(collectionViewWidth!)
+
+      collectionSize = size
+      collectionView.reloadData()
     } else if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight {
       transform = CGAffineTransformMakeRotation(-1.57)
       size = CGSizeMake(view.frame.height, view.frame.width)
@@ -208,11 +213,31 @@ public class LightboxController: UIViewController {
 
       view.addConstraint(collectionViewHeight!)
       view.addConstraint(collectionViewWidth!)
+
+      collectionSize = size
+      collectionView.reloadData()
+    } else if UIDevice.currentDevice().orientation == UIDeviceOrientation.FaceUp {
+      view.removeConstraint(collectionViewHeight!)
+      view.removeConstraint(collectionViewWidth!)
+
+      collectionViewHeight = NSLayoutConstraint(item: collectionView, attribute: .Height,
+        relatedBy: .Equal, toItem: view, attribute: .Height,
+        multiplier: 1, constant: 0)
+
+      collectionViewWidth = NSLayoutConstraint(item: collectionView, attribute: .Width,
+        relatedBy: .Equal, toItem: view, attribute: .Width,
+        multiplier: 1, constant: 0)
+
+      collectionSize = size
+      collectionView.reloadData()
+
+      view.addConstraint(collectionViewHeight!)
+      view.addConstraint(collectionViewWidth!)
     }
 
-    collectionSize = size
-    collectionView.reloadData()
-    collectionView.transform = transform
+    UIView.animateWithDuration(0.4, animations: { [unowned self] in
+      self.collectionView.transform = transform
+    })
   }
 
   // MARK: - Autolayout

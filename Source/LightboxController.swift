@@ -148,11 +148,16 @@ public class LightboxController: UIViewController {
 
     view.backgroundColor = UIColor.blackColor()
 
-    NSNotificationCenter.defaultCenter().addObserver(
-      self,
-      selector: "deviceDidRotate",
-      name: UIDeviceOrientationDidChangeNotification,
-      object: nil)
+    let orientationsSupported: [String] = NSBundle.mainBundle().objectForInfoDictionaryKey("UISupportedInterfaceOrientations") as! [String]
+
+    if orientationsSupported.first == "UIInterfaceOrientationPortrait"
+      && orientationsSupported.count == 1 {
+      NSNotificationCenter.defaultCenter().addObserver(
+        self,
+        selector: "deviceDidRotate",
+        name: UIDeviceOrientationDidChangeNotification,
+        object: nil)
+    }
 
     setupConstraints()
 
@@ -167,9 +172,14 @@ public class LightboxController: UIViewController {
         withAnimation: .Fade)
     }
 
-    if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft
-      || UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight {
-        deviceDidRotate()
+    let orientationsSupported: [String] = NSBundle.mainBundle().objectForInfoDictionaryKey("UISupportedInterfaceOrientations") as! [String]
+
+    if orientationsSupported.first == "UIInterfaceOrientationPortrait"
+      && orientationsSupported.count == 1 {
+        if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft
+          || UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight {
+            deviceDidRotate()
+        }
     }
   }
 

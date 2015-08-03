@@ -23,8 +23,13 @@ public class LightboxController: UIViewController {
     }()
 
   var images = [String]()
-  var collectionSize = CGSizeZero
+  public var collectionSize = CGSizeZero
   var pageLabelBottom: NSLayoutConstraint?
+  var pageLabelAlternative: NSLayoutConstraint?
+  var collectionViewHeight: NSLayoutConstraint?
+  var collectionViewWidth: NSLayoutConstraint?
+  var closeButtonTop: NSLayoutConstraint?
+  var closeButtonRight: NSLayoutConstraint?
   var physics = false
 
   lazy var config: Config = {
@@ -60,7 +65,7 @@ public class LightboxController: UIViewController {
       collectionViewLayout: self.collectionViewLayout)
 
     collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
-    collectionView.backgroundColor = .clearColor()
+    collectionView.backgroundColor = .blackColor()
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.decelerationRate = UIScrollViewDecelerationRateFast
@@ -135,11 +140,19 @@ public class LightboxController: UIViewController {
   public override func viewDidLoad() {
     super.viewDidLoad()
 
-    collectionSize = view.bounds.size
+    collectionSize = CGSizeMake(view.frame.width, view.frame.height)
     [collectionView, pageLabel, closeButton].map { self.view.addSubview($0) }
 
     transitioningDelegate = transitionManager
     transitionManager.delegate = self
+
+    view.backgroundColor = UIColor.blackColor()
+
+    NSNotificationCenter.defaultCenter().addObserver(
+      self,
+      selector: "deviceDidRotate",
+      name: UIDeviceOrientationDidChangeNotification,
+      object: nil)
 
     setupConstraints()
 
@@ -153,39 +166,59 @@ public class LightboxController: UIViewController {
       UIApplication.sharedApplication().setStatusBarHidden(true,
         withAnimation: .Fade)
     }
+
+    if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft
+      || UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight {
+        deviceDidRotate()
+    }
+  }
+
+  // MARK: - Handle rotation
+
+  func deviceDidRotate() {
+    var transform = CGAffineTransformIdentity
+
+    if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft {
+      transform = moveCollectionView(true)
+      moveViews(true)
+      transitionManager.panGestureRecognizer.enabled = false
+    } else if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight {
+      transform = moveCollectionView(false)
+      moveViews(false)
+      transitionManager.panGestureRecognizer.enabled = false
+    } else if UIDevice.currentDevice().orientation == UIDeviceOrientation.Portrait {
+      [collectionViewHeight!, collectionViewWidth!,
+        closeButtonTop!, closeButtonRight!,
+        pageLabelAlternative!, pageLabelBottom!].map { self.view.removeConstraint($0) }
+
+      standardCollectionViewConstraints()
+      standardCloseButtonConstraints()
+      standardPageLabelConstraints()
+
+      transitionManager.panGestureRecognizer.enabled = true
+    }
+
+    if UIDevice.currentDevice().orientation != UIDeviceOrientation.PortraitUpsideDown {
+      UIView.animateWithDuration(0.5, animations: { [unowned self] in
+        self.collectionView.transform = transform
+        self.closeButton.transform = transform
+        self.pageLabel.transform = transform
+        })
+    }
   }
 
   // MARK: - Autolayout
 
   func setupConstraints() {
-    let attributes: [NSLayoutAttribute] = [.Leading, .Trailing, .Top, .Bottom]
+    let attributes: [NSLayoutAttribute] = [.CenterX, .CenterY]
 
-    attributes.map {
-      self.view.addConstraint(NSLayoutConstraint(item: self.collectionView,
-        attribute: $0, relatedBy: .Equal, toItem: self.view, attribute: $0,
-        multiplier: 1, constant: 0))
-    }
-    
-    view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Leading,
-      relatedBy: .Equal, toItem: view, attribute: .Leading,
-      multiplier: 1, constant: 0))
+    attributes.map { self.view.addConstraint(NSLayoutConstraint(item: self.collectionView, attribute: $0,
+      relatedBy: .Equal, toItem: self.view, attribute: $0,
+      multiplier: 1, constant: 0)) }
 
-    view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Trailing,
-      relatedBy: .Equal, toItem: view, attribute: .Trailing,
-      multiplier: 1, constant: 0))
-
-    pageLabelBottom = NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
-      relatedBy: .Equal, toItem: view, attribute: .Bottom,
-      multiplier: 1, constant: pageLabelBottomConstant)
-    view.addConstraint(pageLabelBottom!)
-    
-    view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Top,
-      relatedBy: .Equal, toItem: view, attribute: .Top,
-      multiplier: 1, constant: 16))
-    
-    view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Trailing,
-      relatedBy: .Equal, toItem: view, attribute: .Trailing,
-      multiplier: 1, constant: -17))
+    standardCollectionViewConstraints()
+    standardPageLabelConstraints()
+    standardCloseButtonConstraints()
     
     view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Width,
       relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
@@ -291,5 +324,118 @@ extension LightboxController: LightboxTransitionDelegate {
 
   func transitionDidDismissController(controller: LightboxController) {
     dismissalDelegate?.lightboxControllerDidDismiss(controller)
+  }
+}
+
+// MARK: Custom autolayout
+
+extension LightboxController {
+
+  private func moveCollectionView(left: Bool) -> CGAffineTransform {
+    let value: CGFloat = left ? 1.57 : -1.57
+    let transform = CGAffineTransformMakeRotation(value)
+    let size = CGSizeMake(view.frame.height, view.frame.width)
+
+    view.removeConstraint(collectionViewHeight!)
+    view.removeConstraint(collectionViewWidth!)
+
+    collectionViewHeight = NSLayoutConstraint(item: collectionView, attribute: .Height,
+      relatedBy: .Equal, toItem: view, attribute: .Width,
+      multiplier: 1, constant: 0)
+
+    collectionViewWidth = NSLayoutConstraint(item: collectionView, attribute: .Width,
+      relatedBy: .Equal, toItem: view, attribute: .Height,
+      multiplier: 1, constant: 0)
+
+    view.addConstraint(collectionViewHeight!)
+    view.addConstraint(collectionViewWidth!)
+
+    collectionSize = size
+    collectionView.reloadData()
+
+    return transform
+  }
+
+  private func standardPageLabelConstraints() {
+    pageLabelAlternative = NSLayoutConstraint(item: pageLabel, attribute: .CenterX,
+      relatedBy: .Equal, toItem: view, attribute: .CenterX,
+      multiplier: 1, constant: 0)
+
+    pageLabelBottom = NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
+      relatedBy: .Equal, toItem: view, attribute: .Bottom,
+      multiplier: 1, constant: pageLabelBottomConstant)
+
+    view.addConstraint(pageLabelAlternative!)
+    view.addConstraint(pageLabelBottom!)
+  }
+
+  private func standardCollectionViewConstraints() {
+    collectionViewWidth = NSLayoutConstraint(item: collectionView, attribute: .Width,
+      relatedBy: .Equal, toItem: view, attribute: .Width,
+      multiplier: 1, constant: 0)
+
+    collectionViewHeight = NSLayoutConstraint(item: collectionView, attribute: .Height,
+      relatedBy: .Equal, toItem: view, attribute: .Height,
+      multiplier: 1, constant: 0)
+
+    collectionSize = CGSizeMake(view.frame.width, view.frame.height)
+    collectionView.reloadData()
+
+    view.addConstraint(collectionViewWidth!)
+    view.addConstraint(collectionViewHeight!)
+  }
+
+  private func standardCloseButtonConstraints() {
+    closeButtonTop = NSLayoutConstraint(item: closeButton, attribute: .Top,
+      relatedBy: .Equal, toItem: view, attribute: .Top,
+      multiplier: 1, constant: 16)
+
+    closeButtonRight = NSLayoutConstraint(item: closeButton, attribute: .Right,
+      relatedBy: .Equal, toItem: view, attribute: .Right,
+      multiplier: 1, constant: -17)
+
+    view.addConstraint(closeButtonTop!)
+    view.addConstraint(closeButtonRight!)
+  }
+
+  private func moveViews(left: Bool) {
+    [closeButtonTop!, closeButtonRight!,
+      pageLabelAlternative!, pageLabelBottom!].map { self.view.removeConstraint($0) }
+
+    closeButtonRight = left ?
+      NSLayoutConstraint(item: closeButton, attribute: .Right,
+        relatedBy: .Equal, toItem: view, attribute: .Right,
+        multiplier: 1, constant: 0) :
+      NSLayoutConstraint(item: closeButton, attribute: .Left,
+        relatedBy: .Equal, toItem: view, attribute: .Left,
+        multiplier: 1, constant: 0)
+
+    closeButtonTop = left
+      ? NSLayoutConstraint(item: closeButton, attribute: .Bottom,
+        relatedBy: .Equal, toItem: view, attribute: .Bottom,
+        multiplier: 1, constant: -20)
+      : NSLayoutConstraint(item: closeButton, attribute: .Top,
+        relatedBy: .Equal, toItem: view, attribute: .Top,
+        multiplier: 1, constant: 20)
+
+    pageLabelBottom = left
+      ? NSLayoutConstraint(item: pageLabel, attribute: .Left,
+        relatedBy: .Equal, toItem: view, attribute: .Left,
+        multiplier: 1, constant: 20)
+      : NSLayoutConstraint(item: pageLabel, attribute: .Top,
+        relatedBy: .Equal, toItem: view, attribute: .Top,
+        multiplier: 1, constant: 20)
+
+    pageLabelAlternative = left
+      ? NSLayoutConstraint(item: pageLabel, attribute: .Bottom,
+        relatedBy: .Equal, toItem: view, attribute: .Bottom,
+        multiplier: 1, constant: -20)
+      : NSLayoutConstraint(item: pageLabel, attribute: .Right,
+        relatedBy: .Equal, toItem: view, attribute: .Right,
+        multiplier: 1, constant: -20)
+
+
+    [closeButtonTop!, closeButtonRight!,
+      pageLabelAlternative!, pageLabelBottom!].map { self.view.addConstraint($0) }
   }
 }

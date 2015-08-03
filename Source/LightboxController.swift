@@ -25,8 +25,6 @@ public class LightboxController: UIViewController {
   var images = [String]()
   var collectionSize = CGSizeZero
   var pageLabelBottom: NSLayoutConstraint?
-  var collectionViewTop: NSLayoutConstraint?
-  var collectionViewRight: NSLayoutConstraint?
   var collectionViewHeight: NSLayoutConstraint?
   var collectionViewWidth: NSLayoutConstraint?
   var physics = false
@@ -64,7 +62,7 @@ public class LightboxController: UIViewController {
       collectionViewLayout: self.collectionViewLayout)
 
     collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
-    collectionView.backgroundColor = .clearColor()
+    collectionView.backgroundColor = .blackColor()
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.decelerationRate = UIScrollViewDecelerationRateFast
@@ -139,7 +137,7 @@ public class LightboxController: UIViewController {
   public override func viewDidLoad() {
     super.viewDidLoad()
 
-    collectionSize = CGSizeMake(view.frame.height, view.frame.width)
+    collectionSize = CGSizeMake(view.frame.width, view.frame.height)
     [collectionView, pageLabel, closeButton].map { self.view.addSubview($0) }
 
     //transitioningDelegate = transitionManager
@@ -166,7 +164,7 @@ public class LightboxController: UIViewController {
 
     if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft
       || UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight {
-        //deviceDidRotate()
+        deviceDidRotate()
     }
   }
 
@@ -174,71 +172,68 @@ public class LightboxController: UIViewController {
 
   func deviceDidRotate() {
     var transform = CGAffineTransformIdentity
+    var size = CGSizeMake(view.frame.width, view.frame.height)
 
     if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft {
       transform = CGAffineTransformMakeRotation(1.57)
-      //view.removeConstraints(collectionView.constraints())
-      collectionSize = CGSizeMake(view.frame.height, view.frame.width)
-      view.removeConstraint(collectionViewRight!)
-      view.removeConstraint(collectionViewTop!)
+      size = CGSizeMake(view.frame.height, view.frame.width)
+
       view.removeConstraint(collectionViewHeight!)
       view.removeConstraint(collectionViewWidth!)
 
-      collectionViewRight = NSLayoutConstraint(item: collectionView, attribute: .Top,
-        relatedBy: .Equal, toItem: view, attribute: .Top,
-        multiplier: 1, constant: 0)
-
-      collectionViewTop = NSLayoutConstraint(item: collectionView, attribute: .Right,
-        relatedBy: .Equal, toItem: view, attribute: .Right,
-        multiplier: 1, constant: 0)
-
-      collectionViewHeight = NSLayoutConstraint(item: collectionView, attribute: .Width,
+      collectionViewHeight = NSLayoutConstraint(item: collectionView, attribute: .Height,
         relatedBy: .Equal, toItem: view, attribute: .Width,
         multiplier: 1, constant: 0)
 
-      collectionViewWidth = NSLayoutConstraint(item: collectionView, attribute: .Height,
+      collectionViewWidth = NSLayoutConstraint(item: collectionView, attribute: .Width,
         relatedBy: .Equal, toItem: view, attribute: .Height,
         multiplier: 1, constant: 0)
-      view.addConstraint(collectionViewRight!)
-      view.addConstraint(collectionViewTop!)
+
       view.addConstraint(collectionViewHeight!)
       view.addConstraint(collectionViewWidth!)
-
-      collectionView.transform = CGAffineTransformMakeRotation(1.57)
-
     } else if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight {
       transform = CGAffineTransformMakeRotation(-1.57)
+      size = CGSizeMake(view.frame.height, view.frame.width)
 
+      view.removeConstraint(collectionViewHeight!)
+      view.removeConstraint(collectionViewWidth!)
+
+      collectionViewHeight = NSLayoutConstraint(item: collectionView, attribute: .Height,
+        relatedBy: .Equal, toItem: view, attribute: .Width,
+        multiplier: 1, constant: 0)
+
+      collectionViewWidth = NSLayoutConstraint(item: collectionView, attribute: .Width,
+        relatedBy: .Equal, toItem: view, attribute: .Height,
+        multiplier: 1, constant: 0)
+
+      view.addConstraint(collectionViewHeight!)
+      view.addConstraint(collectionViewWidth!)
     }
 
-    let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-    collectionView.reloadItemsAtIndexPaths([indexPath])
+    collectionSize = size
+    collectionView.reloadData()
+    collectionView.transform = transform
   }
 
   // MARK: - Autolayout
 
   func setupConstraints() {
-    collectionViewRight = NSLayoutConstraint(item: collectionView, attribute: .CenterX,
-      relatedBy: .Equal, toItem: view, attribute: .CenterX,
-      multiplier: 1, constant: 0)
+    let attributes: [NSLayoutAttribute] = [.CenterX, .CenterY]
 
-    collectionViewTop = NSLayoutConstraint(item: collectionView, attribute: .CenterY,
-      relatedBy: .Equal, toItem: view, attribute: .CenterY,
-      multiplier: 1, constant: 0)
+    attributes.map { self.view.addConstraint(NSLayoutConstraint(item: self.collectionView, attribute: $0,
+      relatedBy: .Equal, toItem: self.view, attribute: $0,
+      multiplier: 1, constant: 0)) }
 
     collectionViewHeight = NSLayoutConstraint(item: collectionView, attribute: .Height,
-      relatedBy: .Equal, toItem: view, attribute: .Width,
+      relatedBy: .Equal, toItem: view, attribute: .Height,
       multiplier: 1, constant: 0)
 
     collectionViewWidth = NSLayoutConstraint(item: collectionView, attribute: .Width,
-      relatedBy: .Equal, toItem: view, attribute: .Height,
+      relatedBy: .Equal, toItem: view, attribute: .Width,
       multiplier: 1, constant: 0)
-    view.addConstraint(collectionViewRight!)
-    view.addConstraint(collectionViewTop!)
+
     view.addConstraint(collectionViewHeight!)
     view.addConstraint(collectionViewWidth!)
-    collectionView.backgroundColor = UIColor.redColor()
-    collectionView.transform = CGAffineTransformMakeRotation(1.57)
     
     view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Leading,
       relatedBy: .Equal, toItem: view, attribute: .Leading,

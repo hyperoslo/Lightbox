@@ -342,10 +342,10 @@ extension LightboxController: UIScrollViewDelegate {
   }
 
   public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-    let cell = collectionView.visibleCells().first as! LightboxViewCell
-
-    cell.parentViewController = self
-    cell.setupTransitionManager()
+    if let cell = collectionView.visibleCells().first as? LightboxViewCell {
+      cell.parentViewController = self
+      cell.setupTransitionManager()
+    }
   }
 }
 

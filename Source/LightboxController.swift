@@ -115,6 +115,26 @@ public class LightboxController: UIViewController {
     return button
     }()
 
+  lazy var deleteButton: UIButton = { [unowned self] in
+    let title = NSAttributedString(
+      string: self.config.deleteButton.text,
+      attributes: self.config.deleteButton.textAttributes)
+    let button = UIButton.buttonWithType(.System) as! UIButton
+
+    button.tintColor = self.config.deleteButton.textAttributes[NSForegroundColorAttributeName] as? UIColor
+    button.setTranslatesAutoresizingMaskIntoConstraints(false)
+    button.setAttributedTitle(title, forState: .Normal)
+    button.alpha = self.config.deleteButton.alpha
+    button.addTarget(self, action: "deleteButtonDidPress:",
+      forControlEvents: .TouchUpInside)
+
+    if let image = self.config.deleteButton.image {
+      button.setBackgroundImage(image, forState: .Normal)
+    }
+
+    return button
+    }()
+
   // MARK: Initializers
 
   public required init(images: [String], config: Config? = nil,
@@ -141,7 +161,7 @@ public class LightboxController: UIViewController {
     super.viewDidLoad()
 
     collectionSize = CGSizeMake(view.frame.width, view.frame.height)
-    [collectionView, pageLabel, closeButton].map { self.view.addSubview($0) }
+    [collectionView, pageLabel, closeButton, deleteButton].map { self.view.addSubview($0) }
 
     transitioningDelegate = transitionManager
     transitionManager.delegate = self
@@ -248,7 +268,8 @@ public class LightboxController: UIViewController {
     standardCollectionViewConstraints()
     standardPageLabelConstraints()
     standardCloseButtonConstraints()
-    
+    standardDeleteButtonConstraints()
+
     view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Width,
       relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
       multiplier: 1, constant: config.closeButton.size.width))
@@ -256,6 +277,14 @@ public class LightboxController: UIViewController {
     view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Height,
       relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
       multiplier: 1, constant: config.closeButton.size.height))
+
+    view.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .Width,
+      relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
+      multiplier: 1, constant: config.deleteButton.size.width))
+
+    view.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .Height,
+      relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
+      multiplier: 1, constant: config.deleteButton.size.height))
   }
 
   // MARK: - Orientation
@@ -311,6 +340,33 @@ public class LightboxController: UIViewController {
   
   func closeButtonDidTouchUpInside(sender: UIButton) {
     dismissalDelegate?.lightboxControllerDidDismiss(self)
+  }
+
+  func deleteButtonDidPress(button: UIButton) {
+    var indexPath = NSIndexPath()
+    let index = page
+
+    if page < images.count - 1 {
+      indexPath = NSIndexPath(forRow: page + 1, inSection: 0)
+    } else if page == images.count - 1 && images.count != 1 {
+      indexPath = NSIndexPath(forRow: page - 1, inSection: 0)
+    } else {
+      images.removeAtIndex(page)
+      dismissalDelegate?.lightboxControllerDidDismiss(self)
+      dismissViewControllerAnimated(true, completion: nil)
+      collectionView.reloadData()
+    }
+
+    if images.count != 0 {
+      collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Left, animated: true)
+
+      let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.25 * Double(NSEC_PER_SEC)))
+      dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
+        self.images.removeAtIndex(index)
+        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: .Left, animated: false)
+        self.collectionView.reloadData()
+      }
+    }
   }
 }
 
@@ -430,6 +486,16 @@ extension LightboxController {
 
     view.addConstraint(closeButtonTop!)
     view.addConstraint(closeButtonRight!)
+  }
+
+  private func standardDeleteButtonConstraints() {
+    view.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .Top,
+      relatedBy: .Equal, toItem: view, attribute: .Top,
+      multiplier: 1, constant: 14))
+
+    view.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .Left,
+      relatedBy: .Equal, toItem: view, attribute: .Left,
+      multiplier: 1, constant: 15))
   }
 
   private func moveViews(left: Bool) {

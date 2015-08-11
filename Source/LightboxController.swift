@@ -22,7 +22,7 @@ public class LightboxController: UIViewController {
     return manager
     }()
 
-  var images = []
+  public var images = []
   public var collectionSize = CGSizeZero
   var pageLabelBottom: NSLayoutConstraint?
   var pageLabelAlternative: NSLayoutConstraint?
@@ -369,6 +369,7 @@ public class LightboxController: UIViewController {
       array.removeObjectAtIndex(index)
       dismissalDelegate?.lightboxControllerDidDismiss(self)
       dismissViewControllerAnimated(true, completion: nil)
+      images = array
       collectionView.reloadData()
     }
 
@@ -379,6 +380,8 @@ public class LightboxController: UIViewController {
       dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
         array.removeObjectAtIndex(index)
         self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: .Left, animated: false)
+        self.images = array
+        self.page = index
         self.collectionView.reloadData()
       }
     }

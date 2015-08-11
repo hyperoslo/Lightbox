@@ -509,7 +509,7 @@ extension LightboxController {
   private func standardDeleteButtonConstraints() {
     view.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .Top,
       relatedBy: .Equal, toItem: view, attribute: .Top,
-      multiplier: 1, constant: 14))
+      multiplier: 1, constant: 16))
 
     view.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .Left,
       relatedBy: .Equal, toItem: view, attribute: .Left,

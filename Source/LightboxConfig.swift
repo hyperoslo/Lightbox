@@ -13,6 +13,7 @@ public struct Config {
   public var backgroundColor = UIColor.clearColor()
   public var pageIndicator = PageIndicator()
   public var closeButton = CloseButton()
+  public var deleteButton = DeleteButton()
   public var zoom = Zoom()
   public var remoteImages = false
   public var spacing: CGFloat = 20
@@ -67,16 +68,17 @@ public struct Config {
 
   public struct DeleteButton {
     public var enabled = true
+    public var alpha: CGFloat = 1
     public var textAttributes = [
       NSFontAttributeName: UIFont.boldSystemFontOfSize(12),
-      NSForegroundColorAttributeName: UIColor.redColor(),
+      NSForegroundColorAttributeName: UIColor(red:0.99, green:0.26, blue:0.18, alpha:1),
       NSParagraphStyleAttributeName: {
         var style = NSMutableParagraphStyle()
         style.alignment = .Center
         return style
         }()
     ]
-    public var size = CGSize(width: 75, height: 25)
+    public var size = CGSize(width: 70, height: 25)
     public var text = NSLocalizedString("Delete", comment: "")
     public var image: UIImage?
   }

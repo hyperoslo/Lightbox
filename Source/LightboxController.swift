@@ -343,7 +343,30 @@ public class LightboxController: UIViewController {
   }
 
   func deleteButtonDidPress(button: UIButton) {
-    // TODO: Delete the stuff
+    var indexPath = NSIndexPath()
+    let index = page
+
+    if page < images.count - 1 {
+      indexPath = NSIndexPath(forRow: page + 1, inSection: 0)
+    } else if page == images.count - 1 && images.count != 1 {
+      indexPath = NSIndexPath(forRow: page - 1, inSection: 0)
+    } else {
+      images.removeAtIndex(page)
+      dismissalDelegate?.lightboxControllerDidDismiss(self)
+      dismissViewControllerAnimated(true, completion: nil)
+      collectionView.reloadData()
+    }
+
+    if images.count != 0 {
+      collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Left, animated: true)
+
+      let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.25 * Double(NSEC_PER_SEC)))
+      dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
+        self.images.removeAtIndex(index)
+        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: .Left, animated: false)
+        self.collectionView.reloadData()
+      }
+    }
   }
 }
 

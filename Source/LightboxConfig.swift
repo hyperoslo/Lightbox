@@ -65,6 +65,22 @@ public struct Config {
     public var image: UIImage?
   }
 
+  public struct DeleteButton {
+    public var enabled = true
+    public var textAttributes = [
+      NSFontAttributeName: UIFont.boldSystemFontOfSize(12),
+      NSForegroundColorAttributeName: UIColor.redColor(),
+      NSParagraphStyleAttributeName: {
+        var style = NSMutableParagraphStyle()
+        style.alignment = .Center
+        return style
+        }()
+    ]
+    public var size = CGSize(width: 75, height: 25)
+    public var text = NSLocalizedString("Delete", comment: "")
+    public var image: UIImage?
+  }
+
   public struct Zoom {
     public var minimumScale: CGFloat = 1.0
     public var maximumScale: CGFloat = 3.0

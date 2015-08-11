@@ -155,7 +155,12 @@ public class LightboxController: UIViewController {
     pageDelegate: LightboxControllerPageDelegate? = nil,
     dismissalDelegate: LightboxControllerDismissalDelegate? = nil) {
       self.images = imagesUI
+      self.pageDelegate = pageDelegate
+      self.dismissalDelegate = dismissalDelegate
 
+      if let config = config {
+        LightboxConfig.sharedInstance.config = config
+      }
 
       super.init(nibName: nil, bundle: nil)
   }

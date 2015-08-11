@@ -22,7 +22,7 @@ public class LightboxController: UIViewController {
     return manager
     }()
 
-  var images = [String]()
+  var images = [AnyObject]()
   public var collectionSize = CGSizeZero
   var pageLabelBottom: NSLayoutConstraint?
   var pageLabelAlternative: NSLayoutConstraint?

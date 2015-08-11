@@ -68,7 +68,7 @@ public struct Config {
 
   public struct DeleteButton {
     public var enabled = true
-    public var alpha: CGFloat = 1
+    public var alpha: CGFloat = 0
     public var textAttributes = [
       NSFontAttributeName: UIFont.boldSystemFontOfSize(12),
       NSForegroundColorAttributeName: UIColor(red:0.99, green:0.26, blue:0.18, alpha:1),

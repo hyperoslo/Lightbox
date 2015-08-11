@@ -49,8 +49,9 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
         }
 
         controller.pageLabel.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 250)
-        controller.closeButton.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -250)
-        controller.deleteButton.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -250)
+        [controller.closeButton, controller.deleteButton].map { $0.transform = show
+          ? CGAffineTransformIdentity
+          : CGAffineTransformMakeTranslation(0, -250) }
     }
 
     if presentingViewController {

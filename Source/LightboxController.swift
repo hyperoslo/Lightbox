@@ -22,7 +22,7 @@ public class LightboxController: UIViewController {
     return manager
     }()
 
-  var images = [AnyObject]()
+  var images = []
   public var collectionSize = CGSizeZero
   var pageLabelBottom: NSLayoutConstraint?
   var pageLabelAlternative: NSLayoutConstraint?
@@ -148,6 +148,15 @@ public class LightboxController: UIViewController {
         LightboxConfig.sharedInstance.config = config
       }
     
+      super.init(nibName: nil, bundle: nil)
+  }
+
+  public required init(imagesUI: [UIImage], config: Config? = nil,
+    pageDelegate: LightboxControllerPageDelegate? = nil,
+    dismissalDelegate: LightboxControllerDismissalDelegate? = nil) {
+      self.images = imagesUI
+
+
       super.init(nibName: nil, bundle: nil)
   }
 

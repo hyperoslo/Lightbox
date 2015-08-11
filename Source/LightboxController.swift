@@ -115,7 +115,7 @@ public class LightboxController: UIViewController {
     return button
     }()
 
-  lazy var deleteButton: UIButton = {
+  lazy var deleteButton: UIButton = { [unowned self] in
     let title = NSAttributedString(
       string: self.config.deleteButton.text,
       attributes: self.config.deleteButton.textAttributes)

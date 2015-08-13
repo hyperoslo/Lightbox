@@ -40,6 +40,9 @@ public class LightboxController: UIViewController {
     return collectionSize.width < collectionSize.height ? -20 : -2
   }
 
+  var currentOrientation: UIDeviceOrientation?
+  var beforeFaceOrientation: UIDeviceOrientation?
+
   var rotating = false
 
   public private(set) var page = 0 {
@@ -184,6 +187,9 @@ public class LightboxController: UIViewController {
 
     let orientationsSupported: [String] = NSBundle.mainBundle().objectForInfoDictionaryKey("UISupportedInterfaceOrientations") as! [String]
 
+    currentOrientation = UIDevice.currentDevice().orientation
+    beforeFaceOrientation = UIDevice.currentDevice().orientation
+
     if orientationsSupported.first == "UIInterfaceOrientationPortrait"
       && orientationsSupported.count == 1 {
       NSNotificationCenter.defaultCenter().addObserver(
@@ -220,6 +226,22 @@ public class LightboxController: UIViewController {
   // MARK: - Handle rotation
 
   func deviceDidRotate() {
+    let orientation = UIDevice.currentDevice().orientation
+    let orientations: [UIDeviceOrientation] = [.FaceUp, .FaceDown]
+    let currentIsFace = orientations.filter({ $0 == self.currentOrientation }).first != nil
+    let nextIsFace = orientations.filter({ $0 == orientation }).first != nil
+
+    if nextIsFace {
+      beforeFaceOrientation = currentOrientation
+    }
+    currentOrientation = orientation
+
+    if (!currentIsFace && nextIsFace) ||
+      (currentIsFace && !nextIsFace && orientation == beforeFaceOrientation) {
+      return
+    }
+
+    rotating = true
     var transform = CGAffineTransformIdentity
 
     if UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft {
@@ -253,6 +275,7 @@ public class LightboxController: UIViewController {
             atScrollPosition: UICollectionViewScrollPosition.allZeros, animated: false)
           UIView.animateWithDuration(0.3, animations: { [unowned self] in
             [self.collectionView, self.closeButton, self.pageLabel].map { $0.alpha = 1 }
+            self.rotating = false
           })
       })
     }
@@ -266,7 +289,12 @@ public class LightboxController: UIViewController {
           let indexPath = NSIndexPath(forItem: self.page, inSection: 0)
           self.collectionView.scrollToItemAtIndexPath(indexPath,
             atScrollPosition: UICollectionViewScrollPosition.allZeros, animated: true)
+          self.rotating = false
       })
+    }
+
+    if UIDevice.currentDevice().orientation == UIDeviceOrientation.PortraitUpsideDown {
+      rotating = false
     }
   }
 
@@ -454,12 +482,10 @@ extension LightboxController {
     view.addConstraint(collectionViewWidth!)
 
     collectionSize = size
-    collectionView.reloadData()
     collectionView.alpha = 0
 
-    let indexPath = NSIndexPath(forItem: page, inSection: 0)
-    collectionView.scrollToItemAtIndexPath(indexPath,
-      atScrollPosition: UICollectionViewScrollPosition.allZeros, animated: false)
+    collectionView.collectionViewLayout.invalidateLayout()
+    view.layoutIfNeeded()
 
     return transform
   }

@@ -10,7 +10,7 @@ extension LightboxController: UICollectionViewDataSource {
     let cellIdentifier = LightboxViewCell.reuseIdentifier
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier,
       forIndexPath: indexPath) as! LightboxViewCell
-    let image = images[indexPath.row]
+    let image: AnyObject = images[indexPath.row]
     let config = LightboxConfig.sharedInstance.config
 
     cell.parentViewController = self

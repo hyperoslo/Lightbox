@@ -394,7 +394,9 @@ public class LightboxController: UIViewController {
     } else if page == images.count - 1 && images.count != 1 {
       indexPath = NSIndexPath(forRow: page - 1, inSection: 0)
     } else {
-      array.removeObjectAtIndex(index)
+      if array.count != 0 {
+        array.removeObjectAtIndex(index)
+      }
       images = array
       dismissalDelegate?.lightboxControllerDidDismiss(self)
     }

@@ -394,11 +394,11 @@ public class LightboxController: UIViewController {
     } else if page == images.count - 1 && images.count != 1 {
       indexPath = NSIndexPath(forRow: page - 1, inSection: 0)
     } else {
-      array.removeObjectAtIndex(index)
-      dismissalDelegate?.lightboxControllerDidDismiss(self)
-      dismissViewControllerAnimated(true, completion: nil)
+      if array.count != 0 {
+        array.removeObjectAtIndex(index)
+      }
       images = array
-      collectionView.reloadData()
+      dismissalDelegate?.lightboxControllerDidDismiss(self)
     }
 
     if images.count != 0 {

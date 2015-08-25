@@ -399,6 +399,8 @@ public class LightboxController: UIViewController {
       }
       images = array
       dismissalDelegate?.lightboxControllerDidDismiss(self)
+      collectionView.reloadData()
+      return
     }
 
     if images.count != 0 {

@@ -47,8 +47,10 @@ public class LightboxController: UIViewController {
 
   public private(set) var page = 0 {
     didSet {
+      page = min(images.count - 1, max(0, page))
+
       let text = "\(page + 1)/\(images.count)"
-      
+
       pageLabel.attributedText = NSAttributedString(string: text,
         attributes: config.pageIndicator.textAttributes)
       pageLabel.sizeToFit()

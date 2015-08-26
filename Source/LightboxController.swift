@@ -385,6 +385,7 @@ public class LightboxController: UIViewController {
   }
 
   func deleteButtonDidPress(button: UIButton) {
+    button.enabled = false
     var indexPath = NSIndexPath()
     let index = page
     let array = images.mutableCopy() as! NSMutableArray
@@ -411,6 +412,7 @@ public class LightboxController: UIViewController {
         self.images = array
         self.page = index
         self.collectionView.reloadData()
+        button.enabled = true
       }
     }
   }

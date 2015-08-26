@@ -47,9 +47,7 @@ public class LightboxController: UIViewController {
 
   public private(set) var page = 0 {
     didSet {
-      var result = max(0, page)
-      result = min(images.count - 1, result)
-      page = result
+      page = min(images.count - 1, max(0, page))
 
       let text = "\(page + 1)/\(images.count)"
 

@@ -585,7 +585,7 @@ extension LightboxController {
       : NSLayoutConstraint(item: pageLabel, attribute: .Right,
         relatedBy: .Equal, toItem: view, attribute: .Right,
         multiplier: 1, constant: -20)
-    
+
     [closeButtonTop!, closeButtonRight!,
       pageLabelAlternative!, pageLabelBottom!].map { self.view.addConstraint($0) }
   }

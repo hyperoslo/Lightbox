@@ -5,7 +5,7 @@ public class LightboxViewCell: UICollectionViewCell {
   public static let reuseIdentifier: String = "LightboxViewCell"
 
   var constraintsAdded = false
-  var parentViewController: LightboxController!
+  weak var parentViewController: LightboxController!
 
   public lazy var lightboxView: LightboxView = { [unowned self] in
     let lightboxView = LightboxView(frame: self.bounds)

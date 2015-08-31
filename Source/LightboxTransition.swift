@@ -1,6 +1,6 @@
 import UIKit
 
-protocol LightboxTransitionDelegate {
+protocol LightboxTransitionDelegate: class {
 
   func transitionDidDismissController(controller: LightboxController)
 }
@@ -11,7 +11,7 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
     static let transition: NSTimeInterval = 0.5
   }
 
-  lazy var panGestureRecognizer: UIPanGestureRecognizer = {
+  lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
     let panGestureRecognizer = UIPanGestureRecognizer()
     panGestureRecognizer.addTarget(self, action: "handlePanGesture:")
     panGestureRecognizer.delegate = self
@@ -25,11 +25,11 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
   var attachmentBehavior: UIAttachmentBehavior!
   var gravityBehaviour: UIGravityBehavior!
   var snapBehavior: UISnapBehavior!
-  var sourceViewController: LightboxController!
-  var delegate: LightboxTransitionDelegate?
-  var lightboxController: LightboxController!
+  weak var sourceViewController: LightboxController!
+  weak var delegate: LightboxTransitionDelegate?
+  weak var lightboxController: LightboxController!
 
-  var sourceViewCell: LightboxViewCell! {
+  weak var sourceViewCell: LightboxViewCell! {
     didSet {
       sourceViewCell.addGestureRecognizer(panGestureRecognizer)
     }

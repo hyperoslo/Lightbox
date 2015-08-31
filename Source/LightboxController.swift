@@ -6,16 +6,16 @@ public protocol LightboxControllerPageDelegate: class {
 }
 
 public protocol LightboxControllerDismissalDelegate: class {
-  
+
   func lightboxControllerDidDismiss(controller: LightboxController)
 }
 
 public class LightboxController: UIViewController {
 
-  public var pageDelegate: LightboxControllerPageDelegate?
-  public var dismissalDelegate: LightboxControllerDismissalDelegate?
+  public weak var pageDelegate: LightboxControllerPageDelegate?
+  public weak var dismissalDelegate: LightboxControllerDismissalDelegate?
 
-  lazy var transitionManager: LightboxTransition = {
+  lazy var transitionManager: LightboxTransition = { [unowned self] in
     let manager = LightboxTransition()
     manager.sourceViewController = self
 
@@ -34,7 +34,7 @@ public class LightboxController: UIViewController {
 
   lazy var config: Config = {
     return LightboxConfig.sharedInstance.config
-  }()
+    }()
 
   var pageLabelBottomConstant: CGFloat {
     return collectionSize.width < collectionSize.height ? -20 : -2
@@ -88,25 +88,25 @@ public class LightboxController: UIViewController {
     layout.minimumInteritemSpacing = self.config.spacing
     layout.minimumLineSpacing = self.config.spacing
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    
+
     return layout
     }()
 
   lazy var pageLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRectZero)
-    
+
     label.setTranslatesAutoresizingMaskIntoConstraints(false)
     label.hidden = !self.config.pageIndicator.enabled
-    
+
     return label
     }()
-  
+
   lazy var closeButton: UIButton = { [unowned self] in
     let title = NSAttributedString(
       string: self.config.closeButton.text,
       attributes: self.config.closeButton.textAttributes)
     let button = UIButton.buttonWithType(.System) as! UIButton
-    
+
     button.tintColor = self.config.closeButton.textAttributes[NSForegroundColorAttributeName] as? UIColor
     button.setTranslatesAutoresizingMaskIntoConstraints(false)
     button.setAttributedTitle(title, forState: .Normal)
@@ -116,7 +116,7 @@ public class LightboxController: UIViewController {
     if let image = self.config.closeButton.image {
       button.setBackgroundImage(image, forState: .Normal)
     }
-    
+
     return button
     }()
 
@@ -152,7 +152,7 @@ public class LightboxController: UIViewController {
       if let config = config {
         LightboxConfig.sharedInstance.config = config
       }
-    
+
       super.init(nibName: nil, bundle: nil)
   }
 
@@ -194,18 +194,18 @@ public class LightboxController: UIViewController {
 
     if orientationsSupported.first == "UIInterfaceOrientationPortrait"
       && orientationsSupported.count == 1 {
-      NSNotificationCenter.defaultCenter().addObserver(
-        self,
-        selector: "deviceDidRotate",
-        name: UIDeviceOrientationDidChangeNotification,
-        object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(
+          self,
+          selector: "deviceDidRotate",
+          name: UIDeviceOrientationDidChangeNotification,
+          object: nil)
     }
 
     setupConstraints()
 
     page = 0
   }
-  
+
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(true)
 
@@ -225,6 +225,10 @@ public class LightboxController: UIViewController {
     }
   }
 
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
+
   // MARK: - Handle rotation
 
   func deviceDidRotate() {
@@ -240,7 +244,7 @@ public class LightboxController: UIViewController {
 
     if (!currentIsFace && nextIsFace) ||
       (currentIsFace && !nextIsFace && orientation == beforeFaceOrientation) {
-      return
+        return
     }
 
     rotating = true
@@ -278,7 +282,7 @@ public class LightboxController: UIViewController {
           UIView.animateWithDuration(0.3, animations: { [unowned self] in
             [self.collectionView, self.closeButton, self.pageLabel].map { $0.alpha = 1 }
             self.rotating = false
-          })
+            })
       })
     }
 
@@ -317,7 +321,7 @@ public class LightboxController: UIViewController {
     view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Width,
       relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
       multiplier: 1, constant: config.closeButton.size.width))
-    
+
     view.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .Height,
       relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
       multiplier: 1, constant: config.closeButton.size.height))
@@ -379,9 +383,9 @@ public class LightboxController: UIViewController {
   public func previous(animated: Bool = true) {
     goTo(page - 1, animated: animated)
   }
-  
+
   // MARK: - Actions
-  
+
   func closeButtonDidTouchUpInside(sender: UIButton) {
     dismissalDelegate?.lightboxControllerDidDismiss(self)
   }

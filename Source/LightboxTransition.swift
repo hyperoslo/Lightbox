@@ -28,7 +28,6 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
 
   func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
     let containerView = transitionContext.containerView()
-    let duration = transitionDuration(transitionContext)
 
     let screens : (from: UIViewController, to: UIViewController) = (
       transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!,
@@ -42,7 +41,9 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
       ? screens.to as UIViewController
       : screens.from as UIViewController
 
-    [viewController, lightboxViewController].map { containerView.addSubview($0.view) }
+    for controller in [viewController, lightboxViewController] {
+      containerView?.addSubview(controller.view)
+    }
 
     if presentingViewController {
       transition(lightboxViewController, show: false)

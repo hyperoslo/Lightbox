@@ -8,7 +8,7 @@ public class LightboxViewCell: UICollectionViewCell {
 
   public lazy var lightboxView: LightboxView = { [unowned self] in
     let lightboxView = LightboxView(frame: self.bounds)
-    lightboxView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    lightboxView.translatesAutoresizingMaskIntoConstraints = false
 
     self.contentView.addSubview(lightboxView)
 
@@ -33,7 +33,7 @@ public class LightboxViewCell: UICollectionViewCell {
   var animator: UIDynamicAnimator!
   var attachmentBehavior: UIAttachmentBehavior!
   var gravityBehaviour: UIGravityBehavior!
-  var snapBehavior: UISnapBehavior!
+  var snapBehavior: UISnapBehavior?
   var parentViewController: LightboxController!
 
   private func setupConstraints() {
@@ -72,7 +72,7 @@ extension LightboxViewCell {
 
     if parentViewController.physics {
       if panGestureRecognizer.state == UIGestureRecognizerState.Began {
-        animator.removeBehavior(snapBehavior)
+        if snapBehavior != nil { animator.removeBehavior(snapBehavior!) }
         let centerOffset = UIOffsetMake(boxLocation.x - CGRectGetMidX(imageView.bounds),
           boxLocation.y - CGRectGetMidY(imageView.bounds))
         attachmentBehavior = UIAttachmentBehavior(item: imageView,
@@ -85,7 +85,7 @@ extension LightboxViewCell {
         animator.removeBehavior(attachmentBehavior)
         snapBehavior = UISnapBehavior(item: imageView,
           snapToPoint: lightboxView.center)
-        animator.addBehavior(snapBehavior)
+        animator.addBehavior(snapBehavior!)
         panGestureEnded(translation,
           imageView: imageView)
       }
@@ -109,7 +109,7 @@ extension LightboxViewCell {
           self.animator.removeAllBehaviors()
           self.snapBehavior = UISnapBehavior(item: imageView,
             snapToPoint: self.lightboxView.center)
-          self.animator.addBehavior(self.snapBehavior)
+          self.animator.addBehavior(self.snapBehavior!)
         } else {
           imageView.center = self.lightboxView.center
         }

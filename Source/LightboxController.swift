@@ -53,7 +53,7 @@ public class LightboxController: UIViewController {
     let collectionView = UICollectionView(frame: CGRectZero,
       collectionViewLayout: self.collectionViewLayout)
 
-    collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.backgroundColor = .clearColor()
     collectionView.dataSource = self
     collectionView.delegate = self
@@ -79,7 +79,7 @@ public class LightboxController: UIViewController {
   lazy var pageLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRectZero)
     
-    label.setTranslatesAutoresizingMaskIntoConstraints(false)
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.hidden = !self.config.pageIndicator.enabled
     
     return label
@@ -89,10 +89,10 @@ public class LightboxController: UIViewController {
     let title = NSAttributedString(
       string: self.config.closeButton.text,
       attributes: self.config.closeButton.textAttributes)
-    let button = UIButton.buttonWithType(.System) as! UIButton
+    let button = UIButton(type: .System)
     
     button.tintColor = self.config.closeButton.textAttributes[NSForegroundColorAttributeName] as? UIColor
-    button.setTranslatesAutoresizingMaskIntoConstraints(false)
+    button.translatesAutoresizingMaskIntoConstraints = false
     button.setAttributedTitle(title, forState: .Normal)
     button.addTarget(self, action: "closeButtonDidTouchUpInside:",
       forControlEvents: .TouchUpInside)
@@ -194,8 +194,8 @@ public class LightboxController: UIViewController {
     return true
   }
 
-  public override func supportedInterfaceOrientations() -> Int {
-    return Int(UIInterfaceOrientationMask.All.rawValue)
+  public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.All
   }
 
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {

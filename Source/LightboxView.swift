@@ -8,14 +8,14 @@ public class LightboxView: UIView {
 
   lazy var imageView: UIImageView = {
     let imageView = UIImageView(frame: CGRectZero)
-    imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    imageView.translatesAutoresizingMaskIntoConstraints = false
     imageView.userInteractionEnabled = true
     return imageView
   }()
 
   lazy var scrollView: UIScrollView = { [unowned self] in
     let scrollView = UIScrollView(frame: CGRectZero)
-    scrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    scrollView.translatesAutoresizingMaskIntoConstraints = false
     scrollView.multipleTouchEnabled = true
     scrollView.minimumZoomScale = self.minimumZoomScale
     scrollView.maximumZoomScale = self.maximumZoomScale
@@ -50,7 +50,7 @@ public class LightboxView: UIView {
   }
 
   public required init(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+      fatalError("init(coder:) has not been implemented")
   }
 
   // MARK: - View lifecycle

@@ -22,7 +22,7 @@ class LightboxTransition: NSObject {
 
 extension LightboxTransition : UIViewControllerAnimatedTransitioning {
 
-  func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
+  func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
     return Timing.transition
   }
 

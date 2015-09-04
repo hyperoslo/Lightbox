@@ -72,21 +72,12 @@ public class LightboxView: UIView {
 
   public func setUpConstraints() {
     if !constraintsAdded {
-      addConstraint(NSLayoutConstraint(item: scrollView, attribute: .Leading,
-        relatedBy: .Equal, toItem: self, attribute: .Leading,
-        multiplier: 1, constant: 0))
-
-      addConstraint(NSLayoutConstraint(item: scrollView, attribute: .Trailing,
-        relatedBy: .Equal, toItem: self, attribute: .Trailing,
-        multiplier: 1, constant: 0))
-
-      addConstraint(NSLayoutConstraint(item: scrollView, attribute: .Top,
-        relatedBy: .Equal, toItem: self, attribute: .Top,
-        multiplier: 1, constant: 0))
-
-      addConstraint(NSLayoutConstraint(item: scrollView, attribute: .Bottom,
-        relatedBy: .Equal, toItem: self, attribute: .Bottom,
-        multiplier: 1, constant: 0))
+      let layoutAttributes: [NSLayoutAttribute] = [.Leading, .Trailing, .Top, .Bottom]
+      for layoutAttribute in layoutAttributes {
+        addConstraint(NSLayoutConstraint(item: self.scrollView, attribute: layoutAttribute,
+          relatedBy: .Equal, toItem: self, attribute: layoutAttribute,
+          multiplier: 1, constant: 0))
+      }
 
       imageConstraintLeading = NSLayoutConstraint(item: imageView, attribute: .Leading,
         relatedBy: .Equal, toItem: scrollView, attribute: .Leading,
@@ -131,9 +122,11 @@ public class LightboxView: UIView {
       for constraint in [imageConstraintLeading, imageConstraintTrailing] {
         constraint.constant = hPadding
       }
+
       for constraint in [imageConstraintTop, imageConstraintBottom] {
         constraint.constant = vPadding
       }
+
 
       layoutIfNeeded()
     }

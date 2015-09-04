@@ -15,15 +15,6 @@ class MainViewController: UIViewController {
     return button
     }()
 
-  lazy var lightboxController: LightboxController = { [unowned self] in
-    let controller = LightboxController(images: self.images)
-    controller.dismissalDelegate = self
-
-    return controller
-    }()
-
-  let images = ["photo1", "photo2", "photo3"]
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -33,7 +24,9 @@ class MainViewController: UIViewController {
   // MARK: Action handlers
 
   func galleryButtonDidPress(button: UIButton) {
-    presentViewController(lightboxController, animated: true, completion: nil)
+    let controller = LightboxController(images: ["photo1", "photo2", "photo3"])
+    controller.dismissalDelegate = self
+    presentViewController(controller, animated: true, completion: nil)
   }
 }
 
@@ -42,6 +35,6 @@ class MainViewController: UIViewController {
 extension MainViewController : LightboxControllerDismissalDelegate {
 
   func lightboxControllerDidDismiss(controller: LightboxController) {
-    lightboxController.dismissViewControllerAnimated(true, completion: nil)
+    controller.dismissViewControllerAnimated(true, completion: nil)
   }
 }

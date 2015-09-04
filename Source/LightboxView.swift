@@ -128,8 +128,12 @@ public class LightboxView: UIView {
         vPadding = 0
       }
 
-      [imageConstraintLeading, imageConstraintTrailing].map{ $0.constant = hPadding }
-      [imageConstraintTop, imageConstraintBottom].map{ $0.constant = vPadding }
+      for constraint in [imageConstraintLeading, imageConstraintTrailing] {
+        constraint.constant = hPadding
+      }
+      for constraint in [imageConstraintTop, imageConstraintBottom] {
+        constraint.constant = vPadding
+      }
 
       layoutIfNeeded()
     }

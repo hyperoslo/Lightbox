@@ -130,7 +130,9 @@ public class LightboxController: UIViewController {
     super.viewDidLoad()
 
     collectionSize = view.bounds.size
-    [collectionView, pageLabel, closeButton].map { self.view.addSubview($0) }
+    for subview in [collectionView, pageLabel, closeButton] {
+      view.addSubview(subview)
+    }
 
     transitioningDelegate = transitionManager
     setupConstraints()
@@ -152,12 +154,12 @@ public class LightboxController: UIViewController {
   func setupConstraints() {
     let attributes: [NSLayoutAttribute] = [.Leading, .Trailing, .Top, .Bottom]
 
-    attributes.map {
-      self.view.addConstraint(NSLayoutConstraint(item: self.collectionView,
-        attribute: $0, relatedBy: .Equal, toItem: self.view, attribute: $0,
+    for attribute in attributes {
+      self.view.addConstraint(NSLayoutConstraint(item: collectionView,
+        attribute: attribute, relatedBy: .Equal, toItem: view, attribute: attribute,
         multiplier: 1, constant: 0))
     }
-    
+
     view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Leading,
       relatedBy: .Equal, toItem: view, attribute: .Leading,
       multiplier: 1, constant: 0))

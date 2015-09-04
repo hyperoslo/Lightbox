@@ -180,7 +180,9 @@ public class LightboxController: UIViewController {
     super.viewDidLoad()
 
     collectionSize = CGSizeMake(view.frame.width, view.frame.height)
-    [collectionView, pageLabel, closeButton, deleteButton].map { self.view.addSubview($0) }
+    for subview in [collectionView, pageLabel, closeButton, deleteButton] {
+      self.view.addSubview(subview)
+    }
 
     transitioningDelegate = transitionManager
     transitionManager.delegate = self
@@ -259,9 +261,11 @@ public class LightboxController: UIViewController {
       moveViews(false)
       transitionManager.panGestureRecognizer.enabled = false
     } else if UIDevice.currentDevice().orientation == UIDeviceOrientation.Portrait {
-      [collectionViewHeight!, collectionViewWidth!,
+      for constraint in [collectionViewHeight!, collectionViewWidth!,
         closeButtonTop!, closeButtonRight!,
-        pageLabelAlternative!, pageLabelBottom!].map { self.view.removeConstraint($0) }
+        pageLabelAlternative!, pageLabelBottom!] {
+          view.removeConstraint(constraint)
+      }
 
       standardCollectionViewConstraints()
       standardCloseButtonConstraints()
@@ -273,14 +277,14 @@ public class LightboxController: UIViewController {
 
     if UIDevice.currentDevice().orientation != UIDeviceOrientation.PortraitUpsideDown {
       UIView.animateWithDuration(0.1, animations: { [unowned self] in
-        [self.collectionView, self.closeButton, self.pageLabel].map { $0.alpha = 0 }
+        for subview in [self.collectionView, self.closeButton, self.pageLabel] { subview.alpha = 0 }
         }, completion: { finished in
-          [self.collectionView, self.closeButton, self.pageLabel].map { $0.transform = transform }
+          for subview in [self.collectionView, self.closeButton, self.pageLabel] { subview.transform = transform }
           let indexPath = NSIndexPath(forItem: self.page, inSection: 0)
           self.collectionView.scrollToItemAtIndexPath(indexPath,
             atScrollPosition: UICollectionViewScrollPosition(), animated: false)
           UIView.animateWithDuration(0.3, animations: { [unowned self] in
-            [self.collectionView, self.closeButton, self.pageLabel].map { $0.alpha = 1 }
+            for subview in [self.collectionView, self.closeButton, self.pageLabel] { subview.alpha = 1 }
             self.rotating = false
             })
       })
@@ -309,9 +313,10 @@ public class LightboxController: UIViewController {
   func setupConstraints() {
     let attributes: [NSLayoutAttribute] = [.CenterX, .CenterY]
 
-    attributes.map { self.view.addConstraint(NSLayoutConstraint(item: self.collectionView, attribute: $0,
-      relatedBy: .Equal, toItem: self.view, attribute: $0,
-      multiplier: 1, constant: 0)) }
+    for attribute in attributes {
+      view.addConstraint(NSLayoutConstraint(item: collectionView, attribute: attribute,
+        relatedBy: .Equal, toItem: self.view, attribute: attribute, multiplier: 1, constant: 0))
+    }
 
     standardCollectionViewConstraints()
     standardPageLabelConstraints()
@@ -551,8 +556,10 @@ extension LightboxController {
   }
 
   private func moveViews(left: Bool) {
-    [closeButtonTop!, closeButtonRight!,
-      pageLabelAlternative!, pageLabelBottom!].map { self.view.removeConstraint($0) }
+    for constraint in [closeButtonTop!, closeButtonRight!,
+      pageLabelAlternative!, pageLabelBottom!] {
+        view.removeConstraint(constraint)
+    }
 
     closeButtonRight = left ?
       NSLayoutConstraint(item: closeButton, attribute: .Right,
@@ -586,7 +593,9 @@ extension LightboxController {
         relatedBy: .Equal, toItem: view, attribute: .Right,
         multiplier: 1, constant: -20)
 
-    [closeButtonTop!, closeButtonRight!,
-      pageLabelAlternative!, pageLabelBottom!].map { self.view.addConstraint($0) }
+    for constraint in [closeButtonTop!, closeButtonRight!,
+      pageLabelAlternative!, pageLabelBottom!] {
+        view.addConstraint(constraint)
+    }
   }
 }

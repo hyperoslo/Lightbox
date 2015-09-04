@@ -49,9 +49,11 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
         }
 
         controller.pageLabel.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 250)
-        [controller.closeButton, controller.deleteButton].map { $0.transform = show
+        for button in [controller.closeButton, controller.deleteButton] {
+          button.transform = show
           ? CGAffineTransformIdentity
-          : CGAffineTransformMakeTranslation(0, -250) }
+          : CGAffineTransformMakeTranslation(0, -250)
+        }
     }
 
     if presentingViewController {
@@ -64,13 +66,12 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
 extension LightboxTransition : UIViewControllerAnimatedTransitioning {
 
-  func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
+  func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
     return Timing.transition
   }
 
   func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
     let containerView = transitionContext.containerView()
-    let duration = transitionDuration(transitionContext)
 
     let screens : (from: UIViewController, to: UIViewController) = (
       transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!,
@@ -84,7 +85,9 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
       ? screens.to as UIViewController
       : screens.from as UIViewController
 
-    [viewController, lightboxViewController].map { containerView.addSubview($0.view) }
+    for controller in [viewController, lightboxViewController] {
+      containerView?.addSubview(controller.view)
+    }
 
     if presentingViewController {
       transition(lightboxViewController, show: false)
@@ -152,9 +155,6 @@ extension LightboxTransition {
     let location = panGestureRecognizer.locationInView(sourceViewCell.lightboxView)
     let boxLocation = panGestureRecognizer.locationInView(imageView)
     let translation = panGestureRecognizer.translationInView(sourceViewCell.lightboxView)
-    let maximumValue = UIScreen.mainScreen().bounds.height
-    let calculation = abs(translation.y) / maximumValue
-    let alphaValue = 1 - calculation
     let percentage = fabs(translation.y / UIScreen.mainScreen().bounds.height)
 
     if sourceViewCell.parentViewController.physics {

@@ -69,7 +69,7 @@ public class LightboxController: UIViewController {
     let collectionView = UICollectionView(frame: CGRectZero,
       collectionViewLayout: self.collectionViewLayout)
 
-    collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.backgroundColor = .blackColor()
     collectionView.dataSource = self
     collectionView.delegate = self
@@ -95,7 +95,7 @@ public class LightboxController: UIViewController {
   lazy var pageLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRectZero)
 
-    label.setTranslatesAutoresizingMaskIntoConstraints(false)
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.hidden = !self.config.pageIndicator.enabled
 
     return label
@@ -105,10 +105,10 @@ public class LightboxController: UIViewController {
     let title = NSAttributedString(
       string: self.config.closeButton.text,
       attributes: self.config.closeButton.textAttributes)
-    let button = UIButton.buttonWithType(.System) as! UIButton
+    let button = UIButton(type: .System)
 
     button.tintColor = self.config.closeButton.textAttributes[NSForegroundColorAttributeName] as? UIColor
-    button.setTranslatesAutoresizingMaskIntoConstraints(false)
+    button.translatesAutoresizingMaskIntoConstraints = false
     button.setAttributedTitle(title, forState: .Normal)
     button.addTarget(self, action: "closeButtonDidTouchUpInside:",
       forControlEvents: .TouchUpInside)
@@ -124,10 +124,10 @@ public class LightboxController: UIViewController {
     let title = NSAttributedString(
       string: self.config.deleteButton.text,
       attributes: self.config.deleteButton.textAttributes)
-    let button = UIButton.buttonWithType(.System) as! UIButton
+    let button = UIButton(type: .System)
 
     button.tintColor = self.config.deleteButton.textAttributes[NSForegroundColorAttributeName] as? UIColor
-    button.setTranslatesAutoresizingMaskIntoConstraints(false)
+    button.translatesAutoresizingMaskIntoConstraints = false
     button.setAttributedTitle(title, forState: .Normal)
     button.alpha = self.config.deleteButton.alpha
     button.addTarget(self, action: "deleteButtonDidPress:",
@@ -170,7 +170,7 @@ public class LightboxController: UIViewController {
       super.init(nibName: nil, bundle: nil)
   }
 
-  public required init(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
@@ -278,7 +278,7 @@ public class LightboxController: UIViewController {
           [self.collectionView, self.closeButton, self.pageLabel].map { $0.transform = transform }
           let indexPath = NSIndexPath(forItem: self.page, inSection: 0)
           self.collectionView.scrollToItemAtIndexPath(indexPath,
-            atScrollPosition: UICollectionViewScrollPosition.allZeros, animated: false)
+            atScrollPosition: UICollectionViewScrollPosition(), animated: false)
           UIView.animateWithDuration(0.3, animations: { [unowned self] in
             [self.collectionView, self.closeButton, self.pageLabel].map { $0.alpha = 1 }
             self.rotating = false
@@ -294,7 +294,7 @@ public class LightboxController: UIViewController {
         }, completion: { _ in
           let indexPath = NSIndexPath(forItem: self.page, inSection: 0)
           self.collectionView.scrollToItemAtIndexPath(indexPath,
-            atScrollPosition: UICollectionViewScrollPosition.allZeros, animated: true)
+            atScrollPosition: UICollectionViewScrollPosition(), animated: true)
           self.rotating = false
       })
     }
@@ -341,8 +341,8 @@ public class LightboxController: UIViewController {
     return true
   }
 
-  public override func supportedInterfaceOrientations() -> Int {
-    return Int(UIInterfaceOrientationMask.All.rawValue)
+  public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.All
   }
 
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {

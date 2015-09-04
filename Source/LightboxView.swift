@@ -49,7 +49,7 @@ public class LightboxView: UIView {
     addSubview(scrollView)
   }
 
-  public required init(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
   }
 

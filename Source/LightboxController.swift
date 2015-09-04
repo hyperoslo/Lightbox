@@ -321,7 +321,7 @@ public class LightboxController: UIViewController {
     standardCollectionViewConstraints()
     standardPageLabelConstraints()
     standardCloseButtonConstraints()
-    standardDeleteButtonConstraints()
+    //standardDeleteButtonConstraints()
 
     view.addConstraint(NSLayoutConstraint(item: pageLabel, attribute: .Leading,
       relatedBy: .Equal, toItem: view, attribute: .Leading,
@@ -335,13 +335,13 @@ public class LightboxController: UIViewController {
       relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
       multiplier: 1, constant: config.closeButton.size.height))
 
-    view.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .Width,
-      relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
-      multiplier: 1, constant: config.deleteButton.size.width))
-
-    view.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .Height,
-      relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
-      multiplier: 1, constant: config.deleteButton.size.height))
+//    view.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .Width,
+//      relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
+//      multiplier: 1, constant: config.deleteButton.size.width))
+//
+//    view.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .Height,
+//      relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute,
+//      multiplier: 1, constant: config.deleteButton.size.height))
   }
 
   // MARK: - Orientation

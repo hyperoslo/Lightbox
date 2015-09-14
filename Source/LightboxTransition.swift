@@ -37,7 +37,7 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   func transition(controller: LightboxController, show: Bool) {
     controller.view.backgroundColor = .blackColor()
-    controller.view.alpha = show ? 1 : 0.95
+    controller.view.alpha = show ? 1 : 0.01
     controller.collectionView.alpha = show ? 1 : 0
     lightboxController = controller
 

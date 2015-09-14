@@ -9,7 +9,7 @@ public class LightboxViewCell: UICollectionViewCell {
 
   public lazy var lightboxView: LightboxView = { [unowned self] in
     let lightboxView = LightboxView(frame: self.bounds)
-    lightboxView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    lightboxView.translatesAutoresizingMaskIntoConstraints = false
 
     self.contentView.addSubview(lightboxView)
 

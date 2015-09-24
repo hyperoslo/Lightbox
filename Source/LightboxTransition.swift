@@ -8,7 +8,7 @@ protocol LightboxTransitionDelegate: class {
 class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   struct Timing {
-    static let transition: NSTimeInterval = 0.5
+    static let transition: NSTimeInterval = 0.4
   }
 
   lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
@@ -37,12 +37,12 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   func transition(controller: LightboxController, show: Bool) {
     controller.view.backgroundColor = .blackColor()
-    controller.view.alpha = show ? 1 : 0.95
-    controller.collectionView.alpha = show ? 1 : 0
+    controller.view.alpha = show ? 1 : 0.9
+    controller.collectionView.alpha = show ? 1 : 0.9
     lightboxController = controller
 
     if UIDevice.currentDevice().orientation != UIDeviceOrientation.LandscapeLeft
-      && UIDevice.currentDevice().orientation != UIDeviceOrientation.LandscapeRight{
+      && UIDevice.currentDevice().orientation != UIDeviceOrientation.LandscapeRight {
         if sourceViewCell != nil {
           self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
             UIScreen.mainScreen().bounds.width/2, UIScreen.mainScreen().bounds.height/2)
@@ -97,7 +97,7 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
       self.transition(lightboxViewController, show: self.presentingViewController)
       }, completion: { _ in
         if transitionContext.transitionWasCancelled() {
-          UIView.animateWithDuration(Timing.transition/2, animations: { [unowned self] in
+          UIView.animateWithDuration(Timing.transition/3, animations: { [unowned self] in
             self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
               UIScreen.mainScreen().bounds.width/2, UIScreen.mainScreen().bounds.height/2)
             self.transition(lightboxViewController, show: true)
@@ -107,7 +107,7 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
           })
         } else {
           if self.lightboxController.view.alpha < 0.97 && !self.presentingViewController {
-            UIView.animateWithDuration(0.6, animations: { () -> Void in
+            UIView.animateWithDuration(0.4, animations: { () -> Void in
               self.lightboxController.view.alpha = 0
               }, completion: { _ in
                 transitionContext.completeTransition(true)

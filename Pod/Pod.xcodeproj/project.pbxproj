@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		14A139B41AEFC72B00AD732F /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A139B31AEFC72B00AD732F /* Tests.swift */; };
+		D563F9571B99E13700FF60AC /* LightboxTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563F9561B99E13700FF60AC /* LightboxTransition.swift */; settings = {ASSET_TAGS = (); }; };
 		D58B102D1B468F17008A0B0D /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58B102C1B468F17008A0B0D /* CenterCellCollectionViewFlowLayout.swift */; };
 		D5926DF41B45371F00FA2220 /* LightboxConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5926DF31B45371F00FA2220 /* LightboxConfig.swift */; };
 		D5C0BDEB1B42C449009E6446 /* LightboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C0BDEA1B42C449009E6446 /* LightboxView.swift */; };
@@ -25,6 +26,7 @@
 		14C136521AB784B200B7B07A /* CONTRIBUTING.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CONTRIBUTING.md; path = ../CONTRIBUTING.md; sourceTree = "<group>"; };
 		14C136541AB784B200B7B07A /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		14C136551AB784B200B7B07A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		D563F9561B99E13700FF60AC /* LightboxTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxTransition.swift; sourceTree = "<group>"; };
 		D58B102C1B468F17008A0B0D /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		D5926DF31B45371F00FA2220 /* LightboxConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxConfig.swift; sourceTree = "<group>"; };
 		D5C0BDEA1B42C449009E6446 /* LightboxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxView.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 		14C1365B1AB784BC00B7B07A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				D563F9561B99E13700FF60AC /* LightboxTransition.swift */,
 				D58B102C1B468F17008A0B0D /* CenterCellCollectionViewFlowLayout.swift */,
 				D5926DF31B45371F00FA2220 /* LightboxConfig.swift */,
 				D5C0BE241B4329D4009E6446 /* LightboxController.swift */,
@@ -133,7 +136,9 @@
 		146D728B1AB782920058798C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Example;
 				TargetAttributes = {
 					146D72AB1AB782920058798C = {
@@ -181,6 +186,7 @@
 				D5C0BE211B43253F009E6446 /* LightboxViewCell.swift in Sources */,
 				D5C0BE231B432996009E6446 /* LightboxDataSource.swift in Sources */,
 				D5C0BE251B4329D4009E6446 /* LightboxController.swift in Sources */,
+				D563F9571B99E13700FF60AC /* LightboxTransition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,6 +213,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -277,6 +284,7 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Tests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -293,6 +301,7 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Tests-Bridging-Header.h";
 			};

@@ -8,7 +8,7 @@ protocol LightboxTransitionDelegate: class {
 class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   struct Timing {
-    static let transition: NSTimeInterval = 0.5
+    static let transition: NSTimeInterval = 0.4
   }
 
   lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
@@ -25,37 +25,42 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
   var attachmentBehavior: UIAttachmentBehavior!
   var gravityBehaviour: UIGravityBehavior!
   var snapBehavior: UISnapBehavior!
+  var shouldAnimateAlpha = false
   weak var sourceViewController: LightboxController!
   weak var delegate: LightboxTransitionDelegate?
   weak var lightboxController: LightboxController!
 
-  weak var sourceViewCell: LightboxViewCell! {
+  weak var sourceViewCell: LightboxViewCell? {
     didSet {
-      sourceViewCell.addGestureRecognizer(panGestureRecognizer)
+      sourceViewCell?.addGestureRecognizer(panGestureRecognizer)
     }
   }
 
   func transition(controller: LightboxController, show: Bool) {
-    controller.view.backgroundColor = .blackColor()
-    controller.view.alpha = show ? 1 : 0.95
-    controller.collectionView.alpha = show ? 1 : 0
     lightboxController = controller
 
     if UIDevice.currentDevice().orientation != UIDeviceOrientation.LandscapeLeft
-      && UIDevice.currentDevice().orientation != UIDeviceOrientation.LandscapeRight{
+      && UIDevice.currentDevice().orientation != UIDeviceOrientation.LandscapeRight {
         if sourceViewCell != nil {
-          self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
+          self.sourceViewCell?.lightboxView.imageView.center = CGPointMake(
             UIScreen.mainScreen().bounds.width/2, UIScreen.mainScreen().bounds.height/2)
         }
 
         controller.pageLabel.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 250)
-        [controller.closeButton, controller.deleteButton].map { $0.transform = show
+        for button in [controller.closeButton, controller.deleteButton] {
+          button.transform = show
           ? CGAffineTransformIdentity
-          : CGAffineTransformMakeTranslation(0, -250) }
+          : CGAffineTransformMakeTranslation(0, -250)
+        }
     }
 
     if presentingViewController {
       controller.collectionView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.5, 0.5)
+      controller.view.alpha = show ? 1 : 0.01
+    } else if !interactive || shouldAnimateAlpha {
+      controller.view.alpha = show ? 1 : 0.1
+    } else {
+      controller.view.alpha = show ? 1 : 0.95
     }
   }
 }
@@ -64,13 +69,12 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
 extension LightboxTransition : UIViewControllerAnimatedTransitioning {
 
-  func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
+  func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
     return Timing.transition
   }
 
   func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
     let containerView = transitionContext.containerView()
-    let duration = transitionDuration(transitionContext)
 
     let screens : (from: UIViewController, to: UIViewController) = (
       transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!,
@@ -84,7 +88,9 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
       ? screens.to as UIViewController
       : screens.from as UIViewController
 
-    [viewController, lightboxViewController].map { containerView.addSubview($0.view) }
+    for controller in [viewController, lightboxViewController] {
+      containerView?.addSubview(controller.view)
+    }
 
     if presentingViewController {
       transition(lightboxViewController, show: false)
@@ -94,8 +100,8 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
       self.transition(lightboxViewController, show: self.presentingViewController)
       }, completion: { _ in
         if transitionContext.transitionWasCancelled() {
-          UIView.animateWithDuration(Timing.transition/2, animations: { [unowned self] in
-            self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
+          UIView.animateWithDuration(Timing.transition/3, animations: { [unowned self] in
+            self.sourceViewCell?.lightboxView.imageView.center = CGPointMake(
               UIScreen.mainScreen().bounds.width/2, UIScreen.mainScreen().bounds.height/2)
             self.transition(lightboxViewController, show: true)
             }, completion: { finished in
@@ -104,11 +110,7 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
           })
         } else {
           if self.lightboxController.view.alpha < 0.97 && !self.presentingViewController {
-            UIView.animateWithDuration(0.6, animations: { () -> Void in
-              self.lightboxController.view.alpha = 0
-              }, completion: { _ in
-                transitionContext.completeTransition(true)
-            })
+            transitionContext.completeTransition(true)
           } else {
             transitionContext.completeTransition(true)
             UIApplication.sharedApplication().keyWindow?.addSubview(screens.to.view)
@@ -148,16 +150,17 @@ extension LightboxTransition : UIViewControllerTransitioningDelegate {
 extension LightboxTransition {
 
   func handlePanGesture(panGestureRecognizer: UIPanGestureRecognizer) {
-    let imageView = sourceViewCell.lightboxView.imageView
-    let location = panGestureRecognizer.locationInView(sourceViewCell.lightboxView)
+    guard let imageView = sourceViewCell?.lightboxView.imageView else { return }
+    let location = panGestureRecognizer.locationInView(sourceViewCell?.lightboxView)
     let boxLocation = panGestureRecognizer.locationInView(imageView)
-    let translation = panGestureRecognizer.translationInView(sourceViewCell.lightboxView)
-    let maximumValue = UIScreen.mainScreen().bounds.height
-    let calculation = abs(translation.y) / maximumValue
-    let alphaValue = 1 - calculation
+    let translation = panGestureRecognizer.translationInView(sourceViewCell?.lightboxView)
     let percentage = fabs(translation.y / UIScreen.mainScreen().bounds.height)
 
-    if sourceViewCell.parentViewController.physics {
+    if percentage > 0.35 {
+      transition(lightboxController, show: false)
+    }
+
+    if let controller = sourceViewCell?.parentViewController where controller.physics {
       if panGestureRecognizer.state == UIGestureRecognizerState.Began {
         interactive = true
         sourceViewController.dismissViewControllerAnimated(true, completion: nil)
@@ -174,16 +177,17 @@ extension LightboxTransition {
       } else if panGestureRecognizer.state == UIGestureRecognizerState.Ended {
         interactive = false
 
-        if percentage > 0.25 {
+        if percentage > 0.35 {
           finishInteractiveTransition()
           delegate?.transitionDidDismissController(lightboxController)
         } else {
           cancelInteractiveTransition()
-
-          animator.removeBehavior(attachmentBehavior)
-          snapBehavior = UISnapBehavior(item: imageView,
-            snapToPoint: sourceViewCell.lightboxView.center)
-          animator.addBehavior(snapBehavior)
+          if let cell = sourceViewCell {
+            animator.removeBehavior(attachmentBehavior)
+            snapBehavior = UISnapBehavior(item: imageView,
+              snapToPoint: cell.lightboxView.center)
+            animator.addBehavior(snapBehavior)
+          }
         }
       }
     } else {
@@ -191,13 +195,16 @@ extension LightboxTransition {
         interactive = true
         sourceViewController.dismissViewControllerAnimated(true, completion: nil)
       } else if panGestureRecognizer.state == .Changed {
+        shouldAnimateAlpha = true
         imageView.center = CGPointMake(imageView.center.x, UIScreen.mainScreen().bounds.height/2 + translation.y)
         updateInteractiveTransition(percentage)
       } else {
         interactive = false
-        if percentage > 0.25 {
+        shouldAnimateAlpha = false
+        if percentage > 0.35 {
           finishInteractiveTransition()
           delegate?.transitionDidDismissController(lightboxController)
+          lightboxController.collectionView.alpha = 0
         } else {
           cancelInteractiveTransition()
         }
@@ -207,17 +214,19 @@ extension LightboxTransition {
 
   override func finishInteractiveTransition() {
     super.finishInteractiveTransition()
+    guard let cell = sourceViewCell else { return }
 
-    let point = (sourceViewCell.lightboxView.imageView.center.y - UIScreen.mainScreen().bounds.height/2) * 10
+    let point = (cell.lightboxView.imageView.center.y - UIScreen.mainScreen().bounds.height/2) * 10
 
     UIView.animateWithDuration(Timing.transition, animations: { [unowned self] in
-      self.sourceViewCell.lightboxView.imageView.center = CGPointMake(
+      self.sourceViewCell?.lightboxView.imageView.center = CGPointMake(
         UIScreen.mainScreen().bounds.width/2, point)
       }, completion: { _ in
-        if self.sourceViewCell.parentViewController.physics {
+        guard let cell = self.sourceViewCell else { return }
+        if let controller = cell.parentViewController where controller.physics {
           self.animator.removeBehavior(self.attachmentBehavior)
-          self.snapBehavior = UISnapBehavior(item: self.sourceViewCell.lightboxView.imageView,
-            snapToPoint: self.sourceViewCell.lightboxView.center)
+          self.snapBehavior = UISnapBehavior(item: cell.lightboxView.imageView,
+            snapToPoint: cell.lightboxView.center)
           self.animator.addBehavior(self.snapBehavior)
         }
     })
@@ -234,7 +243,7 @@ extension LightboxTransition : UIGestureRecognizerDelegate {
 
   func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
     if let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer {
-      let translation = panGestureRecognizer.translationInView(sourceViewCell.superview!)
+      let translation = panGestureRecognizer.translationInView(sourceViewCell?.superview!)
       if fabs(translation.x) < fabs(translation.y) {
         return true
       }

@@ -125,6 +125,7 @@
 		D5C0BDED1B42CCBC009E6446 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = Hyper;
 				TargetAttributes = {

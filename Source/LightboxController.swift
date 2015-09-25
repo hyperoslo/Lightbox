@@ -186,7 +186,6 @@ public class LightboxController: UIViewController {
 
     transitioningDelegate = transitionManager
     transitionManager.delegate = self
-
     view.backgroundColor = UIColor.blackColor()
 
     let orientationsSupported: [String] = NSBundle.mainBundle().objectForInfoDictionaryKey("UISupportedInterfaceOrientations") as! [String]
@@ -204,7 +203,6 @@ public class LightboxController: UIViewController {
     }
 
     setupConstraints()
-
     page = 0
   }
 

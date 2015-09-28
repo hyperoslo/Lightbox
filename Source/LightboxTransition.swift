@@ -25,7 +25,6 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
   var attachmentBehavior: UIAttachmentBehavior!
   var gravityBehaviour: UIGravityBehavior!
   var snapBehavior: UISnapBehavior!
-  var shouldAnimateAlpha = false
   weak var sourceViewController: LightboxController!
   weak var delegate: LightboxTransitionDelegate?
   weak var lightboxController: LightboxController!
@@ -199,12 +198,10 @@ extension LightboxTransition {
         interactive = true
         sourceViewController.dismissViewControllerAnimated(true, completion: nil)
       } else if panGestureRecognizer.state == .Changed {
-        shouldAnimateAlpha = true
         imageView.center = CGPointMake(imageView.center.x, UIScreen.mainScreen().bounds.height/2 + translation.y)
         updateInteractiveTransition(percentage)
       } else {
         interactive = false
-        shouldAnimateAlpha = false
         if percentage > 0.35 {
           finishInteractiveTransition()
           delegate?.transitionDidDismissController(lightboxController)

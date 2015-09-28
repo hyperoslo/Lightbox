@@ -57,7 +57,7 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
     if presentingViewController {
       controller.collectionView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.5, 0.5)
       controller.view.alpha = show ? 1 : 0.01
-    } else if !interactive || shouldAnimateAlpha {
+    } else if !interactive {
       controller.view.alpha = show ? 1 : 0.1
     } else {
       controller.view.alpha = show ? 1 : 0.95
@@ -110,7 +110,11 @@ extension LightboxTransition : UIViewControllerAnimatedTransitioning {
           })
         } else {
           if self.lightboxController.view.alpha < 0.97 && !self.presentingViewController {
-            transitionContext.completeTransition(true)
+            UIView.animateWithDuration(0.4, animations: {
+              lightboxViewController.view.alpha = 0
+              }, completion: { _ in
+                transitionContext.completeTransition(true)
+            })
           } else {
             transitionContext.completeTransition(true)
             UIApplication.sharedApplication().keyWindow?.addSubview(screens.to.view)

@@ -21,7 +21,7 @@ public class LightboxViewCell: UICollectionViewCell {
     loadingIndicator.startAnimating()
     loadingIndicator.alpha = 0
 
-    self.contentView.addSubview(lightboxView)
+    self.contentView.addSubview(loadingIndicator)
 
     return loadingIndicator
     }()

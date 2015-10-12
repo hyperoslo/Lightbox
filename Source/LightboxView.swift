@@ -10,8 +10,9 @@ public class LightboxView: UIView {
     let imageView = UIImageView(frame: CGRectZero)
     imageView.translatesAutoresizingMaskIntoConstraints = false
     imageView.userInteractionEnabled = true
+    
     return imageView
-  }()
+    }()
 
   lazy var scrollView: UIScrollView = { [unowned self] in
     let scrollView = UIScrollView(frame: CGRectZero)
@@ -24,7 +25,15 @@ public class LightboxView: UIView {
     scrollView.showsHorizontalScrollIndicator = false
 
     return scrollView
-  }()
+    }()
+
+  public lazy var loadingIndicator: UIActivityIndicatorView = {
+    let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
+    loadingIndicator.startAnimating()
+    loadingIndicator.alpha = 0
+
+    return loadingIndicator
+    }()
 
   var imageConstraintLeading: NSLayoutConstraint!
   var imageConstraintTrailing: NSLayoutConstraint!
@@ -45,8 +54,9 @@ public class LightboxView: UIView {
     minimumZoomScale = config.zoom.minimumScale
     maximumZoomScale = config.zoom.maximumScale
 
-    scrollView.addSubview(self.imageView)
-    addSubview(scrollView)
+    scrollView.addSubview(imageView)
+
+    for subview in [scrollView, loadingIndicator] { addSubview(subview) }
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -66,6 +76,8 @@ public class LightboxView: UIView {
       updateImageConstraints()
       updateZoom()
     }
+
+    loadingIndicator.center = center
   }
 
   // MARK: - Autolayout

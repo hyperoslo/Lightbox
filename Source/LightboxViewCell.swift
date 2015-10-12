@@ -21,13 +21,14 @@ public class LightboxViewCell: UICollectionViewCell {
     loadingIndicator.startAnimating()
     loadingIndicator.alpha = 0
 
-    self.contentView.addSubview(loadingIndicator)
-
     return loadingIndicator
     }()
 
   public override func layoutSubviews() {
     super.layoutSubviews()
+
+    if loadingIndicator.superview == nil { self.contentView.addSubview(loadingIndicator) }
+
     setupConstraints()
     lightboxView.updateViewLayout()
   }

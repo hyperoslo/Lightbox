@@ -20,6 +20,7 @@ public class LightboxViewCell: UICollectionViewCell {
     let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
     loadingIndicator.startAnimating()
     loadingIndicator.alpha = 0
+    loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
 
     return loadingIndicator
     }()

@@ -47,8 +47,7 @@ public class LightboxView: UIView {
     maximumZoomScale = config.zoom.maximumScale
 
     scrollView.addSubview(imageView)
-
-    for subview in [scrollView] { addSubview(subview) }
+    addSubview(scrollView)
   }
 
   public required init?(coder aDecoder: NSCoder) {

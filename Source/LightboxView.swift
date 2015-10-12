@@ -10,8 +10,9 @@ public class LightboxView: UIView {
     let imageView = UIImageView(frame: CGRectZero)
     imageView.translatesAutoresizingMaskIntoConstraints = false
     imageView.userInteractionEnabled = true
+    
     return imageView
-  }()
+    }()
 
   lazy var scrollView: UIScrollView = { [unowned self] in
     let scrollView = UIScrollView(frame: CGRectZero)
@@ -24,7 +25,7 @@ public class LightboxView: UIView {
     scrollView.showsHorizontalScrollIndicator = false
 
     return scrollView
-  }()
+    }()
 
   var imageConstraintLeading: NSLayoutConstraint!
   var imageConstraintTrailing: NSLayoutConstraint!
@@ -45,7 +46,7 @@ public class LightboxView: UIView {
     minimumZoomScale = config.zoom.minimumScale
     maximumZoomScale = config.zoom.maximumScale
 
-    scrollView.addSubview(self.imageView)
+    scrollView.addSubview(imageView)
     addSubview(scrollView)
   }
 

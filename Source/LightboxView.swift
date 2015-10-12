@@ -27,14 +27,6 @@ public class LightboxView: UIView {
     return scrollView
     }()
 
-  public lazy var loadingIndicator: UIActivityIndicatorView = {
-    let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
-    loadingIndicator.startAnimating()
-    loadingIndicator.alpha = 0
-
-    return loadingIndicator
-    }()
-
   var imageConstraintLeading: NSLayoutConstraint!
   var imageConstraintTrailing: NSLayoutConstraint!
   var imageConstraintTop: NSLayoutConstraint!
@@ -56,7 +48,7 @@ public class LightboxView: UIView {
 
     scrollView.addSubview(imageView)
 
-    for subview in [scrollView, loadingIndicator] { addSubview(subview) }
+    for subview in [scrollView] { addSubview(subview) }
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -104,14 +96,6 @@ public class LightboxView: UIView {
       imageConstraintBottom = NSLayoutConstraint(item: imageView, attribute: .Bottom,
         relatedBy: .Equal, toItem: scrollView, attribute: .Bottom,
         multiplier: 1, constant: 0)
-
-      addConstraint(NSLayoutConstraint(item: loadingIndicator, attribute: .CenterX,
-        relatedBy: .Equal, toItem: self, attribute: .CenterX,
-        multiplier: 1, constant: 0))
-
-      addConstraint(NSLayoutConstraint(item: loadingIndicator, attribute: .CenterY,
-        relatedBy: .Equal, toItem: self, attribute: .CenterY,
-        multiplier: 1, constant: 0))
 
       addConstraints([imageConstraintLeading, imageConstraintTrailing,
         imageConstraintTop, imageConstraintBottom])

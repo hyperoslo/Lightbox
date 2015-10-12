@@ -14,16 +14,16 @@ extension LightboxController: UICollectionViewDataSource {
     let config = LightboxConfig.sharedInstance.config
 
     cell.parentViewController = self
-    cell.lightboxView.loadingIndicator.alpha = 0
+    cell.loadingIndicator.alpha = 0
     cell.setupTransitionManager()
 
     if let imageString = image as? String {
       if let imageURL = NSURL(string: imageString) where config.remoteImages {
-        cell.lightboxView.loadingIndicator.alpha = 1
+        cell.loadingIndicator.alpha = 1
         config.loadImage(
           imageView: cell.lightboxView.imageView, URL: imageURL) { error in
             if error == nil {
-              cell.lightboxView.loadingIndicator.alpha = 0
+              cell.loadingIndicator.alpha = 0
               cell.lightboxView.updateViewLayout()
             }
         }

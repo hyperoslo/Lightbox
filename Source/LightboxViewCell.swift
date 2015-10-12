@@ -16,6 +16,16 @@ public class LightboxViewCell: UICollectionViewCell {
     return lightboxView
     }()
 
+  public lazy var loadingIndicator: UIActivityIndicatorView = { [unowned self] in
+    let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
+    loadingIndicator.startAnimating()
+    loadingIndicator.alpha = 0
+
+    self.contentView.addSubview(lightboxView)
+
+    return loadingIndicator
+    }()
+
   public override func layoutSubviews() {
     super.layoutSubviews()
     setupConstraints()
@@ -36,6 +46,14 @@ public class LightboxViewCell: UICollectionViewCell {
           relatedBy: .Equal, toItem: contentView, attribute: layoutAttribute,
           multiplier: 1, constant: 0))
       }
+
+      addConstraint(NSLayoutConstraint(item: loadingIndicator, attribute: .CenterX,
+        relatedBy: .Equal, toItem: self.contentView, attribute: .CenterX,
+        multiplier: 1, constant: 0))
+
+      addConstraint(NSLayoutConstraint(item: loadingIndicator, attribute: .CenterY,
+        relatedBy: .Equal, toItem: self.contentView, attribute: .CenterY,
+        multiplier: 1, constant: 0))
 
       constraintsAdded = true
     }

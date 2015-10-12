@@ -16,7 +16,7 @@ public class LightboxViewCell: UICollectionViewCell {
     return lightboxView
     }()
 
-  public lazy var loadingIndicator: UIActivityIndicatorView = { [unowned self] in
+  public lazy var loadingIndicator: UIActivityIndicatorView = {
     let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
     loadingIndicator.startAnimating()
     loadingIndicator.alpha = 0

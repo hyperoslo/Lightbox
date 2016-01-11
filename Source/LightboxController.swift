@@ -16,8 +16,11 @@ public class LightboxController: UIViewController {
 
   public lazy var closeButton: UIButton = { [unowned self] in
     let button = UIButton()
-    button.setTitle("Close", forState: .Normal)
+    button.setTitle(Lightbox.closeButton, forState: .Normal)
+    button.setTitleColor(Lightbox.closeButtonColor, forState: .Normal)
     button.addTarget(self, action: "closeButtonDidPress", forControlEvents: .TouchUpInside)
+    button.titleLabel?.font = Lightbox.closeButtonFont
+    button.sizeToFit()
 
     return button
   }()
@@ -29,6 +32,8 @@ public class LightboxController: UIViewController {
 
     return pageControl
   }()
+
+  var statusBarHidden = false
 
   // MARK: - Initializers
 
@@ -54,13 +59,27 @@ public class LightboxController: UIViewController {
     view.backgroundColor = UIColor.blackColor()
   }
 
+  public override func viewWillAppear(animated: Bool) {
+    super.viewWillDisappear(animated)
+
+    statusBarHidden = UIApplication.sharedApplication().statusBarHidden
+    UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Fade)
+  }
+
+  public override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+
+    UIApplication.sharedApplication().setStatusBarHidden(statusBarHidden, withAnimation: .Fade)
+  }
+
   // MARK: - Main methods
 
   public func setupFrames(imageCount: Int) {
     scrollView.contentSize.width = UIScreen.mainScreen().bounds.width * CGFloat(imageCount)
+    closeButton.frame.origin = CGPoint(x: 12.5, y: 7.5)
     pageControl.frame.origin = CGPoint(
       x: (UIScreen.mainScreen().bounds.width - pageControl.frame.width) / 2,
-      y: UIScreen.mainScreen().bounds.height - pageControl.frame.height - 10)
+      y: UIScreen.mainScreen().bounds.height - pageControl.frame.height - 15)
 
   }
 

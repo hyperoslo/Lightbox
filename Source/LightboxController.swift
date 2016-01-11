@@ -4,6 +4,8 @@ public class LightboxController: UIViewController {
 
   public lazy var scrollView: UIScrollView = {
     let scrollView = UIScrollView()
+    scrollView.frame = UIScreen.mainScreen().bounds
+
     return scrollView
     }()
 
@@ -16,6 +18,10 @@ public class LightboxController: UIViewController {
 
   public init(images: [UIImage]) {
     super.init(nibName: nil, bundle: nil)
+
+    scrollView.frame.size.width = UIScreen.mainScreen().bounds.width * CGFloat(images.count)
+
+    setupControllers()
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -26,6 +32,17 @@ public class LightboxController: UIViewController {
 
   public override func viewDidLoad() {
     super.viewDidLoad()
+  }
 
+  // MARK: - Main methods
+
+  public func setupControllers(images: [UIImage]) {
+
+    for (element, index) in images.enumerate() {
+      let controller = LightboxImageController()
+      controller.view.frame.origin.x = UIScreen.mainScreen().bounds.width * CGFloat(index)
+      
+      scrollView.addSubview(controller.view)
+    }
   }
 }

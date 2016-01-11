@@ -8,7 +8,6 @@ public class LightboxController: UIViewController {
     scrollView.pagingEnabled = true
     scrollView.delegate = self
     scrollView.userInteractionEnabled = true
-    scrollView.delaysContentTouches = false
     scrollView.showsHorizontalScrollIndicator = false
 
     return scrollView
@@ -42,6 +41,7 @@ public class LightboxController: UIViewController {
 
     [scrollView, closeButton, pageControl].forEach { view.addSubview($0) }
     pageControl.numberOfPages = images.count
+    pageControl.sizeToFit()
 
     setupFrames(images.count)
     setupControllers(images)
@@ -79,7 +79,7 @@ public class LightboxController: UIViewController {
     closeButton.frame.origin = CGPoint(x: 12.5, y: 7.5)
     pageControl.frame.origin = CGPoint(
       x: (UIScreen.mainScreen().bounds.width - pageControl.frame.width) / 2,
-      y: UIScreen.mainScreen().bounds.height - pageControl.frame.height - 15)
+      y: UIScreen.mainScreen().bounds.height - pageControl.frame.height + 5)
 
   }
 

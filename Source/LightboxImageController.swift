@@ -1,17 +1,6 @@
 import UIKit
 
-public class LightboxImageController: UIViewController {
-
-  public lazy var scrollView: UIScrollView = { [unowned self] in
-    let scrollView = UIScrollView()
-    scrollView.delegate = self
-    scrollView.multipleTouchEnabled = true
-    scrollView.minimumZoomScale = 0.5
-    scrollView.maximumZoomScale = 10
-    scrollView.userInteractionEnabled = true
-
-    return scrollView
-    }()
+public class LightboxImage: UIScrollView {
 
   public lazy var imageView: UIImageView = {
     let imageView = UIImageView()
@@ -25,24 +14,23 @@ public class LightboxImageController: UIViewController {
   // MARK: - Initializers
 
   public init(image: UIImage) {
-    super.init(nibName: nil, bundle: nil)
+    super.init(frame: CGRectZero)
 
-    view.addSubview(scrollView)
-    scrollView.addSubview(imageView)
+    addSubview(imageView)
 
     imageView.image = image
+
+    delegate = self
+    multipleTouchEnabled = true
+    minimumZoomScale = 0.5
+    maximumZoomScale = 10
+    userInteractionEnabled = true
 
     setupFrames()
   }
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  // MARK: - View lifecycle
-
-  public override func viewDidLoad() {
-    super.viewDidLoad()
   }
 
   // MARK: - Main methods
@@ -52,12 +40,12 @@ public class LightboxImageController: UIViewController {
     imageView.frame.size.width = UIScreen.mainScreen().bounds.width - 4
     imageView.frame.origin.x = 2
 
-    scrollView.frame = UIScreen.mainScreen().bounds
-    scrollView.contentSize = imageView.frame.size
+    frame = UIScreen.mainScreen().bounds
+    contentSize = imageView.frame.size
   }
 }
 
-extension LightboxImageController: UIScrollViewDelegate {
+extension LightboxImage: UIScrollViewDelegate {
 
   public func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
     return imageView

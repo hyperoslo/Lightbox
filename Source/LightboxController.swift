@@ -86,10 +86,10 @@ public class LightboxController: UIViewController {
   public func setupControllers(images: [UIImage]) {
 
     for (index, image) in images.enumerate() {
-      let controller = LightboxImageController(image: image)
-      controller.view.frame.origin.x = UIScreen.mainScreen().bounds.width * CGFloat(index)
+      let controller = LightboxImage(image: image)
+      controller.frame.origin.x = UIScreen.mainScreen().bounds.width * CGFloat(index)
 
-      scrollView.addSubview(controller.view)
+      scrollView.addSubview(controller)
     }
   }
 

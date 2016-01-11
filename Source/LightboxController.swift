@@ -9,6 +9,7 @@ public class LightboxController: UIViewController {
     scrollView.delegate = self
     scrollView.userInteractionEnabled = true
     scrollView.delaysContentTouches = false
+    scrollView.showsHorizontalScrollIndicator = false
 
     return scrollView
   }()

@@ -13,7 +13,6 @@ public class LightboxImageController: UIViewController {
   // MARK: - Initializers
 
   public init(image: UIImage) {
-    print(image)
     super.init(nibName: nil, bundle: nil)
 
     view.addSubview(imageView)

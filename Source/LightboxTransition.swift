@@ -1,18 +1,38 @@
 import UIKit
 
-class LightboxTransition: NSObject {
+public class LightboxTransition: NSObject {
+
+  public lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
+    let gesture = UIPanGestureRecognizer()
+    gesture.addTarget(self, action: "handlePanGesture")
+
+    return gesture
+    }()
 
   var interactive = false
+
+  public var scrollView: UIScrollView? {
+    didSet {
+      guard let scrollView = scrollView else { return }
+      scrollView.addGestureRecognizer(panGestureRecognizer)
+    }
+  }
+
+  // MARK: - Pan gesture recognizer
+
+  func handlePanGesture() {
+    print("FUUUUUCK")
+  }
   
 }
 
 extension LightboxTransition: UIViewControllerAnimatedTransitioning {
 
-  func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-    
+  public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    return 2
   }
 
-  func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+  public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
 
   }
 }
@@ -23,7 +43,7 @@ extension LightboxTransition: UIViewControllerTransitioningDelegate {
 
 extension LightboxTransition: UIViewControllerInteractiveTransitioning {
 
-  func startInteractiveTransition(transitionContext: UIViewControllerContextTransitioning) {
+  public func startInteractiveTransition(transitionContext: UIViewControllerContextTransitioning) {
 
   }
 }

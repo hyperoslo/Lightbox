@@ -88,6 +88,7 @@ public class LightboxController: UIViewController {
     for (index, image) in images.enumerate() {
       let controller = LightboxImage(image: image)
       controller.frame.origin.x = UIScreen.mainScreen().bounds.width * CGFloat(index)
+      transitioningDelegate = controller.transitionManager
 
       scrollView.addSubview(controller)
     }

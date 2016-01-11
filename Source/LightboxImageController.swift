@@ -11,6 +11,13 @@ public class LightboxImage: UIScrollView {
     return imageView
   }()
 
+  public lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
+    let gesture = UIPanGestureRecognizer()
+    gesture.addTarget(self, action: "handlePanGesture")
+
+    return gesture
+  }()
+
   // MARK: - Initializers
 
   public init(image: UIImage) {
@@ -27,6 +34,7 @@ public class LightboxImage: UIScrollView {
     userInteractionEnabled = true
     showsHorizontalScrollIndicator = false
     showsVerticalScrollIndicator = false
+    addGestureRecognizer(panGestureRecognizer)
 
     setupFrames()
   }
@@ -44,6 +52,12 @@ public class LightboxImage: UIScrollView {
 
     frame = UIScreen.mainScreen().bounds
     contentSize = imageView.frame.size
+  }
+
+  // MARK: - Gesture methods
+
+  public func handlePanGesture() {
+    
   }
 }
 

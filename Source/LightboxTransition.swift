@@ -1,6 +1,8 @@
 import UIKit
 
 class LightboxTransition: NSObject {
+
+  var interactive = false
   
 }
 
@@ -22,6 +24,6 @@ extension LightboxTransition: UIViewControllerTransitioningDelegate {
 extension LightboxTransition: UIViewControllerInteractiveTransitioning {
 
   func startInteractiveTransition(transitionContext: UIViewControllerContextTransitioning) {
-    
+
   }
 }

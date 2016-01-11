@@ -14,8 +14,11 @@ public class LightboxController: UIViewController {
     return scrollView
   }()
 
-  public lazy var closeButton: UIButton = {
+  public lazy var closeButton: UIButton = { [unowned self] in
     let button = UIButton()
+    button.setTitle("Close", forState: .Normal)
+    button.addTarget(self, action: "closeButtonDidPress", forControlEvents: .TouchUpInside)
+
     return button
   }()
 
@@ -77,6 +80,10 @@ public class LightboxController: UIViewController {
     UIView.animateWithDuration(0.35, animations: {
       self.scrollView.contentOffset.x = UIScreen.mainScreen().bounds.width * CGFloat(self.pageControl.currentPage)
     })
+  }
+
+  public func closeButtonDidPress() {
+    dismissViewControllerAnimated(true, completion: nil)
   }
 }
 

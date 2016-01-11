@@ -14,14 +14,20 @@ public class LightboxController: UIViewController {
     return button
     }()
 
+  public lazy var pageControl: UIPageControl = {
+    let pageControl = UIPageControl()
+    return pageControl
+    }()
+
   // MARK: - Initializers
 
   public init(images: [UIImage]) {
     super.init(nibName: nil, bundle: nil)
 
-    scrollView.frame.size.width = UIScreen.mainScreen().bounds.width * CGFloat(images.count)
+    pageControl.numberOfPages = images.count
 
-    setupControllers()
+    setupFrames(images.count)
+    setupControllers(images)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -38,11 +44,19 @@ public class LightboxController: UIViewController {
 
   public func setupControllers(images: [UIImage]) {
 
-    for (element, index) in images.enumerate() {
+    for (index, element) in images.enumerate() {
       let controller = LightboxImageController()
       controller.view.frame.origin.x = UIScreen.mainScreen().bounds.width * CGFloat(index)
-      
+
       scrollView.addSubview(controller.view)
     }
+  }
+
+  public func setupFrames(imageCount: Int) {
+    scrollView.frame.size.width = UIScreen.mainScreen().bounds.width * CGFloat(imageCount)
+    pageControl.frame.origin = CGPoint(
+      x: (UIScreen.mainScreen().bounds.width - pageControl.frame.width) / 2,
+      y: UIScreen.mainScreen().bounds.height - pageControl.frame.height - 10)
+
   }
 }

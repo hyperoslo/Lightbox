@@ -6,9 +6,26 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D523B0BC1C43AA8A001AD1EC /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B51C43AA8A001AD1EC /* CenterCellCollectionViewFlowLayout.swift */; };
+		D523B0BD1C43AA8B001AD1EC /* LightboxConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B61C43AA8A001AD1EC /* LightboxConfig.swift */; };
+		D523B0BE1C43AA8B001AD1EC /* LightboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B71C43AA8A001AD1EC /* LightboxController.swift */; };
+		D523B0BF1C43AA8B001AD1EC /* LightboxDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B81C43AA8A001AD1EC /* LightboxDataSource.swift */; };
+		D523B0C01C43AA8B001AD1EC /* LightboxTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B91C43AA8A001AD1EC /* LightboxTransition.swift */; };
+		D523B0C11C43AA8B001AD1EC /* LightboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0BA1C43AA8A001AD1EC /* LightboxView.swift */; };
+		D523B0C21C43AA8B001AD1EC /* LightboxViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0BB1C43AA8A001AD1EC /* LightboxViewCell.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
-		D523B0A91C43AA2A001AD1EC /* Lightbox-iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Lightbox-iOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D523B0A91C43AA2A001AD1EC /* Lightbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lightbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D523B0AE1C43AA2A001AD1EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D523B0B51C43AA8A001AD1EC /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		D523B0B61C43AA8A001AD1EC /* LightboxConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxConfig.swift; sourceTree = "<group>"; };
+		D523B0B71C43AA8A001AD1EC /* LightboxController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxController.swift; sourceTree = "<group>"; };
+		D523B0B81C43AA8A001AD1EC /* LightboxDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxDataSource.swift; sourceTree = "<group>"; };
+		D523B0B91C43AA8A001AD1EC /* LightboxTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxTransition.swift; sourceTree = "<group>"; };
+		D523B0BA1C43AA8A001AD1EC /* LightboxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxView.swift; sourceTree = "<group>"; };
+		D523B0BB1C43AA8A001AD1EC /* LightboxViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -25,6 +42,7 @@
 		D523B09F1C43AA2A001AD1EC = {
 			isa = PBXGroup;
 			children = (
+				D523B0B41C43AA8A001AD1EC /* Source */,
 				D523B0AB1C43AA2A001AD1EC /* Lightbox */,
 				D523B0AA1C43AA2A001AD1EC /* Products */,
 			);
@@ -33,7 +51,7 @@
 		D523B0AA1C43AA2A001AD1EC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D523B0A91C43AA2A001AD1EC /* Lightbox-iOS.framework */,
+				D523B0A91C43AA2A001AD1EC /* Lightbox.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -44,6 +62,20 @@
 				D523B0AE1C43AA2A001AD1EC /* Info.plist */,
 			);
 			path = Lightbox;
+			sourceTree = "<group>";
+		};
+		D523B0B41C43AA8A001AD1EC /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				D523B0B51C43AA8A001AD1EC /* CenterCellCollectionViewFlowLayout.swift */,
+				D523B0B61C43AA8A001AD1EC /* LightboxConfig.swift */,
+				D523B0B71C43AA8A001AD1EC /* LightboxController.swift */,
+				D523B0B81C43AA8A001AD1EC /* LightboxDataSource.swift */,
+				D523B0B91C43AA8A001AD1EC /* LightboxTransition.swift */,
+				D523B0BA1C43AA8A001AD1EC /* LightboxView.swift */,
+				D523B0BB1C43AA8A001AD1EC /* LightboxViewCell.swift */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,7 +106,7 @@
 			);
 			name = "Lightbox-iOS";
 			productName = Lightbox;
-			productReference = D523B0A91C43AA2A001AD1EC /* Lightbox-iOS.framework */;
+			productReference = D523B0A91C43AA2A001AD1EC /* Lightbox.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -123,6 +155,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D523B0BD1C43AA8B001AD1EC /* LightboxConfig.swift in Sources */,
+				D523B0C11C43AA8B001AD1EC /* LightboxView.swift in Sources */,
+				D523B0BE1C43AA8B001AD1EC /* LightboxController.swift in Sources */,
+				D523B0C21C43AA8B001AD1EC /* LightboxViewCell.swift in Sources */,
+				D523B0BC1C43AA8A001AD1EC /* CenterCellCollectionViewFlowLayout.swift in Sources */,
+				D523B0C01C43AA8B001AD1EC /* LightboxTransition.swift in Sources */,
+				D523B0BF1C43AA8B001AD1EC /* LightboxDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,9 +266,10 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Lightbox/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Lightbox;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Lightbox;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -243,9 +283,10 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Lightbox/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Lightbox;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Lightbox;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;

@@ -36,6 +36,6 @@ public class LightboxImageController: UIViewController {
 
   public func setupFrames() {
     imageView.frame = UIScreen.mainScreen().bounds
-    imageView.frame.size.width = UIScreen.mainScreen().bounds.width - 30
+    imageView.frame.size.width = UIScreen.mainScreen().bounds.width - 4
   }
 }

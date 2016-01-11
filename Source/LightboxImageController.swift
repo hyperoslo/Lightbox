@@ -22,9 +22,11 @@ public class LightboxImage: UIScrollView {
 
     delegate = self
     multipleTouchEnabled = true
-    minimumZoomScale = 0.5
-    maximumZoomScale = 10
+    minimumZoomScale = 1
+    maximumZoomScale = 2.5
     userInteractionEnabled = true
+    showsHorizontalScrollIndicator = false
+    showsVerticalScrollIndicator = false
 
     setupFrames()
   }

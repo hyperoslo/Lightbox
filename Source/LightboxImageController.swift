@@ -13,6 +13,7 @@ public class LightboxImageController: UIViewController {
   // MARK: - Initializers
 
   public init(image: UIImage) {
+    print(image)
     super.init(nibName: nil, bundle: nil)
 
     view.addSubview(imageView)
@@ -37,5 +38,6 @@ public class LightboxImageController: UIViewController {
   public func setupFrames() {
     imageView.frame = UIScreen.mainScreen().bounds
     imageView.frame.size.width = UIScreen.mainScreen().bounds.width - 4
+    imageView.frame.origin.x = 2
   }
 }

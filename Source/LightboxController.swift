@@ -2,10 +2,13 @@ import UIKit
 
 public class LightboxController: UIViewController {
 
-  public lazy var scrollView: UIScrollView = {
+  public lazy var scrollView: UIScrollView = { [unowned self] in
     let scrollView = UIScrollView()
     scrollView.frame = UIScreen.mainScreen().bounds
     scrollView.pagingEnabled = true
+    scrollView.delegate = self
+    scrollView.userInteractionEnabled = true
+    scrollView.delaysContentTouches = false
 
     return scrollView
   }()
@@ -15,8 +18,11 @@ public class LightboxController: UIViewController {
     return button
   }()
 
-  public lazy var pageControl: UIPageControl = {
+  public lazy var pageControl: UIPageControl = { [unowned self] in
     let pageControl = UIPageControl()
+    pageControl.addTarget(self, action: "handlePageControl", forControlEvents: .TouchUpInside)
+    pageControl.userInteractionEnabled = true
+
     return pageControl
   }()
 
@@ -59,9 +65,27 @@ public class LightboxController: UIViewController {
     for (index, image) in images.enumerate() {
       let controller = LightboxImageController(image: image)
       controller.view.frame.origin.x = UIScreen.mainScreen().bounds.width * CGFloat(index)
-      controller.imageView.frame.origin.x = 2 + (UIScreen.mainScreen().bounds.width * CGFloat(index))
 
       scrollView.addSubview(controller.view)
     }
+  }
+
+  // MARK: - Action methods
+
+  public func handlePageControl() {
+    UIView.animateWithDuration(0.35, animations: {
+      self.scrollView.contentOffset.x = UIScreen.mainScreen().bounds.width * CGFloat(self.pageControl.currentPage)
+    })
+  }
+}
+
+// MARK: - ScrollView delegate
+
+extension LightboxController: UIScrollViewDelegate {
+
+  public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    let page = scrollView.contentOffset.x / UIScreen.mainScreen().bounds.width
+
+    pageControl.currentPage = Int(page)
   }
 }

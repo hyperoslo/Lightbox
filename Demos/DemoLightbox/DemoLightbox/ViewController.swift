@@ -1,4 +1,5 @@
 import UIKit
+import Lightbox
 
 class ViewController: UIViewController {
 
@@ -23,7 +24,10 @@ class ViewController: UIViewController {
   // MARK: - Action methods
 
   func showLightbox() {
-    // TODO: - Lightbox
+    let images = [UIImage(named: "photo1")!, UIImage(named: "photo2")!, UIImage(named: "photo3")!]
+    let controller = LightboxController(images: images)
+
+    presentViewController(controller, animated: true, completion: nil)
   }
 }
 

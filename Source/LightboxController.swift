@@ -7,17 +7,17 @@ public class LightboxController: UIViewController {
     scrollView.frame = UIScreen.mainScreen().bounds
 
     return scrollView
-    }()
+  }()
 
   public lazy var closeButton: UIButton = {
     let button = UIButton()
     return button
-    }()
+  }()
 
   public lazy var pageControl: UIPageControl = {
     let pageControl = UIPageControl()
     return pageControl
-    }()
+  }()
 
   // MARK: - Initializers
 
@@ -44,7 +44,7 @@ public class LightboxController: UIViewController {
 
   public func setupControllers(images: [UIImage]) {
 
-    for (index, element) in images.enumerate() {
+    for (index, _) in images.enumerate() {
       let controller = LightboxImageController()
       controller.view.frame.origin.x = UIScreen.mainScreen().bounds.width * CGFloat(index)
 

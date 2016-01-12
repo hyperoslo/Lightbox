@@ -31,8 +31,7 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
     controller.pageControl.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 200)
 
     if interactive {
-      controller.view.alpha = show ? 1 : 0.95
-      controller.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(show ? 1 : 0.7)
+      controller.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(show ? 1 : 0)
     } else {
       controller.view.alpha = show ? 1 : 0
     }
@@ -42,7 +41,7 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   func handlePanGesture(gesture: UIPanGestureRecognizer) {
     let translation = gesture.translationInView(scrollView)
-    let percentage = abs(translation.y) / UIScreen.mainScreen().bounds.height * 1.75
+    let percentage = abs(translation.y) / UIScreen.mainScreen().bounds.height / 1.5
 
     switch gesture.state {
     case .Began:
@@ -60,7 +59,7 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
     default:
       interactive = false
 
-      if percentage > 0.65 {
+      if percentage > 0.3 {
         finishInteractiveTransition()
         guard let controller = lightboxController else { return }
 
@@ -75,9 +74,12 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
       } else {
         cancelInteractiveTransition()
 
-        UIView.animateWithDuration(0.35, animations: {
-          self.scrollView?.frame.origin = self.initialOrigin
-        })
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.035 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+          UIView.animateWithDuration(0.35, animations: {
+            self.scrollView?.frame.origin = self.initialOrigin
+          })
+        }
       }
 
       break
@@ -92,7 +94,7 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
 extension LightboxTransition: UIViewControllerAnimatedTransitioning {
 
   public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-    return 0.35
+    return 0.25
   }
 
   public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {

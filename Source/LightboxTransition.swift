@@ -21,7 +21,20 @@ public class LightboxTransition: NSObject {
   // MARK: - Pan gesture recognizer
 
   func handlePanGesture() {
-    print("FUUUUUCK")
+
+    switch panGestureRecognizer.state {
+    case .Began:
+      // TODO: Dismiss the lightbox controller
+      interactive = true
+    case .Changed:
+      print("Sup")
+      // TODO: Update the presentation
+    case .Ended, .Cancelled:
+      interactive = false
+      // TODO: Finish interactive transition
+    default:
+      break
+    }
   }
   
 }

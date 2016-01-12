@@ -27,8 +27,14 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   func transition(show: Bool) {
     guard let controller = lightboxController else { return }
+    controller.closeButton.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -200)
+    controller.pageControl.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 200)
 
-    controller.view.alpha = show ? 1 : 0
+    if interactive {
+      controller.view.alpha = show ? 1 : 0.95
+    } else {
+      controller.view.alpha = show ? 1 : 0
+    }
   }
 
   // MARK: - Pan gesture recognizer

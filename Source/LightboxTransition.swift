@@ -32,6 +32,7 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
     if interactive {
       controller.view.alpha = show ? 1 : 0.95
+      controller.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(show ? 1 : 0.7)
     } else {
       controller.view.alpha = show ? 1 : 0
     }
@@ -46,9 +47,8 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
     switch gesture.state {
     case .Began:
       interactive = true
-      print(interactive)
       lightboxController?.dismissViewControllerAnimated(true, completion: nil)
-      print(interactive)
+
       if let origin = scrollView?.frame.origin { initialOrigin = origin }
 
       break
@@ -57,26 +57,42 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
       scrollView?.frame.origin.y = initialOrigin.y + translation.y
 
       break
-    case .Ended:
-      print(interactive)
-      interactive = false
-      print(interactive)
-
-      percentage > 0.5 ? finishInteractiveTransition() : cancelInteractiveTransition()
-
-      UIView.animateWithDuration(0.25, animations: {
-        self.scrollView?.frame.origin.y = self.initialOrigin.y
-      })
     default:
+      interactive = false
+
+      if percentage > 0.65 {
+        finishInteractiveTransition()
+        guard let controller = lightboxController else { return }
+
+        controller.closeButton.alpha = 0
+        controller.pageControl.alpha = 0
+
+        UIView.animateWithDuration(0.5, animations: {
+          self.scrollView?.frame.origin.y = translation.y * 3
+          controller.view.alpha = 0
+          controller.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0)
+        })
+      } else {
+        cancelInteractiveTransition()
+
+        UIView.animateWithDuration(0.35, animations: {
+          self.scrollView?.frame.origin = self.initialOrigin
+        })
+      }
+
       break
     }
+  }
+
+  public override func finishInteractiveTransition() {
+    super.finishInteractiveTransition()
   }
 }
 
 extension LightboxTransition: UIViewControllerAnimatedTransitioning {
 
   public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-    return 0.25
+    return 0.35
   }
 
   public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {

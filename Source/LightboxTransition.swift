@@ -5,6 +5,7 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
   public lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
     let gesture = UIPanGestureRecognizer()
     gesture.addTarget(self, action: "handlePanGesture:")
+    gesture.delegate = self
 
     return gesture
     }()
@@ -34,24 +35,33 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   func handlePanGesture(gesture: UIPanGestureRecognizer) {
     let translation = gesture.translationInView(scrollView)
-    let percentage: CGFloat = 0.5
+    let percentage = abs(translation.y) / UIScreen.mainScreen().bounds.height * 1.75
 
-    switch panGestureRecognizer.state {
+    switch gesture.state {
     case .Began:
-      lightboxController?.dismissViewControllerAnimated(true, completion: nil)
       interactive = true
+      print(interactive)
+      lightboxController?.dismissViewControllerAnimated(true, completion: nil)
+      print(interactive)
       if let origin = scrollView?.frame.origin { initialOrigin = origin }
 
       break
     case .Changed:
       updateInteractiveTransition(percentage)
-      scrollView?.frame.origin.y = initialOrigin.y + translation.x
+      scrollView?.frame.origin.y = initialOrigin.y + translation.y
 
       break
-    default:
+    case .Ended:
+      print(interactive)
       interactive = false
+      print(interactive)
+
       percentage > 0.5 ? finishInteractiveTransition() : cancelInteractiveTransition()
 
+      UIView.animateWithDuration(0.25, animations: {
+        self.scrollView?.frame.origin.y = self.initialOrigin.y
+      })
+    default:
       break
     }
   }
@@ -60,7 +70,7 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
 extension LightboxTransition: UIViewControllerAnimatedTransitioning {
 
   public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-    return 0.5
+    return 0.25
   }
 
   public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
@@ -69,14 +79,13 @@ extension LightboxTransition: UIViewControllerAnimatedTransitioning {
       toView = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)?.view
       else { return }
 
-    if !dismissing {
-      transition(false)
-      container.addSubview(fromView)
-      container.addSubview(toView)
-    } else {
-      container.addSubview(toView)
-      container.addSubview(fromView)
-    }
+    let firstView = dismissing ? toView : fromView
+    let secondView = dismissing ? fromView : toView
+
+    if !dismissing { transition(false) }
+
+    container.addSubview(firstView)
+    container.addSubview(secondView)
 
     let duration = transitionDuration(transitionContext)
 
@@ -108,5 +117,20 @@ extension LightboxTransition: UIViewControllerTransitioningDelegate {
 
   public func interactionControllerForPresentation(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
     return interactive ? self : nil
+  }
+}
+
+// MARK: Gesture recognizer delegate methods
+
+extension LightboxTransition : UIGestureRecognizerDelegate {
+
+  public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    if let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer {
+      let translation = panGestureRecognizer.translationInView(gestureRecognizer.view)
+      if fabs(translation.x) < fabs(translation.y) {
+        return true
+      }
+    }
+    return false
   }
 }

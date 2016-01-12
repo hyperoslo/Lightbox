@@ -11,8 +11,6 @@ public class LightboxImage: UIScrollView {
     return imageView
   }()
 
-  public lazy var transitionManager: LightboxTransition = LightboxTransition()
-
   // MARK: - Initializers
 
   public init(image: UIImage) {
@@ -29,7 +27,6 @@ public class LightboxImage: UIScrollView {
     userInteractionEnabled = true
     showsHorizontalScrollIndicator = false
     showsVerticalScrollIndicator = false
-    transitionManager.scrollView = self
     addGestureRecognizer(panGestureRecognizer)
 
     setupFrames()

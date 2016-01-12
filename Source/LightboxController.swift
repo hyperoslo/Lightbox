@@ -32,6 +32,8 @@ public class LightboxController: UIViewController {
     return pageControl
   }()
 
+  public lazy var transitionManager: LightboxTransition = LightboxTransition()
+
   var statusBarHidden = false
 
   // MARK: - Initializers
@@ -57,6 +59,9 @@ public class LightboxController: UIViewController {
     super.viewDidLoad()
 
     view.backgroundColor = UIColor.blackColor()
+    transitionManager.lightboxController = self
+    transitionManager.scrollView = scrollView
+    transitioningDelegate = transitionManager
   }
 
   public override func viewWillAppear(animated: Bool) {
@@ -88,8 +93,6 @@ public class LightboxController: UIViewController {
     for (index, image) in images.enumerate() {
       let controller = LightboxImage(image: image)
       controller.frame.origin.x = UIScreen.mainScreen().bounds.width * CGFloat(index)
-      controller.transitionManager.lightboxController = self
-      transitioningDelegate = controller.transitionManager
 
       scrollView.addSubview(controller)
     }

@@ -24,10 +24,10 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   // MARK: - Transition
 
-  func transition() {
+  func transition(show: Bool) {
     guard let controller = lightboxController else { return }
 
-    controller.view.alpha = dismissing ? 0 : 1
+    controller.view.alpha = show ? 1 : 0
   }
 
   // MARK: - Pan gesture recognizer
@@ -69,15 +69,19 @@ extension LightboxTransition: UIViewControllerAnimatedTransitioning {
       toView = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)?.view
       else { return }
 
-    if !dismissing { transition() }
+    if !dismissing {
+      transition(false)
+      container.addSubview(fromView)
+      container.addSubview(toView)
+    } else {
+      container.addSubview(toView)
+      container.addSubview(fromView)
+    }
 
-    container.addSubview(fromView)
-    container.addSubview(toView)
-
-    let duration = self.transitionDuration(transitionContext)
+    let duration = transitionDuration(transitionContext)
 
     UIView.animateWithDuration(duration, animations: {
-      self.transition()
+      self.transition(!self.dismissing)
       }, completion: { _ in
         transitionContext.transitionWasCancelled()
           ? transitionContext.completeTransition(false)

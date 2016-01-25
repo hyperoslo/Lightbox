@@ -15,10 +15,10 @@ public class LightboxController: UIViewController {
 
   public lazy var closeButton: UIButton = { [unowned self] in
     let button = UIButton()
-    button.setTitle(Lightbox.closeButton, forState: .Normal)
-    button.setTitleColor(Lightbox.closeButtonColor, forState: .Normal)
+    button.setTitle(LightboxConfig.closeButton, forState: .Normal)
+    button.setTitleColor(LightboxConfig.closeButtonColor, forState: .Normal)
     button.addTarget(self, action: "closeButtonDidPress", forControlEvents: .TouchUpInside)
-    button.titleLabel?.font = Lightbox.closeButtonFont
+    button.titleLabel?.font = LightboxConfig.closeButtonFont
     button.sizeToFit()
 
     return button
@@ -32,7 +32,7 @@ public class LightboxController: UIViewController {
     return pageControl
   }()
 
-  public var pages = [LightboxImage]()
+  public var pageViews = [PageView]()
 
   public lazy var transitionManager: LightboxTransition = LightboxTransition()
 
@@ -106,21 +106,21 @@ public class LightboxController: UIViewController {
   public func setupControllers(images: [UIImage]) {
 
     for (index, image) in images.enumerate() {
-      let pageView = LightboxImage(image: image)
+      let pageView = PageView(image: image)
 
       if index == 0 {
         pageView.backgroundColor = .redColor()
       }
 
       scrollView.addSubview(pageView)
-      pages.append(pageView)
+      pageViews.append(pageView)
     }
 
     configureFrames()
   }
 
   public func configureFrames() {
-    for (index, pageView) in pages.enumerate() {
+    for (index, pageView) in pageViews.enumerate() {
       var frame = scrollView.bounds
       frame.origin.x = frame.width * CGFloat(index)
       pageView.configureFrame(frame)

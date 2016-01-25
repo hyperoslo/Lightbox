@@ -1,6 +1,6 @@
 import UIKit
 
-public class LightboxImage: UIScrollView {
+public class PageView: UIScrollView {
 
   public lazy var imageView: UIImageView = {
     let imageView = UIImageView()
@@ -44,7 +44,7 @@ public class LightboxImage: UIScrollView {
   }
 }
 
-extension LightboxImage: UIScrollViewDelegate {
+extension PageView: UIScrollViewDelegate {
 
   public func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
     return imageView

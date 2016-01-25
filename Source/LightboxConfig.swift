@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Lightbox {
+public struct LightboxConfig {
 
   // MARK: - Titles
 

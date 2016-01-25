@@ -32,6 +32,8 @@ public class LightboxController: UIViewController {
     return pageControl
   }()
 
+  public var pages = [LightboxImage]()
+
   public lazy var transitionManager: LightboxTransition = LightboxTransition()
 
   var statusBarHidden = false
@@ -77,6 +79,19 @@ public class LightboxController: UIViewController {
     UIApplication.sharedApplication().setStatusBarHidden(statusBarHidden, withAnimation: .Fade)
   }
 
+  override public func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+
+    scrollView.frame.size = size
+    scrollView.contentSize = CGSize(
+      width: size.width * CGFloat(pageControl.numberOfPages),
+      height: size.height)
+    scrollView.contentOffset = CGPoint(x: CGFloat(pageControl.currentPage) * size.width, y: 0)
+
+    print(scrollView.contentSize)
+    configureFrames()
+  }
+
   // MARK: - Main methods
 
   public func setupFrames(imageCount: Int) {
@@ -91,10 +106,24 @@ public class LightboxController: UIViewController {
   public func setupControllers(images: [UIImage]) {
 
     for (index, image) in images.enumerate() {
-      let controller = LightboxImage(image: image)
-      controller.frame.origin.x = UIScreen.mainScreen().bounds.width * CGFloat(index)
+      let pageView = LightboxImage(image: image)
 
-      scrollView.addSubview(controller)
+      if index == 0 {
+        pageView.backgroundColor = .redColor()
+      }
+
+      scrollView.addSubview(pageView)
+      pages.append(pageView)
+    }
+
+    configureFrames()
+  }
+
+  public func configureFrames() {
+    for (index, pageView) in pages.enumerate() {
+      var frame = scrollView.bounds
+      frame.origin.x = frame.width * CGFloat(index)
+      pageView.configureFrame(frame)
     }
   }
 

@@ -88,7 +88,6 @@ public class LightboxController: UIViewController {
       height: size.height)
     scrollView.contentOffset = CGPoint(x: CGFloat(pageControl.currentPage) * size.width, y: 0)
 
-    print(scrollView.contentSize)
     configureFrames()
   }
 

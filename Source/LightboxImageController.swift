@@ -28,22 +28,18 @@ public class LightboxImage: UIScrollView {
     showsHorizontalScrollIndicator = false
     showsVerticalScrollIndicator = false
     addGestureRecognizer(panGestureRecognizer)
-
-    setupFrames()
   }
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  // MARK: - Main methods
-
-  public func setupFrames() {
-    imageView.frame = UIScreen.mainScreen().bounds
-    imageView.frame.size.width = UIScreen.mainScreen().bounds.width - 4
+  public func configureFrame(frame: CGRect) {
+    imageView.frame = frame
+    imageView.frame.size.width = frame.width - 4
     imageView.frame.origin.x = 2
 
-    frame = UIScreen.mainScreen().bounds
+    self.frame = frame
     contentSize = imageView.frame.size
   }
 }

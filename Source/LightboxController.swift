@@ -7,7 +7,7 @@ public protocol LightboxControllerPageDelegate: class {
 
 public protocol LightboxControllerDismissalDelegate: class {
 
-  func lightboxControllerDidDismiss(controller: LightboxController)
+  func lightboxControllerWillDismiss(controller: LightboxController)
 }
 
 public class LightboxController: UIViewController {
@@ -93,6 +93,14 @@ public class LightboxController: UIViewController {
     return pageViews.count
   }
 
+  public var images: [UIImage] {
+    return pageViews.filter{ $0.imageView.image != nil}.map{ $0.imageView.image! }
+  }
+
+  public var imageURLs: [NSURL] {
+    return pageViews.filter{ $0.imageURL != nil}.map{ $0.imageURL! }
+  }
+
   public weak var pageDelegate: LightboxControllerPageDelegate?
   public weak var dismissalDelegate: LightboxControllerDismissalDelegate?
   public var presented = true
@@ -100,7 +108,6 @@ public class LightboxController: UIViewController {
 
   lazy var transitionManager: LightboxTransition = LightboxTransition()
   var pageViews = [PageView]()
-  var imageURLs: [NSURL]?
   var statusBarHidden = false
   var config: LightboxConfig
 
@@ -156,10 +163,8 @@ public class LightboxController: UIViewController {
 
     [scrollView, closeButton, deleteButton, pageLabel].forEach { view.addSubview($0) }
 
-    configureLayout()
-    configureFrames()
-
     currentPage = 0
+    configureLayout(UIScreen.mainScreen().bounds.size)
   }
 
   public override func viewWillAppear(animated: Bool) {
@@ -188,6 +193,29 @@ public class LightboxController: UIViewController {
     configureLayout(size)
   }
 
+  // MARK: - Pagination
+
+  public func goTo(page: Int, animated: Bool = true) {
+    guard page >= 0 && page < numberOfPages else {
+      return
+    }
+
+    currentPage = page
+
+    var offset = scrollView.contentOffset
+    offset.x = CGFloat(page) * scrollView.frame.width
+
+    scrollView.setContentOffset(offset, animated: animated)
+  }
+
+  public func next(animated: Bool = true) {
+    goTo(currentPage + 1, animated: animated)
+  }
+
+  public func previous(animated: Bool = true) {
+    goTo(currentPage - 1, animated: animated)
+  }
+
   // MARK: - Action methods
 
   public func handlePageControl() {
@@ -196,8 +224,33 @@ public class LightboxController: UIViewController {
     })
   }
 
-  public func closeButtonDidPress() {
+  func deleteButtonDidPress(button: UIButton) {
+    button.enabled = false
+
+    guard numberOfPages != 1 else {
+      pageViews.removeAll()
+      closeButtonDidPress(closeButton)
+      return
+    }
+
+    let prevIndex = currentPage
+    currentPage == numberOfPages - 1 ? previous() : next()
+
+    self.currentPage--
+    self.pageViews.removeAtIndex(prevIndex).removeFromSuperview()
+
+    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
+    dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
+      self.configureLayout(UIScreen.mainScreen().bounds.size)
+      self.scrollViewDidEndDecelerating(self.scrollView)
+      button.enabled = true
+    }
+  }
+
+  public func closeButtonDidPress(button: UIButton) {
+    button.enabled = false
     presented = false
+    dismissalDelegate?.lightboxControllerWillDismiss(self)
     dismissViewControllerAnimated(true, completion: nil)
   }
 
@@ -231,11 +284,11 @@ public class LightboxController: UIViewController {
 
     pageLabel.frame.origin = CGPoint(
       x: pageLabelX,
-      y: bounds.height - pageLabel.frame.height - 40)
+      y: bounds.height - pageLabel.frame.height - 20)
   }
 }
 
-// MARK: - ScrollView delegate
+// MARK: - UIScrollViewDelegate
 
 extension LightboxController: UIScrollViewDelegate {
 

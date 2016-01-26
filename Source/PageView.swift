@@ -1,8 +1,8 @@
 import UIKit
 
-public class PageView: UIScrollView {
+class PageView: UIScrollView {
 
-  public lazy var imageView: UIImageView = {
+  lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFit
     imageView.clipsToBounds = true
@@ -11,17 +11,20 @@ public class PageView: UIScrollView {
     return imageView
   }()
 
+  var imageURL: NSURL?
+
   // MARK: - Initializers
 
-  public init(image: UIImage) {
+  init(image: UIImage) {
     super.init(frame: CGRectZero)
     imageView.image = image
     configure()
   }
 
-  public init(imageURL: NSURL) {
+  init(imageURL: NSURL) {
     super.init(frame: CGRectZero)
 
+    self.imageURL = imageURL
     configure()
 
     LightboxConfig.config.loadImage(
@@ -30,11 +33,11 @@ public class PageView: UIScrollView {
     }
   }
 
-  public required init?(coder aDecoder: NSCoder) {
+  required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configure() {
+  func configure() {
     addSubview(imageView)
 
     delegate = self
@@ -47,7 +50,7 @@ public class PageView: UIScrollView {
     addGestureRecognizer(panGestureRecognizer)
   }
 
-  public func configureFrame(frame: CGRect) {
+  func configureFrame(frame: CGRect) {
     imageView.frame = frame
     imageView.frame.size.width = frame.width
     imageView.frame.origin.x = 0
@@ -61,7 +64,7 @@ public class PageView: UIScrollView {
 
 extension PageView: UIScrollViewDelegate {
 
-  public func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+  func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
     return imageView
   }
 }

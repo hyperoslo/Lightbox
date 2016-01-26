@@ -78,6 +78,7 @@ public class LightboxController: UIViewController {
   }
 
   public var pageViews = [PageView]()
+  var imageURLs: [NSURL]?
   public lazy var transitionManager: LightboxTransition = LightboxTransition()
 
   var statusBarHidden = false
@@ -105,16 +106,12 @@ public class LightboxController: UIViewController {
 
   // MARK: - Initializers
 
-  public init(images: [UIImage], config: LightboxConfig = LightboxConfig(), pageDelegate: LightboxControllerPageDelegate? = nil, dismissalDelegate: LightboxControllerDismissalDelegate? = nil) {
+  public init(images: [UIImage], config: LightboxConfig = LightboxConfig.config, pageDelegate: LightboxControllerPageDelegate? = nil, dismissalDelegate: LightboxControllerDismissalDelegate? = nil) {
     self.config = config
     self.pageDelegate = pageDelegate
     self.dismissalDelegate = dismissalDelegate
 
     super.init(nibName: nil, bundle: nil)
-
-    [scrollView, closeButton, pageLabel].forEach { view.addSubview($0) }
-
-    configureLayout(images.count)
 
     for image in images {
       let pageView = PageView(image: image)
@@ -122,8 +119,23 @@ public class LightboxController: UIViewController {
       scrollView.addSubview(pageView)
       pageViews.append(pageView)
     }
+  }
 
-    configureFrames()
+  public init(imageURLs: [NSURL], config: LightboxConfig = LightboxConfig.config,
+    pageDelegate: LightboxControllerPageDelegate? = nil,
+    dismissalDelegate: LightboxControllerDismissalDelegate? = nil) {
+      self.config = config
+      self.pageDelegate = pageDelegate
+      self.dismissalDelegate = dismissalDelegate
+
+      super.init(nibName: nil, bundle: nil)
+
+      for imageURL in imageURLs {
+        let pageView = PageView(imageURL: imageURL)
+
+        scrollView.addSubview(pageView)
+        pageViews.append(pageView)
+      }
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -139,6 +151,11 @@ public class LightboxController: UIViewController {
     transitionManager.lightboxController = self
     transitionManager.scrollView = scrollView
     transitioningDelegate = transitionManager
+
+    [scrollView, closeButton, pageLabel].forEach { view.addSubview($0) }
+
+    configureLayout()
+    configureFrames()
 
     currentPage = 0
   }
@@ -174,8 +191,8 @@ public class LightboxController: UIViewController {
 
   // MARK: - Layout
 
-  public func configureLayout(imageCount: Int) {
-    scrollView.contentSize.width = UIScreen.mainScreen().bounds.width * CGFloat(imageCount)
+  public func configureLayout() {
+    scrollView.contentSize.width = UIScreen.mainScreen().bounds.width * CGFloat(numberOfPages)
     closeButton.frame.origin = CGPoint(x: 12.5, y: 7.5)
     pageLabel.frame.origin = CGPoint(
       x: (UIScreen.mainScreen().bounds.width - pageLabel.frame.width) / 2,

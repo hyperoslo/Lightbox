@@ -2,6 +2,8 @@ import UIKit
 
 public struct LightboxConfig {
 
+  static var config = LightboxConfig()
+
   public var hideStatusBar = true
   public var backgroundColor = UIColor.clearColor()
   public var pageIndicator = PageIndicator()

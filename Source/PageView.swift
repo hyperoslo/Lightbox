@@ -15,10 +15,29 @@ public class PageView: UIScrollView {
 
   public init(image: UIImage) {
     super.init(frame: CGRectZero)
-
-    addSubview(imageView)
-
     imageView.image = image
+    configure()
+  }
+
+  public init(imageURL: NSURL) {
+    super.init(frame: CGRectZero)
+
+    configure()
+
+    LightboxConfig.config.loadImage(
+      imageView: imageView, URL: imageURL) { error in
+        if error == nil {
+
+        }
+    }
+  }
+
+  public required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  public func configure() {
+    addSubview(imageView)
 
     delegate = self
     multipleTouchEnabled = true
@@ -28,10 +47,6 @@ public class PageView: UIScrollView {
     showsHorizontalScrollIndicator = false
     showsVerticalScrollIndicator = false
     addGestureRecognizer(panGestureRecognizer)
-  }
-
-  public required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
   }
 
   public func configureFrame(frame: CGRect) {

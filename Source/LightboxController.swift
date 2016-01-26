@@ -47,8 +47,16 @@ public class LightboxController: UIViewController {
     pageControl.numberOfPages = images.count
     pageControl.sizeToFit()
 
-    setupFrames(images.count)
-    setupControllers(images)
+    configureLayout(images.count)
+
+    for image in images {
+      let pageView = PageView(image: image)
+
+      scrollView.addSubview(pageView)
+      pageViews.append(pageView)
+    }
+
+    configureFrames()
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -91,31 +99,14 @@ public class LightboxController: UIViewController {
     configureFrames()
   }
 
-  // MARK: - Main methods
+  // MARK: - Layout
 
-  public func setupFrames(imageCount: Int) {
+  public func configureLayout(imageCount: Int) {
     scrollView.contentSize.width = UIScreen.mainScreen().bounds.width * CGFloat(imageCount)
     closeButton.frame.origin = CGPoint(x: 12.5, y: 7.5)
     pageControl.frame.origin = CGPoint(
       x: (UIScreen.mainScreen().bounds.width - pageControl.frame.width) / 2,
       y: UIScreen.mainScreen().bounds.height - pageControl.frame.height + 5)
-
-  }
-
-  public func setupControllers(images: [UIImage]) {
-
-    for (index, image) in images.enumerate() {
-      let pageView = PageView(image: image)
-
-      if index == 0 {
-        pageView.backgroundColor = .redColor()
-      }
-
-      scrollView.addSubview(pageView)
-      pageViews.append(pageView)
-    }
-
-    configureFrames()
   }
 
   public func configureFrames() {

@@ -8,7 +8,7 @@ public struct LightboxConfig {
 
   // MARK: - Fonts
 
-  public static var closeButtonFont = UIFont(name: "AvenirNextCondensed-DemiBold", size: 19)!
+  public static var closeButtonFont = UIFont.systemFontOfSize(19)
 
   // MARK: - Colors
 

@@ -49,13 +49,9 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
       lightboxController?.dismissViewControllerAnimated(true, completion: nil)
 
       if let origin = scrollView?.frame.origin { initialOrigin = origin }
-
-      break
     case .Changed:
       updateInteractiveTransition(percentage)
       scrollView?.frame.origin.y = initialOrigin.y + translation.y
-
-      break
     default:
       interactive = false
 
@@ -81,8 +77,6 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
           })
         }
       }
-
-      break
     }
   }
 

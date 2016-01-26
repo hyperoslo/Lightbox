@@ -48,7 +48,7 @@ public struct LightboxConfig {
   public struct CloseButton {
     public var enabled = true
     public var textAttributes = [
-      NSFontAttributeName: UIFont.boldSystemFontOfSize(12),
+      NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
       NSForegroundColorAttributeName: UIColor.whiteColor(),
       NSParagraphStyleAttributeName: {
         var style = NSMutableParagraphStyle()
@@ -63,9 +63,9 @@ public struct LightboxConfig {
 
   public struct DeleteButton {
     public var enabled = true
-    public var alpha: CGFloat = 0
+    public var alpha: CGFloat = 1
     public var textAttributes = [
-      NSFontAttributeName: UIFont.boldSystemFontOfSize(12),
+      NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
       NSForegroundColorAttributeName: UIColor(red:0.99, green:0.26, blue:0.18, alpha:1),
       NSParagraphStyleAttributeName: {
         var style = NSMutableParagraphStyle()

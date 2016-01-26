@@ -43,6 +43,8 @@ public class LightboxController: UIViewController {
       button.setBackgroundImage(image, forState: .Normal)
     }
 
+    button.hidden = !self.config.deleteButton.enabled
+
     return button
     }()
 
@@ -62,11 +64,14 @@ public class LightboxController: UIViewController {
       button.setBackgroundImage(image, forState: .Normal)
     }
 
+    button.hidden = !self.config.deleteButton.enabled
+
     return button
     }()
 
   lazy var pageLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRectZero)
+    label.backgroundColor = UIColor.blackColor()
 
     label.hidden = !self.config.pageIndicator.enabled
 
@@ -152,7 +157,7 @@ public class LightboxController: UIViewController {
     transitionManager.scrollView = scrollView
     transitioningDelegate = transitionManager
 
-    [scrollView, closeButton, pageLabel].forEach { view.addSubview($0) }
+    [scrollView, closeButton, deleteButton, pageLabel].forEach { view.addSubview($0) }
 
     configureLayout()
     configureFrames()
@@ -173,10 +178,6 @@ public class LightboxController: UIViewController {
     UIApplication.sharedApplication().setStatusBarHidden(statusBarHidden, withAnimation: .Fade)
   }
 
-  public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-    return .All
-  }
-
   override public func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
@@ -191,12 +192,25 @@ public class LightboxController: UIViewController {
 
   // MARK: - Layout
 
+  public override func viewDidLayoutSubviews() {
+    let bounds = UIScreen.mainScreen().bounds
+
+    closeButton.frame = CGRect(x: bounds.width - config.closeButton.size.width - 17, y: 16,
+      width: config.closeButton.size.width, height: config.closeButton.size.height)
+    deleteButton.frame = CGRect(x: 17, y: 16,
+      width: config.deleteButton.size.width, height: config.deleteButton.size.height)
+
+    let pageLabelX: CGFloat = bounds.width < bounds.height
+      ? (bounds.width - pageLabel.frame.width) / 2
+      : deleteButton.center.x
+
+    pageLabel.frame.origin = CGPoint(
+      x: pageLabelX,
+      y: bounds.height - pageLabel.frame.height - 20)
+  }
+
   public func configureLayout() {
     scrollView.contentSize.width = UIScreen.mainScreen().bounds.width * CGFloat(numberOfPages)
-    closeButton.frame.origin = CGPoint(x: 12.5, y: 7.5)
-    pageLabel.frame.origin = CGPoint(
-      x: (UIScreen.mainScreen().bounds.width - pageLabel.frame.width) / 2,
-      y: UIScreen.mainScreen().bounds.height - pageLabel.frame.height + 5)
   }
 
   public func configureFrames() {

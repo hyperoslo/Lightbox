@@ -44,6 +44,8 @@ public class PageView: UIScrollView {
   }
 }
 
+// MARK: - UIScrollViewDelegate
+
 extension PageView: UIScrollViewDelegate {
 
   public func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {

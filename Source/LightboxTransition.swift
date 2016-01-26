@@ -85,6 +85,8 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
   }
 }
 
+// MARK: - UIViewControllerAnimatedTransitioning
+
 extension LightboxTransition: UIViewControllerAnimatedTransitioning {
 
   public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
@@ -117,6 +119,8 @@ extension LightboxTransition: UIViewControllerAnimatedTransitioning {
   }
 }
 
+// MARK: - UIViewControllerTransitioningDelegate
+
 extension LightboxTransition: UIViewControllerTransitioningDelegate {
 
   public func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -138,17 +142,20 @@ extension LightboxTransition: UIViewControllerTransitioningDelegate {
   }
 }
 
-// MARK: Gesture recognizer delegate methods
+// MARK: - Gesture recognizer delegate methods
 
 extension LightboxTransition : UIGestureRecognizerDelegate {
 
   public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    var result = false
+
     if let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer {
       let translation = panGestureRecognizer.translationInView(gestureRecognizer.view)
       if fabs(translation.x) < fabs(translation.y) {
-        return true
+        result = true
       }
     }
-    return false
+
+    return result
   }
 }

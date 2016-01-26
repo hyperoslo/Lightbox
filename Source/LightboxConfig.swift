@@ -5,12 +5,10 @@ public struct LightboxConfig {
   static var config = LightboxConfig()
 
   public var hideStatusBar = true
-  public var backgroundColor = UIColor.clearColor()
   public var pageIndicator = PageIndicator()
   public var closeButton = CloseButton()
   public var deleteButton = DeleteButton()
   public var zoom = Zoom()
-  public var remoteImages = false
   public var spacing: CGFloat = 20
 
   public typealias LoadImageCompletion = (error: NSError?) -> Void
@@ -80,6 +78,6 @@ public struct LightboxConfig {
 
   public struct Zoom {
     public var minimumScale: CGFloat = 1.0
-    public var maximumScale: CGFloat = 3.0
+    public var maximumScale: CGFloat = 2.5
   }
 }

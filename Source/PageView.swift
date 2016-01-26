@@ -26,9 +26,7 @@ public class PageView: UIScrollView {
 
     LightboxConfig.config.loadImage(
       imageView: imageView, URL: imageURL) { error in
-        if error == nil {
-
-        }
+        if error == nil {}
     }
   }
 
@@ -41,8 +39,8 @@ public class PageView: UIScrollView {
 
     delegate = self
     multipleTouchEnabled = true
-    minimumZoomScale = 1
-    maximumZoomScale = 2.5
+    minimumZoomScale = LightboxConfig.config.zoom.minimumScale
+    maximumZoomScale = LightboxConfig.config.zoom.maximumScale
     userInteractionEnabled = true
     showsHorizontalScrollIndicator = false
     showsVerticalScrollIndicator = false
@@ -51,8 +49,8 @@ public class PageView: UIScrollView {
 
   public func configureFrame(frame: CGRect) {
     imageView.frame = frame
-    imageView.frame.size.width = frame.width - 4
-    imageView.frame.origin.x = 2
+    imageView.frame.size.width = frame.width
+    imageView.frame.origin.x = 0
 
     self.frame = frame
     contentSize = imageView.frame.size

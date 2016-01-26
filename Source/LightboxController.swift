@@ -12,11 +12,6 @@ public protocol LightboxControllerDismissalDelegate: class {
 
 public class LightboxController: UIViewController {
 
-  public weak var pageDelegate: LightboxControllerPageDelegate?
-  public weak var dismissalDelegate: LightboxControllerDismissalDelegate?
-
-  public var dismissed = false
-
   public lazy var scrollView: UIScrollView = { [unowned self] in
     let scrollView = UIScrollView()
     scrollView.frame = UIScreen.mainScreen().bounds
@@ -71,25 +66,10 @@ public class LightboxController: UIViewController {
 
   lazy var pageLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRectZero)
-    label.backgroundColor = UIColor.blackColor()
-
     label.hidden = !self.config.pageIndicator.enabled
 
     return label
     }()
-
-  public var numberOfPages: Int {
-    return pageViews.count
-  }
-
-  public var pageViews = [PageView]()
-  var imageURLs: [NSURL]?
-  public lazy var transitionManager: LightboxTransition = LightboxTransition()
-
-  var statusBarHidden = false
-  public private(set) var seen = false
-  var rotating = false
-  var config: LightboxConfig
 
   public private(set) var currentPage = 0 {
     didSet {
@@ -109,21 +89,38 @@ public class LightboxController: UIViewController {
     }
   }
 
+  public var numberOfPages: Int {
+    return pageViews.count
+  }
+
+  public weak var pageDelegate: LightboxControllerPageDelegate?
+  public weak var dismissalDelegate: LightboxControllerDismissalDelegate?
+  public var presented = true
+  public private(set) var seen = false
+
+  lazy var transitionManager: LightboxTransition = LightboxTransition()
+  var pageViews = [PageView]()
+  var imageURLs: [NSURL]?
+  var statusBarHidden = false
+  var config: LightboxConfig
+
   // MARK: - Initializers
 
-  public init(images: [UIImage], config: LightboxConfig = LightboxConfig.config, pageDelegate: LightboxControllerPageDelegate? = nil, dismissalDelegate: LightboxControllerDismissalDelegate? = nil) {
-    self.config = config
-    self.pageDelegate = pageDelegate
-    self.dismissalDelegate = dismissalDelegate
+  public init(images: [UIImage], config: LightboxConfig = LightboxConfig.config,
+    pageDelegate: LightboxControllerPageDelegate? = nil,
+    dismissalDelegate: LightboxControllerDismissalDelegate? = nil) {
+      self.config = config
+      self.pageDelegate = pageDelegate
+      self.dismissalDelegate = dismissalDelegate
 
-    super.init(nibName: nil, bundle: nil)
+      super.init(nibName: nil, bundle: nil)
 
-    for image in images {
-      let pageView = PageView(image: image)
+      for image in images {
+        let pageView = PageView(image: image)
 
-      scrollView.addSubview(pageView)
-      pageViews.append(pageView)
-    }
+        scrollView.addSubview(pageView)
+        pageViews.append(pageView)
+      }
   }
 
   public init(imageURLs: [NSURL], config: LightboxConfig = LightboxConfig.config,
@@ -169,56 +166,26 @@ public class LightboxController: UIViewController {
     super.viewWillDisappear(animated)
 
     statusBarHidden = UIApplication.sharedApplication().statusBarHidden
-    UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Fade)
+
+    if config.hideStatusBar {
+      UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Fade)
+    }
   }
 
-  public override func viewWillDisappear(animated: Bool) {
+  public override func viewDidDisappear(animated: Bool) {
     super.viewWillDisappear(animated)
 
-    UIApplication.sharedApplication().setStatusBarHidden(statusBarHidden, withAnimation: .Fade)
+    if config.hideStatusBar {
+      UIApplication.sharedApplication().setStatusBarHidden(statusBarHidden, withAnimation: .Fade)
+    }
   }
+
+  // MARK: - Rotation
 
   override public func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
-    scrollView.frame.size = size
-    scrollView.contentSize = CGSize(
-      width: size.width * CGFloat(numberOfPages),
-      height: size.height)
-    scrollView.contentOffset = CGPoint(x: CGFloat(currentPage) * size.width, y: 0)
-
-    configureFrames()
-  }
-
-  // MARK: - Layout
-
-  public override func viewDidLayoutSubviews() {
-    let bounds = UIScreen.mainScreen().bounds
-
-    closeButton.frame = CGRect(x: bounds.width - config.closeButton.size.width - 17, y: 16,
-      width: config.closeButton.size.width, height: config.closeButton.size.height)
-    deleteButton.frame = CGRect(x: 17, y: 16,
-      width: config.deleteButton.size.width, height: config.deleteButton.size.height)
-
-    let pageLabelX: CGFloat = bounds.width < bounds.height
-      ? (bounds.width - pageLabel.frame.width) / 2
-      : deleteButton.center.x
-
-    pageLabel.frame.origin = CGPoint(
-      x: pageLabelX,
-      y: bounds.height - pageLabel.frame.height - 20)
-  }
-
-  public func configureLayout() {
-    scrollView.contentSize.width = UIScreen.mainScreen().bounds.width * CGFloat(numberOfPages)
-  }
-
-  public func configureFrames() {
-    for (index, pageView) in pageViews.enumerate() {
-      var frame = scrollView.bounds
-      frame.origin.x = frame.width * CGFloat(index)
-      pageView.configureFrame(frame)
-    }
+    configureLayout(size)
   }
 
   // MARK: - Action methods
@@ -230,9 +197,41 @@ public class LightboxController: UIViewController {
   }
 
   public func closeButtonDidPress() {
-    dismissed = true
-
+    presented = false
     dismissViewControllerAnimated(true, completion: nil)
+  }
+
+  // MARK: - Layout
+
+  public func configureLayout(size: CGSize) {
+    scrollView.frame.size = size
+    scrollView.contentSize = CGSize(
+      width: size.width * CGFloat(numberOfPages),
+      height: size.height)
+    scrollView.contentOffset = CGPoint(x: CGFloat(currentPage) * size.width, y: 0)
+
+    for (index, pageView) in pageViews.enumerate() {
+      var frame = scrollView.bounds
+      frame.origin.x = frame.width * CGFloat(index)
+      pageView.configureFrame(frame)
+    }
+
+    let bounds = scrollView.bounds
+
+    closeButton.frame = CGRect(
+      x: bounds.width - config.closeButton.size.width - 17, y: 16,
+      width: config.closeButton.size.width, height: config.closeButton.size.height)
+    deleteButton.frame = CGRect(
+      x: 17, y: 16,
+      width: config.deleteButton.size.width, height: config.deleteButton.size.height)
+
+    let pageLabelX: CGFloat = bounds.width < bounds.height
+      ? (bounds.width - pageLabel.frame.width) / 2
+      : deleteButton.center.x
+
+    pageLabel.frame.origin = CGPoint(
+      x: pageLabelX,
+      y: bounds.height - pageLabel.frame.height - 40)
   }
 }
 

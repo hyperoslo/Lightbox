@@ -28,7 +28,7 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
   func transition(show: Bool) {
     guard let controller = lightboxController else { return }
     controller.closeButton.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -200)
-    controller.pageControl.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 200)
+    controller.pageLabel.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 200)
 
     if interactive {
       controller.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(show ? 1 : 0)
@@ -60,7 +60,7 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
         guard let controller = lightboxController else { return }
 
         controller.closeButton.alpha = 0
-        controller.pageControl.alpha = 0
+        controller.pageLabel.alpha = 0
 
         UIView.animateWithDuration(0.5, animations: {
           self.scrollView?.frame.origin.y = translation.y * 3

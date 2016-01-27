@@ -14,11 +14,12 @@ public class LightboxController: UIViewController {
 
   public lazy var scrollView: UIScrollView = { [unowned self] in
     let scrollView = UIScrollView()
-    scrollView.frame = UIScreen.mainScreen().bounds
-    scrollView.pagingEnabled = true
+    scrollView.frame = self.screenBounds
+    scrollView.pagingEnabled = false
     scrollView.delegate = self
     scrollView.userInteractionEnabled = true
     scrollView.showsHorizontalScrollIndicator = false
+    scrollView.decelerationRate = UIScrollViewDecelerationRateFast
 
     return scrollView
     }()
@@ -67,6 +68,10 @@ public class LightboxController: UIViewController {
 
     return label
     }()
+
+  var screenBounds: CGRect {
+    return UIScreen.mainScreen().bounds
+  }
 
   public private(set) var currentPage = 0 {
     didSet {
@@ -161,7 +166,7 @@ public class LightboxController: UIViewController {
     [scrollView, closeButton, deleteButton, pageLabel].forEach { view.addSubview($0) }
 
     currentPage = 0
-    configureLayout(UIScreen.mainScreen().bounds.size)
+    configureLayout(screenBounds.size)
   }
 
   public override func viewWillAppear(animated: Bool) {
@@ -232,8 +237,8 @@ public class LightboxController: UIViewController {
 
     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
     dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
-      self.configureLayout(UIScreen.mainScreen().bounds.size)
-      self.scrollViewDidEndDecelerating(self.scrollView)
+      self.configureLayout(self.screenBounds.size)
+      self.currentPage = Int(self.scrollView.contentOffset.x / self.screenBounds.width)
       button.enabled = true
     }
   }
@@ -250,14 +255,17 @@ public class LightboxController: UIViewController {
   public func configureLayout(size: CGSize) {
     scrollView.frame.size = size
     scrollView.contentSize = CGSize(
-      width: size.width * CGFloat(numberOfPages),
+      width: size.width * CGFloat(numberOfPages) + config.spacing * CGFloat(numberOfPages - 1),
       height: size.height)
-    scrollView.contentOffset = CGPoint(x: CGFloat(currentPage) * size.width, y: 0)
+    scrollView.contentOffset = CGPoint(x: CGFloat(currentPage) * (size.width + config.spacing), y: 0)
 
     for (index, pageView) in pageViews.enumerate() {
       var frame = scrollView.bounds
-      frame.origin.x = frame.width * CGFloat(index)
+      frame.origin.x = (frame.width + config.spacing) * CGFloat(index)
       pageView.configureLayout(frame)
+      if index != numberOfPages - 1 {
+        pageView.frame.size.width += LightboxConfig.config.spacing
+      }
     }
 
     let bounds = scrollView.bounds
@@ -283,7 +291,25 @@ public class LightboxController: UIViewController {
 
 extension LightboxController: UIScrollViewDelegate {
 
-  public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-    currentPage = Int(scrollView.contentOffset.x / UIScreen.mainScreen().bounds.width)
+  public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    var speed: CGFloat = velocity.x < 0 ? -2 : 2
+
+    if velocity.x == 0 {
+      speed = 0
+    }
+
+    let pageWidth = scrollView.bounds.width + config.spacing
+    var x = scrollView.contentOffset.x + speed * 60.0
+
+    if speed > 0 {
+      x = ceil(x / pageWidth) * pageWidth
+    } else if speed < -0 {
+      x = floor(x / pageWidth) * pageWidth
+    } else {
+      x = round(x / pageWidth) * pageWidth
+    }
+
+    targetContentOffset.memory.x = x
+    currentPage = Int(x / screenBounds.width)
   }
 }

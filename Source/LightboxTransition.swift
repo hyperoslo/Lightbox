@@ -43,6 +43,7 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
   func handlePanGesture(gesture: UIPanGestureRecognizer) {
     let translation = gesture.translationInView(scrollView)
     let percentage = abs(translation.y) / UIScreen.mainScreen().bounds.height / 1.5
+    let velocity = gesture.velocityInView(scrollView)
 
     switch gesture.state {
     case .Began:
@@ -53,11 +54,15 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
     case .Changed:
       updateInteractiveTransition(percentage)
       scrollView?.frame.origin.y = initialOrigin.y + translation.y
-    default:
+    case .Ended, .Cancelled:
+
+      var time = translation.y * 3 / abs(velocity.y)
+      if time > 1 { time = 0.7 }
+
       interactive = false
       lightboxController?.presented = true
 
-      if percentage > 0.3 {
+      if percentage > 0.1 {
         finishInteractiveTransition()
         guard let controller = lightboxController else { return }
 
@@ -65,11 +70,11 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
         controller.deleteButton.alpha = 0
         controller.pageLabel.alpha = 0
 
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animateWithDuration(NSTimeInterval(time), delay: 0, options: [.AllowUserInteraction], animations: {
           self.scrollView?.frame.origin.y = translation.y * 3
           controller.view.alpha = 0
           controller.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0)
-        })
+        }, completion: { _ in })
       } else {
         cancelInteractiveTransition()
 
@@ -80,6 +85,7 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
           })
         }
       }
+    default: break
     }
   }
 

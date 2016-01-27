@@ -18,6 +18,7 @@ class PageView: UIScrollView {
 
   weak var pageViewDelegate: PageViewDelegate?
   var imageURL: NSURL?
+  var contentFrame = CGRectZero
 
   // MARK: - Initializers
 
@@ -71,8 +72,8 @@ class PageView: UIScrollView {
       ? minimumZoomScale
       : maximumZoomScale
 
-    let width = bounds.size.width / newZoomScale
-    let height = bounds.size.height / newZoomScale
+    let width = contentFrame.size.width / newZoomScale
+    let height = contentFrame.size.height / newZoomScale
     let x = pointInView.x - (width / 2.0)
     let y = pointInView.y - (height / 2.0)
 
@@ -85,9 +86,12 @@ class PageView: UIScrollView {
 
   func configureLayout(frame: CGRect) {
     self.frame = frame
+    contentFrame = frame
     contentSize = frame.size
     imageView.frame = frame
     zoomScale = LightboxConfig.config.zoom.minimumScale
+
+    configureImageView()
   }
 
   func configureImageView() {
@@ -113,7 +117,7 @@ class PageView: UIScrollView {
   }
 
   func centerImageView() {
-    let boundsSize = bounds.size
+    let boundsSize = contentFrame.size
     var imageViewFrame = imageView.frame
 
     if imageViewFrame.size.width < boundsSize.width {

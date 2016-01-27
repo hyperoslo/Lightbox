@@ -2,7 +2,7 @@ import UIKit
 
 public protocol LightboxControllerPageDelegate: class {
 
-  func lightboxControllerDidMoveToPage(controller: LightboxController, page: Int)
+  func lightboxController(controller: LightboxController, didMoveToPage page: Int)
 }
 
 public protocol LightboxControllerDismissalDelegate: class {
@@ -29,7 +29,6 @@ public class LightboxController: UIViewController {
       attributes: self.config.closeButton.textAttributes)
     let button = UIButton(type: .System)
 
-    button.tintColor = self.config.closeButton.textAttributes[NSForegroundColorAttributeName] as? UIColor
     button.setAttributedTitle(title, forState: .Normal)
     button.addTarget(self, action: "closeButtonDidPress:",
       forControlEvents: .TouchUpInside)
@@ -44,14 +43,12 @@ public class LightboxController: UIViewController {
     }()
 
   lazy var deleteButton: UIButton = { [unowned self] in
+    let button = UIButton(type: .System)
     let title = NSAttributedString(
       string: self.config.deleteButton.text,
       attributes: self.config.deleteButton.textAttributes)
-    let button = UIButton(type: .System)
 
-    button.tintColor = self.config.deleteButton.textAttributes[NSForegroundColorAttributeName] as? UIColor
     button.setAttributedTitle(title, forState: .Normal)
-    button.alpha = self.config.deleteButton.alpha
     button.addTarget(self, action: "deleteButtonDidPress:",
       forControlEvents: .TouchUpInside)
 
@@ -85,7 +82,7 @@ public class LightboxController: UIViewController {
         seen = true
       }
 
-      pageDelegate?.lightboxControllerDidMoveToPage(self, page: currentPage)
+      pageDelegate?.lightboxController(self, didMoveToPage: currentPage)
     }
   }
 
@@ -218,12 +215,6 @@ public class LightboxController: UIViewController {
 
   // MARK: - Action methods
 
-  public func handlePageControl() {
-    UIView.animateWithDuration(0.35, animations: {
-      self.scrollView.contentOffset.x = UIScreen.mainScreen().bounds.width * CGFloat(self.currentPage)
-    })
-  }
-
   func deleteButtonDidPress(button: UIButton) {
     button.enabled = false
 
@@ -266,7 +257,7 @@ public class LightboxController: UIViewController {
     for (index, pageView) in pageViews.enumerate() {
       var frame = scrollView.bounds
       frame.origin.x = frame.width * CGFloat(index)
-      pageView.configureFrame(frame)
+      pageView.configureLayout(frame)
     }
 
     let bounds = scrollView.bounds

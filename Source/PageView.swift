@@ -9,7 +9,7 @@ class PageView: UIScrollView {
     imageView.userInteractionEnabled = true
 
     return imageView
-  }()
+    }()
 
   var imageURL: NSURL?
 
@@ -27,15 +27,14 @@ class PageView: UIScrollView {
     self.imageURL = imageURL
     configure()
 
-    LightboxConfig.config.loadImage(
-      imageView: imageView, URL: imageURL) { error in
-        if error == nil {}
-    }
+    LightboxConfig.config.loadImage(imageView: imageView, URL: imageURL) { _ in }
   }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+
+  // MARK: - Configuration
 
   func configure() {
     addSubview(imageView)
@@ -50,7 +49,9 @@ class PageView: UIScrollView {
     addGestureRecognizer(panGestureRecognizer)
   }
 
-  func configureFrame(frame: CGRect) {
+  // MARK: - Layout
+
+  func configureLayout(frame: CGRect) {
     imageView.frame = frame
     imageView.frame.size.width = frame.width
     imageView.frame.origin.x = 0

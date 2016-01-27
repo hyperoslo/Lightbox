@@ -145,9 +145,9 @@ extension LightboxTransition: UIViewControllerTransitioningDelegate {
   }
 }
 
-// MARK: - Gesture recognizer delegate methods
+// MARK: - UIGestureRecognizerDelegate
 
-extension LightboxTransition : UIGestureRecognizerDelegate {
+extension LightboxTransition: UIGestureRecognizerDelegate {
 
   public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
     var result = false

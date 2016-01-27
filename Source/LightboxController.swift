@@ -14,7 +14,7 @@ public class LightboxController: UIViewController {
 
   public lazy var scrollView: UIScrollView = { [unowned self] in
     let scrollView = UIScrollView()
-    scrollView.frame = UIScreen.mainScreen().bounds
+    scrollView.frame = self.screenBounds
     scrollView.pagingEnabled = false
     scrollView.delegate = self
     scrollView.userInteractionEnabled = true
@@ -68,6 +68,10 @@ public class LightboxController: UIViewController {
 
     return label
     }()
+
+  var screenBounds: CGRect {
+    return UIScreen.mainScreen().bounds
+  }
 
   public private(set) var currentPage = 0 {
     didSet {
@@ -162,7 +166,7 @@ public class LightboxController: UIViewController {
     [scrollView, closeButton, deleteButton, pageLabel].forEach { view.addSubview($0) }
 
     currentPage = 0
-    configureLayout(UIScreen.mainScreen().bounds.size)
+    configureLayout(screenBounds.size)
   }
 
   public override func viewWillAppear(animated: Bool) {
@@ -233,8 +237,8 @@ public class LightboxController: UIViewController {
 
     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
     dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
-      self.configureLayout(UIScreen.mainScreen().bounds.size)
-      self.currentPage = Int(self.scrollView.contentOffset.x / UIScreen.mainScreen().bounds.width)
+      self.configureLayout(self.screenBounds.size)
+      self.currentPage = Int(self.scrollView.contentOffset.x / self.screenBounds.width)
       button.enabled = true
     }
   }
@@ -306,6 +310,6 @@ extension LightboxController: UIScrollViewDelegate {
     }
 
     targetContentOffset.memory.x = x
-    currentPage = Int(x / UIScreen.mainScreen().bounds.width)
+    currentPage = Int(x / screenBounds.width)
   }
 }

@@ -1,5 +1,10 @@
 import UIKit
 
+protocol PageViewDelegate: class {
+
+  func pageVewDidZoom(pageView: PageView)
+}
+
 class PageView: UIScrollView {
 
   lazy var imageView: UIImageView = {
@@ -11,6 +16,7 @@ class PageView: UIScrollView {
     return imageView
     }()
 
+  weak var pageViewDelegate: PageViewDelegate?
   var imageURL: NSURL?
 
   // MARK: - Initializers

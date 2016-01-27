@@ -77,43 +77,43 @@ class PageView: UIScrollView {
     self.frame = frame
     contentSize = frame.size
     imageView.frame = frame
-
-    let imgViewSize = imageView.frame.size
-    let imageSize = imageView.image!.size
-
     zoomScale = LightboxConfig.config.zoom.minimumScale
 
-    var realImgSize: CGSize
-    if(imageSize.width / imageSize.height > imgViewSize.width / imgViewSize.height) {
-      realImgSize = CGSizeMake(imgViewSize.width, imgViewSize.width / imageSize.width * imageSize.height);
-    }
-    else {
-      realImgSize = CGSizeMake(imgViewSize.height / imageSize.height * imageSize.width, imgViewSize.height);
+    let imageViewSize = imageView.frame.size
+    let imageSize = imageView.image!.size
+    let realImageViewSize: CGSize
+
+    if imageSize.width / imageSize.height > imageViewSize.width / imageViewSize.height {
+      realImageViewSize = CGSize(
+        width: imageViewSize.width,
+        height: imageViewSize.width / imageSize.width * imageSize.height)
+    } else {
+      realImageViewSize = CGSize(
+        width: imageViewSize.height / imageSize.height * imageSize.width,
+        height: imageViewSize.height)
     }
 
-    var fr = CGRectMake(0, 0, 0, 0)
-    fr.size = realImgSize
-    imageView.frame = fr
+    imageView.frame = CGRect(origin: CGPointZero, size: realImageViewSize)
     centerImageView()
   }
 
   func centerImageView() {
     let boundsSize = bounds.size
-    var contentsFrame = imageView.frame
+    var imageViewFrame = imageView.frame
 
-    if contentsFrame.size.width < boundsSize.width {
-      contentsFrame.origin.x = (boundsSize.width - contentsFrame.size.width) / 2.0
+    if imageViewFrame.size.width < boundsSize.width {
+      imageViewFrame.origin.x = (boundsSize.width - imageViewFrame.size.width) / 2.0
     } else {
-      contentsFrame.origin.x = 0.0
+      imageViewFrame.origin.x = 0.0
     }
 
-    if contentsFrame.size.height < boundsSize.height {
-      contentsFrame.origin.y = (boundsSize.height - contentsFrame.size.height) / 2.0
+    if imageViewFrame.size.height < boundsSize.height {
+      imageViewFrame.origin.y = (boundsSize.height - imageViewFrame.size.height) / 2.0
     } else {
-      contentsFrame.origin.y = 0.0
+      imageViewFrame.origin.y = 0.0
     }
 
-    imageView.frame = contentsFrame
+    imageView.frame = imageViewFrame
   }
 }
 

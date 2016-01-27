@@ -28,7 +28,8 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
   func transition(show: Bool) {
     guard let controller = lightboxController else { return }
     controller.closeButton.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -200)
-    controller.pageControl.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 200)
+    controller.deleteButton.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -200)
+    controller.pageLabel.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 250)
 
     if interactive {
       controller.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(show ? 1 : 0)
@@ -46,25 +47,23 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
     switch gesture.state {
     case .Began:
       interactive = true
+      lightboxController?.presented = false
       lightboxController?.dismissViewControllerAnimated(true, completion: nil)
-
       if let origin = scrollView?.frame.origin { initialOrigin = origin }
-
-      break
     case .Changed:
       updateInteractiveTransition(percentage)
       scrollView?.frame.origin.y = initialOrigin.y + translation.y
-
-      break
     default:
       interactive = false
+      lightboxController?.presented = true
 
       if percentage > 0.3 {
         finishInteractiveTransition()
         guard let controller = lightboxController else { return }
 
         controller.closeButton.alpha = 0
-        controller.pageControl.alpha = 0
+        controller.deleteButton.alpha = 0
+        controller.pageLabel.alpha = 0
 
         UIView.animateWithDuration(0.5, animations: {
           self.scrollView?.frame.origin.y = translation.y * 3
@@ -81,8 +80,6 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
           })
         }
       }
-
-      break
     }
   }
 
@@ -90,6 +87,8 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
     super.finishInteractiveTransition()
   }
 }
+
+// MARK: - UIViewControllerAnimatedTransitioning
 
 extension LightboxTransition: UIViewControllerAnimatedTransitioning {
 
@@ -123,6 +122,8 @@ extension LightboxTransition: UIViewControllerAnimatedTransitioning {
   }
 }
 
+// MARK: - UIViewControllerTransitioningDelegate
+
 extension LightboxTransition: UIViewControllerTransitioningDelegate {
 
   public func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -144,17 +145,20 @@ extension LightboxTransition: UIViewControllerTransitioningDelegate {
   }
 }
 
-// MARK: Gesture recognizer delegate methods
+// MARK: - UIGestureRecognizerDelegate
 
-extension LightboxTransition : UIGestureRecognizerDelegate {
+extension LightboxTransition: UIGestureRecognizerDelegate {
 
   public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    var result = false
+
     if let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer {
       let translation = panGestureRecognizer.translationInView(gestureRecognizer.view)
       if fabs(translation.x) < fabs(translation.y) {
-        return true
+        result = true
       }
     }
-    return false
+
+    return result
   }
 }

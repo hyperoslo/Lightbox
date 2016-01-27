@@ -25,6 +25,7 @@ class PageView: UIScrollView {
     super.init(frame: CGRectZero)
     imageView.image = image
     configure()
+    userInteractionEnabled = true
   }
 
   init(imageURL: NSURL) {
@@ -33,7 +34,11 @@ class PageView: UIScrollView {
     self.imageURL = imageURL
     configure()
 
-    LightboxConfig.config.loadImage(imageView: imageView, URL: imageURL) { _ in }
+    LightboxConfig.config.loadImage(imageView: imageView, URL: imageURL) { error in
+      guard error == nil else { return }
+      self.userInteractionEnabled = true
+      self.configureImageView()
+    }
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -49,7 +54,6 @@ class PageView: UIScrollView {
     multipleTouchEnabled = true
     minimumZoomScale = LightboxConfig.config.zoom.minimumScale
     maximumZoomScale = LightboxConfig.config.zoom.maximumScale
-    userInteractionEnabled = true
     showsHorizontalScrollIndicator = false
     showsVerticalScrollIndicator = false
 
@@ -84,9 +88,13 @@ class PageView: UIScrollView {
     contentSize = frame.size
     imageView.frame = frame
     zoomScale = LightboxConfig.config.zoom.minimumScale
+  }
+
+  func configureImageView() {
+    guard let image = imageView.image else { return }
 
     let imageViewSize = imageView.frame.size
-    let imageSize = imageView.image!.size
+    let imageSize = image.size
     let realImageViewSize: CGSize
 
     if imageSize.width / imageSize.height > imageViewSize.width / imageViewSize.height {
@@ -100,6 +108,7 @@ class PageView: UIScrollView {
     }
 
     imageView.frame = CGRect(origin: CGPointZero, size: realImageViewSize)
+
     centerImageView()
   }
 

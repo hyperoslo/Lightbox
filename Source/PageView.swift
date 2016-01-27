@@ -133,5 +133,6 @@ extension PageView: UIScrollViewDelegate {
 
   func scrollViewDidZoom(scrollView: UIScrollView) {
     centerImageView()
+    pageViewDelegate?.pageVewDidZoom(self)
   }
 }

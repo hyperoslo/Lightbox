@@ -38,7 +38,7 @@ public class LightboxController: UIViewController {
       button.setBackgroundImage(image, forState: .Normal)
     }
 
-    button.hidden = !self.config.deleteButton.enabled
+    button.alpha = self.config.closeButton.enabled ? 1.0 : 0.0
 
     return button
     }()
@@ -57,14 +57,14 @@ public class LightboxController: UIViewController {
       button.setBackgroundImage(image, forState: .Normal)
     }
 
-    button.hidden = !self.config.deleteButton.enabled
+    button.alpha = self.config.deleteButton.enabled ? 1.0 : 0.0
 
     return button
     }()
 
   lazy var pageLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRectZero)
-    label.hidden = !self.config.pageIndicator.enabled
+    label.alpha = self.config.pageIndicator.enabled ? 1.0 : 0.0
 
     return label
     }()
@@ -322,8 +322,16 @@ extension LightboxController: PageViewDelegate {
   func pageVewDidZoom(pageView: PageView) {
     let hidden = pageView.zoomScale != 1.0
 
-    closeButton.hidden = config.closeButton.enabled || hidden
-    deleteButton.hidden = config.deleteButton.enabled || hidden
-    pageLabel.hidden = hidden
+    if hidden {
+      closeButton.alpha = 0.0
+      deleteButton.alpha = 0.0
+      pageLabel.alpha = hidden ? 0.0 : 1.0
+    } else {
+      UIView.animateWithDuration(1.0, delay: 0.5, options: [], animations: { () -> Void in
+        self.closeButton.alpha = self.config.closeButton.enabled ? 1.0 : 0.0
+        self.deleteButton.alpha = self.config.deleteButton.enabled ? 1.0 : 0.0
+        self.pageLabel.alpha = self.config.pageIndicator.enabled ? 1.0 : 0.0
+      }, completion: nil)
+    }
   }
 }

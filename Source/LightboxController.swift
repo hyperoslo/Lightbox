@@ -126,6 +126,7 @@ public class LightboxController: UIViewController {
 
       for image in images {
         let pageView = PageView(image: image)
+        pageView.pageViewDelegate = self
 
         scrollView.addSubview(pageView)
         pageViews.append(pageView)
@@ -311,5 +312,18 @@ extension LightboxController: UIScrollViewDelegate {
 
     targetContentOffset.memory.x = x
     currentPage = Int(x / screenBounds.width)
+  }
+}
+
+// MARK: - PageViewDelegate
+
+extension LightboxController: PageViewDelegate {
+
+  func pageVewDidZoom(pageView: PageView) {
+    let hidden = pageView.zoomScale != 1.0
+
+    closeButton.hidden = config.closeButton.enabled || hidden
+    deleteButton.hidden = config.deleteButton.enabled || hidden
+    pageLabel.hidden = hidden
   }
 }

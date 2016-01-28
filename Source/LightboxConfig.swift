@@ -1,4 +1,5 @@
 import UIKit
+import Hue
 
 public struct LightboxConfig {
 
@@ -85,8 +86,10 @@ public struct LightboxConfig {
 
     public var textAttributes = [
       NSFontAttributeName: UIFont.systemFontOfSize(12),
-      NSForegroundColorAttributeName: UIColor(red:219/255, green:219/255, blue:219/255, alpha:1)
+      NSForegroundColorAttributeName: UIColor.hex("DBDBDB")
     ]
+
+    public var elipsisColor = UIColor.hex("899AB9")
   }
 
   public struct Zoom {

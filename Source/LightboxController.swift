@@ -69,6 +69,25 @@ public class LightboxController: UIViewController {
     return label
     }()
 
+  lazy var infoLabel: UILabel = { [unowned self] in
+    let label = UILabel(frame: CGRectZero)
+    return label
+    }()
+
+  lazy var overlayView: UIView = { [unowned self] in
+    let view = UIView(frame: CGRectZero)
+    let gradient = CAGradientLayer()
+    var colors = [CGColor]()
+    for color in uicolors {
+      colors.append(color.CGColor)
+    }
+
+    gradient.frame = view.bounds
+    gradient.colors = colors
+    view.layer.insertSublayer(gradient, atIndex: 0)
+    return view
+    }()
+
   var screenBounds: CGRect {
     return UIScreen.mainScreen().bounds
   }

@@ -5,7 +5,7 @@ class InfoView: UILabel {
   let numberOfVisibleLines = 2
 
   var ellipsis: String {
-    return LightboxConfig.config.ellipsisText
+    return LightboxConfig.config.infoLabel.ellipsisText
   }
 
   private var fullText: String?

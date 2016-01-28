@@ -8,9 +8,9 @@ public struct LightboxConfig {
   public var pageIndicator = PageIndicator()
   public var closeButton = CloseButton()
   public var deleteButton = DeleteButton()
+  public var infoLabel = InfoLabel()
   public var zoom = Zoom()
   public var spacing: CGFloat = 20
-  public var ellipsisText = NSLocalizedString("Show more", comment: "")
 
   public typealias LoadImageCompletion = (error: NSError?) -> Void
 
@@ -33,6 +33,7 @@ public struct LightboxConfig {
 
   public struct PageIndicator {
     public var enabled = true
+
     public var textAttributes = [
       NSFontAttributeName: UIFont.systemFontOfSize(18),
       NSForegroundColorAttributeName: UIColor.lightGrayColor(),
@@ -46,6 +47,10 @@ public struct LightboxConfig {
 
   public struct CloseButton {
     public var enabled = true
+    public var size = CGSize(width: 60, height: 25)
+    public var text = NSLocalizedString("Close", comment: "")
+    public var image: UIImage?
+
     public var textAttributes = [
       NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
       NSForegroundColorAttributeName: UIColor.whiteColor(),
@@ -55,13 +60,14 @@ public struct LightboxConfig {
         return style
         }()
     ]
-    public var size = CGSize(width: 60, height: 25)
-    public var text = NSLocalizedString("Close", comment: "")
-    public var image: UIImage?
   }
 
   public struct DeleteButton {
     public var enabled = false
+    public var size = CGSize(width: 70, height: 25)
+    public var text = NSLocalizedString("Delete", comment: "")
+    public var image: UIImage?
+
     public var textAttributes = [
       NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
       NSForegroundColorAttributeName: UIColor(red:0.99, green:0.26, blue:0.18, alpha:1),
@@ -71,9 +77,16 @@ public struct LightboxConfig {
         return style
         }()
     ]
-    public var size = CGSize(width: 70, height: 25)
-    public var text = NSLocalizedString("Delete", comment: "")
-    public var image: UIImage?
+  }
+
+  public struct InfoLabel {
+    public var enabled = true
+    public var ellipsisText = NSLocalizedString("Show more", comment: "")
+
+    public var textAttributes = [
+      NSFontAttributeName: UIFont.systemFontOfSize(12),
+      NSForegroundColorAttributeName: UIColor(red:219/255, green:219/255, blue:219/255, alpha:1)
+    ]
   }
 
   public struct Zoom {

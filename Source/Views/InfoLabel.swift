@@ -2,10 +2,11 @@ import UIKit
 
 class InfoLabel: UILabel {
 
+  let model: LightboxModel
   let numberOfVisibleLines = 2
 
   var ellipsis: String {
-    return "... \(LightboxConfig.config.infoLabel.ellipsisText)"
+    return "... \(model.infoLabel.ellipsisText)"
   }
 
   var expanded = false {
@@ -41,7 +42,8 @@ class InfoLabel: UILabel {
 
   // MARK: - Initialization
 
-  init(text: String, expanded: Bool = false) {
+  init(model: LightboxModel, text: String, expanded: Bool = false) {
+    self.model = model
     self.fullText = text
     super.init(frame: CGRectZero)
 
@@ -76,12 +78,12 @@ class InfoLabel: UILabel {
 
   private func updateText(string: String) {
     let attributedString = NSMutableAttributedString(string: string,
-      attributes: LightboxConfig.config.infoLabel.textAttributes)
+      attributes: model.infoLabel.textAttributes)
 
     if string.rangeOfString(ellipsis) != nil {
       let range = (string as NSString).rangeOfString(ellipsis)
       attributedString.addAttribute(NSForegroundColorAttributeName,
-        value: LightboxConfig.config.infoLabel.elipsisColor, range: range)
+        value: model.infoLabel.elipsisColor, range: range)
     }
 
     attributedText = attributedString

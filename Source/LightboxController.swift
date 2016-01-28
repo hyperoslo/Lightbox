@@ -27,19 +27,19 @@ public class LightboxController: UIViewController {
 
   lazy var closeButton: UIButton = { [unowned self] in
     let title = NSAttributedString(
-      string: self.config.closeButton.text,
-      attributes: self.config.closeButton.textAttributes)
+      string: self.model.closeButton.text,
+      attributes: self.model.closeButton.textAttributes)
     let button = UIButton(type: .System)
 
     button.setAttributedTitle(title, forState: .Normal)
     button.addTarget(self, action: "closeButtonDidPress:",
       forControlEvents: .TouchUpInside)
 
-    if let image = self.config.closeButton.image {
+    if let image = self.model.closeButton.image {
       button.setBackgroundImage(image, forState: .Normal)
     }
 
-    button.alpha = self.config.closeButton.enabled ? 1.0 : 0.0
+    button.alpha = self.model.closeButton.enabled ? 1.0 : 0.0
 
     return button
     }()
@@ -47,32 +47,33 @@ public class LightboxController: UIViewController {
   lazy var deleteButton: UIButton = { [unowned self] in
     let button = UIButton(type: .System)
     let title = NSAttributedString(
-      string: self.config.deleteButton.text,
-      attributes: self.config.deleteButton.textAttributes)
+      string: self.model.deleteButton.text,
+      attributes: self.model.deleteButton.textAttributes)
 
     button.setAttributedTitle(title, forState: .Normal)
     button.addTarget(self, action: "deleteButtonDidPress:",
       forControlEvents: .TouchUpInside)
 
-    if let image = self.config.deleteButton.image {
+    if let image = self.model.deleteButton.image {
       button.setBackgroundImage(image, forState: .Normal)
     }
 
-    button.alpha = self.config.deleteButton.enabled ? 1.0 : 0.0
+    button.alpha = self.model.deleteButton.enabled ? 1.0 : 0.0
 
     return button
     }()
 
   lazy var pageLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRectZero)
-    label.alpha = self.config.pageIndicator.enabled ? 1.0 : 0.0
+    label.alpha = self.model.pageIndicator.enabled ? 1.0 : 0.0
 
     return label
     }()
 
   lazy var infoLabel: InfoLabel = { [unowned self] in
-    let label = InfoLabel(text: "Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text")
-    label.hidden = !self.config.infoLabel.enabled
+    let label = InfoLabel(model: self.model,
+      text: "Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text")
+    label.hidden = !self.model.infoLabel.enabled
     label.textColor = .whiteColor()
 
     return label
@@ -86,7 +87,7 @@ public class LightboxController: UIViewController {
     gradient.frame = view.bounds
     gradient.colors = colors
     view.layer.insertSublayer(gradient, atIndex: 0)
-    view.hidden = !self.config.infoLabel.enabled
+    view.hidden = !self.model.infoLabel.enabled
     view.alpha = 0
 
     return view
@@ -103,7 +104,7 @@ public class LightboxController: UIViewController {
       let text = "\(currentPage + 1)/\(numberOfPages)"
 
       pageLabel.attributedText = NSAttributedString(string: text,
-        attributes: config.pageIndicator.textAttributes)
+        attributes: model.pageIndicator.textAttributes)
       pageLabel.sizeToFit()
 
       if currentPage == numberOfPages - 1 {
@@ -134,43 +135,23 @@ public class LightboxController: UIViewController {
   lazy var transitionManager: LightboxTransition = LightboxTransition()
   var pageViews = [PageView]()
   var statusBarHidden = false
-  var config: LightboxConfig
+  var model: LightboxModel
 
   // MARK: - Initializers
 
-  public init(images: [UIImage], config: LightboxConfig = LightboxConfig.config,
-    pageDelegate: LightboxControllerPageDelegate? = nil,
-    dismissalDelegate: LightboxControllerDismissalDelegate? = nil) {
-      self.config = config
-      self.pageDelegate = pageDelegate
-      self.dismissalDelegate = dismissalDelegate
+  public init(model: LightboxModel) {
+    self.model = model
+    LightboxModel.sharedModel = model
 
-      super.init(nibName: nil, bundle: nil)
+    super.init(nibName: nil, bundle: nil)
 
-      for image in images {
-        let pageView = PageView(image: image)
-        pageView.pageViewDelegate = self
+    for index in 0..<numberOfPages {
+      let pageView = PageView(model: model, index: index)
+      pageView.pageViewDelegate = self
 
-        scrollView.addSubview(pageView)
-        pageViews.append(pageView)
-      }
-  }
-
-  public init(imageURLs: [NSURL], config: LightboxConfig = LightboxConfig.config,
-    pageDelegate: LightboxControllerPageDelegate? = nil,
-    dismissalDelegate: LightboxControllerDismissalDelegate? = nil) {
-      self.config = config
-      self.pageDelegate = pageDelegate
-      self.dismissalDelegate = dismissalDelegate
-
-      super.init(nibName: nil, bundle: nil)
-
-      for imageURL in imageURLs {
-        let pageView = PageView(imageURL: imageURL)
-
-        scrollView.addSubview(pageView)
-        pageViews.append(pageView)
-      }
+      scrollView.addSubview(pageView)
+      pageViews.append(pageView)
+    }
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -191,7 +172,7 @@ public class LightboxController: UIViewController {
       pageLabel, overlayView, infoLabel].forEach { view.addSubview($0) }
 
     currentPage = 0
-    configureLayout(screenBounds.size)
+    modelureLayout(screenBounds.size)
   }
 
   public override func viewWillAppear(animated: Bool) {
@@ -199,7 +180,7 @@ public class LightboxController: UIViewController {
 
     statusBarHidden = UIApplication.sharedApplication().statusBarHidden
 
-    if config.hideStatusBar {
+    if model.hideStatusBar {
       UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Fade)
     }
   }
@@ -207,7 +188,7 @@ public class LightboxController: UIViewController {
   public override func viewDidDisappear(animated: Bool) {
     super.viewWillDisappear(animated)
 
-    if config.hideStatusBar {
+    if model.hideStatusBar {
       UIApplication.sharedApplication().setStatusBarHidden(statusBarHidden, withAnimation: .Fade)
     }
   }
@@ -217,7 +198,7 @@ public class LightboxController: UIViewController {
   override public func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
-    configureLayout(size)
+    modelureLayout(size)
   }
 
   // MARK: - Pagination
@@ -262,7 +243,7 @@ public class LightboxController: UIViewController {
 
     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
     dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
-      self.configureLayout(self.screenBounds.size)
+      self.modelureLayout(self.screenBounds.size)
       self.currentPage = Int(self.scrollView.contentOffset.x / self.screenBounds.width)
       button.enabled = true
     }
@@ -277,30 +258,30 @@ public class LightboxController: UIViewController {
 
   // MARK: - Layout
 
-  public func configureLayout(size: CGSize) {
+  public func modelureLayout(size: CGSize) {
     scrollView.frame.size = size
     scrollView.contentSize = CGSize(
-      width: size.width * CGFloat(numberOfPages) + config.spacing * CGFloat(numberOfPages - 1),
+      width: size.width * CGFloat(numberOfPages) + model.spacing * CGFloat(numberOfPages - 1),
       height: size.height)
-    scrollView.contentOffset = CGPoint(x: CGFloat(currentPage) * (size.width + config.spacing), y: 0)
+    scrollView.contentOffset = CGPoint(x: CGFloat(currentPage) * (size.width + model.spacing), y: 0)
 
     for (index, pageView) in pageViews.enumerate() {
       var frame = scrollView.bounds
-      frame.origin.x = (frame.width + config.spacing) * CGFloat(index)
+      frame.origin.x = (frame.width + model.spacing) * CGFloat(index)
       pageView.configureLayout(frame)
       if index != numberOfPages - 1 {
-        pageView.frame.size.width += LightboxConfig.config.spacing
+        pageView.frame.size.width += model.spacing
       }
     }
 
     let bounds = scrollView.bounds
 
     closeButton.frame = CGRect(
-      x: bounds.width - config.closeButton.size.width - 17, y: 16,
-      width: config.closeButton.size.width, height: config.closeButton.size.height)
+      x: bounds.width - model.closeButton.size.width - 17, y: 16,
+      width: model.closeButton.size.width, height: model.closeButton.size.height)
     deleteButton.frame = CGRect(
       x: 17, y: 16,
-      width: config.deleteButton.size.width, height: config.deleteButton.size.height)
+      width: model.deleteButton.size.width, height: model.deleteButton.size.height)
 
     let pageLabelX: CGFloat = bounds.width < bounds.height
       ? (bounds.width - pageLabel.frame.width) / 2
@@ -329,7 +310,7 @@ extension LightboxController: UIScrollViewDelegate {
       speed = 0
     }
 
-    let pageWidth = scrollView.bounds.width + config.spacing
+    let pageWidth = scrollView.bounds.width + model.spacing
     var x = scrollView.contentOffset.x + speed * 60.0
 
     if speed > 0 {
@@ -358,9 +339,9 @@ extension LightboxController: PageViewDelegate {
       pageLabel.alpha = hidden ? 0.0 : 1.0
     } else {
       UIView.animateWithDuration(1.0, delay: 0.5, options: [], animations: { () -> Void in
-        self.closeButton.alpha = self.config.closeButton.enabled ? 1.0 : 0.0
-        self.deleteButton.alpha = self.config.deleteButton.enabled ? 1.0 : 0.0
-        self.pageLabel.alpha = self.config.pageIndicator.enabled ? 1.0 : 0.0
+        self.closeButton.alpha = self.model.closeButton.enabled ? 1.0 : 0.0
+        self.deleteButton.alpha = self.model.deleteButton.enabled ? 1.0 : 0.0
+        self.pageLabel.alpha = self.model.pageIndicator.enabled ? 1.0 : 0.0
       }, completion: nil)
     }
   }

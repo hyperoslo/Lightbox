@@ -1,10 +1,13 @@
 import UIKit
 import Hue
 
-public struct LightboxConfig {
+public class LightboxModel {
 
-  static var config = LightboxConfig()
+  static var sharedModel = LightboxModel(images: [])
 
+  public let images: [UIImage]
+  public let imageURLs: [NSURL]
+  public let text: String
   public var hideStatusBar = true
   public var pageIndicator = PageIndicator()
   public var closeButton = CloseButton()
@@ -12,6 +15,10 @@ public struct LightboxConfig {
   public var infoLabel = InfoLabel()
   public var zoom = Zoom()
   public var spacing: CGFloat = 20
+
+  public var numberOfPages: Int {
+    return imageURLs.count > 0 ? imageURLs.count : images.count
+  }
 
   public typealias LoadImageCompletion = (error: NSError?) -> Void
 
@@ -30,7 +37,19 @@ public struct LightboxConfig {
     })
   }
 
-  public init() {}
+  public init(images: [UIImage], text: String = "") {
+    self.images = images
+    self.text = text
+    self.imageURLs = []
+  }
+
+  public init(imagesURLs: [NSURL], text: String = "") {
+    self.imageURLs = imagesURLs
+    self.text = text
+    self.images = []
+  }
+
+  // MARK: - Inner types
 
   public struct PageIndicator {
     public var enabled = true

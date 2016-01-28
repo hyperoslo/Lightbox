@@ -16,30 +16,34 @@ class PageView: UIScrollView {
     return imageView
     }()
 
-  weak var pageViewDelegate: PageViewDelegate?
+  let model: LightboxModel
   var imageURL: NSURL?
   var contentFrame = CGRectZero
+  weak var pageViewDelegate: PageViewDelegate?
 
   // MARK: - Initializers
 
-  init(image: UIImage) {
-    super.init(frame: CGRectZero)
-    imageView.image = image
-    configure()
-    userInteractionEnabled = true
-  }
-
-  init(imageURL: NSURL) {
+  init(model: LightboxModel, index: Int) {
+    self.model = model
     super.init(frame: CGRectZero)
 
-    self.imageURL = imageURL
-    configure()
+    if index < model.imageURLs.count {
+      let imageURL = model.imageURLs[index]
+      self.imageURL = imageURL
 
-    LightboxConfig.config.loadImage(imageView: imageView, URL: imageURL) { error in
-      guard error == nil else { return }
-      self.userInteractionEnabled = true
-      self.configureImageView()
+      model.loadImage(imageView: imageView, URL: imageURL) { error in
+        guard error == nil else { return }
+        self.userInteractionEnabled = true
+        self.configureImageView()
+      }
+    } else if index < model.images.count {
+      let image = model.images[index]
+
+      imageView.image = image
+      userInteractionEnabled = true
     }
+
+    configure()
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -53,8 +57,8 @@ class PageView: UIScrollView {
 
     delegate = self
     multipleTouchEnabled = true
-    minimumZoomScale = LightboxConfig.config.zoom.minimumScale
-    maximumZoomScale = LightboxConfig.config.zoom.maximumScale
+    minimumZoomScale = model.zoom.minimumScale
+    maximumZoomScale = model.zoom.maximumScale
     showsHorizontalScrollIndicator = false
     showsVerticalScrollIndicator = false
 
@@ -89,7 +93,7 @@ class PageView: UIScrollView {
     contentFrame = frame
     contentSize = frame.size
     imageView.frame = frame
-    zoomScale = LightboxConfig.config.zoom.minimumScale
+    zoomScale = model.zoom.minimumScale
 
     configureImageView()
   }

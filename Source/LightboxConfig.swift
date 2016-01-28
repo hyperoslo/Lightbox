@@ -10,6 +10,7 @@ public struct LightboxConfig {
   public var deleteButton = DeleteButton()
   public var zoom = Zoom()
   public var spacing: CGFloat = 20
+  public var ellipsisText = NSLocalizedString("Show more", comment: "")
 
   public typealias LoadImageCompletion = (error: NSError?) -> Void
 

@@ -71,7 +71,7 @@ public struct LightboxConfig {
 
     public var textAttributes = [
       NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
-      NSForegroundColorAttributeName: UIColor(red:0.99, green:0.26, blue:0.18, alpha:1),
+      NSForegroundColorAttributeName: UIColor.hex("FA2F5B"),
       NSParagraphStyleAttributeName: {
         var style = NSMutableParagraphStyle()
         style.alignment = .Center

@@ -1,17 +1,23 @@
 import UIKit
 
-class InfoView: UILabel {
+class InfoLabel: UILabel {
 
   let numberOfVisibleLines = 2
 
   var ellipsis: String {
-    return LightboxConfig.config.infoLabel.ellipsisText
+    return "... \(LightboxConfig.config.infoLabel.ellipsisText)"
   }
 
-  private var fullText: String?
+  var expanded = false {
+    didSet {
+      resetFrame()
+    }
+  }
+
+  var fullText: String
 
   var truncatedText: String {
-    guard var truncatedText = fullText else { return "" }
+    var truncatedText = fullText
 
     guard numberOfLines(truncatedText) > numberOfVisibleLines else {
       return truncatedText
@@ -33,20 +39,52 @@ class InfoView: UILabel {
     return truncatedText
   }
 
-  // MARK: - Actions
+  // MARK: - Initialization
 
-  func expand() {
-    guard let fullText = fullText else { return }
+  init(text: String, expanded: Bool = false) {
+    self.fullText = text
+    super.init(frame: CGRectZero)
 
-    frame.size.height = heightForString(fullText)
-    text = fullText
+    numberOfLines = 0
+    updateText(text)
+    self.expanded = expanded
   }
 
-  func collapse() {
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Configuration
+
+  func resetFrame() {
+    expanded ? expand() : collapse()
+  }
+
+  // MARK: - Actions
+
+  private func expand() {
+    frame.size.height = heightForString(fullText)
+    updateText(fullText)
+  }
+
+  private func collapse() {
     let string = truncatedText
 
     frame.size.height = heightForString(string)
-    text = string
+    updateText(string)
+  }
+
+  private func updateText(string: String) {
+    let attributedString = NSMutableAttributedString(string: string,
+      attributes: LightboxConfig.config.infoLabel.textAttributes)
+
+    if string.rangeOfString(ellipsis) != nil {
+      let range = (string as NSString).rangeOfString(ellipsis)
+      attributedString.addAttribute(NSForegroundColorAttributeName,
+        value: LightboxConfig.config.infoLabel.elipsisColor, range: range)
+    }
+
+    attributedText = attributedString
   }
 
   // MARK: - Helper methods

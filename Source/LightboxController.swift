@@ -1,4 +1,5 @@
 import UIKit
+import Hue
 
 public protocol LightboxControllerPageDelegate: class {
 
@@ -69,22 +70,25 @@ public class LightboxController: UIViewController {
     return label
     }()
 
-  lazy var infoLabel: UILabel = { [unowned self] in
-    let label = UILabel(frame: CGRectZero)
+  lazy var infoLabel: InfoLabel = { [unowned self] in
+    let label = InfoLabel(text: "Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text")
+    label.hidden = !self.config.infoLabel.enabled
+    label.textColor = .whiteColor()
+
     return label
     }()
 
   lazy var overlayView: UIView = { [unowned self] in
     let view = UIView(frame: CGRectZero)
     let gradient = CAGradientLayer()
-    var colors = [CGColor]()
-    for color in uicolors {
-      colors.append(color.CGColor)
-    }
+    var colors = [UIColor.hex("090909").CGColor, UIColor.hex("040404").CGColor]
 
     gradient.frame = view.bounds
     gradient.colors = colors
     view.layer.insertSublayer(gradient, atIndex: 0)
+    view.hidden = !self.config.infoLabel.enabled
+    view.alpha = 0
+
     return view
     }()
 
@@ -183,7 +187,8 @@ public class LightboxController: UIViewController {
     transitionManager.scrollView = scrollView
     transitioningDelegate = transitionManager
 
-    [scrollView, closeButton, deleteButton, pageLabel].forEach { view.addSubview($0) }
+    [scrollView, closeButton, deleteButton,
+      pageLabel, overlayView, infoLabel].forEach { view.addSubview($0) }
 
     currentPage = 0
     configureLayout(screenBounds.size)
@@ -304,6 +309,12 @@ public class LightboxController: UIViewController {
     pageLabel.frame.origin = CGPoint(
       x: pageLabelX,
       y: bounds.height - pageLabel.frame.height - 20)
+
+    overlayView.frame = scrollView.frame
+
+    infoLabel.frame = CGRect(x: 17, y: 0, width: scrollView.frame.width - 17 * 2, height: 35)
+    infoLabel.resetFrame()
+    infoLabel.frame.origin.y = scrollView.frame.maxY - infoLabel.frame.height - 40
   }
 }
 

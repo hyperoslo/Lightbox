@@ -13,20 +13,21 @@ class InfoView: UILabel {
   var truncatedText: String {
     guard var truncatedText = fullText else { return "" }
 
-    if numberOfLines(truncatedText) > numberOfVisibleLines {
-      truncatedText += ellipsis
+    guard numberOfLines(truncatedText) > numberOfVisibleLines else {
+      return truncatedText
+    }
 
-      var range = Range<String.Index>(
-        start: truncatedText.endIndex.advancedBy(-(ellipsis.characters.count + 1)),
-        end: truncatedText.endIndex.advancedBy(-ellipsis.characters.count)
-      )
+    truncatedText += ellipsis
 
-      while numberOfLines(truncatedText) > numberOfVisibleLines {
-        truncatedText.removeRange(range)
+    var range = Range<String.Index>(
+      start: truncatedText.endIndex.advancedBy(-(ellipsis.characters.count + 1)),
+      end: truncatedText.endIndex.advancedBy(-ellipsis.characters.count)
+    )
 
-        range.startIndex = range.startIndex.advancedBy(-1)
-        range.endIndex = range.endIndex.advancedBy(-1)
-      }
+    while numberOfLines(truncatedText) > numberOfVisibleLines {
+      truncatedText.removeRange(range)
+      range.startIndex = range.startIndex.advancedBy(-1)
+      range.endIndex = range.endIndex.advancedBy(-1)
     }
 
     return truncatedText

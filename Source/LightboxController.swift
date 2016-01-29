@@ -96,7 +96,7 @@ public class LightboxController: UIViewController {
 
   // MARK: - Initializers
 
-  public init(model: LightboxModel) {
+  public init(model: LightboxModel, startIndex index: Int = 0) {
     self.model = model
 
     super.init(nibName: nil, bundle: nil)
@@ -108,6 +108,8 @@ public class LightboxController: UIViewController {
       scrollView.addSubview(pageView)
       pageViews.append(pageView)
     }
+
+    currentPage = index
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -127,7 +129,7 @@ public class LightboxController: UIViewController {
     [scrollView, overlayView, headerView, footerView].forEach { view.addSubview($0) }
     overlayView.addGestureRecognizer(overlayTapGestureRecognizer)
 
-    currentPage = 0
+    goTo(currentPage, animated: false)
     configureLayout(screenBounds.size)
   }
 

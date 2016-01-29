@@ -24,7 +24,21 @@ class ViewController: UIViewController {
   // MARK: - Action methods
 
   func showLightbox() {
-    let images = [UIImage(named: "photo1")!, UIImage(named: "photo2")!, UIImage(named: "photo3")!]
+    let images = [
+      LightboxImage(
+        image: UIImage(named: "photo1")!,
+        text: "Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text"
+      ),
+      LightboxImage(
+        image: UIImage(named: "photo2")!,
+        text: ""
+      ),
+      LightboxImage(
+        image: UIImage(named: "photo3")!,
+        text: "Some very long lorem ipsum text."
+      )
+    ]
+    
     let model = LightboxModel(images: images)
     let controller = LightboxController(model: model)
 

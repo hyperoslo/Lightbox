@@ -37,13 +37,13 @@ public class LightboxModel {
     })
   }
 
-  public init(images: [UIImage], text: String = "") {
+  public init(images: [UIImage], text: String = "Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text") {
     self.images = images
     self.text = text
     self.imageURLs = []
   }
 
-  public init(imagesURLs: [NSURL], text: String = "") {
+  public init(imagesURLs: [NSURL], text: String = "Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text") {
     self.imageURLs = imagesURLs
     self.text = text
     self.images = []
@@ -53,10 +53,11 @@ public class LightboxModel {
 
   public struct PageIndicator {
     public var enabled = true
+    public var separatorColor = UIColor.hex("3D4757")
 
     public var textAttributes = [
-      NSFontAttributeName: UIFont.systemFontOfSize(18),
-      NSForegroundColorAttributeName: UIColor.lightGrayColor(),
+      NSFontAttributeName: UIFont.systemFontOfSize(12),
+      NSForegroundColorAttributeName: UIColor.hex("899AB8"),
       NSParagraphStyleAttributeName: {
         var style = NSMutableParagraphStyle()
         style.alignment = .Center
@@ -102,13 +103,12 @@ public class LightboxModel {
   public struct InfoLabel {
     public var enabled = true
     public var ellipsisText = NSLocalizedString("Show more", comment: "")
+    public var elipsisColor = UIColor.hex("899AB9")
 
     public var textAttributes = [
       NSFontAttributeName: UIFont.systemFontOfSize(12),
       NSForegroundColorAttributeName: UIColor.hex("DBDBDB")
     ]
-
-    public var elipsisColor = UIColor.hex("899AB9")
   }
 
   public struct Zoom {

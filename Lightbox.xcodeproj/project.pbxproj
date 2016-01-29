@@ -14,7 +14,7 @@
 		D54DFCBF1C5AAAD600ADEA0E /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54DFCBD1C5AAAD600ADEA0E /* PageView.swift */; };
 		D54DFCC21C5AAAF100ADEA0E /* Hue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54DFCC01C5AAAF100ADEA0E /* Hue.framework */; };
 		D54DFCC31C5AAAF100ADEA0E /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54DFCC11C5AAAF100ADEA0E /* Sugar.framework */; };
-		D58A18CB1C5ABF8F000024BB /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58A18CA1C5ABF8F000024BB /* InfoView.swift */; };
+		D58A18CB1C5ABF8F000024BB /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58A18CA1C5ABF8F000024BB /* FooterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,7 @@
 		D54DFCBD1C5AAAD600ADEA0E /* PageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		D54DFCC01C5AAAF100ADEA0E /* Hue.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Hue.framework; path = Carthage/Build/iOS/Hue.framework; sourceTree = "<group>"; };
 		D54DFCC11C5AAAF100ADEA0E /* Sugar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sugar.framework; path = Carthage/Build/iOS/Sugar.framework; sourceTree = "<group>"; };
-		D58A18CA1C5ABF8F000024BB /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		D58A18CA1C5ABF8F000024BB /* FooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +86,7 @@
 			children = (
 				D54DFCBC1C5AAAD600ADEA0E /* InfoLabel.swift */,
 				D54DFCBD1C5AAAD600ADEA0E /* PageView.swift */,
-				D58A18CA1C5ABF8F000024BB /* InfoView.swift */,
+				D58A18CA1C5ABF8F000024BB /* FooterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -192,7 +192,7 @@
 				D523B0BD1C43AA8B001AD1EC /* LightboxModel.swift in Sources */,
 				D523B0BE1C43AA8B001AD1EC /* LightboxController.swift in Sources */,
 				D54DFCBE1C5AAAD600ADEA0E /* InfoLabel.swift in Sources */,
-				D58A18CB1C5ABF8F000024BB /* InfoView.swift in Sources */,
+				D58A18CB1C5ABF8F000024BB /* FooterView.swift in Sources */,
 				D523B0C01C43AA8B001AD1EC /* LightboxTransition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

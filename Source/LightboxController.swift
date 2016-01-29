@@ -63,20 +63,9 @@ public class LightboxController: UIViewController {
     return button
     }()
 
-  lazy var pageLabel: UILabel = { [unowned self] in
-    let label = UILabel(frame: CGRectZero)
-    label.alpha = self.model.pageIndicator.enabled ? 1.0 : 0.0
-
-    return label
-    }()
-
-  lazy var infoLabel: InfoLabel = { [unowned self] in
-    let label = InfoLabel(model: self.model,
-      text: "Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text")
-    label.hidden = !self.model.infoLabel.enabled
-    label.textColor = .whiteColor()
-
-    return label
+  lazy var footerView: FooterView = { [unowned self] in
+    let view = FooterView(model: self.model)
+    return view
     }()
 
   lazy var overlayView: UIView = { [unowned self] in
@@ -100,12 +89,7 @@ public class LightboxController: UIViewController {
   public private(set) var currentPage = 0 {
     didSet {
       currentPage = min(numberOfPages - 1, max(0, currentPage))
-
-      let text = "\(currentPage + 1)/\(numberOfPages)"
-
-      pageLabel.attributedText = NSAttributedString(string: text,
-        attributes: model.pageIndicator.textAttributes)
-      pageLabel.sizeToFit()
+      footerView.updatePage(currentPage + 1, numberOfPages)
 
       if currentPage == numberOfPages - 1 {
         seen = true
@@ -168,11 +152,10 @@ public class LightboxController: UIViewController {
     transitionManager.scrollView = scrollView
     transitioningDelegate = transitionManager
 
-    [scrollView, closeButton, deleteButton,
-      pageLabel, overlayView, infoLabel].forEach { view.addSubview($0) }
+    [scrollView, closeButton, deleteButton, overlayView, footerView].forEach { view.addSubview($0) }
 
     currentPage = 0
-    modelureLayout(screenBounds.size)
+    configureLayout(screenBounds.size)
   }
 
   public override func viewWillAppear(animated: Bool) {
@@ -198,7 +181,7 @@ public class LightboxController: UIViewController {
   override public func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
-    modelureLayout(size)
+    configureLayout(size)
   }
 
   // MARK: - Pagination
@@ -243,7 +226,7 @@ public class LightboxController: UIViewController {
 
     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
     dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
-      self.modelureLayout(self.screenBounds.size)
+      self.configureLayout(self.screenBounds.size)
       self.currentPage = Int(self.scrollView.contentOffset.x / self.screenBounds.width)
       button.enabled = true
     }
@@ -258,7 +241,7 @@ public class LightboxController: UIViewController {
 
   // MARK: - Layout
 
-  public func modelureLayout(size: CGSize) {
+  public func configureLayout(size: CGSize) {
     scrollView.frame.size = size
     scrollView.contentSize = CGSize(
       width: size.width * CGFloat(numberOfPages) + model.spacing * CGFloat(numberOfPages - 1),
@@ -283,19 +266,7 @@ public class LightboxController: UIViewController {
       x: 17, y: 16,
       width: model.deleteButton.size.width, height: model.deleteButton.size.height)
 
-    let pageLabelX: CGFloat = bounds.width < bounds.height
-      ? (bounds.width - pageLabel.frame.width) / 2
-      : deleteButton.center.x
-
-    pageLabel.frame.origin = CGPoint(
-      x: pageLabelX,
-      y: bounds.height - pageLabel.frame.height - 20)
-
     overlayView.frame = scrollView.frame
-
-    infoLabel.frame = CGRect(x: 17, y: 0, width: scrollView.frame.width - 17 * 2, height: 35)
-    infoLabel.resetFrame()
-    infoLabel.frame.origin.y = scrollView.frame.maxY - infoLabel.frame.height - 40
   }
 }
 
@@ -332,17 +303,12 @@ extension LightboxController: PageViewDelegate {
 
   func pageVewDidZoom(pageView: PageView) {
     let hidden = pageView.zoomScale != 1.0
+    let duration = hidden ? 0.0 : 1.0
 
-    if hidden {
-      closeButton.alpha = 0.0
-      deleteButton.alpha = 0.0
-      pageLabel.alpha = hidden ? 0.0 : 1.0
-    } else {
-      UIView.animateWithDuration(1.0, delay: 0.5, options: [], animations: { () -> Void in
-        self.closeButton.alpha = self.model.closeButton.enabled ? 1.0 : 0.0
-        self.deleteButton.alpha = self.model.deleteButton.enabled ? 1.0 : 0.0
-        self.pageLabel.alpha = self.model.pageIndicator.enabled ? 1.0 : 0.0
+    UIView.animateWithDuration(duration, delay: 0.5, options: [], animations: { () -> Void in
+      self.closeButton.alpha = 1.0
+      self.deleteButton.alpha = 1.0
+      self.footerView.alpha = 1.0
       }, completion: nil)
-    }
   }
 }

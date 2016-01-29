@@ -1,5 +1,10 @@
 import UIKit
 
+protocol FooterViewDelegate: class {
+
+  func footerView(footerView: FooterView, didExpand expanded: Bool)
+}
+
 class FooterView: UIView {
 
   lazy var infoLabel: InfoLabel = { [unowned self] in
@@ -29,6 +34,7 @@ class FooterView: UIView {
     }()
 
   let model: LightboxModel
+  weak var delegate: FooterViewDelegate?
 
   var expanded = false {
     didSet {
@@ -92,7 +98,7 @@ extension FooterView: LayoutConfigurable {
 
 extension FooterView: InfoLabelDelegate {
 
-  func infoLabelDidUpdateState(infoLabel: InfoLabel) {
-    expanded = infoLabel.expanded
+  func infoLabel(infoLabel: InfoLabel, didExpand expanded: Bool) {
+    self.expanded = expanded
   }
 }

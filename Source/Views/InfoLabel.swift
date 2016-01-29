@@ -2,7 +2,7 @@ import UIKit
 
 protocol InfoLabelDelegate: class {
 
-  func infoLabelDidUpdateState(infoLabel: InfoLabel)
+  func infoLabel(infoLabel: InfoLabel, didExpand expanded: Bool)
 }
 
 class InfoLabel: UILabel {
@@ -80,7 +80,7 @@ class InfoLabel: UILabel {
 
   func labelDidTap(tapGestureRecognizer: UITapGestureRecognizer) {
     expanded = !expanded
-    delegate?.infoLabelDidUpdateState(self)
+    delegate?.infoLabel(self, didExpand: expanded)
   }
 
   private func expand() {

@@ -42,7 +42,7 @@ public class LightboxController: UIViewController {
   lazy var overlayView: UIView = { [unowned self] in
     let view = UIView(frame: CGRectZero)
     let gradient = CAGradientLayer()
-    let colors = [UIColor.hex("090909").alpha(1), UIColor.hex("040404")]
+    let colors = [UIColor.hex("090909").alpha(0), UIColor.hex("040404")]
 
     view.addGradientLayer(colors)
     view.hidden = !self.model.infoLabel.enabled
@@ -295,9 +295,6 @@ extension LightboxController: FooterViewDelegate {
 
   func footerView(footerView: FooterView, didExpand expanded: Bool) {
     footerView.frame.origin.y = screenBounds.height - footerView.frame.height
-
-    UIView.animateWithDuration(0.2, delay: 0, options: [], animations: {
-      self.overlayView.alpha = expanded ? 1.0 : 0.0
-      }, completion: nil)
+    self.overlayView.alpha = expanded ? 1.0 : 0.0
   }
 }

@@ -35,7 +35,7 @@ class FooterView: UIView {
     }()
 
   let model: LightboxModel
-  let gradientColors = [UIColor.hex("040404").alpha(0.87), UIColor.hex("040404")]
+  let gradientColors = [UIColor.hex("040404").alpha(0.1), UIColor.hex("040404")]
   weak var delegate: FooterViewDelegate?
 
   var expanded = false {

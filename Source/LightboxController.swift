@@ -51,6 +51,13 @@ public class LightboxController: UIViewController {
     return view
     }()
 
+  lazy var overlayTapGestureRecognizer: UITapGestureRecognizer = {
+    let gesture = UITapGestureRecognizer()
+    gesture.addTarget(self, action: "overlayViewDidTap:")
+
+    return gesture
+  }()
+
   var screenBounds: CGRect {
     return UIScreen.mainScreen().bounds
   }
@@ -122,6 +129,7 @@ public class LightboxController: UIViewController {
     transitioningDelegate = transitionManager
 
     [scrollView, overlayView, headerView, footerView].forEach { view.addSubview($0) }
+    overlayView.addGestureRecognizer(overlayTapGestureRecognizer)
 
     currentPage = 0
     configureLayout(screenBounds.size)
@@ -174,6 +182,12 @@ public class LightboxController: UIViewController {
 
   public func previous(animated: Bool = true) {
     goTo(currentPage - 1, animated: animated)
+  }
+
+  // MARK: - Actions
+
+  func overlayViewDidTap(tapGestureRecognizer: UITapGestureRecognizer) {
+    footerView.expand(false)
   }
 
   // MARK: - Layout

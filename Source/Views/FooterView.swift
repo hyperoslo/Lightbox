@@ -38,13 +38,6 @@ class FooterView: UIView {
   let gradientColors = [UIColor.hex("040404").alpha(0.1), UIColor.hex("040404")]
   weak var delegate: FooterViewDelegate?
 
-  var expanded = false {
-    didSet {
-      resetFrames()
-      expanded ? removeGradientLayer() : addGradientLayer(gradientColors)
-    }
-  }
-
   // MARK: - Initializers
 
   init(model: LightboxModel) {
@@ -62,6 +55,10 @@ class FooterView: UIView {
   }
 
   // MARK: - Helpers
+
+  func expand(expand: Bool) {
+    expand ? infoLabel.expand() : infoLabel.collapse()
+  }
 
   func updatePage(page: Int, _ numberOfPages: Int) {
     let text = "\(page)/\(numberOfPages)"
@@ -102,7 +99,8 @@ extension FooterView: LayoutConfigurable {
 extension FooterView: InfoLabelDelegate {
 
   func infoLabel(infoLabel: InfoLabel, didExpand expanded: Bool) {
-    self.expanded = expanded
+    resetFrames()
+    expanded ? removeGradientLayer() : addGradientLayer(gradientColors)
     delegate?.footerView(self, didExpand: expanded)
   }
 }

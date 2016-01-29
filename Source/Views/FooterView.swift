@@ -53,9 +53,7 @@ class FooterView: UIView {
 
   // MARK: - Layout
 
-  func configureLayout(frame: CGRect) {
-    self.frame = frame
-
+  func configureLayout() {
     pageLabel.frame.origin = CGPoint(
       x: (frame.width - pageLabel.frame.width) / 2,
       y: frame.height - pageLabel.frame.height - 20)

@@ -7,9 +7,6 @@ protocol HeaderViewDelegate: class {
 
 class HeaderView: UIView {
 
-  let model: LightboxModel
-  weak var delegate: HeaderViewDelegate?
-
   lazy var closeButton: UIButton = { [unowned self] in
     let title = NSAttributedString(
       string: self.model.closeButton.text,
@@ -47,6 +44,9 @@ class HeaderView: UIView {
 
     return button
     }()
+
+  let model: LightboxModel
+  weak var delegate: HeaderViewDelegate?
 
   // MARK: - Initializers
 

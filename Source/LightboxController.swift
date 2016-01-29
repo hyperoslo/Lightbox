@@ -78,13 +78,13 @@ public class LightboxController: UIViewController {
 
   public weak var pageDelegate: LightboxControllerPageDelegate?
   public weak var dismissalDelegate: LightboxControllerDismissalDelegate?
-  public var presented = true
+  public internal(set) var presented = true
   public private(set) var seen = false
 
   lazy var transitionManager: LightboxTransition = LightboxTransition()
   var pageViews = [PageView]()
   var statusBarHidden = false
-  var model: LightboxModel
+  let model: LightboxModel
 
   // MARK: - Initializers
 

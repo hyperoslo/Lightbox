@@ -38,11 +38,9 @@ public class LightboxController: UIViewController {
   lazy var overlayView: UIView = { [unowned self] in
     let view = UIView(frame: CGRectZero)
     let gradient = CAGradientLayer()
-    var colors = [UIColor.hex("090909").CGColor, UIColor.hex("040404").CGColor]
+    let colors = [UIColor.hex("090909").alpha(0), UIColor.hex("040404")]
 
-    gradient.frame = view.bounds
-    gradient.colors = colors
-    view.layer.insertSublayer(gradient, atIndex: 0)
+    view.setupGradient(colors)
     view.hidden = !self.model.infoLabel.enabled
     view.alpha = 0
 

@@ -54,6 +54,8 @@ class HeaderView: UIView {
     self.model = model
     super.init(frame: CGRectZero)
 
+    backgroundColor = UIColor.clearColor()
+
     [closeButton, deleteButton].forEach { addSubview($0) }
   }
 

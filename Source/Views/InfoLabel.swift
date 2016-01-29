@@ -1,6 +1,6 @@
 import UIKit
 
-class InfoLabel: UILabel {
+class InfoLabel: UILabel, Expandable {
 
   let model: LightboxModel
   let numberOfVisibleLines = 2

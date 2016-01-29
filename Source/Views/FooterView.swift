@@ -1,8 +1,6 @@
 import UIKit
 
-class FooterView: UIView {
-
-  let model: LightboxModel
+class FooterView: UIView, Expandable {
 
   lazy var infoLabel: InfoLabel = { [unowned self] in
     let label = InfoLabel(model: self.model,
@@ -29,11 +27,22 @@ class FooterView: UIView {
     return view
     }()
 
+  let model: LightboxModel
+
+  var expanded = false {
+    didSet {
+      resetFrame()
+    }
+  }
+
   // MARK: - Initializers
 
   init(model: LightboxModel) {
     self.model = model
     super.init(frame: CGRectZero)
+
+    let colors = [UIColor.hex("040404").alpha(0.87), UIColor.hex("040404")]
+    setupGradient(colors)
 
     [pageLabel, infoLabel, separatorView].forEach { addSubview($0) }
   }
@@ -43,6 +52,11 @@ class FooterView: UIView {
   }
 
   // MARK: - Helpers
+
+  func resetFrame() {
+    infoLabel.expanded = expanded
+    configureLayout()
+  }
 
   func updatePage(page: Int, _ numberOfPages: Int) {
     let text = "\(page)/\(numberOfPages)"
@@ -58,6 +72,11 @@ class FooterView: UIView {
 extension FooterView: LayoutConfigurable {
 
   func configureLayout() {
+    infoLabel.frame = CGRect(x: 17, y: 0, width: frame.width - 17 * 2, height: 35)
+    infoLabel.resetFrame()
+
+    frame.size.height = infoLabel.frame.height + 40 + 0.5
+
     pageLabel.frame.origin = CGPoint(
       x: (frame.width - pageLabel.frame.width) / 2,
       y: frame.height - pageLabel.frame.height - 2)
@@ -65,8 +84,6 @@ extension FooterView: LayoutConfigurable {
     separatorView.frame = CGRect(x: 0, y: pageLabel.frame.minY - 2.5,
       width: frame.width, height: 0.5)
 
-    infoLabel.frame = CGRect(x: 17, y: 0, width: frame.width - 17 * 2, height: 35)
-    infoLabel.resetFrame()
     infoLabel.frame.origin.y = separatorView.frame.minY - infoLabel.frame.height - 20
   }
 }

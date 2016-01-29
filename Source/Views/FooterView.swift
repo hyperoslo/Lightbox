@@ -8,8 +8,7 @@ protocol FooterViewDelegate: class {
 class FooterView: UIView {
 
   lazy var infoLabel: InfoLabel = { [unowned self] in
-    let label = InfoLabel(model: self.model,
-      text: self.model.text)
+    let label = InfoLabel(model: self.model, text: "")
     label.hidden = !self.model.infoLabel.enabled
     label.textColor = .whiteColor()
     label.userInteractionEnabled = true
@@ -66,6 +65,10 @@ class FooterView: UIView {
     pageLabel.attributedText = NSAttributedString(string: text,
       attributes: model.pageIndicator.textAttributes)
     pageLabel.sizeToFit()
+  }
+
+  func updateText(text: String) {
+    infoLabel.fullText = text
   }
 
   // MARK: - Layout

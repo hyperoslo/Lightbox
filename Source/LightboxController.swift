@@ -66,6 +66,7 @@ public class LightboxController: UIViewController {
     didSet {
       currentPage = min(numberOfPages - 1, max(0, currentPage))
       footerView.updatePage(currentPage + 1, numberOfPages)
+      footerView.updateText(pageViews[currentPage].image.text)
 
       if currentPage == numberOfPages - 1 {
         seen = true
@@ -79,12 +80,8 @@ public class LightboxController: UIViewController {
     return pageViews.count
   }
 
-  public var images: [UIImage] {
-    return pageViews.filter{ $0.imageView.image != nil}.map{ $0.imageView.image! }
-  }
-
-  public var imageURLs: [NSURL] {
-    return pageViews.filter{ $0.imageURL != nil}.map{ $0.imageURL! }
+  public var images: [LightboxImage] {
+    return pageViews.map { $0.image }
   }
 
   public weak var pageDelegate: LightboxControllerPageDelegate?
@@ -101,12 +98,11 @@ public class LightboxController: UIViewController {
 
   public init(model: LightboxModel) {
     self.model = model
-    LightboxModel.sharedModel = model
 
     super.init(nibName: nil, bundle: nil)
 
-    for index in 0..<model.numberOfPages {
-      let pageView = PageView(model: model, index: index)
+    for image in model.images {
+      let pageView = PageView(model: model, image: image)
       pageView.pageViewDelegate = self
 
       scrollView.addSubview(pageView)

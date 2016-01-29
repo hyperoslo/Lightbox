@@ -3,26 +3,9 @@ import Hue
 
 public class LightboxModel {
 
-  static var sharedModel = LightboxModel(images: [])
-
-  public let images: [UIImage]
-  public let imageURLs: [NSURL]
-  public let text: String
-  public var hideStatusBar = true
-  public var pageIndicator = PageIndicator()
-  public var closeButton = CloseButton()
-  public var deleteButton = DeleteButton()
-  public var infoLabel = InfoLabel()
-  public var zoom = Zoom()
-  public var spacing: CGFloat = 20
-
-  public var numberOfPages: Int {
-    return imageURLs.count > 0 ? imageURLs.count : images.count
-  }
-
   public typealias LoadImageCompletion = (error: NSError?) -> Void
 
-  public var loadImage: (imageView: UIImageView, URL: NSURL, completion: LoadImageCompletion?) -> Void = {
+  public static var loadImage: (imageView: UIImageView, URL: NSURL, completion: LoadImageCompletion?) -> Void = {
     imageView, URL, completion in
     let imageRequest: NSURLRequest = NSURLRequest(URL: URL)
 
@@ -37,16 +20,21 @@ public class LightboxModel {
     })
   }
 
-  public init(images: [UIImage], text: String = "Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text") {
-    self.images = images
-    self.text = text
-    self.imageURLs = []
+  public let images: [LightboxImage]
+  public var hideStatusBar = true
+  public var pageIndicator = PageIndicator()
+  public var closeButton = CloseButton()
+  public var deleteButton = DeleteButton()
+  public var infoLabel = InfoLabel()
+  public var zoom = Zoom()
+  public var spacing: CGFloat = 20
+
+  public var numberOfPages: Int {
+    return images.count
   }
 
-  public init(imagesURLs: [NSURL], text: String = "Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text") {
-    self.imageURLs = imagesURLs
-    self.text = text
-    self.images = []
+  public init(images: [LightboxImage]) {
+    self.images = images
   }
 
   // MARK: - Inner types

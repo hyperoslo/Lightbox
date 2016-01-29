@@ -17,30 +17,20 @@ class PageView: UIScrollView {
     }()
 
   let model: LightboxModel
-  var imageURL: NSURL?
+  var image: LightboxImage
   var contentFrame = CGRectZero
   weak var pageViewDelegate: PageViewDelegate?
 
   // MARK: - Initializers
 
-  init(model: LightboxModel, index: Int) {
+  init(model: LightboxModel, image: LightboxImage) {
     self.model = model
+    self.image = image
     super.init(frame: CGRectZero)
 
-    if index < model.imageURLs.count {
-      let imageURL = model.imageURLs[index]
-      self.imageURL = imageURL
-
-      model.loadImage(imageView: imageView, URL: imageURL) { error in
-        guard error == nil else { return }
-        self.userInteractionEnabled = true
-        self.configureImageView()
-      }
-    } else if index < model.images.count {
-      let image = model.images[index]
-
-      imageView.image = image
-      userInteractionEnabled = true
+    image.addImageTo(imageView) {
+      self.userInteractionEnabled = true
+      self.configureImageView()
     }
 
     configure()

@@ -21,7 +21,7 @@ class HeaderView: UIView {
       button.setBackgroundImage(image, forState: .Normal)
     }
 
-    button.alpha = self.model.closeButton.enabled ? 1.0 : 0.0
+    button.hidden = !self.model.closeButton.enabled
 
     return button
     }()
@@ -40,7 +40,7 @@ class HeaderView: UIView {
       button.setBackgroundImage(image, forState: .Normal)
     }
 
-    button.alpha = self.model.deleteButton.enabled ? 1.0 : 0.0
+    button.hidden = !self.model.deleteButton.enabled
 
     return button
     }()

@@ -84,7 +84,7 @@ public class LightboxModel {
   }
 
   public struct DeleteButton {
-    public var enabled = false
+    public var enabled = true
     public var size = CGSize(width: 70, height: 25)
     public var text = NSLocalizedString("Delete", comment: "")
     public var image: UIImage?

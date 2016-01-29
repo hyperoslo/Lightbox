@@ -20,7 +20,7 @@ class FooterView: UIView {
 
   lazy var pageLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRectZero)
-    label.alpha = self.model.pageIndicator.enabled ? 1.0 : 0.0
+    label.hidden = !self.model.pageIndicator.enabled
     label.numberOfLines = 1
 
     return label
@@ -28,7 +28,7 @@ class FooterView: UIView {
 
   lazy var separatorView: UIView = { [unowned self] in
     let view = UILabel(frame: CGRectZero)
-    view.alpha = self.model.pageIndicator.enabled ? 1.0 : 0.0
+    view.hidden = !self.model.pageIndicator.enabled
     view.backgroundColor = self.model.pageIndicator.separatorColor
 
     return view

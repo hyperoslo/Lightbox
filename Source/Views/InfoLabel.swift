@@ -16,23 +16,33 @@ class InfoLabel: UILabel {
 
   let model: LightboxModel
   let numberOfVisibleLines = 2
-  var fullText: String
   weak var delegate: InfoLabelDelegate?
+  private var shortText = ""
+
+  var fullText: String {
+    didSet {
+      shortText = truncatedText
+    }
+  }
 
   var ellipsis: String {
     return "... \(model.infoLabel.ellipsisText)"
   }
 
-  var expanded = false {
+  var expandable: Bool {
+    return shortText != fullText
+  }
+
+  private(set) var expanded = false {
     didSet {
-      resetFrame()
+      delegate?.infoLabel(self, didExpand: expanded)
     }
   }
 
-  var truncatedText: String {
+  private var truncatedText: String {
     var truncatedText = fullText
 
-    guard numberOfLines(truncatedText) > numberOfVisibleLines else {
+    guard numberOfLines(fullText) > numberOfVisibleLines else {
       return truncatedText
     }
 
@@ -60,7 +70,6 @@ class InfoLabel: UILabel {
     super.init(frame: CGRectZero)
 
     numberOfLines = 0
-    updateText(text)
     self.expanded = expanded
 
     addGestureRecognizer(tapGestureRecognizer)
@@ -70,29 +79,25 @@ class InfoLabel: UILabel {
     fatalError("init(coder:) has not been implemented")
   }
 
-  // MARK: - Configuration
-
-  func resetFrame() {
-    expanded ? expand() : collapse()
-  }
-
   // MARK: - Actions
 
   func labelDidTap(tapGestureRecognizer: UITapGestureRecognizer) {
-    expanded = !expanded
-    delegate?.infoLabel(self, didExpand: expanded)
+    shortText = truncatedText
+    expanded ? collapse() : expand()
   }
 
-  private func expand() {
+  func expand() {
     frame.size.height = heightForString(fullText)
     updateText(fullText)
+
+    expanded = expandable
   }
 
-  private func collapse() {
-    let string = truncatedText
+  func collapse() {
+    frame.size.height = heightForString(shortText)
+    updateText(shortText)
 
-    frame.size.height = heightForString(string)
-    updateText(string)
+    expanded = false
   }
 
   private func updateText(string: String) {
@@ -123,5 +128,15 @@ class InfoLabel: UILabel {
     let totalHeight = heightForString(string)
 
     return Int(totalHeight / lineHeight)
+  }
+}
+
+// MARK: - LayoutConfigurable
+
+extension InfoLabel: LayoutConfigurable {
+
+  func configureLayout() {
+    shortText = truncatedText
+    expanded ? expand() : collapse()
   }
 }

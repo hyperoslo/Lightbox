@@ -73,7 +73,7 @@ class FooterView: UIView {
 
   // MARK: - Layout
 
-  func resetFrames() {
+  private func resetFrames() {
     frame.size.height = infoLabel.frame.height + 40 + 0.5
 
     pageLabel.frame.origin = CGPoint(
@@ -95,9 +95,7 @@ extension FooterView: LayoutConfigurable {
 
   func configureLayout() {
     infoLabel.frame = CGRect(x: 17, y: 0, width: frame.width - 17 * 2, height: 35)
-    infoLabel.expanded = expanded
-
-    resetFrames()
+    infoLabel.configureLayout()
   }
 }
 

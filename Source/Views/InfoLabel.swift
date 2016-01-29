@@ -70,6 +70,7 @@ class InfoLabel: UILabel {
     super.init(frame: CGRectZero)
 
     numberOfLines = 0
+    updateText(text)
     self.expanded = expanded
 
     addGestureRecognizer(tapGestureRecognizer)

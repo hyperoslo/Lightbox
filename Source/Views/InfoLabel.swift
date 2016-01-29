@@ -22,6 +22,8 @@ class InfoLabel: UILabel {
   var fullText: String {
     didSet {
       shortText = truncatedText
+      updateText(fullText)
+      configureLayout()
     }
   }
 

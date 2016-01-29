@@ -281,3 +281,14 @@ extension LightboxController: HeaderViewDelegate {
     dismissViewControllerAnimated(true, completion: nil)
   }
 }
+
+// MARK: - FooterViewDelegate
+
+extension LightboxController: FooterViewDelegate {
+
+  func footerView(footerView: FooterView, didExpand expanded: Bool) {
+    UIView.animateWithDuration(1.0, delay: 0, options: [], animations: {
+      self.overlayView.alpha = expanded ? 1.0 : 0.0
+      }, completion: nil)
+  }
+}

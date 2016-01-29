@@ -16,30 +16,24 @@ class PageView: UIScrollView {
     return imageView
     }()
 
-  weak var pageViewDelegate: PageViewDelegate?
-  var imageURL: NSURL?
+  let model: LightboxModel
+  var image: LightboxImage
   var contentFrame = CGRectZero
+  weak var pageViewDelegate: PageViewDelegate?
 
   // MARK: - Initializers
 
-  init(image: UIImage) {
-    super.init(frame: CGRectZero)
-    imageView.image = image
-    configure()
-    userInteractionEnabled = true
-  }
-
-  init(imageURL: NSURL) {
+  init(model: LightboxModel, image: LightboxImage) {
+    self.model = model
+    self.image = image
     super.init(frame: CGRectZero)
 
-    self.imageURL = imageURL
-    configure()
-
-    LightboxConfig.config.loadImage(imageView: imageView, URL: imageURL) { error in
-      guard error == nil else { return }
+    image.addImageTo(imageView) {
       self.userInteractionEnabled = true
       self.configureImageView()
     }
+
+    configure()
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -53,8 +47,8 @@ class PageView: UIScrollView {
 
     delegate = self
     multipleTouchEnabled = true
-    minimumZoomScale = LightboxConfig.config.zoom.minimumScale
-    maximumZoomScale = LightboxConfig.config.zoom.maximumScale
+    minimumZoomScale = model.zoom.minimumScale
+    maximumZoomScale = model.zoom.maximumScale
     showsHorizontalScrollIndicator = false
     showsVerticalScrollIndicator = false
 
@@ -83,16 +77,6 @@ class PageView: UIScrollView {
   }
 
   // MARK: - Layout
-
-  func configureLayout(frame: CGRect) {
-    self.frame = frame
-    contentFrame = frame
-    contentSize = frame.size
-    imageView.frame = frame
-    zoomScale = LightboxConfig.config.zoom.minimumScale
-
-    configureImageView()
-  }
 
   func configureImageView() {
     guard let image = imageView.image else { return }
@@ -133,6 +117,20 @@ class PageView: UIScrollView {
     }
 
     imageView.frame = imageViewFrame
+  }
+}
+
+// MARK: - LayoutConfigurable
+
+extension PageView: LayoutConfigurable {
+
+  func configureLayout() {
+    contentFrame = frame
+    contentSize = frame.size
+    imageView.frame = frame
+    zoomScale = model.zoom.minimumScale
+
+    configureImageView()
   }
 }
 

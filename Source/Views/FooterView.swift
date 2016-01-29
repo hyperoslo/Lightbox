@@ -1,12 +1,13 @@
 import UIKit
 
-class FooterView: UIView, Expandable {
+class FooterView: UIView {
 
   lazy var infoLabel: InfoLabel = { [unowned self] in
     let label = InfoLabel(model: self.model,
       text: self.model.text)
     label.hidden = !self.model.infoLabel.enabled
     label.textColor = .whiteColor()
+    label.userInteractionEnabled = true
 
     return label
     }()
@@ -31,7 +32,7 @@ class FooterView: UIView, Expandable {
 
   var expanded = false {
     didSet {
-      resetFrame()
+      resetSubviewFrames()
     }
   }
 
@@ -53,11 +54,6 @@ class FooterView: UIView, Expandable {
 
   // MARK: - Helpers
 
-  func resetFrame() {
-    infoLabel.expanded = expanded
-    configureLayout()
-  }
-
   func updatePage(page: Int, _ numberOfPages: Int) {
     let text = "\(page)/\(numberOfPages)"
 
@@ -65,16 +61,10 @@ class FooterView: UIView, Expandable {
       attributes: model.pageIndicator.textAttributes)
     pageLabel.sizeToFit()
   }
-}
 
-// MARK: - LayoutConfigurable
+  // MARK: - Layout
 
-extension FooterView: LayoutConfigurable {
-
-  func configureLayout() {
-    infoLabel.frame = CGRect(x: 17, y: 0, width: frame.width - 17 * 2, height: 35)
-    infoLabel.resetFrame()
-
+  func resetSubviewFrames() {
     frame.size.height = infoLabel.frame.height + 40 + 0.5
 
     pageLabel.frame.origin = CGPoint(
@@ -85,5 +75,24 @@ extension FooterView: LayoutConfigurable {
       width: frame.width, height: 0.5)
 
     infoLabel.frame.origin.y = separatorView.frame.minY - infoLabel.frame.height - 20
+  }
+}
+
+// MARK: - LayoutConfigurable
+
+extension FooterView: LayoutConfigurable {
+
+  func configureLayout() {
+    infoLabel.frame = CGRect(x: 17, y: 0, width: frame.width - 17 * 2, height: 35)
+    infoLabel.expanded = expanded
+
+    resetSubviewFrames()
+  }
+}
+
+extension FooterView: InfoLabelDelegate {
+
+  func infoLabelDidUpdateState(infoLabel: InfoLabel) {
+    expanded = infoLabel.expanded
   }
 }

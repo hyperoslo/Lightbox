@@ -117,7 +117,7 @@ public class LightboxController: UIViewController {
     transitionManager.scrollView = scrollView
     transitioningDelegate = transitionManager
 
-    [scrollView, overlayView, footerView].forEach { view.addSubview($0) }
+    [scrollView, overlayView, headerView, footerView].forEach { view.addSubview($0) }
 
     currentPage = 0
     configureLayout(screenBounds.size)

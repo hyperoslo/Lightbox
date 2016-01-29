@@ -1,9 +1,23 @@
 import UIKit
 
-class InfoLabel: UILabel, Expandable {
+protocol InfoLabelDelegate: class {
+
+  func infoLabelDidUpdateState(infoLabel: InfoLabel)
+}
+
+class InfoLabel: UILabel {
+
+  lazy var tapGestureRecognizer: UITapGestureRecognizer = {
+    let gesture = UITapGestureRecognizer()
+    gesture.addTarget(self, action: "labelDidTap:")
+
+    return gesture
+  }()
 
   let model: LightboxModel
   let numberOfVisibleLines = 2
+  var fullText: String
+  weak var delegate: InfoLabelDelegate?
 
   var ellipsis: String {
     return "... \(model.infoLabel.ellipsisText)"
@@ -14,8 +28,6 @@ class InfoLabel: UILabel, Expandable {
       resetFrame()
     }
   }
-
-  var fullText: String
 
   var truncatedText: String {
     var truncatedText = fullText
@@ -50,6 +62,8 @@ class InfoLabel: UILabel, Expandable {
     numberOfLines = 0
     updateText(text)
     self.expanded = expanded
+
+    addGestureRecognizer(tapGestureRecognizer)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -63,6 +77,11 @@ class InfoLabel: UILabel, Expandable {
   }
 
   // MARK: - Actions
+
+  func labelDidTap(tapGestureRecognizer: UITapGestureRecognizer) {
+    expanded = !expanded
+    delegate?.infoLabelDidUpdateState(self)
+  }
 
   private func expand() {
     frame.size.height = heightForString(fullText)

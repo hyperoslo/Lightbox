@@ -27,11 +27,15 @@ public class LightboxController: UIViewController {
 
   lazy var headerView: HeaderView = { [unowned self] in
     let view = HeaderView(model: self.model)
+    view.delegate = self
+
     return view
     }()
 
   lazy var footerView: FooterView = { [unowned self] in
     let view = FooterView(model: self.model)
+    view.delegate = self
+
     return view
     }()
 
@@ -201,6 +205,7 @@ public class LightboxController: UIViewController {
 
     [headerView, footerView].forEach { $0.configureLayout() }
 
+    footerView.frame.origin.y = bounds.height - footerView.frame.height
     overlayView.frame = scrollView.frame
   }
 }
@@ -287,7 +292,8 @@ extension LightboxController: HeaderViewDelegate {
 extension LightboxController: FooterViewDelegate {
 
   func footerView(footerView: FooterView, didExpand expanded: Bool) {
-    UIView.animateWithDuration(1.0, delay: 0, options: [], animations: {
+    UIView.animateWithDuration(0.2, delay: 0, options: [], animations: {
+      self.footerView.frame.origin.y = self.screenBounds.height - footerView.frame.height
       self.overlayView.alpha = expanded ? 1.0 : 0.0
       }, completion: nil)
   }

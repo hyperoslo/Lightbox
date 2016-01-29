@@ -13,6 +13,7 @@ class FooterView: UIView {
     label.hidden = !self.model.infoLabel.enabled
     label.textColor = .whiteColor()
     label.userInteractionEnabled = true
+    label.delegate = self
 
     return label
     }()
@@ -38,7 +39,7 @@ class FooterView: UIView {
 
   var expanded = false {
     didSet {
-      resetSubviewFrames()
+      resetFrames()
     }
   }
 
@@ -70,7 +71,7 @@ class FooterView: UIView {
 
   // MARK: - Layout
 
-  func resetSubviewFrames() {
+  func resetFrames() {
     frame.size.height = infoLabel.frame.height + 40 + 0.5
 
     pageLabel.frame.origin = CGPoint(
@@ -80,7 +81,7 @@ class FooterView: UIView {
     separatorView.frame = CGRect(x: 0, y: pageLabel.frame.minY - 2.5,
       width: frame.width, height: 0.5)
 
-    infoLabel.frame.origin.y = separatorView.frame.minY - infoLabel.frame.height - 20
+    infoLabel.frame.origin.y = separatorView.frame.minY - infoLabel.frame.height - 15
   }
 }
 
@@ -92,7 +93,7 @@ extension FooterView: LayoutConfigurable {
     infoLabel.frame = CGRect(x: 17, y: 0, width: frame.width - 17 * 2, height: 35)
     infoLabel.expanded = expanded
 
-    resetSubviewFrames()
+    resetFrames()
   }
 }
 
@@ -100,5 +101,6 @@ extension FooterView: InfoLabelDelegate {
 
   func infoLabel(infoLabel: InfoLabel, didExpand expanded: Bool) {
     self.expanded = expanded
+    delegate?.footerView(self, didExpand: expanded)
   }
 }

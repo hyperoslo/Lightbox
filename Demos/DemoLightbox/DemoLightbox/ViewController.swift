@@ -25,7 +25,8 @@ class ViewController: UIViewController {
 
   func showLightbox() {
     let images = [UIImage(named: "photo1")!, UIImage(named: "photo2")!, UIImage(named: "photo3")!]
-    let controller = LightboxController(images: images)
+    let model = LightboxModel(images: images)
+    let controller = LightboxController(model: model)
 
     presentViewController(controller, animated: true, completion: nil)
   }

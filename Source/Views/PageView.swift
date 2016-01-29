@@ -88,8 +88,7 @@ class PageView: UIScrollView {
 
   // MARK: - Layout
 
-  func configureLayout(frame: CGRect) {
-    self.frame = frame
+  func configureLayout() {
     contentFrame = frame
     contentSize = frame.size
     imageView.frame = frame

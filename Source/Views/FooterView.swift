@@ -16,6 +16,7 @@ class FooterView: UIView {
   lazy var pageLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRectZero)
     label.alpha = self.model.pageIndicator.enabled ? 1.0 : 0.0
+    label.numberOfLines = 1
 
     return label
     }()
@@ -34,7 +35,7 @@ class FooterView: UIView {
     self.model = model
     super.init(frame: CGRectZero)
 
-    [pageLabel, infoLabel].forEach { addSubview($0) }
+    [pageLabel, infoLabel, separatorView].forEach { addSubview($0) }
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -56,10 +57,13 @@ class FooterView: UIView {
   func configureLayout() {
     pageLabel.frame.origin = CGPoint(
       x: (frame.width - pageLabel.frame.width) / 2,
-      y: frame.height - pageLabel.frame.height - 20)
+      y: frame.height - pageLabel.frame.height - 2)
+
+    separatorView.frame = CGRect(x: 0, y: pageLabel.frame.minY - 2.5,
+      width: frame.width, height: 0.5)
 
     infoLabel.frame = CGRect(x: 17, y: 0, width: frame.width - 17 * 2, height: 35)
     infoLabel.resetFrame()
-    infoLabel.frame.origin.y = frame.maxY - infoLabel.frame.height - 40
+    infoLabel.frame.origin.y = separatorView.frame.minY - infoLabel.frame.height - 20
   }
 }

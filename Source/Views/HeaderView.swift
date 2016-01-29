@@ -77,6 +77,7 @@ class HeaderView: UIView {
     closeButton.frame = CGRect(
       x: bounds.width - model.closeButton.size.width - 17, y: 0,
       width: model.closeButton.size.width, height: model.closeButton.size.height)
+    
     deleteButton.frame = CGRect(
       x: 17, y: 0,
       width: model.deleteButton.size.width, height: model.deleteButton.size.height)

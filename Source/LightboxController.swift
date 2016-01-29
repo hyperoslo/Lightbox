@@ -186,7 +186,8 @@ public class LightboxController: UIViewController {
     for (index, pageView) in pageViews.enumerate() {
       var frame = scrollView.bounds
       frame.origin.x = (frame.width + model.spacing) * CGFloat(index)
-      pageView.configureLayout(frame)
+      pageView.frame = frame
+      pageView.configureLayout()
       if index != numberOfPages - 1 {
         pageView.frame.size.width += model.spacing
       }

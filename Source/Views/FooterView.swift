@@ -35,11 +35,13 @@ class FooterView: UIView {
     }()
 
   let model: LightboxModel
+  let gradientColors = [UIColor.hex("040404").alpha(0.87), UIColor.hex("040404")]
   weak var delegate: FooterViewDelegate?
 
   var expanded = false {
     didSet {
       resetFrames()
+      expanded ? removeGradientLayer() : addGradientLayer(gradientColors)
     }
   }
 
@@ -49,8 +51,8 @@ class FooterView: UIView {
     self.model = model
     super.init(frame: CGRectZero)
 
-    let colors = [UIColor.hex("040404").alpha(0.87), UIColor.hex("040404")]
-    setupGradient(colors)
+    backgroundColor = UIColor.clearColor()
+    addGradientLayer(gradientColors)
 
     [pageLabel, infoLabel, separatorView].forEach { addSubview($0) }
   }
@@ -82,6 +84,8 @@ class FooterView: UIView {
       width: frame.width, height: 0.5)
 
     infoLabel.frame.origin.y = separatorView.frame.minY - infoLabel.frame.height - 15
+
+    resizeGradientLayer()
   }
 }
 

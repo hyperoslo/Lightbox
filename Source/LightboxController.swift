@@ -42,9 +42,9 @@ public class LightboxController: UIViewController {
   lazy var overlayView: UIView = { [unowned self] in
     let view = UIView(frame: CGRectZero)
     let gradient = CAGradientLayer()
-    let colors = [UIColor.hex("090909").alpha(0), UIColor.hex("040404")]
+    let colors = [UIColor.hex("090909").alpha(1), UIColor.hex("040404")]
 
-    view.setupGradient(colors)
+    view.addGradientLayer(colors)
     view.hidden = !self.model.infoLabel.enabled
     view.alpha = 0
 
@@ -98,7 +98,7 @@ public class LightboxController: UIViewController {
 
     super.init(nibName: nil, bundle: nil)
 
-    for index in 0..<numberOfPages {
+    for index in 0..<model.numberOfPages {
       let pageView = PageView(model: model, index: index)
       pageView.pageViewDelegate = self
 
@@ -206,7 +206,9 @@ public class LightboxController: UIViewController {
     [headerView, footerView].forEach { $0.configureLayout() }
 
     footerView.frame.origin.y = bounds.height - footerView.frame.height
+
     overlayView.frame = scrollView.frame
+    overlayView.resizeGradientLayer()
   }
 }
 
@@ -292,8 +294,9 @@ extension LightboxController: HeaderViewDelegate {
 extension LightboxController: FooterViewDelegate {
 
   func footerView(footerView: FooterView, didExpand expanded: Bool) {
+    footerView.frame.origin.y = screenBounds.height - footerView.frame.height
+
     UIView.animateWithDuration(0.2, delay: 0, options: [], animations: {
-      self.footerView.frame.origin.y = self.screenBounds.height - footerView.frame.height
       self.overlayView.alpha = expanded ? 1.0 : 0.0
       }, completion: nil)
   }

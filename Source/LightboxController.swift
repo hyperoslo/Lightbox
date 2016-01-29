@@ -199,10 +199,9 @@ public class LightboxController: UIViewController {
       : model.deleteButton.size.height
 
     headerView.frame = CGRect(x: 0, y: 16, width: bounds.width, height: headerViewHeight)
-    headerView.configureLayout()
-
     footerView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 70)
-    footerView.configureLayout()
+
+    [headerView, footerView].forEach { $0.configureLayout() }
 
     overlayView.frame = scrollView.frame
   }

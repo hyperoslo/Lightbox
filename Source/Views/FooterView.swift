@@ -51,8 +51,11 @@ class FooterView: UIView {
       attributes: model.pageIndicator.textAttributes)
     pageLabel.sizeToFit()
   }
+}
 
-  // MARK: - Layout
+// MARK: - LayoutConfigurable
+
+extension FooterView: LayoutConfigurable {
 
   func configureLayout() {
     pageLabel.frame.origin = CGPoint(

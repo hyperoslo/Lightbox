@@ -88,15 +88,6 @@ class PageView: UIScrollView {
 
   // MARK: - Layout
 
-  func configureLayout() {
-    contentFrame = frame
-    contentSize = frame.size
-    imageView.frame = frame
-    zoomScale = model.zoom.minimumScale
-
-    configureImageView()
-  }
-
   func configureImageView() {
     guard let image = imageView.image else { return }
 
@@ -136,6 +127,20 @@ class PageView: UIScrollView {
     }
 
     imageView.frame = imageViewFrame
+  }
+}
+
+// MARK: - LayoutConfigurable
+
+extension PageView: LayoutConfigurable {
+
+  func configureLayout() {
+    contentFrame = frame
+    contentSize = frame.size
+    imageView.frame = frame
+    zoomScale = model.zoom.minimumScale
+
+    configureImageView()
   }
 }
 

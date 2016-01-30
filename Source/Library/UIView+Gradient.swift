@@ -6,13 +6,9 @@ extension UIView {
     if let gradientLayer = gradientLayer { return gradientLayer }
 
     let gradient = CAGradientLayer()
-    var gradientColors = [CGColor]()
-    for color in colors {
-      gradientColors.append(color.CGColor)
-    }
 
     gradient.frame = bounds
-    gradient.colors = gradientColors
+    gradient.colors = colors.map { $0.CGColor }
     layer.insertSublayer(gradient, atIndex: 0)
 
     return gradient
@@ -29,6 +25,6 @@ extension UIView {
   }
 
   private var gradientLayer: CAGradientLayer? {
-    return layer.sublayers?[0] as? CAGradientLayer
+    return layer.sublayers?.first as? CAGradientLayer
   }
 }

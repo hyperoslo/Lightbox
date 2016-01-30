@@ -51,7 +51,7 @@ public class LightboxController: UIViewController {
     return view
     }()
 
-  lazy var overlayTapGestureRecognizer: UITapGestureRecognizer = {
+  lazy var overlayTapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
     gesture.addTarget(self, action: "overlayViewDidTap:")
 

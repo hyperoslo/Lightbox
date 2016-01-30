@@ -1,5 +1,6 @@
 import UIKit
 import Hue
+import Sugar
 
 public protocol LightboxControllerPageDelegate: class {
 
@@ -257,11 +258,12 @@ extension LightboxController: PageViewDelegate {
 
   func pageVewDidZoom(pageView: PageView) {
     let hidden = pageView.zoomScale != 1.0
-    let duration = hidden ? 0.0 : 1.0
+    let duration = hidden ? 0.1 : 1.0
+    let alpha: CGFloat = hidden ? 0.0 : 1.0
 
     UIView.animateWithDuration(duration, delay: 0.5, options: [], animations: {
-      self.headerView.alpha = 1.0
-      self.footerView.alpha = 1.0
+      self.headerView.alpha = alpha
+      self.footerView.alpha = alpha
       }, completion: nil)
   }
 }
@@ -285,8 +287,7 @@ extension LightboxController: HeaderViewDelegate {
     self.currentPage--
     self.pageViews.removeAtIndex(prevIndex).removeFromSuperview()
 
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
+    delay(0.5) {
       self.configureLayout(self.screenBounds.size)
       self.currentPage = Int(self.scrollView.contentOffset.x / self.screenBounds.width)
       deleteButton.enabled = true

@@ -7,7 +7,7 @@ protocol InfoLabelDelegate: class {
 
 class InfoLabel: UILabel {
 
-  lazy var tapGestureRecognizer: UITapGestureRecognizer = {
+  lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
     gesture.addTarget(self, action: "labelDidTap:")
 

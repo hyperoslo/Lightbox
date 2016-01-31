@@ -89,6 +89,17 @@ public class LightboxController: UIViewController {
       }
 
       pageDelegate?.lightboxController(self, didMoveToPage: currentPage)
+  public var dynamicBackground: Bool = false {
+    didSet {
+      if dynamicBackground == true {
+        effectView.frame = view.frame
+        backgroundView.frame = effectView.frame
+        view.insertSubview(effectView, atIndex: 0)
+        view.insertSubview(backgroundView, atIndex: 0)
+      } else {
+        effectView.removeFromSuperview()
+        backgroundView.removeFromSuperview()
+      }
     }
   }
 

@@ -193,7 +193,9 @@ public class LightboxController: UIViewController {
   override public func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
 
-    configureLayout(size)
+    coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
+      self.configureLayout(size)
+      }, completion: nil)
   }
 
   // MARK: - Pagination

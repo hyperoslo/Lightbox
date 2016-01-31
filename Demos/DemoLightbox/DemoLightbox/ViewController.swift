@@ -10,6 +10,7 @@ class ViewController: UIViewController {
     button.setTitleColor(UIColor(red:0.47, green:0.6, blue:0.13, alpha:1), forState: .Normal)
     button.titleLabel?.font = UIFont(name: "AvenirNextCondensed-DemiBold", size: 30)
     button.frame = UIScreen.mainScreen().bounds
+    button.autoresizingMask = [.FlexibleTopMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleBottomMargin]
 
     return button
     }()
@@ -17,6 +18,7 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    view.autoresizingMask = [.FlexibleTopMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleBottomMargin]
     view.backgroundColor = UIColor.whiteColor()
     view.addSubview(showButton)
   }

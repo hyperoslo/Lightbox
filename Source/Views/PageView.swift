@@ -2,7 +2,7 @@ import UIKit
 
 protocol PageViewDelegate: class {
 
-  func pageVewDidZoom(pageView: PageView)
+  func pageViewDidZoom(pageView: PageView)
 }
 
 class PageView: UIScrollView {
@@ -144,6 +144,6 @@ extension PageView: UIScrollViewDelegate {
 
   func scrollViewDidZoom(scrollView: UIScrollView) {
     centerImageView()
-    pageViewDelegate?.pageVewDidZoom(self)
+    pageViewDelegate?.pageViewDidZoom(self)
   }
 }

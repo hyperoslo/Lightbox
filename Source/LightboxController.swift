@@ -67,6 +67,13 @@ public class LightboxController: UIViewController {
     return view
   }()
 
+  lazy var backgroundView: UIImageView = {
+    let view = UIImageView()
+    view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+
+    return view
+  }()
+
   var screenBounds: CGRect {
     return UIScreen.mainScreen().bounds
   }

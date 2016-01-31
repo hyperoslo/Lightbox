@@ -95,6 +95,9 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   public override func finishInteractiveTransition() {
     super.finishInteractiveTransition()
+
+    guard let lightboxController = lightboxController else { return }
+    lightboxController.dismissalDelegate?.lightboxControllerWillDismiss(lightboxController)
   }
 }
 

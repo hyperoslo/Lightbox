@@ -2,9 +2,9 @@ import UIKit
 
 public class LightboxImage {
 
-  var image: UIImage?
-  var imageURL: NSURL?
-  var text: String
+  public var image: UIImage?
+  public var imageURL: NSURL?
+  public var text: String
 
   // MARK: - Initialization
 

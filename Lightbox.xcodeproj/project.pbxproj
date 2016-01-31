@@ -7,25 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D523B0BC1C43AA8A001AD1EC /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B51C43AA8A001AD1EC /* CenterCellCollectionViewFlowLayout.swift */; };
-		D523B0BD1C43AA8B001AD1EC /* LightboxConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B61C43AA8A001AD1EC /* LightboxConfig.swift */; };
+		D5026B3C1C5BF3FD003BC1A3 /* LightboxImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */; };
+		D523B0BD1C43AA8B001AD1EC /* LightboxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B61C43AA8A001AD1EC /* LightboxModel.swift */; };
 		D523B0BE1C43AA8B001AD1EC /* LightboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B71C43AA8A001AD1EC /* LightboxController.swift */; };
-		D523B0BF1C43AA8B001AD1EC /* LightboxDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B81C43AA8A001AD1EC /* LightboxDataSource.swift */; };
-		D523B0C01C43AA8B001AD1EC /* LightboxTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B91C43AA8A001AD1EC /* LightboxTransition.swift */; };
-		D523B0C11C43AA8B001AD1EC /* LightboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0BA1C43AA8A001AD1EC /* LightboxView.swift */; };
-		D523B0C21C43AA8B001AD1EC /* LightboxViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0BB1C43AA8A001AD1EC /* LightboxViewCell.swift */; };
+		D54DFCBE1C5AAAD600ADEA0E /* InfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54DFCBC1C5AAAD600ADEA0E /* InfoLabel.swift */; };
+		D54DFCBF1C5AAAD600ADEA0E /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54DFCBD1C5AAAD600ADEA0E /* PageView.swift */; };
+		D54DFCC21C5AAAF100ADEA0E /* Hue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54DFCC01C5AAAF100ADEA0E /* Hue.framework */; };
+		D54DFCC31C5AAAF100ADEA0E /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54DFCC11C5AAAF100ADEA0E /* Sugar.framework */; };
+		D573A2F01C5B5605006053DD /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2EF1C5B5605006053DD /* HeaderView.swift */; };
+		D573A2F31C5B5C7B006053DD /* LayoutConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2F21C5B5C7B006053DD /* LayoutConfigurable.swift */; };
+		D573A2F51C5B5CA4006053DD /* LightboxTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2F41C5B5CA4006053DD /* LightboxTransition.swift */; };
+		D573A2F71C5B5E55006053DD /* UIView+Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2F61C5B5E55006053DD /* UIView+Gradient.swift */; };
+		D58A18CB1C5ABF8F000024BB /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58A18CA1C5ABF8F000024BB /* FooterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxImage.swift; sourceTree = "<group>"; };
 		D523B0A91C43AA2A001AD1EC /* Lightbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lightbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D523B0AE1C43AA2A001AD1EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D523B0B51C43AA8A001AD1EC /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
-		D523B0B61C43AA8A001AD1EC /* LightboxConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxConfig.swift; sourceTree = "<group>"; };
+		D523B0B61C43AA8A001AD1EC /* LightboxModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxModel.swift; sourceTree = "<group>"; };
 		D523B0B71C43AA8A001AD1EC /* LightboxController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxController.swift; sourceTree = "<group>"; };
-		D523B0B81C43AA8A001AD1EC /* LightboxDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxDataSource.swift; sourceTree = "<group>"; };
-		D523B0B91C43AA8A001AD1EC /* LightboxTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxTransition.swift; sourceTree = "<group>"; };
-		D523B0BA1C43AA8A001AD1EC /* LightboxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxView.swift; sourceTree = "<group>"; };
-		D523B0BB1C43AA8A001AD1EC /* LightboxViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxViewCell.swift; sourceTree = "<group>"; };
+		D54DFCBC1C5AAAD600ADEA0E /* InfoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoLabel.swift; sourceTree = "<group>"; };
+		D54DFCBD1C5AAAD600ADEA0E /* PageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
+		D54DFCC01C5AAAF100ADEA0E /* Hue.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Hue.framework; path = Carthage/Build/iOS/Hue.framework; sourceTree = "<group>"; };
+		D54DFCC11C5AAAF100ADEA0E /* Sugar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sugar.framework; path = Carthage/Build/iOS/Sugar.framework; sourceTree = "<group>"; };
+		D573A2EF1C5B5605006053DD /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		D573A2F21C5B5C7B006053DD /* LayoutConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutConfigurable.swift; sourceTree = "<group>"; };
+		D573A2F41C5B5CA4006053DD /* LightboxTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxTransition.swift; sourceTree = "<group>"; };
+		D573A2F61C5B5E55006053DD /* UIView+Gradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Gradient.swift"; sourceTree = "<group>"; };
+		D58A18CA1C5ABF8F000024BB /* FooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +43,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D54DFCC21C5AAAF100ADEA0E /* Hue.framework in Frameworks */,
+				D54DFCC31C5AAAF100ADEA0E /* Sugar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +54,8 @@
 		D523B09F1C43AA2A001AD1EC = {
 			isa = PBXGroup;
 			children = (
+				D54DFCC01C5AAAF100ADEA0E /* Hue.framework */,
+				D54DFCC11C5AAAF100ADEA0E /* Sugar.framework */,
 				D523B0B41C43AA8A001AD1EC /* Source */,
 				D523B0AB1C43AA2A001AD1EC /* Lightbox */,
 				D523B0AA1C43AA2A001AD1EC /* Products */,
@@ -67,15 +81,34 @@
 		D523B0B41C43AA8A001AD1EC /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				D523B0B51C43AA8A001AD1EC /* CenterCellCollectionViewFlowLayout.swift */,
-				D523B0B61C43AA8A001AD1EC /* LightboxConfig.swift */,
+				D573A2F11C5B5C72006053DD /* Library */,
+				D54DFCBB1C5AAAD600ADEA0E /* Views */,
+				D523B0B61C43AA8A001AD1EC /* LightboxModel.swift */,
 				D523B0B71C43AA8A001AD1EC /* LightboxController.swift */,
-				D523B0B81C43AA8A001AD1EC /* LightboxDataSource.swift */,
-				D523B0B91C43AA8A001AD1EC /* LightboxTransition.swift */,
-				D523B0BA1C43AA8A001AD1EC /* LightboxView.swift */,
-				D523B0BB1C43AA8A001AD1EC /* LightboxViewCell.swift */,
+				D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		D54DFCBB1C5AAAD600ADEA0E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D573A2EF1C5B5605006053DD /* HeaderView.swift */,
+				D58A18CA1C5ABF8F000024BB /* FooterView.swift */,
+				D54DFCBD1C5AAAD600ADEA0E /* PageView.swift */,
+				D54DFCBC1C5AAAD600ADEA0E /* InfoLabel.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D573A2F11C5B5C72006053DD /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				D573A2F41C5B5CA4006053DD /* LightboxTransition.swift */,
+				D573A2F21C5B5C7B006053DD /* LayoutConfigurable.swift */,
+				D573A2F61C5B5E55006053DD /* UIView+Gradient.swift */,
+			);
+			path = Library;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -99,6 +132,7 @@
 				D523B0A51C43AA2A001AD1EC /* Frameworks */,
 				D523B0A61C43AA2A001AD1EC /* Headers */,
 				D523B0A71C43AA2A001AD1EC /* Resources */,
+				D54DFCC41C5AAAF600ADEA0E /* Copy frameworks with Carthage */,
 			);
 			buildRules = (
 			);
@@ -150,18 +184,40 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D54DFCC41C5AAAF600ADEA0E /* Copy frameworks with Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Sugar.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Hue.framework",
+			);
+			name = "Copy frameworks with Carthage";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D523B0A41C43AA2A001AD1EC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D523B0BD1C43AA8B001AD1EC /* LightboxConfig.swift in Sources */,
-				D523B0C11C43AA8B001AD1EC /* LightboxView.swift in Sources */,
+				D54DFCBF1C5AAAD600ADEA0E /* PageView.swift in Sources */,
+				D573A2F71C5B5E55006053DD /* UIView+Gradient.swift in Sources */,
+				D523B0BD1C43AA8B001AD1EC /* LightboxModel.swift in Sources */,
+				D573A2F31C5B5C7B006053DD /* LayoutConfigurable.swift in Sources */,
+				D5026B3C1C5BF3FD003BC1A3 /* LightboxImage.swift in Sources */,
 				D523B0BE1C43AA8B001AD1EC /* LightboxController.swift in Sources */,
-				D523B0C21C43AA8B001AD1EC /* LightboxViewCell.swift in Sources */,
-				D523B0BC1C43AA8A001AD1EC /* CenterCellCollectionViewFlowLayout.swift in Sources */,
-				D523B0C01C43AA8B001AD1EC /* LightboxTransition.swift in Sources */,
-				D523B0BF1C43AA8B001AD1EC /* LightboxDataSource.swift in Sources */,
+				D54DFCBE1C5AAAD600ADEA0E /* InfoLabel.swift in Sources */,
+				D58A18CB1C5ABF8F000024BB /* FooterView.swift in Sources */,
+				D573A2F01C5B5605006053DD /* HeaderView.swift in Sources */,
+				D573A2F51C5B5CA4006053DD /* LightboxTransition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +320,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Lightbox/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -281,6 +341,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Lightbox/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

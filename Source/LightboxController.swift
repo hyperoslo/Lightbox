@@ -59,6 +59,14 @@ public class LightboxController: UIViewController {
     return gesture
   }()
 
+  lazy var effectView: UIVisualEffectView = {
+    let effect = UIBlurEffect(style: .Dark)
+    let view = UIVisualEffectView(effect: effect)
+    view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+
+    return view
+  }()
+
   var screenBounds: CGRect {
     return UIScreen.mainScreen().bounds
   }

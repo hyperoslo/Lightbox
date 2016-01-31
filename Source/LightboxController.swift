@@ -294,7 +294,7 @@ extension LightboxController: UIScrollViewDelegate {
 
 extension LightboxController: PageViewDelegate {
 
-  func pageVewDidZoom(pageView: PageView) {
+  func pageViewDidZoom(pageView: PageView) {
     let hidden = pageView.zoomScale != 1.0
     let duration = hidden ? 0.1 : 1.0
     let alpha: CGFloat = hidden ? 0.0 : 1.0

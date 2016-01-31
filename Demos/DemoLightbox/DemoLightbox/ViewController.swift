@@ -38,9 +38,10 @@ class ViewController: UIViewController {
         text: "Some very long lorem ipsum text."
       )
     ]
-    
+
     let model = LightboxModel(images: images)
     let controller = LightboxController(model: model)
+    controller.dynamicBackground = true
 
     presentViewController(controller, animated: true, completion: nil)
   }

@@ -59,6 +59,21 @@ public class LightboxController: UIViewController {
     return gesture
   }()
 
+  lazy var effectView: UIVisualEffectView = {
+    let effect = UIBlurEffect(style: .Dark)
+    let view = UIVisualEffectView(effect: effect)
+    view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+
+    return view
+  }()
+
+  lazy var backgroundView: UIImageView = {
+    let view = UIImageView()
+    view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+
+    return view
+  }()
+
   var screenBounds: CGRect {
     return UIScreen.mainScreen().bounds
   }
@@ -74,6 +89,27 @@ public class LightboxController: UIViewController {
       }
 
       pageDelegate?.lightboxController(self, didMoveToPage: currentPage)
+
+      if let image = images[currentPage].image where dynamicBackground {
+        delay(0.125) {
+          self.backgroundView.image = image
+          self.backgroundView.layer.addAnimation(CATransition(), forKey: kCATransitionFade)
+        }
+      }
+    }
+  }
+
+  public var dynamicBackground: Bool = false {
+    didSet {
+      if dynamicBackground == true {
+        effectView.frame = view.frame
+        backgroundView.frame = effectView.frame
+        view.insertSubview(effectView, atIndex: 0)
+        view.insertSubview(backgroundView, atIndex: 0)
+      } else {
+        effectView.removeFromSuperview()
+        backgroundView.removeFromSuperview()
+      }
     }
   }
 

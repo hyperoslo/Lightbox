@@ -89,6 +89,16 @@ public class LightboxController: UIViewController {
       }
 
       pageDelegate?.lightboxController(self, didMoveToPage: currentPage)
+
+      if let image = images[currentPage].image where dynamicBackground {
+        delay(0.125) {
+          self.backgroundView.image = image
+          self.backgroundView.layer.addAnimation(CATransition(), forKey: kCATransitionFade)
+        }
+      }
+    }
+  }
+
   public var dynamicBackground: Bool = false {
     didSet {
       if dynamicBackground == true {

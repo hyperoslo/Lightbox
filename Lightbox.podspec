@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = "Lightbox"
   s.summary          = "A short description of Lightbox."
-  s.version          = "0.1.0"
+  s.version          = "1.0.0"
   s.homepage         = "https://github.com/hyperoslo/Lightbox"
   s.license          = 'MIT'
   s.author           = { "Hyper Interaktiv AS" => "ios@hyper.no" }
@@ -10,6 +10,8 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '8.0'
   s.requires_arc = true
   s.source_files = 'Source/**/*'
-# s.frameworks = 'UIKit', 'MapKit'
-# s.dependency 'AFNetworking', '~> 2.3'
+
+  s.frameworks = 'UIKit'
+  s.dependency 'Sugar'
+  s.dependency 'Hue'
 end

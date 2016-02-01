@@ -24,7 +24,6 @@ public class LightboxModel {
   public var closeButton = CloseButton()
   public var deleteButton = DeleteButton()
   public var infoLabel = InfoLabel()
-  public var zoom = Zoom()
 
   // MARK: - Inner types
 
@@ -86,10 +85,5 @@ public class LightboxModel {
       NSFontAttributeName: UIFont.systemFontOfSize(12),
       NSForegroundColorAttributeName: UIColor.hex("DBDBDB")
     ]
-  }
-
-  public struct Zoom {
-    public var minimumScale: CGFloat = 1.0
-    public var maximumScale: CGFloat = 2.5
   }
 }

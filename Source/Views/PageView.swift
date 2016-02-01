@@ -47,8 +47,8 @@ class PageView: UIScrollView {
 
     delegate = self
     multipleTouchEnabled = true
-    minimumZoomScale = model.zoom.minimumScale
-    maximumZoomScale = model.zoom.maximumScale
+    minimumZoomScale = 1.0
+    maximumZoomScale = 2.5
     showsHorizontalScrollIndicator = false
     showsVerticalScrollIndicator = false
 
@@ -128,7 +128,7 @@ extension PageView: LayoutConfigurable {
     contentFrame = frame
     contentSize = frame.size
     imageView.frame = frame
-    zoomScale = model.zoom.minimumScale
+    zoomScale = minimumZoomScale
 
     configureImageView()
   }

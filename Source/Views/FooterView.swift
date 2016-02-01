@@ -9,8 +9,9 @@ public class FooterView: UIView {
 
   public private(set) lazy var infoLabel: InfoLabel = { [unowned self] in
     let label = InfoLabel(text: "")
+    label.hidden = !LightboxConfig.InfoLabel.enabled
 
-    label.textColor = .whiteColor()
+    label.textColor = LightboxConfig.InfoLabel.textColor
     label.userInteractionEnabled = true
     label.delegate = self
 
@@ -19,9 +20,7 @@ public class FooterView: UIView {
 
   public private(set) lazy var pageLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRectZero)
-    label.font = UIFont.systemFontOfSize(12)
-    label.textColor = UIColor.hex("899AB8")
-    label.textAlignment = .Center
+    label.hidden = !LightboxConfig.PageIndicator.enabled
     label.numberOfLines = 1
 
     return label
@@ -29,7 +28,8 @@ public class FooterView: UIView {
 
   public private(set) lazy var separatorView: UIView = { [unowned self] in
     let view = UILabel(frame: CGRectZero)
-    view.backgroundColor = UIColor.hex("3D4757")
+    view.hidden = !LightboxConfig.PageIndicator.enabled
+    view.backgroundColor = LightboxConfig.PageIndicator.separatorColor
 
     return view
     }()
@@ -61,12 +61,19 @@ public class FooterView: UIView {
   func updatePage(page: Int, _ numberOfPages: Int) {
     let text = "\(page)/\(numberOfPages)"
 
-    pageLabel.text = text
+    pageLabel.attributedText = NSAttributedString(string: text,
+      attributes: LightboxConfig.PageIndicator.textAttributes)
     pageLabel.sizeToFit()
   }
 
   func updateText(text: String) {
     infoLabel.fullText = text
+
+    if text.isEmpty {
+      removeGradientLayer()
+    } else if !infoLabel.expanded  {
+      addGradientLayer(gradientColors)
+    }
   }
 
   // MARK: - Layout

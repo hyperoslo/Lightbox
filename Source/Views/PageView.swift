@@ -45,8 +45,8 @@ class PageView: UIScrollView {
 
     delegate = self
     multipleTouchEnabled = true
-    minimumZoomScale = 1.0
-    maximumZoomScale = 2.5
+    minimumZoomScale = LightboxConfig.Zoom.minimumScale
+    maximumZoomScale = LightboxConfig.Zoom.maximumScale
     showsHorizontalScrollIndicator = false
     showsVerticalScrollIndicator = false
 

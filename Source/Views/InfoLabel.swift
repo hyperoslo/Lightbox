@@ -15,13 +15,10 @@ public class InfoLabel: UILabel {
   }()
 
   public var numberOfVisibleLines = 2
-  public var ellipsis = "... " + NSLocalizedString("Show more", comment: "")
-  public var elipsisColor = UIColor.hex("899AB9")
 
-  public var textAttributes = [
-    NSFontAttributeName: UIFont.systemFontOfSize(12),
-    NSForegroundColorAttributeName: UIColor.hex("DBDBDB")
-  ]
+  var ellipsis: String {
+    return "... \(LightboxConfig.InfoLabel.ellipsisText)"
+  }
 
   public weak var delegate: InfoLabelDelegate?
   private var shortText = ""
@@ -107,12 +104,12 @@ public class InfoLabel: UILabel {
 
   private func updateText(string: String) {
     let attributedString = NSMutableAttributedString(string: string,
-      attributes: textAttributes)
+      attributes: LightboxConfig.InfoLabel.textAttributes)
 
     if string.rangeOfString(ellipsis) != nil {
       let range = (string as NSString).rangeOfString(ellipsis)
       attributedString.addAttribute(NSForegroundColorAttributeName,
-        value: elipsisColor, range: range)
+        value: LightboxConfig.InfoLabel.ellipsisColor, range: range)
     }
 
     attributedText = attributedString

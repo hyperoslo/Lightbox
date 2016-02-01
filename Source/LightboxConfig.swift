@@ -20,26 +20,10 @@ public class LightboxModel {
     })
   }
 
-  public var pageIndicator = PageIndicator()
   public var deleteButton = DeleteButton()
   public var infoLabel = InfoLabel()
 
   // MARK: - Inner types
-
-  public struct PageIndicator {
-    public var enabled = true
-    public var separatorColor = UIColor.hex("3D4757")
-
-    public var textAttributes = [
-      NSFontAttributeName: UIFont.systemFontOfSize(12),
-      NSForegroundColorAttributeName: UIColor.hex("899AB8"),
-      NSParagraphStyleAttributeName: {
-        var style = NSMutableParagraphStyle()
-        style.alignment = .Center
-        return style
-        }()
-    ]
-  }
 
   public struct DeleteButton {
     public var enabled = true

@@ -19,7 +19,9 @@ class FooterView: UIView {
 
   lazy var pageLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRectZero)
-    label.hidden = !self.model.pageIndicator.enabled
+    label.font = UIFont.systemFontOfSize(12)
+    label.textColor = UIColor.hex("899AB8")
+    label.textAlignment = .Center
     label.numberOfLines = 1
 
     return label
@@ -27,8 +29,7 @@ class FooterView: UIView {
 
   lazy var separatorView: UIView = { [unowned self] in
     let view = UILabel(frame: CGRectZero)
-    view.hidden = !self.model.pageIndicator.enabled
-    view.backgroundColor = self.model.pageIndicator.separatorColor
+    view.backgroundColor = UIColor.hex("3D4757")
 
     return view
     }()
@@ -62,8 +63,7 @@ class FooterView: UIView {
   func updatePage(page: Int, _ numberOfPages: Int) {
     let text = "\(page)/\(numberOfPages)"
 
-    pageLabel.attributedText = NSAttributedString(string: text,
-      attributes: model.pageIndicator.textAttributes)
+    pageLabel.text = text
     pageLabel.sizeToFit()
   }
 

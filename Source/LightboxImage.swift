@@ -22,7 +22,7 @@ public class LightboxImage {
     if let image = image {
       imageView.image = image
     } else if let imageURL = imageURL {
-      LightboxImageLoader.loadImage(imageView: imageView, URL: imageURL) { error in
+      LightboxConfig.loadImage(imageView: imageView, URL: imageURL) { error in
         completion?()
       }
     }

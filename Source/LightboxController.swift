@@ -139,7 +139,6 @@ public class LightboxController: UIViewController {
 
   public weak var pageDelegate: LightboxControllerPageDelegate?
   public weak var dismissalDelegate: LightboxControllerDismissalDelegate?
-  public var hideStatusBar = true
   public internal(set) var presented = true
   public private(set) var seen = false
 
@@ -183,7 +182,7 @@ public class LightboxController: UIViewController {
 
     statusBarHidden = UIApplication.sharedApplication().statusBarHidden
 
-    if hideStatusBar {
+    if LightboxConfig.hideStatusBar {
       UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Fade)
     }
   }
@@ -191,7 +190,7 @@ public class LightboxController: UIViewController {
   public override func viewDidDisappear(animated: Bool) {
     super.viewWillDisappear(animated)
 
-    if hideStatusBar {
+    if LightboxConfig.hideStatusBar {
       UIApplication.sharedApplication().setStatusBarHidden(statusBarHidden, withAnimation: .Fade)
     }
   }

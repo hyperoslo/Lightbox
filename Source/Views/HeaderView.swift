@@ -14,43 +14,43 @@ public class HeaderView: UIView {
   }()
 
   public private(set) lazy var closeButton: UIButton = { [unowned self] in
-    var textAttributes = [
-      NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
-      NSForegroundColorAttributeName: UIColor.whiteColor(),
-      NSParagraphStyleAttributeName: self.centerTextStyle
-    ]
-
     let title = NSAttributedString(
-      string: NSLocalizedString("Close", comment: ""),
-      attributes: textAttributes)
+      string: LightboxConfig.CloseButton.text,
+      attributes: LightboxConfig.CloseButton.textAttributes)
 
     let button = UIButton(type: .System)
 
-    button.frame.size = CGSize(width: 60, height: 25)
+    button.frame.size = LightboxConfig.CloseButton.size
     button.setAttributedTitle(title, forState: .Normal)
     button.addTarget(self, action: "closeButtonDidPress:",
       forControlEvents: .TouchUpInside)
+
+    if let image = LightboxConfig.CloseButton.image {
+      button.setBackgroundImage(image, forState: .Normal)
+    }
+
+    button.hidden = !LightboxConfig.CloseButton.enabled
 
     return button
     }()
 
   public private(set) lazy var deleteButton: UIButton = { [unowned self] in
-    var textAttributes = [
-      NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
-      NSForegroundColorAttributeName: UIColor.hex("FA2F5B"),
-      NSParagraphStyleAttributeName: self.centerTextStyle
-    ]
-
     let title = NSAttributedString(
-      string: NSLocalizedString("Delete", comment: ""),
-      attributes: textAttributes)
+      string: LightboxConfig.DeleteButton.text,
+      attributes: LightboxConfig.DeleteButton.textAttributes)
 
     let button = UIButton(type: .System)
 
-    button.frame.size = CGSize(width: 70, height: 25)
+    button.frame.size = LightboxConfig.DeleteButton.size
     button.setAttributedTitle(title, forState: .Normal)
     button.addTarget(self, action: "deleteButtonDidPress:",
       forControlEvents: .TouchUpInside)
+
+    if let image = LightboxConfig.DeleteButton.image {
+      button.setBackgroundImage(image, forState: .Normal)
+    }
+
+    button.hidden = !LightboxConfig.DeleteButton.enabled
 
     return button
     }()

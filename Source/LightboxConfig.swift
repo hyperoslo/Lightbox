@@ -5,7 +5,7 @@ public class LightboxConfig {
 
   public typealias LoadImageCompletion = (error: NSError?) -> Void
 
-  public var hideStatusBar = true
+  public static var hideStatusBar = true
 
   public static var loadImage: (imageView: UIImageView, URL: NSURL, completion: LoadImageCompletion?) -> Void = {
     imageView, URL, completion in
@@ -24,10 +24,11 @@ public class LightboxConfig {
 
   public struct PageIndicator {
     public static var enabled = true
+    public static var separatorColor = UIColor.hex("3D4757")
 
     public static var textAttributes = [
-      NSFontAttributeName: UIFont.systemFontOfSize(18),
-      NSForegroundColorAttributeName: UIColor.lightGrayColor(),
+      NSFontAttributeName: UIFont.systemFontOfSize(12),
+      NSForegroundColorAttributeName: UIColor.hex("899AB8"),
       NSParagraphStyleAttributeName: {
         var style = NSMutableParagraphStyle()
         style.alignment = .Center
@@ -43,7 +44,7 @@ public class LightboxConfig {
     public static var image: UIImage?
 
     public static var textAttributes = [
-      NSFontAttributeName: UIFont.boldSystemFontOfSize(12),
+      NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
       NSForegroundColorAttributeName: UIColor.whiteColor(),
       NSParagraphStyleAttributeName: {
         var style = NSMutableParagraphStyle()
@@ -54,19 +55,31 @@ public class LightboxConfig {
   }
 
   public struct DeleteButton {
-    public static var enabled = false
+    public static var enabled = true
     public static var size = CGSize(width: 70, height: 25)
     public static var text = NSLocalizedString("Delete", comment: "")
     public static var image: UIImage?
 
     public static var textAttributes = [
-      NSFontAttributeName: UIFont.boldSystemFontOfSize(12),
-      NSForegroundColorAttributeName: UIColor(red:0.99, green:0.26, blue:0.18, alpha:1),
+      NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
+      NSForegroundColorAttributeName: UIColor.hex("FA2F5B"),
       NSParagraphStyleAttributeName: {
         var style = NSMutableParagraphStyle()
         style.alignment = .Center
         return style
         }()
+    ]
+  }
+
+  public struct InfoLabel {
+    public static var enabled = true
+    public static var textColor = UIColor.whiteColor()
+    public static var ellipsisText = NSLocalizedString("Show more", comment: "")
+    public static var ellipsisColor = UIColor.hex("899AB9")
+
+    public static var textAttributes = [
+      NSFontAttributeName: UIFont.systemFontOfSize(12),
+      NSForegroundColorAttributeName: UIColor.hex("DBDBDB")
     ]
   }
 

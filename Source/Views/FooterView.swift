@@ -1,13 +1,13 @@
 import UIKit
 
-protocol FooterViewDelegate: class {
+public protocol FooterViewDelegate: class {
 
   func footerView(footerView: FooterView, didExpand expanded: Bool)
 }
 
-class FooterView: UIView {
+public class FooterView: UIView {
 
-  lazy var infoLabel: InfoLabel = { [unowned self] in
+  public private(set) lazy var infoLabel: InfoLabel = { [unowned self] in
     let label = InfoLabel(text: "")
 
     label.textColor = .whiteColor()
@@ -17,7 +17,7 @@ class FooterView: UIView {
     return label
     }()
 
-  lazy var pageLabel: UILabel = { [unowned self] in
+  public private(set) lazy var pageLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRectZero)
     label.font = UIFont.systemFontOfSize(12)
     label.textColor = UIColor.hex("899AB8")
@@ -27,7 +27,7 @@ class FooterView: UIView {
     return label
     }()
 
-  lazy var separatorView: UIView = { [unowned self] in
+  public private(set) lazy var separatorView: UIView = { [unowned self] in
     let view = UILabel(frame: CGRectZero)
     view.backgroundColor = UIColor.hex("3D4757")
 
@@ -35,11 +35,11 @@ class FooterView: UIView {
     }()
 
   let gradientColors = [UIColor.hex("040404").alpha(0.1), UIColor.hex("040404")]
-  weak var delegate: FooterViewDelegate?
+  public weak var delegate: FooterViewDelegate?
 
   // MARK: - Initializers
 
-  init() {
+  public init() {
     super.init(frame: CGRectZero)
 
     backgroundColor = UIColor.clearColor()
@@ -48,7 +48,7 @@ class FooterView: UIView {
     [pageLabel, infoLabel, separatorView].forEach { addSubview($0) }
   }
 
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
@@ -91,7 +91,7 @@ class FooterView: UIView {
 
 extension FooterView: LayoutConfigurable {
 
-  func configureLayout() {
+  public func configureLayout() {
     infoLabel.frame = CGRect(x: 17, y: 0, width: frame.width - 17 * 2, height: 35)
     infoLabel.configureLayout()
   }
@@ -99,7 +99,7 @@ extension FooterView: LayoutConfigurable {
 
 extension FooterView: InfoLabelDelegate {
 
-  func infoLabel(infoLabel: InfoLabel, didExpand expanded: Bool) {
+  public func infoLabel(infoLabel: InfoLabel, didExpand expanded: Bool) {
     resetFrames()
     expanded ? removeGradientLayer() : addGradientLayer(gradientColors)
     delegate?.footerView(self, didExpand: expanded)

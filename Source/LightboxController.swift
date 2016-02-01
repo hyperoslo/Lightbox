@@ -14,7 +14,7 @@ public protocol LightboxControllerDismissalDelegate: class {
 
 public class LightboxController: UIViewController {
 
-  // MARK: - Views
+  // MARK: - Internal views
 
   lazy var scrollView: UIScrollView = { [unowned self] in
     let scrollView = UIScrollView()
@@ -26,31 +26,6 @@ public class LightboxController: UIViewController {
     scrollView.decelerationRate = UIScrollViewDecelerationRateFast
 
     return scrollView
-    }()
-
-  lazy var headerView: HeaderView = { [unowned self] in
-    let view = HeaderView()
-    view.delegate = self
-
-    return view
-    }()
-
-  lazy var footerView: FooterView = { [unowned self] in
-    let view = FooterView()
-    view.delegate = self
-
-    return view
-    }()
-
-  lazy var overlayView: UIView = { [unowned self] in
-    let view = UIView(frame: CGRectZero)
-    let gradient = CAGradientLayer()
-    let colors = [UIColor.hex("090909").alpha(0), UIColor.hex("040404")]
-
-    view.addGradientLayer(colors)
-    view.alpha = 0
-
-    return view
     }()
 
   lazy var overlayTapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
@@ -75,11 +50,38 @@ public class LightboxController: UIViewController {
     return view
   }()
 
+  // MARK: - Public views
+
+  public private(set) lazy var headerView: HeaderView = { [unowned self] in
+    let view = HeaderView()
+    view.delegate = self
+
+    return view
+    }()
+
+  public private(set) lazy var footerView: FooterView = { [unowned self] in
+    let view = FooterView()
+    view.delegate = self
+
+    return view
+    }()
+
+  public private(set) lazy var overlayView: UIView = { [unowned self] in
+    let view = UIView(frame: CGRectZero)
+    let gradient = CAGradientLayer()
+    let colors = [UIColor.hex("090909").alpha(0), UIColor.hex("040404")]
+
+    view.addGradientLayer(colors)
+    view.alpha = 0
+
+    return view
+    }()
+
   var screenBounds: CGRect {
     return UIScreen.mainScreen().bounds
   }
 
-  // MARK: - Public API properties
+  // MARK: - Properties
 
   public private(set) var currentPage = 0 {
     didSet {
@@ -102,6 +104,10 @@ public class LightboxController: UIViewController {
     }
   }
 
+  public var numberOfPages: Int {
+    return pageViews.count
+  }
+
   public var dynamicBackground: Bool = false {
     didSet {
       if dynamicBackground == true {
@@ -114,10 +120,6 @@ public class LightboxController: UIViewController {
         backgroundView.removeFromSuperview()
       }
     }
-  }
-
-  public var numberOfPages: Int {
-    return pageViews.count
   }
 
   public var spacing: CGFloat = 20 {
@@ -352,7 +354,7 @@ extension LightboxController: HeaderViewDelegate {
 
 extension LightboxController: FooterViewDelegate {
 
-  func footerView(footerView: FooterView, didExpand expanded: Bool) {
+  public func footerView(footerView: FooterView, didExpand expanded: Bool) {
     footerView.frame.origin.y = screenBounds.height - footerView.frame.height
     overlayView.alpha = expanded ? 1.0 : 0.0
     headerView.deleteButton.alpha = expanded ? 0.0 : 1.0

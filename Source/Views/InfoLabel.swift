@@ -1,6 +1,6 @@
 import UIKit
 
-protocol InfoLabelDelegate: class {
+public protocol InfoLabelDelegate: class {
 
   func infoLabel(infoLabel: InfoLabel, didExpand expanded: Bool)
 }
@@ -14,6 +14,8 @@ public class InfoLabel: UILabel {
     return gesture
   }()
 
+  public var numberOfVisibleLines = 2
+  public var ellipsis = "... " + NSLocalizedString("Show more", comment: "")
   public var elipsisColor = UIColor.hex("899AB9")
 
   public var textAttributes = [
@@ -21,8 +23,7 @@ public class InfoLabel: UILabel {
     NSForegroundColorAttributeName: UIColor.hex("DBDBDB")
   ]
 
-  let numberOfVisibleLines = 2
-  weak var delegate: InfoLabelDelegate?
+  public weak var delegate: InfoLabelDelegate?
   private var shortText = ""
 
   var fullText: String {
@@ -32,8 +33,6 @@ public class InfoLabel: UILabel {
       configureLayout()
     }
   }
-
-  var ellipsis = "... " + NSLocalizedString("Show more", comment: "")
 
   var expandable: Bool {
     return shortText != fullText
@@ -70,7 +69,7 @@ public class InfoLabel: UILabel {
 
   // MARK: - Initialization
 
-  init(text: String, expanded: Bool = false) {
+  public init(text: String, expanded: Bool = false) {
     self.fullText = text
     super.init(frame: CGRectZero)
 
@@ -141,7 +140,7 @@ public class InfoLabel: UILabel {
 
 extension InfoLabel: LayoutConfigurable {
 
-  func configureLayout() {
+  public func configureLayout() {
     shortText = truncatedText
     expanded ? expand() : collapse()
   }

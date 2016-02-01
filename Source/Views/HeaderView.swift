@@ -5,7 +5,7 @@ protocol HeaderViewDelegate: class {
   func headerView(headerView: HeaderView, didPressCloseButton closeButton: UIButton)
 }
 
-class HeaderView: UIView {
+public class HeaderView: UIView {
 
   var centerTextStyle: NSMutableParagraphStyle = {
     var style = NSMutableParagraphStyle()
@@ -13,7 +13,7 @@ class HeaderView: UIView {
     return style
   }()
 
-  lazy var closeButton: UIButton = { [unowned self] in
+  public private(set) lazy var closeButton: UIButton = { [unowned self] in
     var textAttributes = [
       NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
       NSForegroundColorAttributeName: UIColor.whiteColor(),
@@ -34,7 +34,7 @@ class HeaderView: UIView {
     return button
     }()
 
-  lazy var deleteButton: UIButton = { [unowned self] in
+  public private(set) lazy var deleteButton: UIButton = { [unowned self] in
     var textAttributes = [
       NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
       NSForegroundColorAttributeName: UIColor.hex("FA2F5B"),
@@ -59,7 +59,7 @@ class HeaderView: UIView {
 
   // MARK: - Initializers
 
-  init() {
+  public init() {
     super.init(frame: CGRectZero)
 
     backgroundColor = UIColor.clearColor()
@@ -67,7 +67,7 @@ class HeaderView: UIView {
     [closeButton, deleteButton].forEach { addSubview($0) }
   }
 
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
@@ -86,7 +86,7 @@ class HeaderView: UIView {
 
 extension HeaderView: LayoutConfigurable {
 
-  func configureLayout() {
+  public func configureLayout() {
     closeButton.frame.origin = CGPoint(
       x: bounds.width - closeButton.frame.width - 17, y: 0)
 

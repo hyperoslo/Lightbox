@@ -258,9 +258,9 @@ public class LightboxController: UIViewController {
     }
 
     let bounds = scrollView.bounds
-    let headerViewHeight = model.closeButton.size.height > model.deleteButton.size.height
-      ? model.closeButton.size.height
-      : model.deleteButton.size.height
+    let headerViewHeight = headerView.closeButton.frame.height > headerView.deleteButton.frame.height
+      ? headerView.closeButton.frame.height
+      : headerView.deleteButton.frame.height
 
     headerView.frame = CGRect(x: 0, y: 16, width: bounds.width, height: headerViewHeight)
     footerView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 70)

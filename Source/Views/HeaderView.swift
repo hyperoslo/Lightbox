@@ -8,20 +8,26 @@ protocol HeaderViewDelegate: class {
 class HeaderView: UIView {
 
   lazy var closeButton: UIButton = { [unowned self] in
+
+    var textAttributes = [
+      NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
+      NSForegroundColorAttributeName: UIColor.whiteColor(),
+      NSParagraphStyleAttributeName: {
+        var style = NSMutableParagraphStyle()
+        style.alignment = .Center
+        return style
+        }()
+    ]
+
     let title = NSAttributedString(
-      string: self.model.closeButton.text,
-      attributes: self.model.closeButton.textAttributes)
+      string: NSLocalizedString("Close", comment: ""),
+      attributes: textAttributes)
     let button = UIButton(type: .System)
 
+    button.frame.size = CGSize(width: 60, height: 25)
     button.setAttributedTitle(title, forState: .Normal)
     button.addTarget(self, action: "closeButtonDidPress:",
       forControlEvents: .TouchUpInside)
-
-    if let image = self.model.closeButton.image {
-      button.setBackgroundImage(image, forState: .Normal)
-    }
-
-    button.hidden = !self.model.closeButton.enabled
 
     return button
     }()
@@ -79,9 +85,8 @@ class HeaderView: UIView {
 extension HeaderView: LayoutConfigurable {
 
   func configureLayout() {
-    closeButton.frame = CGRect(
-      x: bounds.width - model.closeButton.size.width - 17, y: 0,
-      width: model.closeButton.size.width, height: model.closeButton.size.height)
+    closeButton.frame.origin = CGPoint(
+      x: bounds.width - closeButton.frame.width - 17, y: 0)
 
     deleteButton.frame = CGRect(
       x: 17, y: 0,

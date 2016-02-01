@@ -21,7 +21,6 @@ public class LightboxModel {
   }
 
   public var pageIndicator = PageIndicator()
-  public var closeButton = CloseButton()
   public var deleteButton = DeleteButton()
   public var infoLabel = InfoLabel()
 
@@ -34,23 +33,6 @@ public class LightboxModel {
     public var textAttributes = [
       NSFontAttributeName: UIFont.systemFontOfSize(12),
       NSForegroundColorAttributeName: UIColor.hex("899AB8"),
-      NSParagraphStyleAttributeName: {
-        var style = NSMutableParagraphStyle()
-        style.alignment = .Center
-        return style
-        }()
-    ]
-  }
-
-  public struct CloseButton {
-    public var enabled = true
-    public var size = CGSize(width: 60, height: 25)
-    public var text = NSLocalizedString("Close", comment: "")
-    public var image: UIImage?
-
-    public var textAttributes = [
-      NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
-      NSForegroundColorAttributeName: UIColor.whiteColor(),
       NSParagraphStyleAttributeName: {
         var style = NSMutableParagraphStyle()
         style.alignment = .Center

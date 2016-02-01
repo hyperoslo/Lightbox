@@ -2,7 +2,7 @@ import UIKit
 
 extension UIView {
 
-  public func addGradientLayer(colors: [UIColor]) -> CAGradientLayer {
+  func addGradientLayer(colors: [UIColor]) -> CAGradientLayer {
     if let gradientLayer = gradientLayer { return gradientLayer }
 
     let gradient = CAGradientLayer()
@@ -14,13 +14,13 @@ extension UIView {
     return gradient
   }
 
-  public func removeGradientLayer() -> CAGradientLayer? {
+  func removeGradientLayer() -> CAGradientLayer? {
     gradientLayer?.removeFromSuperlayer()
 
     return gradientLayer
   }
 
-  public func resizeGradientLayer() {
+  func resizeGradientLayer() {
     gradientLayer?.frame = bounds
   }
 

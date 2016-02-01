@@ -14,7 +14,9 @@ public protocol LightboxControllerDismissalDelegate: class {
 
 public class LightboxController: UIViewController {
 
-  public lazy var scrollView: UIScrollView = { [unowned self] in
+  // MARK: - Views
+
+  lazy var scrollView: UIScrollView = { [unowned self] in
     let scrollView = UIScrollView()
     scrollView.frame = self.screenBounds
     scrollView.pagingEnabled = false
@@ -78,6 +80,8 @@ public class LightboxController: UIViewController {
     return UIScreen.mainScreen().bounds
   }
 
+  // MARK: - Public API properties
+
   public private(set) var currentPage = 0 {
     didSet {
       currentPage = min(numberOfPages - 1, max(0, currentPage))
@@ -117,12 +121,19 @@ public class LightboxController: UIViewController {
     return pageViews.count
   }
 
+  public var spacing: CGFloat = 20 {
+    didSet {
+      configureLayout(screenBounds.size)
+    }
+  }
+
   public var images: [LightboxImage] {
     return pageViews.map { $0.image }
   }
 
   public weak var pageDelegate: LightboxControllerPageDelegate?
   public weak var dismissalDelegate: LightboxControllerDismissalDelegate?
+  public var hideStatusBar = true
   public internal(set) var presented = true
   public private(set) var seen = false
 
@@ -133,12 +144,12 @@ public class LightboxController: UIViewController {
 
   // MARK: - Initializers
 
-  public init(model: LightboxModel, startIndex index: Int = 0) {
+  public init(images: [LightboxImage], model: LightboxModel, startIndex index: Int = 0) {
     self.model = model
 
     super.init(nibName: nil, bundle: nil)
 
-    for image in model.images {
+    for image in images {
       let pageView = PageView(model: model, image: image)
       pageView.pageViewDelegate = self
 
@@ -175,7 +186,7 @@ public class LightboxController: UIViewController {
 
     statusBarHidden = UIApplication.sharedApplication().statusBarHidden
 
-    if model.hideStatusBar {
+    if hideStatusBar {
       UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Fade)
     }
   }
@@ -183,7 +194,7 @@ public class LightboxController: UIViewController {
   public override func viewDidDisappear(animated: Bool) {
     super.viewWillDisappear(animated)
 
-    if model.hideStatusBar {
+    if hideStatusBar {
       UIApplication.sharedApplication().setStatusBarHidden(statusBarHidden, withAnimation: .Fade)
     }
   }
@@ -232,17 +243,17 @@ public class LightboxController: UIViewController {
   public func configureLayout(size: CGSize) {
     scrollView.frame.size = size
     scrollView.contentSize = CGSize(
-      width: size.width * CGFloat(numberOfPages) + model.spacing * CGFloat(numberOfPages - 1),
+      width: size.width * CGFloat(numberOfPages) + spacing * CGFloat(numberOfPages - 1),
       height: size.height)
-    scrollView.contentOffset = CGPoint(x: CGFloat(currentPage) * (size.width + model.spacing), y: 0)
+    scrollView.contentOffset = CGPoint(x: CGFloat(currentPage) * (size.width + spacing), y: 0)
 
     for (index, pageView) in pageViews.enumerate() {
       var frame = scrollView.bounds
-      frame.origin.x = (frame.width + model.spacing) * CGFloat(index)
+      frame.origin.x = (frame.width + spacing) * CGFloat(index)
       pageView.frame = frame
       pageView.configureLayout()
       if index != numberOfPages - 1 {
-        pageView.frame.size.width += model.spacing
+        pageView.frame.size.width += spacing
       }
     }
 
@@ -274,7 +285,7 @@ extension LightboxController: UIScrollViewDelegate {
       speed = 0
     }
 
-    let pageWidth = scrollView.bounds.width + model.spacing
+    let pageWidth = scrollView.bounds.width + spacing
     var x = scrollView.contentOffset.x + speed * 60.0
 
     if speed > 0 {

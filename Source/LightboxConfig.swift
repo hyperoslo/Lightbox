@@ -20,22 +20,11 @@ public class LightboxModel {
     })
   }
 
-  public let images: [LightboxImage]
-  public var hideStatusBar = true
   public var pageIndicator = PageIndicator()
   public var closeButton = CloseButton()
   public var deleteButton = DeleteButton()
   public var infoLabel = InfoLabel()
   public var zoom = Zoom()
-  public var spacing: CGFloat = 20
-
-  public var numberOfPages: Int {
-    return images.count
-  }
-
-  public init(images: [LightboxImage]) {
-    self.images = images
-  }
 
   // MARK: - Inner types
 

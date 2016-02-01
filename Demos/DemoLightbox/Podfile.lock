@@ -18,7 +18,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Hue:
-    :commit: d31e0257a47f05c1c800ce150d1fec104dfc9085
+    :commit: 4f0f8bfdb69d926883216ffe9a802a5a2022f3f5
     :git: https://github.com/hyperoslo/Hue
 
 SPEC CHECKSUMS:

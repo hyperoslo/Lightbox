@@ -55,7 +55,7 @@ public class LightboxConfig {
   }
 
   public struct DeleteButton {
-    public static var enabled = true
+    public static var enabled = false
     public static var size = CGSize(width: 70, height: 25)
     public static var text = NSLocalizedString("Delete", comment: "")
     public static var image: UIImage?

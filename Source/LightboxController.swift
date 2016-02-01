@@ -124,7 +124,7 @@ public class LightboxController: UIViewController {
 
   public var spacing: CGFloat = 20 {
     didSet {
-      configureLayout(screenBounds.size)
+      configureLayout()
     }
   }
 
@@ -132,17 +132,8 @@ public class LightboxController: UIViewController {
     get {
       return pageViews.map { $0.image }
     }
-    set {
-      pageViews.forEach { $0.removeFromSuperview() }
-      pageViews = []
-
-      for image in images {
-        let pageView = PageView(image: image)
-        pageView.pageViewDelegate = self
-
-        scrollView.addSubview(pageView)
-        pageViews.append(pageView)
-      }
+    set(value) {
+      configurePages(value)
     }
   }
 
@@ -162,7 +153,7 @@ public class LightboxController: UIViewController {
 
     super.init(nibName: nil, bundle: nil)
 
-    self.images = images
+    configurePages(images)
     currentPage = index
   }
 
@@ -184,7 +175,7 @@ public class LightboxController: UIViewController {
     overlayView.addGestureRecognizer(overlayTapGestureRecognizer)
 
     goTo(currentPage, animated: false)
-    configureLayout(screenBounds.size)
+    configureLayout()
   }
 
   public override func viewWillAppear(animated: Bool) {
@@ -213,6 +204,23 @@ public class LightboxController: UIViewController {
     coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
       self.configureLayout(size)
       }, completion: nil)
+  }
+
+  // MARK: - Configuration
+
+  func configurePages(images: [LightboxImage]) {
+    pageViews.forEach { $0.removeFromSuperview() }
+    pageViews = []
+
+    for image in images {
+      let pageView = PageView(image: image)
+      pageView.pageViewDelegate = self
+
+      scrollView.addSubview(pageView)
+      pageViews.append(pageView)
+    }
+
+    configureLayout()
   }
 
   // MARK: - Pagination
@@ -246,7 +254,7 @@ public class LightboxController: UIViewController {
 
   // MARK: - Layout
 
-  public func configureLayout(size: CGSize) {
+  public func configureLayout(size: CGSize = UIScreen.mainScreen().bounds.size) {
     scrollView.frame.size = size
     scrollView.contentSize = CGSize(
       width: size.width * CGFloat(numberOfPages) + spacing * CGFloat(numberOfPages - 1),
@@ -343,7 +351,7 @@ extension LightboxController: HeaderViewDelegate {
     self.pageViews.removeAtIndex(prevIndex).removeFromSuperview()
 
     delay(0.5) {
-      self.configureLayout(self.screenBounds.size)
+      self.configureLayout()
       self.currentPage = Int(self.scrollView.contentOffset.x / self.screenBounds.width)
       deleteButton.enabled = true
     }

@@ -1,9 +1,9 @@
 import UIKit
 import Sugar
 
-public class LightboxTransition: UIPercentDrivenInteractiveTransition {
+class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
-  public lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
+  lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
     let gesture = UIPanGestureRecognizer()
     gesture.addTarget(self, action: "handlePanGesture:")
     gesture.delegate = self
@@ -15,14 +15,14 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
   var dismissing = false
   var initialOrigin = CGPoint(x: 0, y: 0)
 
-  public var scrollView: UIScrollView? {
+  var scrollView: UIScrollView? {
     didSet {
       guard let scrollView = scrollView else { return }
       scrollView.addGestureRecognizer(panGestureRecognizer)
     }
   }
 
-  public var lightboxController: LightboxController?
+  var lightboxController: LightboxController?
 
   // MARK: - Transition
 
@@ -93,7 +93,7 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
     }
   }
 
-  public override func finishInteractiveTransition() {
+  override func finishInteractiveTransition() {
     super.finishInteractiveTransition()
 
     guard let lightboxController = lightboxController else { return }
@@ -105,11 +105,11 @@ public class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
 extension LightboxTransition: UIViewControllerAnimatedTransitioning {
 
-  public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+  func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
     return 0.25
   }
 
-  public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+  func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
     guard let container = transitionContext.containerView(),
       fromView = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)?.view,
       toView = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)?.view
@@ -139,21 +139,21 @@ extension LightboxTransition: UIViewControllerAnimatedTransitioning {
 
 extension LightboxTransition: UIViewControllerTransitioningDelegate {
 
-  public func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+  func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     dismissing = true
     return self
   }
 
-  public func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+  func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     dismissing = false
     return self
   }
 
-  public func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+  func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
     return interactive ? self : nil
   }
 
-  public func interactionControllerForPresentation(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+  func interactionControllerForPresentation(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
     return interactive ? self : nil
   }
 }
@@ -162,7 +162,7 @@ extension LightboxTransition: UIViewControllerTransitioningDelegate {
 
 extension LightboxTransition: UIGestureRecognizerDelegate {
 
-  public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+  func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
     var result = false
 
     if let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer {

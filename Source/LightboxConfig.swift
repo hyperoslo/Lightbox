@@ -20,27 +20,8 @@ public class LightboxModel {
     })
   }
 
-  public var deleteButton = DeleteButton()
   public var infoLabel = InfoLabel()
 
-  // MARK: - Inner types
-
-  public struct DeleteButton {
-    public var enabled = true
-    public var size = CGSize(width: 70, height: 25)
-    public var text = NSLocalizedString("Delete", comment: "")
-    public var image: UIImage?
-
-    public var textAttributes = [
-      NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
-      NSForegroundColorAttributeName: UIColor.hex("FA2F5B"),
-      NSParagraphStyleAttributeName: {
-        var style = NSMutableParagraphStyle()
-        style.alignment = .Center
-        return style
-        }()
-    ]
-  }
 
   public struct InfoLabel {
     public var enabled = true

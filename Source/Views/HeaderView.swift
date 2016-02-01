@@ -7,21 +7,23 @@ protocol HeaderViewDelegate: class {
 
 class HeaderView: UIView {
 
-  lazy var closeButton: UIButton = { [unowned self] in
+  var centerTextStyle: NSMutableParagraphStyle = {
+    var style = NSMutableParagraphStyle()
+    style.alignment = .Center
+    return style
+  }()
 
+  lazy var closeButton: UIButton = { [unowned self] in
     var textAttributes = [
       NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
       NSForegroundColorAttributeName: UIColor.whiteColor(),
-      NSParagraphStyleAttributeName: {
-        var style = NSMutableParagraphStyle()
-        style.alignment = .Center
-        return style
-        }()
+      NSParagraphStyleAttributeName: self.centerTextStyle
     ]
 
     let title = NSAttributedString(
       string: NSLocalizedString("Close", comment: ""),
       attributes: textAttributes)
+
     let button = UIButton(type: .System)
 
     button.frame.size = CGSize(width: 60, height: 25)
@@ -33,20 +35,22 @@ class HeaderView: UIView {
     }()
 
   lazy var deleteButton: UIButton = { [unowned self] in
-    let button = UIButton(type: .System)
-    let title = NSAttributedString(
-      string: self.model.deleteButton.text,
-      attributes: self.model.deleteButton.textAttributes)
+    var textAttributes = [
+      NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
+      NSForegroundColorAttributeName: UIColor.hex("FA2F5B"),
+      NSParagraphStyleAttributeName: self.centerTextStyle
+    ]
 
+    let title = NSAttributedString(
+      string: NSLocalizedString("Delete", comment: ""),
+      attributes: textAttributes)
+
+    let button = UIButton(type: .System)
+
+    button.frame.size = CGSize(width: 70, height: 25)
     button.setAttributedTitle(title, forState: .Normal)
     button.addTarget(self, action: "deleteButtonDidPress:",
       forControlEvents: .TouchUpInside)
-
-    if let image = self.model.deleteButton.image {
-      button.setBackgroundImage(image, forState: .Normal)
-    }
-
-    button.hidden = !self.model.deleteButton.enabled
 
     return button
     }()
@@ -88,8 +92,6 @@ extension HeaderView: LayoutConfigurable {
     closeButton.frame.origin = CGPoint(
       x: bounds.width - closeButton.frame.width - 17, y: 0)
 
-    deleteButton.frame = CGRect(
-      x: 17, y: 0,
-      width: model.deleteButton.size.width, height: model.deleteButton.size.height)
+    deleteButton.frame.origin = CGPoint(x: 17, y: 0)
   }
 }

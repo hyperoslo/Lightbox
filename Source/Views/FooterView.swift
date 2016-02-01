@@ -9,7 +9,7 @@ class FooterView: UIView {
 
   lazy var infoLabel: InfoLabel = { [unowned self] in
     let label = InfoLabel(model: self.model, text: "")
-    label.hidden = !self.model.infoLabel.enabled
+
     label.textColor = .whiteColor()
     label.userInteractionEnabled = true
     label.delegate = self

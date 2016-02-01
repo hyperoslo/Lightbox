@@ -19,18 +19,4 @@ public class LightboxModel {
         completion?(error: error)
     })
   }
-
-  public var infoLabel = InfoLabel()
-
-
-  public struct InfoLabel {
-    public var enabled = true
-    public var ellipsisText = NSLocalizedString("Show more", comment: "")
-    public var elipsisColor = UIColor.hex("899AB9")
-
-    public var textAttributes = [
-      NSFontAttributeName: UIFont.systemFontOfSize(12),
-      NSForegroundColorAttributeName: UIColor.hex("DBDBDB")
-    ]
-  }
 }

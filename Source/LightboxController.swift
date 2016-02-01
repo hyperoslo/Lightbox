@@ -48,7 +48,6 @@ public class LightboxController: UIViewController {
     let colors = [UIColor.hex("090909").alpha(0), UIColor.hex("040404")]
 
     view.addGradientLayer(colors)
-    view.hidden = !self.model.infoLabel.enabled
     view.alpha = 0
 
     return view

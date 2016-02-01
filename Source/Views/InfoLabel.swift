@@ -5,7 +5,7 @@ protocol InfoLabelDelegate: class {
   func infoLabel(infoLabel: InfoLabel, didExpand expanded: Bool)
 }
 
-class InfoLabel: UILabel {
+public class InfoLabel: UILabel {
 
   lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
@@ -13,6 +13,13 @@ class InfoLabel: UILabel {
 
     return gesture
   }()
+
+  public var elipsisColor = UIColor.hex("899AB9")
+
+  public var textAttributes = [
+    NSFontAttributeName: UIFont.systemFontOfSize(12),
+    NSForegroundColorAttributeName: UIColor.hex("DBDBDB")
+  ]
 
   let model: LightboxModel
   let numberOfVisibleLines = 2
@@ -27,9 +34,7 @@ class InfoLabel: UILabel {
     }
   }
 
-  var ellipsis: String {
-    return "... \(model.infoLabel.ellipsisText)"
-  }
+  var ellipsis = "... " + NSLocalizedString("Show more", comment: "")
 
   var expandable: Bool {
     return shortText != fullText
@@ -78,7 +83,7 @@ class InfoLabel: UILabel {
     addGestureRecognizer(tapGestureRecognizer)
   }
 
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
@@ -105,12 +110,12 @@ class InfoLabel: UILabel {
 
   private func updateText(string: String) {
     let attributedString = NSMutableAttributedString(string: string,
-      attributes: model.infoLabel.textAttributes)
+      attributes: textAttributes)
 
     if string.rangeOfString(ellipsis) != nil {
       let range = (string as NSString).rangeOfString(ellipsis)
       attributedString.addAttribute(NSForegroundColorAttributeName,
-        value: model.infoLabel.elipsisColor, range: range)
+        value: elipsisColor, range: range)
     }
 
     attributedText = attributedString

@@ -68,6 +68,12 @@ public class FooterView: UIView {
 
   func updateText(text: String) {
     infoLabel.fullText = text
+
+    if text.isEmpty {
+      removeGradientLayer()
+    } else if !infoLabel.expanded  {
+      addGradientLayer(gradientColors)
+    }
   }
 
   // MARK: - Layout

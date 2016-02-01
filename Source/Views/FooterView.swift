@@ -1,15 +1,15 @@
 import UIKit
 
-protocol FooterViewDelegate: class {
+public protocol FooterViewDelegate: class {
 
   func footerView(footerView: FooterView, didExpand expanded: Bool)
 }
 
-class FooterView: UIView {
+public class FooterView: UIView {
 
-  lazy var infoLabel: InfoLabel = { [unowned self] in
-    let label = InfoLabel(model: self.model, text: "")
-    label.hidden = !self.model.infoLabel.enabled
+  public private(set) lazy var infoLabel: InfoLabel = { [unowned self] in
+    let label = InfoLabel(text: "")
+
     label.textColor = .whiteColor()
     label.userInteractionEnabled = true
     label.delegate = self
@@ -17,30 +17,29 @@ class FooterView: UIView {
     return label
     }()
 
-  lazy var pageLabel: UILabel = { [unowned self] in
+  public private(set) lazy var pageLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRectZero)
-    label.hidden = !self.model.pageIndicator.enabled
+    label.font = UIFont.systemFontOfSize(12)
+    label.textColor = UIColor.hex("899AB8")
+    label.textAlignment = .Center
     label.numberOfLines = 1
 
     return label
     }()
 
-  lazy var separatorView: UIView = { [unowned self] in
+  public private(set) lazy var separatorView: UIView = { [unowned self] in
     let view = UILabel(frame: CGRectZero)
-    view.hidden = !self.model.pageIndicator.enabled
-    view.backgroundColor = self.model.pageIndicator.separatorColor
+    view.backgroundColor = UIColor.hex("3D4757")
 
     return view
     }()
 
-  let model: LightboxModel
   let gradientColors = [UIColor.hex("040404").alpha(0.1), UIColor.hex("040404")]
-  weak var delegate: FooterViewDelegate?
+  public weak var delegate: FooterViewDelegate?
 
   // MARK: - Initializers
 
-  init(model: LightboxModel) {
-    self.model = model
+  public init() {
     super.init(frame: CGRectZero)
 
     backgroundColor = UIColor.clearColor()
@@ -49,7 +48,7 @@ class FooterView: UIView {
     [pageLabel, infoLabel, separatorView].forEach { addSubview($0) }
   }
 
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
@@ -62,8 +61,7 @@ class FooterView: UIView {
   func updatePage(page: Int, _ numberOfPages: Int) {
     let text = "\(page)/\(numberOfPages)"
 
-    pageLabel.attributedText = NSAttributedString(string: text,
-      attributes: model.pageIndicator.textAttributes)
+    pageLabel.text = text
     pageLabel.sizeToFit()
   }
 
@@ -93,7 +91,7 @@ class FooterView: UIView {
 
 extension FooterView: LayoutConfigurable {
 
-  func configureLayout() {
+  public func configureLayout() {
     infoLabel.frame = CGRect(x: 17, y: 0, width: frame.width - 17 * 2, height: 35)
     infoLabel.configureLayout()
   }
@@ -101,7 +99,7 @@ extension FooterView: LayoutConfigurable {
 
 extension FooterView: InfoLabelDelegate {
 
-  func infoLabel(infoLabel: InfoLabel, didExpand expanded: Bool) {
+  public func infoLabel(infoLabel: InfoLabel, didExpand expanded: Bool) {
     resetFrames()
     expanded ? removeGradientLayer() : addGradientLayer(gradientColors)
     delegate?.footerView(self, didExpand: expanded)

@@ -1,11 +1,11 @@
 import UIKit
 
-protocol InfoLabelDelegate: class {
+public protocol InfoLabelDelegate: class {
 
   func infoLabel(infoLabel: InfoLabel, didExpand expanded: Bool)
 }
 
-class InfoLabel: UILabel {
+public class InfoLabel: UILabel {
 
   lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
@@ -14,9 +14,16 @@ class InfoLabel: UILabel {
     return gesture
   }()
 
-  let model: LightboxModel
-  let numberOfVisibleLines = 2
-  weak var delegate: InfoLabelDelegate?
+  public var numberOfVisibleLines = 2
+  public var ellipsis = "... " + NSLocalizedString("Show more", comment: "")
+  public var elipsisColor = UIColor.hex("899AB9")
+
+  public var textAttributes = [
+    NSFontAttributeName: UIFont.systemFontOfSize(12),
+    NSForegroundColorAttributeName: UIColor.hex("DBDBDB")
+  ]
+
+  public weak var delegate: InfoLabelDelegate?
   private var shortText = ""
 
   var fullText: String {
@@ -25,10 +32,6 @@ class InfoLabel: UILabel {
       updateText(fullText)
       configureLayout()
     }
-  }
-
-  var ellipsis: String {
-    return "... \(model.infoLabel.ellipsisText)"
   }
 
   var expandable: Bool {
@@ -66,8 +69,7 @@ class InfoLabel: UILabel {
 
   // MARK: - Initialization
 
-  init(model: LightboxModel, text: String, expanded: Bool = false) {
-    self.model = model
+  public init(text: String, expanded: Bool = false) {
     self.fullText = text
     super.init(frame: CGRectZero)
 
@@ -78,7 +80,7 @@ class InfoLabel: UILabel {
     addGestureRecognizer(tapGestureRecognizer)
   }
 
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
@@ -105,12 +107,12 @@ class InfoLabel: UILabel {
 
   private func updateText(string: String) {
     let attributedString = NSMutableAttributedString(string: string,
-      attributes: model.infoLabel.textAttributes)
+      attributes: textAttributes)
 
     if string.rangeOfString(ellipsis) != nil {
       let range = (string as NSString).rangeOfString(ellipsis)
       attributedString.addAttribute(NSForegroundColorAttributeName,
-        value: model.infoLabel.elipsisColor, range: range)
+        value: elipsisColor, range: range)
     }
 
     attributedText = attributedString
@@ -138,7 +140,7 @@ class InfoLabel: UILabel {
 
 extension InfoLabel: LayoutConfigurable {
 
-  func configureLayout() {
+  public func configureLayout() {
     shortText = truncatedText
     expanded ? expand() : collapse()
   }

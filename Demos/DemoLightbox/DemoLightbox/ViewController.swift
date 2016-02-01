@@ -41,8 +41,7 @@ class ViewController: UIViewController {
       )
     ]
 
-    let model = LightboxModel(images: images)
-    let controller = LightboxController(model: model)
+    let controller = LightboxController(images: images)
     controller.dynamicBackground = true
 
     presentViewController(controller, animated: true, completion: nil)

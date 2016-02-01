@@ -129,7 +129,21 @@ public class LightboxController: UIViewController {
   }
 
   public var images: [LightboxImage] {
-    return pageViews.map { $0.image }
+    get {
+      return pageViews.map { $0.image }
+    }
+    set {
+      pageViews.forEach { $0.removeFromSuperview() }
+      pageViews = []
+
+      for image in images {
+        let pageView = PageView(image: image)
+        pageView.pageViewDelegate = self
+
+        scrollView.addSubview(pageView)
+        pageViews.append(pageView)
+      }
+    }
   }
 
   public weak var pageDelegate: LightboxControllerPageDelegate?
@@ -144,18 +158,11 @@ public class LightboxController: UIViewController {
 
   // MARK: - Initializers
 
-  public init(images: [LightboxImage], startIndex index: Int = 0) {
+  public init(images: [LightboxImage] = [], startIndex index: Int = 0) {
 
     super.init(nibName: nil, bundle: nil)
 
-    for image in images {
-      let pageView = PageView(image: image)
-      pageView.pageViewDelegate = self
-
-      scrollView.addSubview(pageView)
-      pageViews.append(pageView)
-    }
-
+    self.images = images
     currentPage = index
   }
 

@@ -29,14 +29,14 @@ public class LightboxController: UIViewController {
     }()
 
   lazy var headerView: HeaderView = { [unowned self] in
-    let view = HeaderView(model: self.model)
+    let view = HeaderView()
     view.delegate = self
 
     return view
     }()
 
   lazy var footerView: FooterView = { [unowned self] in
-    let view = FooterView(model: self.model)
+    let view = FooterView()
     view.delegate = self
 
     return view
@@ -139,17 +139,15 @@ public class LightboxController: UIViewController {
   lazy var transitionManager: LightboxTransition = LightboxTransition()
   var pageViews = [PageView]()
   var statusBarHidden = false
-  let model: LightboxModel
 
   // MARK: - Initializers
 
-  public init(images: [LightboxImage], model: LightboxModel, startIndex index: Int = 0) {
-    self.model = model
+  public init(images: [LightboxImage], startIndex index: Int = 0) {
 
     super.init(nibName: nil, bundle: nil)
 
     for image in images {
-      let pageView = PageView(model: model, image: image)
+      let pageView = PageView(image: image)
       pageView.pageViewDelegate = self
 
       scrollView.addSubview(pageView)

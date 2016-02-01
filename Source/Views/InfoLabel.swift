@@ -21,7 +21,6 @@ public class InfoLabel: UILabel {
     NSForegroundColorAttributeName: UIColor.hex("DBDBDB")
   ]
 
-  let model: LightboxModel
   let numberOfVisibleLines = 2
   weak var delegate: InfoLabelDelegate?
   private var shortText = ""
@@ -71,8 +70,7 @@ public class InfoLabel: UILabel {
 
   // MARK: - Initialization
 
-  init(model: LightboxModel, text: String, expanded: Bool = false) {
-    self.model = model
+  init(text: String, expanded: Bool = false) {
     self.fullText = text
     super.init(frame: CGRectZero)
 

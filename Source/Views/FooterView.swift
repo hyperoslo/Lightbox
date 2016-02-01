@@ -8,7 +8,7 @@ protocol FooterViewDelegate: class {
 class FooterView: UIView {
 
   lazy var infoLabel: InfoLabel = { [unowned self] in
-    let label = InfoLabel(model: self.model, text: "")
+    let label = InfoLabel(text: "")
 
     label.textColor = .whiteColor()
     label.userInteractionEnabled = true
@@ -34,14 +34,12 @@ class FooterView: UIView {
     return view
     }()
 
-  let model: LightboxModel
   let gradientColors = [UIColor.hex("040404").alpha(0.1), UIColor.hex("040404")]
   weak var delegate: FooterViewDelegate?
 
   // MARK: - Initializers
 
-  init(model: LightboxModel) {
-    self.model = model
+  init() {
     super.init(frame: CGRectZero)
 
     backgroundColor = UIColor.clearColor()

@@ -1,7 +1,7 @@
 import UIKit
 import Hue
 
-public class LightboxModel {
+public class LightboxImageLoader {
 
   public typealias LoadImageCompletion = (error: NSError?) -> Void
 

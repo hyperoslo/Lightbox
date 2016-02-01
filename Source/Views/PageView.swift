@@ -16,15 +16,13 @@ class PageView: UIScrollView {
     return imageView
     }()
 
-  let model: LightboxModel
   var image: LightboxImage
   var contentFrame = CGRectZero
   weak var pageViewDelegate: PageViewDelegate?
 
   // MARK: - Initializers
 
-  init(model: LightboxModel, image: LightboxImage) {
-    self.model = model
+  init(image: LightboxImage) {
     self.image = image
     super.init(frame: CGRectZero)
 

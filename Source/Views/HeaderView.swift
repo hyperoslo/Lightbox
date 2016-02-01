@@ -55,13 +55,11 @@ class HeaderView: UIView {
     return button
     }()
 
-  let model: LightboxModel
   weak var delegate: HeaderViewDelegate?
 
   // MARK: - Initializers
 
-  init(model: LightboxModel) {
-    self.model = model
+  init() {
     super.init(frame: CGRectZero)
 
     backgroundColor = UIColor.clearColor()

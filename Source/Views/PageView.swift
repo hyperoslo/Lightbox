@@ -3,6 +3,7 @@ import UIKit
 protocol PageViewDelegate: class {
 
   func pageViewDidZoom(pageView: PageView)
+  func remoteImageDidLoad(image: UIImage?)
 }
 
 class PageView: UIScrollView {

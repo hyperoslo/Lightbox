@@ -97,8 +97,7 @@ public class LightboxController: UIViewController {
 
       if let image = images[currentPage].image where dynamicBackground {
         delay(0.125) {
-          self.backgroundView.image = image
-          self.backgroundView.layer.addAnimation(CATransition(), forKey: kCATransitionFade)
+          self.loadDynamicBackground(image)
         }
       }
     }
@@ -284,6 +283,11 @@ public class LightboxController: UIViewController {
 
     overlayView.frame = scrollView.frame
     overlayView.resizeGradientLayer()
+  }
+
+  private func loadDynamicBackground(image: UIImage) {
+    backgroundView.image = image
+    backgroundView.layer.addAnimation(CATransition(), forKey: kCATransitionFade)
   }
 }
 

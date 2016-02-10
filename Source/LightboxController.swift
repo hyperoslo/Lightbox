@@ -95,10 +95,9 @@ public class LightboxController: UIViewController {
 
       pageDelegate?.lightboxController(self, didMoveToPage: currentPage)
 
-      if let image = images[currentPage].image where dynamicBackground {
+      if let image = pageViews[currentPage].imageView.image where dynamicBackground {
         delay(0.125) {
-          self.backgroundView.image = image
-          self.backgroundView.layer.addAnimation(CATransition(), forKey: kCATransitionFade)
+          self.loadDynamicBackground(image)
         }
       }
     }
@@ -285,6 +284,11 @@ public class LightboxController: UIViewController {
     overlayView.frame = scrollView.frame
     overlayView.resizeGradientLayer()
   }
+
+  private func loadDynamicBackground(image: UIImage) {
+    backgroundView.image = image
+    backgroundView.layer.addAnimation(CATransition(), forKey: kCATransitionFade)
+  }
 }
 
 // MARK: - UIScrollViewDelegate
@@ -317,6 +321,11 @@ extension LightboxController: UIScrollViewDelegate {
 // MARK: - PageViewDelegate
 
 extension LightboxController: PageViewDelegate {
+
+  func remoteImageDidLoad(image: UIImage?) {
+    guard let image = image where dynamicBackground else { return }
+    loadDynamicBackground(image)
+  }
 
   func pageViewDidZoom(pageView: PageView) {
     let hidden = pageView.zoomScale != 1.0

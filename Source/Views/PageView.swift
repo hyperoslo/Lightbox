@@ -3,6 +3,7 @@ import UIKit
 protocol PageViewDelegate: class {
 
   func pageViewDidZoom(pageView: PageView)
+  func remoteImageDidLoad(image: UIImage?)
 }
 
 class PageView: UIScrollView {
@@ -26,9 +27,10 @@ class PageView: UIScrollView {
     self.image = image
     super.init(frame: CGRectZero)
 
-    image.addImageTo(imageView) {
+    image.addImageTo(imageView) { image in
       self.userInteractionEnabled = true
       self.configureImageView()
+      self.pageViewDelegate?.remoteImageDidLoad(image)
     }
 
     configure()

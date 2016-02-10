@@ -3,7 +3,7 @@ import Hue
 
 public class LightboxConfig {
 
-  public typealias LoadImageCompletion = (error: NSError?) -> Void
+  public typealias LoadImageCompletion = (error: NSError?, image: UIImage?) -> Void
 
   public static var hideStatusBar = true
 
@@ -18,7 +18,7 @@ public class LightboxConfig {
           imageView.image = image
         }
 
-        completion?(error: error)
+        completion?(error: error, image: imageView.image)
     })
   }
 

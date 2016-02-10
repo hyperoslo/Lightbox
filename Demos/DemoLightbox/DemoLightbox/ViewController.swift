@@ -38,7 +38,8 @@ class ViewController: UIViewController {
       LightboxImage(
         image: UIImage(named: "photo3")!,
         text: "Some very long lorem ipsum text."
-      )
+      ),
+      LightboxImage(imageURL: NSURL(string: "https://cdn.arstechnica.net/2011/10/05/iphone4s_sample_apple-4e8c706-intro.jpg")!)
     ]
 
     let controller = LightboxController(images: images)

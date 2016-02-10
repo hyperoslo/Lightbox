@@ -322,6 +322,12 @@ extension LightboxController: UIScrollViewDelegate {
 
 extension LightboxController: PageViewDelegate {
 
+  func remoteImageDidLoad(image: UIImage?) {
+    if let image = image where dynamicBackground {
+      loadDynamicBackground(image)
+    }
+  }
+
   func pageViewDidZoom(pageView: PageView) {
     let hidden = pageView.zoomScale != 1.0
     let duration = hidden ? 0.1 : 1.0

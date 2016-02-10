@@ -36,5 +36,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSAllowsArbitraryLoads</key>
+	<true/>
 </dict>
 </plist>

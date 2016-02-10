@@ -95,7 +95,7 @@ public class LightboxController: UIViewController {
 
       pageDelegate?.lightboxController(self, didMoveToPage: currentPage)
 
-      if let image = images[currentPage].image where dynamicBackground {
+      if let image = pageViews[currentPage].imageView.image where dynamicBackground {
         delay(0.125) {
           self.loadDynamicBackground(image)
         }

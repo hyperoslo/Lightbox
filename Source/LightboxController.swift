@@ -138,7 +138,7 @@ public class LightboxController: UIViewController {
 
   public weak var pageDelegate: LightboxControllerPageDelegate?
   public weak var dismissalDelegate: LightboxControllerDismissalDelegate?
-  public internal(set) var presented = true
+  public internal(set) var presented = false
   public private(set) var seen = false
 
   lazy var transitionManager: LightboxTransition = LightboxTransition()
@@ -165,6 +165,8 @@ public class LightboxController: UIViewController {
   public override func viewDidLoad() {
     super.viewDidLoad()
 
+    statusBarHidden = UIApplication.sharedApplication().statusBarHidden
+
     view.backgroundColor = UIColor.blackColor()
     transitionManager.lightboxController = self
     transitionManager.scrollView = scrollView
@@ -177,21 +179,23 @@ public class LightboxController: UIViewController {
     currentPage = initialPage
 
     goTo(currentPage, animated: false)
-    configureLayout()
   }
 
-  public override func viewWillAppear(animated: Bool) {
-    super.viewWillDisappear(animated)
-
-    statusBarHidden = UIApplication.sharedApplication().statusBarHidden
+  public override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
 
     if LightboxConfig.hideStatusBar {
       UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Fade)
     }
+
+    if !presented {
+      presented = true
+      configureLayout()
+    }
   }
 
   public override func viewDidDisappear(animated: Bool) {
-    super.viewWillDisappear(animated)
+    super.viewDidDisappear(animated)
 
     if LightboxConfig.hideStatusBar {
       UIApplication.sharedApplication().setStatusBarHidden(statusBarHidden, withAnimation: .Fade)

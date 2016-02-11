@@ -136,6 +136,9 @@ public class LightboxController: UIViewController {
     }
   }
 
+  private var initialImages = [LightboxImage]()
+  private var initialPage = 0
+
   public weak var pageDelegate: LightboxControllerPageDelegate?
   public weak var dismissalDelegate: LightboxControllerDismissalDelegate?
   public internal(set) var presented = true
@@ -148,11 +151,9 @@ public class LightboxController: UIViewController {
   // MARK: - Initializers
 
   public init(images: [LightboxImage] = [], startIndex index: Int = 0) {
-
     super.init(nibName: nil, bundle: nil)
-
-    configurePages(images)
-    currentPage = index
+    initialImages = images
+    initialPage = index
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -171,6 +172,9 @@ public class LightboxController: UIViewController {
 
     [scrollView, overlayView, headerView, footerView].forEach { view.addSubview($0) }
     overlayView.addGestureRecognizer(overlayTapGestureRecognizer)
+
+    configurePages(initialImages)
+    currentPage = initialPage
 
     goTo(currentPage, animated: false)
     configureLayout()

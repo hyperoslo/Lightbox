@@ -138,7 +138,7 @@ public class LightboxController: UIViewController {
 
   public weak var pageDelegate: LightboxControllerPageDelegate?
   public weak var dismissalDelegate: LightboxControllerDismissalDelegate?
-  public internal(set) var presented = true
+  public internal(set) var presented = false
   public private(set) var seen = false
 
   lazy var transitionManager: LightboxTransition = LightboxTransition()
@@ -177,21 +177,25 @@ public class LightboxController: UIViewController {
     currentPage = initialPage
 
     goTo(currentPage, animated: false)
-    configureLayout()
   }
 
-  public override func viewWillAppear(animated: Bool) {
-    super.viewWillDisappear(animated)
+  public override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
 
     statusBarHidden = UIApplication.sharedApplication().statusBarHidden
 
     if LightboxConfig.hideStatusBar {
       UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Fade)
     }
+
+    if !presented {
+      presented = true
+      configureLayout()
+    }
   }
 
   public override func viewDidDisappear(animated: Bool) {
-    super.viewWillDisappear(animated)
+    super.viewDidDisappear(animated)
 
     if LightboxConfig.hideStatusBar {
       UIApplication.sharedApplication().setStatusBarHidden(statusBarHidden, withAnimation: .Fade)

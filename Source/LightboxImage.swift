@@ -1,6 +1,6 @@
 import UIKit
 
-public struct LightboxImage {
+public class LightboxImage {
 
   public var image: UIImage?
   public var imageURL: NSURL?

@@ -136,9 +136,6 @@ public class LightboxController: UIViewController {
     }
   }
 
-  private var initialImages = [LightboxImage]()
-  private var initialPage = 0
-
   public weak var pageDelegate: LightboxControllerPageDelegate?
   public weak var dismissalDelegate: LightboxControllerDismissalDelegate?
   public internal(set) var presented = true
@@ -148,12 +145,15 @@ public class LightboxController: UIViewController {
   var pageViews = [PageView]()
   var statusBarHidden = false
 
+  private let initialImages: [LightboxImage]
+  private let initialPage: Int
+
   // MARK: - Initializers
 
   public init(images: [LightboxImage] = [], startIndex index: Int = 0) {
+    self.initialImages = images
+    self.initialPage = index
     super.init(nibName: nil, bundle: nil)
-    initialImages = images
-    initialPage = index
   }
 
   public required init?(coder aDecoder: NSCoder) {

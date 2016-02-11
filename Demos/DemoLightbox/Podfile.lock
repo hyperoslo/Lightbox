@@ -3,7 +3,7 @@ PODS:
   - Lightbox (1.0.0):
     - Hue
     - Sugar
-  - Sugar (1.0.3)
+  - Sugar (1.0.4)
 
 DEPENDENCIES:
   - Hue (from `https://github.com/hyperoslo/Hue`)
@@ -24,6 +24,6 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Hue: 44ae8b1091935fcc75055174095ab04653989235
   Lightbox: 857975225b89e83758b4895c035f5621d62e9bba
-  Sugar: 0dec8fa53840c88c01579e61bcff8edbe468cb41
+  Sugar: 814a9f59f546b942884a276f32324e73d6f93b11
 
 COCOAPODS: 0.39.0

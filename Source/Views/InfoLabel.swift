@@ -9,7 +9,7 @@ public class InfoLabel: UILabel {
 
   lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
-    gesture.addTarget(self, action: "labelDidTap:")
+    gesture.addTarget(self, action: #selector(labelDidTap(_:)))
 
     return gesture
   }()
@@ -50,10 +50,9 @@ public class InfoLabel: UILabel {
 
     truncatedText += ellipsis
 
-    var range = Range<String.Index>(
-      start: truncatedText.endIndex.advancedBy(-(ellipsis.characters.count + 1)),
-      end: truncatedText.endIndex.advancedBy(-ellipsis.characters.count)
-    )
+    let start = truncatedText.endIndex.advancedBy(-(ellipsis.characters.count + 1))
+    let end = truncatedText.endIndex.advancedBy(-ellipsis.characters.count)
+    var range = start..<end
 
     while numberOfLines(truncatedText) > numberOfVisibleLines {
       truncatedText.removeRange(range)

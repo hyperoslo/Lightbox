@@ -52,7 +52,7 @@ class PageView: UIScrollView {
     showsHorizontalScrollIndicator = false
     showsVerticalScrollIndicator = false
 
-    let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "scrollViewDoubleTapped:")
+    let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(scrollViewDoubleTapped(_:)))
     doubleTapRecognizer.numberOfTapsRequired = 2
     doubleTapRecognizer.numberOfTouchesRequired = 1
     addGestureRecognizer(doubleTapRecognizer)

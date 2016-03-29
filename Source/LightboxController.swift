@@ -30,7 +30,7 @@ public class LightboxController: UIViewController {
 
   lazy var overlayTapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
-    gesture.addTarget(self, action: "overlayViewDidTap:")
+    gesture.addTarget(self, action: #selector(overlayViewDidTap(_:)))
 
     return gesture
   }()
@@ -363,7 +363,7 @@ extension LightboxController: HeaderViewDelegate {
     let prevIndex = currentPage
     currentPage == numberOfPages - 1 ? previous() : next()
 
-    self.currentPage--
+    self.currentPage -= 1
     self.pageViews.removeAtIndex(prevIndex).removeFromSuperview()
 
     delay(0.5) {

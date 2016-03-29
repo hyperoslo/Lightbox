@@ -22,7 +22,7 @@ public class HeaderView: UIView {
 
     button.frame.size = LightboxConfig.CloseButton.size
     button.setAttributedTitle(title, forState: .Normal)
-    button.addTarget(self, action: "closeButtonDidPress:",
+    button.addTarget(self, action: #selector(closeButtonDidPress(_:)),
       forControlEvents: .TouchUpInside)
 
     if let image = LightboxConfig.CloseButton.image {
@@ -43,7 +43,7 @@ public class HeaderView: UIView {
 
     button.frame.size = LightboxConfig.DeleteButton.size
     button.setAttributedTitle(title, forState: .Normal)
-    button.addTarget(self, action: "deleteButtonDidPress:",
+    button.addTarget(self, action: #selector(deleteButtonDidPress(_:)),
       forControlEvents: .TouchUpInside)
 
     if let image = LightboxConfig.DeleteButton.image {

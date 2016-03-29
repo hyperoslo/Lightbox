@@ -5,7 +5,7 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
     let gesture = UIPanGestureRecognizer()
-    gesture.addTarget(self, action: "handlePanGesture:")
+    gesture.addTarget(self, action: #selector(handlePanGesture(_:)))
     gesture.delegate = self
 
     return gesture

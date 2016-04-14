@@ -239,7 +239,7 @@ public class LightboxController: UIViewController {
     currentPage = page
 
     var offset = scrollView.contentOffset
-    offset.x = CGFloat(page) * scrollView.frame.width
+    offset.x = CGFloat(page) * (scrollView.frame.width + spacing)
 
     scrollView.setContentOffset(offset, animated: animated)
   }
@@ -361,9 +361,14 @@ extension LightboxController: HeaderViewDelegate {
     }
 
     let prevIndex = currentPage
-    currentPage == numberOfPages - 1 ? previous() : next()
+    
+    if currentPage == numberOfPages - 1 {
+      previous()
+    } else {
+      next()
+      currentPage -= 1
+    }
 
-    self.currentPage -= 1
     self.pageViews.removeAtIndex(prevIndex).removeFromSuperview()
 
     delay(0.5) {

@@ -387,7 +387,10 @@ extension LightboxController: FooterViewDelegate {
 
   public func footerView(footerView: FooterView, didExpand expanded: Bool) {
     footerView.frame.origin.y = screenBounds.height - footerView.frame.height
-    overlayView.alpha = expanded ? 1.0 : 0.0
-    headerView.deleteButton.alpha = expanded ? 0.0 : 1.0
+    
+    UIView.animateWithDuration(0.25) {
+      self.overlayView.alpha = expanded ? 1.0 : 0.0
+      self.headerView.deleteButton.alpha = expanded ? 0.0 : 1.0
+    }
   }
 }

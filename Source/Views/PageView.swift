@@ -27,10 +27,10 @@ class PageView: UIScrollView {
     self.image = image
     super.init(frame: CGRectZero)
 
-    self.image.addImageTo(imageView) { image in
-      self.userInteractionEnabled = true
-      self.configureImageView()
-      self.pageViewDelegate?.remoteImageDidLoad(image)
+    self.image.addImageTo(imageView) { [weak self] image in
+      self?.userInteractionEnabled = true
+      self?.configureImageView()
+      self?.pageViewDelegate?.remoteImageDidLoad(image)
     }
 
     configure()

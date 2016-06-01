@@ -79,24 +79,7 @@ class PageView: UIScrollView {
   // MARK: - Layout
 
   func configureImageView() {
-    guard let image = imageView.image else { return }
-
-    let imageViewSize = imageView.frame.size
-    let imageSize = image.size
-    let realImageViewSize: CGSize
-
-    if imageSize.width / imageSize.height > imageViewSize.width / imageViewSize.height {
-      realImageViewSize = CGSize(
-        width: imageViewSize.width,
-        height: imageViewSize.width / imageSize.width * imageSize.height)
-    } else {
-      realImageViewSize = CGSize(
-        width: imageViewSize.height / imageSize.height * imageSize.width,
-        height: imageViewSize.height)
-    }
-
-    imageView.frame = CGRect(origin: CGPointZero, size: realImageViewSize)
-
+    imageView.frame = bounds
     centerImageView()
   }
 

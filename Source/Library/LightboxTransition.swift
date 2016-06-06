@@ -22,7 +22,7 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
     }
   }
 
-  var lightboxController: LightboxController?
+  weak var lightboxController: LightboxController?
 
   // MARK: - Transition
 
@@ -79,7 +79,7 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
           self.scrollView?.frame.origin.y = translation.y * 3
           controller.view.alpha = 0
           controller.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0)
-        }, completion: { _ in })
+          }, completion: { _ in })
       } else {
         cancelInteractiveTransition()
 
@@ -144,7 +144,9 @@ extension LightboxTransition: UIViewControllerTransitioningDelegate {
     return self
   }
 
-  func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+  func animationControllerForPresentedController(presented: UIViewController,
+                                                 presentingController presenting: UIViewController,
+                                                                      sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     dismissing = false
     return self
   }

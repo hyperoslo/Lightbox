@@ -18,14 +18,14 @@ class PageView: UIScrollView {
     }()
 
   var image: LightboxImage
-  var contentFrame = CGRectZero
+  var contentFrame = CGRect.zero
   weak var pageViewDelegate: PageViewDelegate?
 
   // MARK: - Initializers
 
   init(image: LightboxImage) {
     self.image = image
-    super.init(frame: CGRectZero)
+    super.init(frame: CGRect.zero)
 
     self.image.addImageTo(imageView) { image in
       self.userInteractionEnabled = true
@@ -71,7 +71,7 @@ class PageView: UIScrollView {
     let x = pointInView.x - (width / 2.0)
     let y = pointInView.y - (height / 2.0)
 
-    let rectToZoomTo = CGRectMake(x, y, width, height)
+    let rectToZoomTo = CGRect(x: x, y: y, width: width, height: height)
 
     zoomToRect(rectToZoomTo, animated: true)
   }
@@ -95,7 +95,7 @@ class PageView: UIScrollView {
         height: imageViewSize.height)
     }
 
-    imageView.frame = CGRect(origin: CGPointZero, size: realImageViewSize)
+    imageView.frame = CGRect(origin: CGPoint.zero, size: realImageViewSize)
 
     centerImageView()
   }

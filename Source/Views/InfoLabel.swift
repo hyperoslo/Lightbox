@@ -67,7 +67,7 @@ public class InfoLabel: UILabel {
 
   public init(text: String, expanded: Bool = false) {
     self.fullText = text
-    super.init(frame: CGRectZero)
+    super.init(frame: CGRect.zero)
 
     numberOfLines = 0
     updateText(text)
@@ -118,7 +118,7 @@ public class InfoLabel: UILabel {
 
   private func heightForString(string: String) -> CGFloat {
     return string.boundingRectWithSize(
-      CGSizeMake(bounds.size.width, CGFloat.max),
+      CGSize(width: bounds.size.width, height: CGFloat.max),
       options: [.UsesLineFragmentOrigin, .UsesFontLeading],
       attributes: [NSFontAttributeName : font],
       context: nil).height

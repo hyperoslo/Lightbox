@@ -60,7 +60,7 @@ public class HeaderView: UIView {
   // MARK: - Initializers
 
   public init() {
-    super.init(frame: CGRectZero)
+    super.init(frame: CGRect.zero)
 
     backgroundColor = UIColor.clearColor()
 

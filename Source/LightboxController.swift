@@ -67,7 +67,7 @@ public class LightboxController: UIViewController {
     }()
 
   public private(set) lazy var overlayView: UIView = { [unowned self] in
-    let view = UIView(frame: CGRectZero)
+    let view = UIView(frame: CGRect.zero)
     let gradient = CAGradientLayer()
     let colors = [UIColor.hex("090909").alpha(0), UIColor.hex("040404")]
 
@@ -145,8 +145,8 @@ public class LightboxController: UIViewController {
   var pageViews = [PageView]()
   var statusBarHidden = false
 
-  private let initialImages: [LightboxImage]
-  private let initialPage: Int
+  private var initialImages: [LightboxImage]
+  private var initialPage: Int
 
   // MARK: - Initializers
 
@@ -361,7 +361,7 @@ extension LightboxController: HeaderViewDelegate {
     }
 
     let prevIndex = currentPage
-    
+
     if currentPage == numberOfPages - 1 {
       previous()
     } else {
@@ -392,7 +392,7 @@ extension LightboxController: FooterViewDelegate {
 
   public func footerView(footerView: FooterView, didExpand expanded: Bool) {
     footerView.frame.origin.y = screenBounds.height - footerView.frame.height
-    
+
     UIView.animateWithDuration(0.25) {
       self.overlayView.alpha = expanded ? 1.0 : 0.0
       self.headerView.deleteButton.alpha = expanded ? 0.0 : 1.0

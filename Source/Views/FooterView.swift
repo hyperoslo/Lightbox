@@ -19,7 +19,7 @@ public class FooterView: UIView {
     }()
 
   public private(set) lazy var pageLabel: UILabel = { [unowned self] in
-    let label = UILabel(frame: CGRectZero)
+    let label = UILabel(frame: CGRect.zero)
     label.hidden = !LightboxConfig.PageIndicator.enabled
     label.numberOfLines = 1
 
@@ -27,7 +27,7 @@ public class FooterView: UIView {
     }()
 
   public private(set) lazy var separatorView: UIView = { [unowned self] in
-    let view = UILabel(frame: CGRectZero)
+    let view = UILabel(frame: CGRect.zero)
     view.hidden = !LightboxConfig.PageIndicator.enabled
     view.backgroundColor = LightboxConfig.PageIndicator.separatorColor
 
@@ -40,7 +40,7 @@ public class FooterView: UIView {
   // MARK: - Initializers
 
   public init() {
-    super.init(frame: CGRectZero)
+    super.init(frame: CGRect.zero)
 
     backgroundColor = UIColor.clearColor()
     addGradientLayer(gradientColors)
@@ -71,7 +71,7 @@ public class FooterView: UIView {
 
     if text.isEmpty {
       removeGradientLayer()
-    } else if !infoLabel.expanded  {
+    } else if !infoLabel.expanded {
       addGradientLayer(gradientColors)
     }
   }

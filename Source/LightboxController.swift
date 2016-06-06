@@ -145,8 +145,8 @@ public class LightboxController: UIViewController {
   var pageViews = [PageView]()
   var statusBarHidden = false
 
-  private var initialImages: [LightboxImage]
-  private var initialPage: Int
+  private let initialImages: [LightboxImage]
+  private let initialPage: Int
 
   // MARK: - Initializers
 

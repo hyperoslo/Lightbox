@@ -22,7 +22,7 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
     }
   }
 
-  var lightboxController: LightboxController?
+  weak var lightboxController: LightboxController?
 
   // MARK: - Transition
 

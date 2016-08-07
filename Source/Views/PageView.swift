@@ -54,7 +54,10 @@ class PageView: UIScrollView {
 
   func configure() {
     addSubview(imageView)
-    addSubview(playButton)
+
+    if image.videoURL != nil {
+      addSubview(playButton)
+    }
 
     delegate = self
     multipleTouchEnabled = true

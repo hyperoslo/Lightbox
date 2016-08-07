@@ -345,6 +345,10 @@ extension LightboxController: PageViewDelegate {
       self.footerView.alpha = alpha
       }, completion: nil)
   }
+
+  func pageView(pageView: PageView, didTouchPlayButton videoURL: NSURL) {
+    LightboxConfig.handleVideo(from: self, videoURL: videoURL)
+  }
 }
 
 // MARK: - HeaderViewDelegate

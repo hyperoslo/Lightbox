@@ -1,5 +1,7 @@
 import UIKit
 import Hue
+import AVKit
+import AVFoundation
 
 public class LightboxConfig {
 
@@ -20,6 +22,15 @@ public class LightboxConfig {
 
         completion?(error: error, image: imageView.image)
     })
+  }
+
+  public static var handleVideo: (from: UIViewController, videoURL: NSURL) -> Void = { from, videoURL in
+    let videoController = AVPlayerViewController()
+    videoController.player = AVPlayer(URL: videoURL)
+
+    from.presentViewController(videoController, animated: true) {
+      videoController.player?.play()
+    }
   }
 
   public struct PageIndicator {

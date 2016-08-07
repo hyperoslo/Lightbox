@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D2D71BBA1D54DA65006AB907 /* Lightbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D2D71BB91D54DA65006AB907 /* Lightbox.bundle */; };
+		D2D71BBC1D54DA77006AB907 /* AssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D71BBB1D54DA77006AB907 /* AssetManager.swift */; };
 		D5026B3C1C5BF3FD003BC1A3 /* LightboxImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */; };
 		D523B0BD1C43AA8B001AD1EC /* LightboxConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B61C43AA8A001AD1EC /* LightboxConfig.swift */; };
 		D523B0BE1C43AA8B001AD1EC /* LightboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B71C43AA8A001AD1EC /* LightboxController.swift */; };
@@ -22,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D2D71BB91D54DA65006AB907 /* Lightbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Lightbox.bundle; sourceTree = "<group>"; };
+		D2D71BBB1D54DA77006AB907 /* AssetManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetManager.swift; sourceTree = "<group>"; };
 		D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxImage.swift; sourceTree = "<group>"; };
 		D523B0A91C43AA2A001AD1EC /* Lightbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lightbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D523B0AE1C43AA2A001AD1EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -81,11 +85,13 @@
 		D523B0B41C43AA8A001AD1EC /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				D2D71BB91D54DA65006AB907 /* Lightbox.bundle */,
 				D573A2F11C5B5C72006053DD /* Library */,
 				D54DFCBB1C5AAAD600ADEA0E /* Views */,
 				D523B0B61C43AA8A001AD1EC /* LightboxConfig.swift */,
 				D523B0B71C43AA8A001AD1EC /* LightboxController.swift */,
 				D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */,
+				D2D71BBB1D54DA77006AB907 /* AssetManager.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -179,6 +185,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2D71BBA1D54DA65006AB907 /* Lightbox.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +225,7 @@
 				D58A18CB1C5ABF8F000024BB /* FooterView.swift in Sources */,
 				D573A2F01C5B5605006053DD /* HeaderView.swift in Sources */,
 				D573A2F51C5B5CA4006053DD /* LightboxTransition.swift in Sources */,
+				D2D71BBC1D54DA77006AB907 /* AssetManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

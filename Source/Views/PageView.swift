@@ -4,6 +4,7 @@ protocol PageViewDelegate: class {
 
   func pageViewDidZoom(pageView: PageView)
   func remoteImageDidLoad(image: UIImage?)
+  func pageView(pageView: PageView, didTouchPlayButton videoURL: NSURL)
 }
 
 class PageView: UIScrollView {
@@ -16,6 +17,20 @@ class PageView: UIScrollView {
 
     return imageView
     }()
+
+  lazy var playButton: UIButton = {
+    let button = UIButton(type: .Custom)
+    button.frame.size = CGSize(width: 60, height: 60)
+    button.setBackgroundImage(AssetManager.image("lightbox_play"), forState: .Normal)
+    button.addTarget(self, action: #selector(playButtonTouched(_:)), forControlEvents: .TouchUpInside)
+
+    button.layer.shadowOffset = CGSize(width: 1, height: 1)
+    button.layer.shadowColor = UIColor.grayColor().CGColor
+    button.layer.masksToBounds = false
+    button.layer.shadowOpacity = 0.8
+
+    return button
+  }()
 
   var image: LightboxImage
   var contentFrame = CGRect.zero
@@ -44,6 +59,10 @@ class PageView: UIScrollView {
 
   func configure() {
     addSubview(imageView)
+
+    if image.videoURL != nil {
+      addSubview(playButton)
+    }
 
     delegate = self
     multipleTouchEnabled = true
@@ -77,6 +96,12 @@ class PageView: UIScrollView {
   }
 
   // MARK: - Layout
+
+  override func layoutSubviews() {
+    super.layoutSubviews()
+
+    playButton.center = CGPoint(x: bounds.size.width/2, y: bounds.size.height/2)
+  }
 
   func configureImageView() {
     guard let image = imageView.image else { return }
@@ -117,6 +142,14 @@ class PageView: UIScrollView {
     }
 
     imageView.frame = imageViewFrame
+  }
+
+  // MARK: - Action
+
+  func playButtonTouched(button: UIButton) {
+    guard let videoURL = image.videoURL else { return }
+
+    pageViewDelegate?.pageView(self, didTouchPlayButton: videoURL)
   }
 }
 

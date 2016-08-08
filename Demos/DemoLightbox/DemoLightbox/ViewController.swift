@@ -33,7 +33,8 @@ class ViewController: UIViewController {
       ),
       LightboxImage(
         image: UIImage(named: "photo2")!,
-        text: ""
+        text: "",
+        videoURL: NSURL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
       ),
       LightboxImage(
         image: UIImage(named: "photo3")!,

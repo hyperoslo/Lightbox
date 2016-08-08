@@ -340,10 +340,17 @@ extension LightboxController: PageViewDelegate {
     let duration = hidden ? 0.1 : 1.0
     let alpha: CGFloat = hidden ? 0.0 : 1.0
 
+    pageView.playButton.hidden = hidden
+
     UIView.animateWithDuration(duration, delay: 0.5, options: [], animations: {
       self.headerView.alpha = alpha
       self.footerView.alpha = alpha
-      }, completion: nil)
+      pageView.playButton.alpha = alpha
+    }, completion: nil)
+  }
+
+  func pageView(pageView: PageView, didTouchPlayButton videoURL: NSURL) {
+    LightboxConfig.handleVideo(from: self, videoURL: videoURL)
   }
 }
 

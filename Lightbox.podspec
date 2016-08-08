@@ -10,8 +10,9 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '8.0'
   s.requires_arc = true
   s.source_files = 'Source/**/*'
+  s.ios.resource = 'Source/Lightbox.bundle'
 
-  s.frameworks = 'UIKit'
+  s.frameworks = 'UIKit', 'AVFoundation', 'AVKit'
   s.dependency 'Sugar'
   s.dependency 'Hue'
 end

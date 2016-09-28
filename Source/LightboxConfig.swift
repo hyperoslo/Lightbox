@@ -3,46 +3,46 @@ import Hue
 import AVKit
 import AVFoundation
 
-public class LightboxConfig {
+open class LightboxConfig {
 
-  public typealias LoadImageCompletion = (error: NSError?, image: UIImage?) -> Void
+  public typealias LoadImageCompletion = (_ error: NSError?, _ image: UIImage?) -> Void
 
-  public static var hideStatusBar = true
+  open static var hideStatusBar = true
 
-  public static var loadImage: (imageView: UIImageView, URL: NSURL, completion: LoadImageCompletion?) -> Void = {
+  open static var loadImage: (_ imageView: UIImageView, _ URL: URL, _ completion: LoadImageCompletion?) -> Void = {
     imageView, URL, completion in
-    let imageRequest: NSURLRequest = NSURLRequest(URL: URL)
+    let imageRequest: URLRequest = URLRequest(url: URL)
 
     NSURLConnection.sendAsynchronousRequest(imageRequest,
-      queue: NSOperationQueue.mainQueue(),
+      queue: OperationQueue.main,
       completionHandler: { response, data, error in
-        if let data = data, image = UIImage(data: data) {
+        if let data = data, let image = UIImage(data: data) {
           imageView.image = image
         }
 
-        completion?(error: error, image: imageView.image)
+        completion?(error as NSError?, imageView.image)
     })
   }
 
-  public static var handleVideo: (from: UIViewController, videoURL: NSURL) -> Void = { from, videoURL in
+  open static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in
     let videoController = AVPlayerViewController()
-    videoController.player = AVPlayer(URL: videoURL)
+    videoController.player = AVPlayer(url: videoURL)
 
-    from.presentViewController(videoController, animated: true) {
+    from.present(videoController, animated: true) {
       videoController.player?.play()
     }
   }
 
   public struct PageIndicator {
     public static var enabled = true
-    public static var separatorColor = UIColor.hex("3D4757")
+    public static var separatorColor = UIColor(hex: "3D4757")
 
     public static var textAttributes = [
-      NSFontAttributeName: UIFont.systemFontOfSize(12),
-      NSForegroundColorAttributeName: UIColor.hex("899AB8"),
+      NSFontAttributeName: UIFont.systemFont(ofSize: 12),
+      NSForegroundColorAttributeName: UIColor(hex: "899AB8"),
       NSParagraphStyleAttributeName: {
         var style = NSMutableParagraphStyle()
-        style.alignment = .Center
+        style.alignment = .center
         return style
         }()
     ]
@@ -55,11 +55,11 @@ public class LightboxConfig {
     public static var image: UIImage?
 
     public static var textAttributes = [
-      NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
-      NSForegroundColorAttributeName: UIColor.whiteColor(),
+      NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16),
+      NSForegroundColorAttributeName: UIColor.white,
       NSParagraphStyleAttributeName: {
         var style = NSMutableParagraphStyle()
-        style.alignment = .Center
+        style.alignment = .center
         return style
         }()
     ]
@@ -72,11 +72,11 @@ public class LightboxConfig {
     public static var image: UIImage?
 
     public static var textAttributes = [
-      NSFontAttributeName: UIFont.boldSystemFontOfSize(16),
-      NSForegroundColorAttributeName: UIColor.hex("FA2F5B"),
+      NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16),
+      NSForegroundColorAttributeName: UIColor(hex: "FA2F5B"),
       NSParagraphStyleAttributeName: {
         var style = NSMutableParagraphStyle()
-        style.alignment = .Center
+        style.alignment = .center
         return style
         }()
     ]
@@ -84,13 +84,13 @@ public class LightboxConfig {
 
   public struct InfoLabel {
     public static var enabled = true
-    public static var textColor = UIColor.whiteColor()
+    public static var textColor = UIColor.white
     public static var ellipsisText = NSLocalizedString("Show more", comment: "")
-    public static var ellipsisColor = UIColor.hex("899AB9")
+    public static var ellipsisColor = UIColor(hex: "899AB9")
 
     public static var textAttributes = [
-      NSFontAttributeName: UIFont.systemFontOfSize(12),
-      NSForegroundColorAttributeName: UIColor.hex("DBDBDB")
+      NSFontAttributeName: UIFont.systemFont(ofSize: 12),
+      NSForegroundColorAttributeName: UIColor(hex: "DBDBDB")
     ]
   }
 

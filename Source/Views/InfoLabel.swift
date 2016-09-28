@@ -2,10 +2,10 @@ import UIKit
 
 public protocol InfoLabelDelegate: class {
 
-  func infoLabel(infoLabel: InfoLabel, didExpand expanded: Bool)
+  func infoLabel(_ infoLabel: InfoLabel, didExpand expanded: Bool)
 }
 
-public class InfoLabel: UILabel {
+open class InfoLabel: UILabel {
 
   lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
@@ -14,14 +14,14 @@ public class InfoLabel: UILabel {
     return gesture
   }()
 
-  public var numberOfVisibleLines = 2
+  open var numberOfVisibleLines = 2
 
   var ellipsis: String {
     return "... \(LightboxConfig.InfoLabel.ellipsisText)"
   }
 
-  public weak var delegate: InfoLabelDelegate?
-  private var shortText = ""
+  open weak var delegate: InfoLabelDelegate?
+  fileprivate var shortText = ""
 
   var fullText: String {
     didSet {
@@ -35,13 +35,13 @@ public class InfoLabel: UILabel {
     return shortText != fullText
   }
 
-  private(set) var expanded = false {
+  fileprivate(set) var expanded = false {
     didSet {
       delegate?.infoLabel(self, didExpand: expanded)
     }
   }
 
-  private var truncatedText: String {
+  fileprivate var truncatedText: String {
     var truncatedText = fullText
 
     guard numberOfLines(fullText) > numberOfVisibleLines else {
@@ -50,14 +50,13 @@ public class InfoLabel: UILabel {
 
     truncatedText += ellipsis
 
-    let start = truncatedText.endIndex.advancedBy(-(ellipsis.characters.count + 1))
-    let end = truncatedText.endIndex.advancedBy(-ellipsis.characters.count)
+    let start = truncatedText.characters.index(truncatedText.endIndex, offsetBy: -(ellipsis.characters.count + 1))
+    let end = truncatedText.characters.index(truncatedText.endIndex, offsetBy: -ellipsis.characters.count)
     var range = start..<end
 
     while numberOfLines(truncatedText) > numberOfVisibleLines {
-      truncatedText.removeRange(range)
-      range.startIndex = range.startIndex.advancedBy(-1)
-      range.endIndex = range.endIndex.advancedBy(-1)
+      truncatedText.removeSubrange(range)
+      range = truncatedText.index(range.lowerBound, offsetBy: -1)..<truncatedText.index(range.upperBound, offsetBy: -1)
     }
 
     return truncatedText
@@ -82,7 +81,7 @@ public class InfoLabel: UILabel {
 
   // MARK: - Actions
 
-  func labelDidTap(tapGestureRecognizer: UITapGestureRecognizer) {
+  func labelDidTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
     shortText = truncatedText
     expanded ? collapse() : expand()
   }
@@ -101,12 +100,12 @@ public class InfoLabel: UILabel {
     expanded = false
   }
 
-  private func updateText(string: String) {
+  fileprivate func updateText(_ string: String) {
     let attributedString = NSMutableAttributedString(string: string,
       attributes: LightboxConfig.InfoLabel.textAttributes)
 
-    if string.rangeOfString(ellipsis) != nil {
-      let range = (string as NSString).rangeOfString(ellipsis)
+    if string.range(of: ellipsis) != nil {
+      let range = (string as NSString).range(of: ellipsis)
       attributedString.addAttribute(NSForegroundColorAttributeName,
         value: LightboxConfig.InfoLabel.ellipsisColor, range: range)
     }
@@ -116,16 +115,16 @@ public class InfoLabel: UILabel {
 
   // MARK: - Helper methods
 
-  private func heightForString(string: String) -> CGFloat {
-    return string.boundingRectWithSize(
-      CGSize(width: bounds.size.width, height: CGFloat.max),
-      options: [.UsesLineFragmentOrigin, .UsesFontLeading],
+  fileprivate func heightForString(_ string: String) -> CGFloat {
+    return string.boundingRect(
+      with: CGSize(width: bounds.size.width, height: CGFloat.greatestFiniteMagnitude),
+      options: [.usesLineFragmentOrigin, .usesFontLeading],
       attributes: [NSFontAttributeName : font],
       context: nil).height
   }
 
-  private func numberOfLines(string: String) -> Int {
-    let lineHeight = "A".sizeWithAttributes([NSFontAttributeName: font]).height
+  fileprivate func numberOfLines(_ string: String) -> Int {
+    let lineHeight = "A".size(attributes: [NSFontAttributeName: font]).height
     let totalHeight = heightForString(string)
 
     return Int(totalHeight / lineHeight)

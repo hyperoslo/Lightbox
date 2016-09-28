@@ -26,19 +26,19 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   // MARK: - Transition
 
-  func transition(show: Bool) {
+  func transition(_ show: Bool) {
     guard let controller = lightboxController else { return }
 
     controller.headerView.transform = show
-      ? CGAffineTransformIdentity
-      : CGAffineTransformMakeTranslation(0, -200)
+      ? CGAffineTransform.identity
+      : CGAffineTransform(translationX: 0, y: -200)
 
     controller.footerView.transform = show
-      ? CGAffineTransformIdentity
-      : CGAffineTransformMakeTranslation(0, 250)
+      ? CGAffineTransform.identity
+      : CGAffineTransform(translationX: 0, y: 250)
 
     if interactive {
-      controller.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(show ? 1 : 0)
+      controller.view.backgroundColor = UIColor.black.withAlphaComponent(show ? 1 : 0)
     } else {
       controller.view.alpha = show ? 1 : 0
     }
@@ -46,21 +46,21 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   // MARK: - Pan gesture recognizer
 
-  func handlePanGesture(gesture: UIPanGestureRecognizer) {
-    let translation = gesture.translationInView(scrollView)
-    let percentage = abs(translation.y) / UIScreen.mainScreen().bounds.height / 1.5
-    let velocity = gesture.velocityInView(scrollView)
+  func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+    let translation = gesture.translation(in: scrollView)
+    let percentage = abs(translation.y) / UIScreen.main.bounds.height / 1.5
+    let velocity = gesture.velocity(in: scrollView)
 
     switch gesture.state {
-    case .Began:
+    case .began:
       interactive = true
       lightboxController?.presented = false
-      lightboxController?.dismissViewControllerAnimated(true, completion: nil)
+      lightboxController?.dismiss(animated: true, completion: nil)
       if let origin = scrollView?.frame.origin { initialOrigin = origin }
-    case .Changed:
-      updateInteractiveTransition(percentage)
+    case .changed:
+      update(percentage)
       scrollView?.frame.origin.y = initialOrigin.y + translation.y
-    case .Ended, .Cancelled:
+    case .ended, .cancelled:
 
       var time = translation.y * 3 / abs(velocity.y)
       if time > 1 { time = 0.7 }
@@ -69,22 +69,22 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
       lightboxController?.presented = true
 
       if percentage > 0.1 {
-        finishInteractiveTransition()
+        finish()
         guard let controller = lightboxController else { return }
 
         controller.headerView.alpha = 0
         controller.footerView.alpha = 0
 
-        UIView.animateWithDuration(NSTimeInterval(time), delay: 0, options: [.AllowUserInteraction], animations: {
+        UIView.animate(withDuration: TimeInterval(time), delay: 0, options: [.allowUserInteraction], animations: {
           self.scrollView?.frame.origin.y = translation.y * 3
           controller.view.alpha = 0
-          controller.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0)
+          controller.view.backgroundColor = UIColor.black.withAlphaComponent(0)
           }, completion: { _ in })
       } else {
-        cancelInteractiveTransition()
+        cancel()
 
         delay(0.035) {
-          UIView.animateWithDuration(0.35, animations: {
+          UIView.animate(withDuration: 0.35, animations: {
             self.scrollView?.frame.origin = self.initialOrigin
           })
         }
@@ -93,8 +93,8 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
     }
   }
 
-  override func finishInteractiveTransition() {
-    super.finishInteractiveTransition()
+  override func finish() {
+    super.finish()
 
     guard let lightboxController = lightboxController else { return }
     lightboxController.dismissalDelegate?.lightboxControllerWillDismiss(lightboxController)
@@ -105,14 +105,15 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
 extension LightboxTransition: UIViewControllerAnimatedTransitioning {
 
-  func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+  func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
     return 0.25
   }
 
-  func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-    guard let container = transitionContext.containerView(),
-      fromView = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)?.view,
-      toView = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)?.view
+  func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+    let container = transitionContext.containerView
+
+    guard let fromView = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)?.view,
+      let toView = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)?.view
       else { return }
 
     let firstView = dismissing ? toView : fromView
@@ -123,12 +124,12 @@ extension LightboxTransition: UIViewControllerAnimatedTransitioning {
     container.addSubview(firstView)
     container.addSubview(secondView)
 
-    let duration = transitionDuration(transitionContext)
+    let duration = transitionDuration(using: transitionContext)
 
-    UIView.animateWithDuration(duration, animations: {
+    UIView.animate(withDuration: duration, animations: {
       self.transition(!self.dismissing)
       }, completion: { _ in
-        transitionContext.transitionWasCancelled()
+        transitionContext.transitionWasCancelled
           ? transitionContext.completeTransition(false)
           : transitionContext.completeTransition(true)
     })
@@ -139,23 +140,23 @@ extension LightboxTransition: UIViewControllerAnimatedTransitioning {
 
 extension LightboxTransition: UIViewControllerTransitioningDelegate {
 
-  func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+  func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     dismissing = true
     return self
   }
 
-  func animationControllerForPresentedController(presented: UIViewController,
-                                                 presentingController presenting: UIViewController,
-                                                                      sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+  func animationController(forPresented presented: UIViewController,
+                                                 presenting: UIViewController,
+                                                                      source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     dismissing = false
     return self
   }
 
-  func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+  func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
     return interactive ? self : nil
   }
 
-  func interactionControllerForPresentation(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+  func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
     return interactive ? self : nil
   }
 }
@@ -164,11 +165,11 @@ extension LightboxTransition: UIViewControllerTransitioningDelegate {
 
 extension LightboxTransition: UIGestureRecognizerDelegate {
 
-  func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+  func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
     var result = false
 
     if let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer {
-      let translation = panGestureRecognizer.translationInView(gestureRecognizer.view)
+      let translation = panGestureRecognizer.translation(in: gestureRecognizer.view)
       if fabs(translation.x) < fabs(translation.y) {
         result = true
       }

@@ -15,4 +15,5 @@ Pod::Spec.new do |s|
   s.frameworks = 'UIKit', 'AVFoundation', 'AVKit'
   s.dependency 'Sugar' = {:git => "https://github.com/hyperoslo/Hue.git", :branch => 'swift-3' }
   s.dependency 'Hue' = {:git => "https://github.com/hyperoslo/Sugar.git", :branch => 'swift3'  }
+  
 end

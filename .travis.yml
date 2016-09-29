@@ -8,4 +8,3 @@ before_install:
 
 script:
 - xcodebuild clean build -project Lightbox.xcodeproj -scheme "Lightbox-iOS" -sdk iphonesimulator
-- xcodebuild test -project Lightbox.xcodeproj -scheme "Lightbox-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0'

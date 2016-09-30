@@ -24,6 +24,7 @@ public class LightboxImage {
   public func addImageTo(imageView: UIImageView, completion: ((image: UIImage?) -> Void)? = nil) {
     if let image = image {
       imageView.image = image
+      completion?(image: image)
     } else if let imageURL = imageURL {
       LightboxConfig.loadImage(imageView: imageView, URL: imageURL) { error, image in
         completion?(image: image)

@@ -16,7 +16,7 @@ class PageView: UIScrollView {
     imageView.userInteractionEnabled = true
 
     return imageView
-    }()
+  }()
 
   lazy var playButton: UIButton = {
     let button = UIButton(type: .Custom)
@@ -32,6 +32,8 @@ class PageView: UIScrollView {
     return button
   }()
 
+  lazy var activityIndicator: LoadingIndicator = LoadingIndicator()
+
   var image: LightboxImage
   var contentFrame = CGRect.zero
   weak var pageViewDelegate: PageViewDelegate?
@@ -42,13 +44,18 @@ class PageView: UIScrollView {
     self.image = image
     super.init(frame: CGRect.zero)
 
+    configure()
+
+    activityIndicator.alpha = 1
     self.image.addImageTo(imageView) { image in
       self.userInteractionEnabled = true
       self.configureImageView()
       self.pageViewDelegate?.remoteImageDidLoad(image)
-    }
 
-    configure()
+      UIView.animateWithDuration(0.4) {
+        self.activityIndicator.alpha = 0
+      }
+    }
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -63,6 +70,8 @@ class PageView: UIScrollView {
     if image.videoURL != nil {
       addSubview(playButton)
     }
+
+    addSubview(activityIndicator)
 
     delegate = self
     multipleTouchEnabled = true
@@ -100,7 +109,8 @@ class PageView: UIScrollView {
   override func layoutSubviews() {
     super.layoutSubviews()
 
-    playButton.center = CGPoint(x: bounds.size.width/2, y: bounds.size.height/2)
+    activityIndicator.center = imageView.center
+    playButton.center = imageView.center
   }
 
   func configureImageView() {

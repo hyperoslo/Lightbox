@@ -8,3 +8,6 @@ before_install:
 
 script:
 - xcodebuild clean build -project Lightbox.xcodeproj -scheme "Lightbox-iOS" -sdk iphonesimulator
+
+notifications:
+  email: false

@@ -165,8 +165,7 @@ class PageView: UIScrollView {
   // MARK: - Controls
   
   func makeActivityIndicator() -> UIActivityIndicatorView {
-    let view = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-    view.color = UIColor.black
+    let view = UIActivityIndicatorView(activityIndicatorStyle: .white)
     LightboxConfig.LoadingIndicator.configure?(view)
     view.startAnimating()
   

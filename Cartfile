@@ -1,2 +1,2 @@
-github "hyperoslo/Sugar" "swift-3"
-github "hyperoslo/Hue" "swift3"
+github "hyperoslo/Sugar" "master"
+github "hyperoslo/Hue" "master"

@@ -15,7 +15,6 @@
 		D54DFCBE1C5AAAD600ADEA0E /* InfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54DFCBC1C5AAAD600ADEA0E /* InfoLabel.swift */; };
 		D54DFCBF1C5AAAD600ADEA0E /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54DFCBD1C5AAAD600ADEA0E /* PageView.swift */; };
 		D54DFCC21C5AAAF100ADEA0E /* Hue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54DFCC01C5AAAF100ADEA0E /* Hue.framework */; };
-		D54DFCC31C5AAAF100ADEA0E /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54DFCC11C5AAAF100ADEA0E /* Sugar.framework */; };
 		D573A2F01C5B5605006053DD /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2EF1C5B5605006053DD /* HeaderView.swift */; };
 		D573A2F31C5B5C7B006053DD /* LayoutConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2F21C5B5C7B006053DD /* LayoutConfigurable.swift */; };
 		D573A2F51C5B5CA4006053DD /* LightboxTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2F41C5B5CA4006053DD /* LightboxTransition.swift */; };
@@ -48,7 +47,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D54DFCC21C5AAAF100ADEA0E /* Hue.framework in Frameworks */,
-				D54DFCC31C5AAAF100ADEA0E /* Sugar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,7 +197,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Sugar.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Hue.framework",
 			);
 			name = "Copy frameworks with Carthage";

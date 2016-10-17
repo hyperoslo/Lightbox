@@ -1,5 +1,4 @@
 import UIKit
-import Sugar
 
 class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
@@ -83,7 +82,7 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
       } else {
         cancel()
 
-        delay(0.035) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.035) {
           UIView.animate(withDuration: 0.35, animations: {
             self.scrollView?.frame.origin = self.initialOrigin
           })

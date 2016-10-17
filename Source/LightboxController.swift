@@ -1,6 +1,5 @@
 import UIKit
 import Hue
-import Sugar
 
 public protocol LightboxControllerPageDelegate: class {
 
@@ -96,7 +95,7 @@ open class LightboxController: UIViewController {
       pageDelegate?.lightboxController(self, didMoveToPage: currentPage)
 
       if let image = pageViews[currentPage].imageView.image , dynamicBackground {
-        delay(0.125) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.125) {
           self.loadDynamicBackground(image)
         }
       }
@@ -378,7 +377,7 @@ extension LightboxController: HeaderViewDelegate {
 
     self.pageViews.remove(at: prevIndex).removeFromSuperview()
 
-    delay(0.5) {
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
       self.configureLayout()
       self.currentPage = Int(self.scrollView.contentOffset.x / self.screenBounds.width)
       deleteButton.isEnabled = true

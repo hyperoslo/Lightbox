@@ -5,6 +5,6 @@ inhibit_all_warnings!
 
 target 'DemoLightbox' do
   pod 'Lightbox', path: '../../'
-  pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar', branch: 'swift-3'
-  pod 'Hue', git: 'https://github.com/hyperoslo/Hue', branch: 'swift3'
+  pod 'Sugar', git: 'https://github.com/hyperoslo/Sugar'
+  pod 'Hue', git: 'https://github.com/hyperoslo/Hue'
 end

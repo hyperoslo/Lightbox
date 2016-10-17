@@ -2,7 +2,7 @@ import UIKit
 import Lightbox
 
 class ViewController: UIViewController {
-
+  
   lazy var showButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.addTarget(self, action: #selector(showLightbox), for: .touchUpInside)
@@ -11,22 +11,23 @@ class ViewController: UIViewController {
     button.titleLabel?.font = UIFont(name: "AvenirNextCondensed-DemiBold", size: 30)
     button.frame = UIScreen.main.bounds
     button.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleBottomMargin]
-
+    
     return button
     }()
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-
+    
     view.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleBottomMargin]
     view.backgroundColor = UIColor.white
     view.addSubview(showButton)
   }
-
+  
   // MARK: - Action methods
-
+  
   func showLightbox() {
     let images = [
+      LightboxImage(imageURL: URL(string: "https://cdn.arstechnica.net/2011/10/05/iphone4s_sample_apple-4e8c706-intro.jpg")!),
       LightboxImage(
         image: UIImage(named: "photo1")!,
         text: "Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text"
@@ -39,13 +40,12 @@ class ViewController: UIViewController {
       LightboxImage(
         image: UIImage(named: "photo3")!,
         text: "Some very long lorem ipsum text."
-      ),
-      LightboxImage(imageURL: URL(string: "https://cdn.arstechnica.net/2011/10/05/iphone4s_sample_apple-4e8c706-intro.jpg")!)
+      )
     ]
-
+    
     let controller = LightboxController(images: images)
     controller.dynamicBackground = true
-
+    
     present(controller, animated: true, completion: nil)
   }
 }

@@ -5,6 +5,7 @@ protocol PageViewDelegate: class {
   func pageViewDidZoom(_ pageView: PageView)
   func remoteImageDidLoad(_ image: UIImage?)
   func pageView(_ pageView: PageView, didTouchPlayButton videoURL: URL)
+  func pageViewDidTouch(_ pageView: PageView)
 }
 
 class PageView: UIScrollView {
@@ -37,6 +38,10 @@ class PageView: UIScrollView {
   var image: LightboxImage
   var contentFrame = CGRect.zero
   weak var pageViewDelegate: PageViewDelegate?
+
+  var hasZoomed: Bool {
+    return zoomScale != 1.0
+  }
 
   // MARK: - Initializers
 
@@ -84,6 +89,11 @@ class PageView: UIScrollView {
     doubleTapRecognizer.numberOfTapsRequired = 2
     doubleTapRecognizer.numberOfTouchesRequired = 1
     addGestureRecognizer(doubleTapRecognizer)
+
+    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:)))
+    addGestureRecognizer(tapRecognizer)
+
+    tapRecognizer.require(toFail: doubleTapRecognizer)
   }
 
   // MARK: - Recognizers
@@ -102,6 +112,10 @@ class PageView: UIScrollView {
     let rectToZoomTo = CGRect(x: x, y: y, width: width, height: height)
 
     zoom(to: rectToZoomTo, animated: true)
+  }
+
+  func viewTapped(_ recognizer: UITapGestureRecognizer) {
+    pageViewDelegate?.pageViewDidTouch(self)
   }
 
   // MARK: - Layout

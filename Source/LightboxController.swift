@@ -296,6 +296,18 @@ open class LightboxController: UIViewController {
     backgroundView.image = image
     backgroundView.layer.add(CATransition(), forKey: kCATransitionFade)
   }
+
+  func toggleControls(pageView: PageView?, visible: Bool, duration: TimeInterval = 0.1, delay: TimeInterval = 0) {
+    let alpha: CGFloat = visible ? 1.0 : 0.0
+
+    pageView?.playButton.isHidden = !visible
+
+    UIView.animate(withDuration: duration, delay: delay, options: [], animations: {
+      self.headerView.alpha = alpha
+      self.footerView.alpha = alpha
+      pageView?.playButton.alpha = alpha
+    }, completion: nil)
+  }
 }
 
 // MARK: - UIScrollViewDelegate
@@ -335,21 +347,19 @@ extension LightboxController: PageViewDelegate {
   }
 
   func pageViewDidZoom(_ pageView: PageView) {
-    let hidden = pageView.zoomScale != 1.0
-    let duration = hidden ? 0.1 : 1.0
-    let alpha: CGFloat = hidden ? 0.0 : 1.0
-
-    pageView.playButton.isHidden = hidden
-
-    UIView.animate(withDuration: duration, delay: 0.5, options: [], animations: {
-      self.headerView.alpha = alpha
-      self.footerView.alpha = alpha
-      pageView.playButton.alpha = alpha
-    }, completion: nil)
+    let duration = pageView.hasZoomed ? 0.1 : 0.5
+    toggleControls(pageView: pageView, visible: !pageView.hasZoomed, duration: duration, delay: 0.5)
   }
 
   func pageView(_ pageView: PageView, didTouchPlayButton videoURL: URL) {
     LightboxConfig.handleVideo(self, videoURL)
+  }
+
+  func pageViewDidTouch(_ pageView: PageView) {
+    guard !pageView.hasZoomed else { return }
+
+    let visible = (headerView.alpha == 1.0)
+    toggleControls(pageView: pageView, visible: !visible)
   }
 }
 

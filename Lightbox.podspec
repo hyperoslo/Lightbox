@@ -13,6 +13,7 @@ Pod::Spec.new do |s|
   s.ios.resource = 'Source/Lightbox.bundle'
 
   s.frameworks = 'UIKit', 'AVFoundation', 'AVKit'
-  s.dependency 'Sugar'
-  s.dependency 'Hue'
+  s.dependency 'Sugar' = {:git => "https://github.com/hyperoslo/Hue.git", :branch => 'swift-3' }
+  s.dependency 'Hue' = {:git => "https://github.com/hyperoslo/Sugar.git", :branch => 'swift3'  }
+  
 end

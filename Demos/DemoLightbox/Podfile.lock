@@ -6,25 +6,17 @@ PODS:
   - Sugar (3.0.0)
 
 DEPENDENCIES:
-  - Hue (from `https://github.com/hyperoslo/Hue`)
   - Lightbox (from `../../`)
 
 EXTERNAL SOURCES:
-  Hue:
-    :git: https://github.com/hyperoslo/Hue
   Lightbox:
     :path: "../../"
 
-CHECKOUT OPTIONS:
-  Hue:
-    :commit: ef39c988eb6c1606454359c808e5373edb257c57
-    :git: https://github.com/hyperoslo/Hue
-
 SPEC CHECKSUMS:
-  Hue: ab7efb15270e0bc764f2f468aa6f3f2728d52f2b
+  Hue: 354caec055fdc9d38b5ef33ca2e7224721843baf
   Lightbox: e4523e8cf3261cbc833d0e76ae4dae774731d115
   Sugar: 079e1375b76c8f0693474417836ef098f507ac50
 
-PODFILE CHECKSUM: 2f4174011e05bafa19e471a87fbcc5ecded249bf
+PODFILE CHECKSUM: cd88b68c201e5c39cef62070056649eaee91c71b
 
 COCOAPODS: 1.1.1

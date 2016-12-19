@@ -1,4 +1,4 @@
-![Lightbox](https://github.com/hyperoslo/Lightbox/blob/master/Art/LightboxPresentation.png)
+# Lightbox
 
 [![Version](https://img.shields.io/cocoapods/v/Lightbox.svg?style=flat)](http://cocoadocs.org/docsets/Lightbox)
 [![CI Status](http://img.shields.io/travis/hyperoslo/Lightbox.svg?style=flat)](https://travis-ci.org/hyperoslo/Lightbox)
@@ -6,8 +6,6 @@
 [![License](https://img.shields.io/cocoapods/l/Lightbox.svg?style=flat)](http://cocoadocs.org/docsets/Lightbox)
 [![Platform](https://img.shields.io/cocoapods/p/Lightbox.svg?style=flat)](http://cocoadocs.org/docsets/Lightbox)
 ![Swift](https://img.shields.io/badge/%20in-swift%203.0-orange.svg)
-
-<img src="https://github.com/hyperoslo/Lightbox/blob/master/Resources/LightboxIcon.png" alt="Lightbox Icon" align="right" />
 
 **Lightbox** is a convenient and easy to use image viewer for your iOS app,
 packed with all the features you expect:
@@ -22,8 +20,6 @@ packed with all the features you expect:
 - [x] Demo project.
 
 ## Table of Contents
-
-<img src="https://github.com/hyperoslo/BarcodeScanner/blob/master/Art/LightboxIcon.png" alt="Lightbox Icon" width="190" height="190" align="right" />
 
 * [Usage](#usage)
   * [Controller](#controller)

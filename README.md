@@ -103,7 +103,7 @@ extension ViewController: LightboxControllerDismissalDelegate: class {
 
 ### Image loading
 
-Bu default images are loaded using `sendAsynchronousRequest` method of
+By default images are loaded using `sendAsynchronousRequest` method of
 `NSURLConnection`. But it's easy to change this behavior using **Lightbox**
 configuration.
 
@@ -142,7 +142,7 @@ LightboxConfig.handleVideo = { from, videoURL in
 
 ### Configuration
 
-Configure text, colors, fonts of UI elements by just overriding the static
+Configure text, colors, fonts of UI elements by overriding the static
 variables in the **Lightbox** [configuration](https://github.com/hyperoslo/Lightbox/blob/master/Source/LightboxConfig.swift) struct. As an example:
 
 ```swift

@@ -7,7 +7,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/Lightbox.svg?style=flat)](http://cocoadocs.org/docsets/Lightbox)
 ![Swift](https://img.shields.io/badge/%20in-swift%203.0-orange.svg)
 
-<iframe src="https://appetize.io/embed/wfgwc2uvg82m9pzbt17p4rrgh4?device=iphone5s&scale=100&autoplay=false&orientation=portrait&deviceColor=black" width="378px" height="800px" frameborder="0" scrolling="no"></iframe>
+[Demo](https://appetize.io/app/wfgwc2uvg82m9pzbt17p4rrgh4?device=iphone5s&scale=75&orientation=portrait&osVersion=9.3)
 
 <img src="https://raw.githubusercontent.com/hyperoslo/Lightbox/master/Images/Icon.png" alt="Lightbox Icon" align="right" />
 

@@ -1,5 +1,4 @@
 import UIKit
-import Hue
 
 public protocol LightboxControllerPageDelegate: class {
 

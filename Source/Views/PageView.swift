@@ -17,7 +17,7 @@ class PageView: UIScrollView {
     imageView.isUserInteractionEnabled = true
 
     return imageView
-    }()
+  }()
 
   lazy var playButton: UIButton = {
     let button = UIButton(type: .custom)
@@ -35,6 +35,8 @@ class PageView: UIScrollView {
   
   lazy var activityIndicator: UIActivityIndicatorView = self.makeActivityIndicator()
 
+  lazy var activityIndicator: LoadingIndicator = LoadingIndicator()
+
   var image: LightboxImage
   var contentFrame = CGRect.zero
   weak var pageViewDelegate: PageViewDelegate?
@@ -49,6 +51,8 @@ class PageView: UIScrollView {
     self.image = image
     super.init(frame: CGRect.zero)
 
+    configure()
+
     activityIndicator.alpha = 1
     self.image.addImageTo(imageView) { image in
       self.isUserInteractionEnabled = true
@@ -59,8 +63,6 @@ class PageView: UIScrollView {
         self.activityIndicator.alpha = 0
       }
     }
-
-    configure()
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -76,6 +78,7 @@ class PageView: UIScrollView {
       addSubview(playButton)
     }
     
+
     addSubview(activityIndicator)
 
     delegate = self

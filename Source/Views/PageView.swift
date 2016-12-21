@@ -2,41 +2,47 @@ import UIKit
 
 protocol PageViewDelegate: class {
 
-  func pageViewDidZoom(pageView: PageView)
-  func remoteImageDidLoad(image: UIImage?)
-  func pageView(pageView: PageView, didTouchPlayButton videoURL: NSURL)
+  func pageViewDidZoom(_ pageView: PageView)
+  func remoteImageDidLoad(_ image: UIImage?)
+  func pageView(_ pageView: PageView, didTouchPlayButton videoURL: URL)
+  func pageViewDidTouch(_ pageView: PageView)
 }
 
 class PageView: UIScrollView {
 
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFit
+    imageView.contentMode = .scaleAspectFit
     imageView.clipsToBounds = true
-    imageView.userInteractionEnabled = true
+    imageView.isUserInteractionEnabled = true
 
     return imageView
   }()
 
   lazy var playButton: UIButton = {
-    let button = UIButton(type: .Custom)
+    let button = UIButton(type: .custom)
     button.frame.size = CGSize(width: 60, height: 60)
-    button.setBackgroundImage(AssetManager.image("lightbox_play"), forState: .Normal)
-    button.addTarget(self, action: #selector(playButtonTouched(_:)), forControlEvents: .TouchUpInside)
+    button.setBackgroundImage(AssetManager.image("lightbox_play"), for: UIControlState())
+    button.addTarget(self, action: #selector(playButtonTouched(_:)), for: .touchUpInside)
 
     button.layer.shadowOffset = CGSize(width: 1, height: 1)
-    button.layer.shadowColor = UIColor.grayColor().CGColor
+    button.layer.shadowColor = UIColor.gray.cgColor
     button.layer.masksToBounds = false
     button.layer.shadowOpacity = 0.8
 
     return button
   }()
-
+  
   lazy var activityIndicator: LoadingIndicator = LoadingIndicator()
+    
 
   var image: LightboxImage
   var contentFrame = CGRect.zero
   weak var pageViewDelegate: PageViewDelegate?
+
+  var hasZoomed: Bool {
+    return zoomScale != 1.0
+  }
 
   // MARK: - Initializers
 
@@ -48,11 +54,11 @@ class PageView: UIScrollView {
 
     activityIndicator.alpha = 1
     self.image.addImageTo(imageView) { image in
-      self.userInteractionEnabled = true
+      self.isUserInteractionEnabled = true
       self.configureImageView()
       self.pageViewDelegate?.remoteImageDidLoad(image)
-
-      UIView.animateWithDuration(0.4) {
+      
+      UIView.animate(withDuration: 0.4) {
         self.activityIndicator.alpha = 0
       }
     }
@@ -70,11 +76,12 @@ class PageView: UIScrollView {
     if image.videoURL != nil {
       addSubview(playButton)
     }
+    
 
     addSubview(activityIndicator)
 
     delegate = self
-    multipleTouchEnabled = true
+    isMultipleTouchEnabled = true
     minimumZoomScale = LightboxConfig.Zoom.minimumScale
     maximumZoomScale = LightboxConfig.Zoom.maximumScale
     showsHorizontalScrollIndicator = false
@@ -84,12 +91,17 @@ class PageView: UIScrollView {
     doubleTapRecognizer.numberOfTapsRequired = 2
     doubleTapRecognizer.numberOfTouchesRequired = 1
     addGestureRecognizer(doubleTapRecognizer)
+
+    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:)))
+    addGestureRecognizer(tapRecognizer)
+
+    tapRecognizer.require(toFail: doubleTapRecognizer)
   }
 
   // MARK: - Recognizers
 
-  func scrollViewDoubleTapped(recognizer: UITapGestureRecognizer) {
-    let pointInView = recognizer.locationInView(imageView)
+  func scrollViewDoubleTapped(_ recognizer: UITapGestureRecognizer) {
+    let pointInView = recognizer.location(in: imageView)
     let newZoomScale = zoomScale > minimumZoomScale
       ? minimumZoomScale
       : maximumZoomScale
@@ -101,7 +113,11 @@ class PageView: UIScrollView {
 
     let rectToZoomTo = CGRect(x: x, y: y, width: width, height: height)
 
-    zoomToRect(rectToZoomTo, animated: true)
+    zoom(to: rectToZoomTo, animated: true)
+  }
+
+  func viewTapped(_ recognizer: UITapGestureRecognizer) {
+    pageViewDelegate?.pageViewDidTouch(self)
   }
 
   // MARK: - Layout
@@ -156,10 +172,20 @@ class PageView: UIScrollView {
 
   // MARK: - Action
 
-  func playButtonTouched(button: UIButton) {
+  func playButtonTouched(_ button: UIButton) {
     guard let videoURL = image.videoURL else { return }
 
-    pageViewDelegate?.pageView(self, didTouchPlayButton: videoURL)
+    pageViewDelegate?.pageView(self, didTouchPlayButton: videoURL as URL)
+  }
+  
+  // MARK: - Controls
+  
+  func makeActivityIndicator() -> UIActivityIndicatorView {
+    let view = UIActivityIndicatorView(activityIndicatorStyle: .white)
+    LightboxConfig.LoadingIndicator.configure?(view)
+    view.startAnimating()
+  
+    return view
   }
 }
 
@@ -181,11 +207,11 @@ extension PageView: LayoutConfigurable {
 
 extension PageView: UIScrollViewDelegate {
 
-  func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+  func viewForZooming(in scrollView: UIScrollView) -> UIView? {
     return imageView
   }
 
-  func scrollViewDidZoom(scrollView: UIScrollView) {
+  func scrollViewDidZoom(_ scrollView: UIScrollView) {
     centerImageView()
     pageViewDelegate?.pageViewDidZoom(self)
   }

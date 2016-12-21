@@ -3,8 +3,5 @@ platform :ios, '8.0'
 use_frameworks!
 inhibit_all_warnings!
 
-target 'DemoLightbox' do
-  pod 'Lightbox', path: '../../'
-  pod 'Sugar'
-  pod 'Hue', git: 'https://github.com/hyperoslo/Hue'	
-end
+pod 'Lightbox', path: '../../'
+target 'DemoLightbox'

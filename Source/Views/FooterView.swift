@@ -2,48 +2,48 @@ import UIKit
 
 public protocol FooterViewDelegate: class {
 
-  func footerView(footerView: FooterView, didExpand expanded: Bool)
+  func footerView(_ footerView: FooterView, didExpand expanded: Bool)
 }
 
-public class FooterView: UIView {
+open class FooterView: UIView {
 
-  public private(set) lazy var infoLabel: InfoLabel = { [unowned self] in
+  open fileprivate(set) lazy var infoLabel: InfoLabel = { [unowned self] in
     let label = InfoLabel(text: "")
-    label.hidden = !LightboxConfig.InfoLabel.enabled
+    label.isHidden = !LightboxConfig.InfoLabel.enabled
 
     label.textColor = LightboxConfig.InfoLabel.textColor
-    label.userInteractionEnabled = true
+    label.isUserInteractionEnabled = true
     label.delegate = self
 
     return label
     }()
 
-  public private(set) lazy var pageLabel: UILabel = { [unowned self] in
+  open fileprivate(set) lazy var pageLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRect.zero)
-    label.hidden = !LightboxConfig.PageIndicator.enabled
+    label.isHidden = !LightboxConfig.PageIndicator.enabled
     label.numberOfLines = 1
 
     return label
     }()
 
-  public private(set) lazy var separatorView: UIView = { [unowned self] in
+  open fileprivate(set) lazy var separatorView: UIView = { [unowned self] in
     let view = UILabel(frame: CGRect.zero)
-    view.hidden = !LightboxConfig.PageIndicator.enabled
+    view.isHidden = !LightboxConfig.PageIndicator.enabled
     view.backgroundColor = LightboxConfig.PageIndicator.separatorColor
 
     return view
     }()
 
-  let gradientColors = [UIColor.hex("040404").alpha(0.1), UIColor.hex("040404")]
-  public weak var delegate: FooterViewDelegate?
+  let gradientColors = [UIColor(hex: "040404").alpha(0.1), UIColor(hex: "040404")]
+  open weak var delegate: FooterViewDelegate?
 
   // MARK: - Initializers
 
   public init() {
     super.init(frame: CGRect.zero)
 
-    backgroundColor = UIColor.clearColor()
-    addGradientLayer(gradientColors)
+    backgroundColor = UIColor.clear
+    _ = addGradientLayer(gradientColors)
 
     [pageLabel, infoLabel, separatorView].forEach { addSubview($0) }
   }
@@ -54,11 +54,11 @@ public class FooterView: UIView {
 
   // MARK: - Helpers
 
-  func expand(expand: Bool) {
+  func expand(_ expand: Bool) {
     expand ? infoLabel.expand() : infoLabel.collapse()
   }
 
-  func updatePage(page: Int, _ numberOfPages: Int) {
+  func updatePage(_ page: Int, _ numberOfPages: Int) {
     let text = "\(page)/\(numberOfPages)"
 
     pageLabel.attributedText = NSAttributedString(string: text,
@@ -66,19 +66,19 @@ public class FooterView: UIView {
     pageLabel.sizeToFit()
   }
 
-  func updateText(text: String) {
+  func updateText(_ text: String) {
     infoLabel.fullText = text
 
     if text.isEmpty {
-      removeGradientLayer()
+      _ = removeGradientLayer()
     } else if !infoLabel.expanded {
-      addGradientLayer(gradientColors)
+      _ = addGradientLayer(gradientColors)
     }
   }
 
   // MARK: - Layout
 
-  private func resetFrames() {
+  fileprivate func resetFrames() {
     frame.size.height = infoLabel.frame.height + 40 + 0.5
 
     pageLabel.frame.origin = CGPoint(
@@ -106,9 +106,9 @@ extension FooterView: LayoutConfigurable {
 
 extension FooterView: InfoLabelDelegate {
 
-  public func infoLabel(infoLabel: InfoLabel, didExpand expanded: Bool) {
+  public func infoLabel(_ infoLabel: InfoLabel, didExpand expanded: Bool) {
     resetFrames()
-    expanded ? removeGradientLayer() : addGradientLayer(gradientColors)
+    _ = expanded ? removeGradientLayer() : addGradientLayer(gradientColors)
     delegate?.footerView(self, didExpand: expanded)
   }
 }

@@ -2,14 +2,14 @@ import UIKit
 
 extension UIView {
 
-  func addGradientLayer(colors: [UIColor]) -> CAGradientLayer {
+  func addGradientLayer(_ colors: [UIColor]) -> CAGradientLayer {
     if let gradientLayer = gradientLayer { return gradientLayer }
 
     let gradient = CAGradientLayer()
 
     gradient.frame = bounds
-    gradient.colors = colors.map { $0.CGColor }
-    layer.insertSublayer(gradient, atIndex: 0)
+    gradient.colors = colors.map { $0.cgColor }
+    layer.insertSublayer(gradient, at: 0)
 
     return gradient
   }
@@ -24,7 +24,7 @@ extension UIView {
     gradientLayer?.frame = bounds
   }
 
-  private var gradientLayer: CAGradientLayer? {
+  fileprivate var gradientLayer: CAGradientLayer? {
     return layer.sublayers?.first as? CAGradientLayer
   }
 }

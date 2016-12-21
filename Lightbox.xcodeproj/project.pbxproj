@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D2D71BBA1D54DA65006AB907 /* Lightbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D2D71BB91D54DA65006AB907 /* Lightbox.bundle */; };
+		D22006741DFB4D9700E92898 /* Lightbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D22006731DFB4D9700E92898 /* Lightbox.bundle */; };
 		D2D71BBC1D54DA77006AB907 /* AssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D71BBB1D54DA77006AB907 /* AssetManager.swift */; };
 		D5026B3C1C5BF3FD003BC1A3 /* LightboxImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */; };
 		D523B0BD1C43AA8B001AD1EC /* LightboxConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B61C43AA8A001AD1EC /* LightboxConfig.swift */; };
@@ -15,7 +15,7 @@
 		D54DFCBE1C5AAAD600ADEA0E /* InfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54DFCBC1C5AAAD600ADEA0E /* InfoLabel.swift */; };
 		D54DFCBF1C5AAAD600ADEA0E /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54DFCBD1C5AAAD600ADEA0E /* PageView.swift */; };
 		D54DFCC21C5AAAF100ADEA0E /* Hue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54DFCC01C5AAAF100ADEA0E /* Hue.framework */; };
-		D54DFCC31C5AAAF100ADEA0E /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54DFCC11C5AAAF100ADEA0E /* Sugar.framework */; };
+		D56F15C81E0AB79800F128AF /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56F15C71E0AB79800F128AF /* LoadingIndicator.swift */; };
 		D573A2F01C5B5605006053DD /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2EF1C5B5605006053DD /* HeaderView.swift */; };
 		D573A2F31C5B5C7B006053DD /* LayoutConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2F21C5B5C7B006053DD /* LayoutConfigurable.swift */; };
 		D573A2F51C5B5CA4006053DD /* LightboxTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2F41C5B5CA4006053DD /* LightboxTransition.swift */; };
@@ -24,7 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		D2D71BB91D54DA65006AB907 /* Lightbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Lightbox.bundle; sourceTree = "<group>"; };
+		D22006731DFB4D9700E92898 /* Lightbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Lightbox.bundle; sourceTree = "<group>"; };
 		D2D71BBB1D54DA77006AB907 /* AssetManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetManager.swift; sourceTree = "<group>"; };
 		D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxImage.swift; sourceTree = "<group>"; };
 		D523B0A91C43AA2A001AD1EC /* Lightbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lightbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,7 +34,7 @@
 		D54DFCBC1C5AAAD600ADEA0E /* InfoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoLabel.swift; sourceTree = "<group>"; };
 		D54DFCBD1C5AAAD600ADEA0E /* PageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		D54DFCC01C5AAAF100ADEA0E /* Hue.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Hue.framework; path = Carthage/Build/iOS/Hue.framework; sourceTree = "<group>"; };
-		D54DFCC11C5AAAF100ADEA0E /* Sugar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sugar.framework; path = Carthage/Build/iOS/Sugar.framework; sourceTree = "<group>"; };
+		D56F15C71E0AB79800F128AF /* LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		D573A2EF1C5B5605006053DD /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		D573A2F21C5B5C7B006053DD /* LayoutConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutConfigurable.swift; sourceTree = "<group>"; };
 		D573A2F41C5B5CA4006053DD /* LightboxTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxTransition.swift; sourceTree = "<group>"; };
@@ -48,18 +48,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				D54DFCC21C5AAAF100ADEA0E /* Hue.framework in Frameworks */,
-				D54DFCC31C5AAAF100ADEA0E /* Sugar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D22006721DFB4D9700E92898 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D22006731DFB4D9700E92898 /* Lightbox.bundle */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		D523B09F1C43AA2A001AD1EC = {
 			isa = PBXGroup;
 			children = (
+				D22006721DFB4D9700E92898 /* Resources */,
 				D54DFCC01C5AAAF100ADEA0E /* Hue.framework */,
-				D54DFCC11C5AAAF100ADEA0E /* Sugar.framework */,
 				D523B0B41C43AA8A001AD1EC /* Source */,
 				D523B0AB1C43AA2A001AD1EC /* Lightbox */,
 				D523B0AA1C43AA2A001AD1EC /* Products */,
@@ -85,7 +92,6 @@
 		D523B0B41C43AA8A001AD1EC /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				D2D71BB91D54DA65006AB907 /* Lightbox.bundle */,
 				D573A2F11C5B5C72006053DD /* Library */,
 				D54DFCBB1C5AAAD600ADEA0E /* Views */,
 				D523B0B61C43AA8A001AD1EC /* LightboxConfig.swift */,
@@ -99,6 +105,7 @@
 		D54DFCBB1C5AAAD600ADEA0E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D56F15C71E0AB79800F128AF /* LoadingIndicator.swift */,
 				D573A2EF1C5B5605006053DD /* HeaderView.swift */,
 				D58A18CA1C5ABF8F000024BB /* FooterView.swift */,
 				D54DFCBD1C5AAAD600ADEA0E /* PageView.swift */,
@@ -155,11 +162,12 @@
 		D523B0A01C43AA2A001AD1EC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Hyper Interaktiv AS";
 				TargetAttributes = {
 					D523B0A81C43AA2A001AD1EC = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -185,7 +193,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2D71BBA1D54DA65006AB907 /* Lightbox.bundle in Resources */,
+				D22006741DFB4D9700E92898 /* Lightbox.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +206,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Sugar.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Hue.framework",
 			);
 			name = "Copy frameworks with Carthage";
@@ -215,6 +222,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D56F15C81E0AB79800F128AF /* LoadingIndicator.swift in Sources */,
 				D54DFCBF1C5AAAD600ADEA0E /* PageView.swift in Sources */,
 				D573A2F71C5B5E55006053DD /* UIView+Gradient.swift in Sources */,
 				D523B0BD1C43AA8B001AD1EC /* LightboxConfig.swift in Sources */,
@@ -245,8 +253,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -274,6 +284,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -293,8 +304,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -314,6 +327,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -324,6 +339,7 @@
 		D523B0B21C43AA2A001AD1EC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -339,12 +355,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Lightbox;
 				PRODUCT_NAME = Lightbox;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		D523B0B31C43AA2A001AD1EC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -360,6 +378,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Lightbox;
 				PRODUCT_NAME = Lightbox;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

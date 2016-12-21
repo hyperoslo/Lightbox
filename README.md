@@ -7,6 +7,8 @@
 [![Platform](https://img.shields.io/cocoapods/p/Lightbox.svg?style=flat)](http://cocoadocs.org/docsets/Lightbox)
 ![Swift](https://img.shields.io/badge/%20in-swift%203.0-orange.svg)
 
+<img src="https://raw.githubusercontent.com/hyperoslo/Lightbox/master/Images/Icon.png" alt="Lightbox Icon" align="right" />
+
 **Lightbox** is a convenient and easy to use image viewer for your iOS app,
 packed with all the features you expect:
 

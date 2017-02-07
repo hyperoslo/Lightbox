@@ -11,6 +11,11 @@ public protocol LightboxControllerDismissalDelegate: class {
   func lightboxControllerWillDismiss(_ controller: LightboxController)
 }
 
+public protocol LightboxControllerTouchDelegate: class {
+    
+  func lightboxController(_ controller: LightboxController, didTouch image: LightboxImage, at index: Int)
+}
+
 open class LightboxController: UIViewController {
 
   // MARK: - Internal views
@@ -137,6 +142,7 @@ open class LightboxController: UIViewController {
 
   open weak var pageDelegate: LightboxControllerPageDelegate?
   open weak var dismissalDelegate: LightboxControllerDismissalDelegate?
+  open weak var imageTouchDelegate: LightboxControllerTouchDelegate?
   open internal(set) var presented = false
   open fileprivate(set) var seen = false
 
@@ -358,6 +364,8 @@ extension LightboxController: PageViewDelegate {
   func pageViewDidTouch(_ pageView: PageView) {
     guard !pageView.hasZoomed else { return }
 
+    imageTouchDelegate?.lightboxController(self, didTouch: images[currentPage], at: currentPage)
+    
     let visible = (headerView.alpha == 1.0)
     toggleControls(pageView: pageView, visible: !visible)
   }

@@ -111,8 +111,8 @@ extension LightboxTransition: UIViewControllerAnimatedTransitioning {
   func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
     let container = transitionContext.containerView
 
-    guard let fromView = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)?.view,
-      let toView = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)?.view
+    guard let fromView = transitionContext.view(forKey: UITransitionContextViewKey.from),
+        let toView = transitionContext.view(forKey: UITransitionContextViewKey.to)
       else { return }
 
     let firstView = dismissing ? toView : fromView
@@ -122,6 +122,8 @@ extension LightboxTransition: UIViewControllerAnimatedTransitioning {
 
     container.addSubview(firstView)
     container.addSubview(secondView)
+
+    toView.frame = container.bounds
 
     let duration = transitionDuration(using: transitionContext)
 

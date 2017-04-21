@@ -23,9 +23,9 @@ open class HeaderView: UIView {
     button.setAttributedTitle(title, for: UIControlState())
 
     if let size = LightboxConfig.CloseButton.size {
-        button.frame.size = size
+      button.frame.size = size
     } else {
-        button.sizeToFit()
+      button.sizeToFit()
     }
 
     button.addTarget(self, action: #selector(closeButtonDidPress(_:)),
@@ -50,9 +50,9 @@ open class HeaderView: UIView {
     button.setAttributedTitle(title, for: .normal)
 
     if let size = LightboxConfig.DeleteButton.size {
-        button.frame.size = size
+      button.frame.size = size
     } else {
-        button.sizeToFit()
+      button.sizeToFit()
     }
     
     button.addTarget(self, action: #selector(deleteButtonDidPress(_:)),

@@ -75,7 +75,7 @@ open class LightboxController: UIViewController {
     let gradient = CAGradientLayer()
     let colors = [UIColor(hex: "090909").alpha(0), UIColor(hex: "040404")]
 
-    _ = view.addGradientLayer(colors)
+    view.addGradientLayer(colors)
     view.alpha = 0
 
     return view
@@ -99,7 +99,7 @@ open class LightboxController: UIViewController {
 
       pageDelegate?.lightboxController(self, didMoveToPage: currentPage)
 
-      if let image = pageViews[currentPage].imageView.image , dynamicBackground {
+      if let image = pageViews[currentPage].imageView.image, dynamicBackground {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.125) {
           self.loadDynamicBackground(image)
         }
@@ -246,7 +246,9 @@ open class LightboxController: UIViewController {
     var offset = scrollView.contentOffset
     offset.x = CGFloat(page) * (scrollView.frame.width + spacing)
 
-    scrollView.setContentOffset(offset, animated: animated)
+    var shouldAnimated = view.window != nil ? animated : false
+
+    scrollView.setContentOffset(offset, animated: shouldAnimated)
   }
 
   open func next(_ animated: Bool = true) {
@@ -347,8 +349,16 @@ extension LightboxController: UIScrollViewDelegate {
 
 extension LightboxController: PageViewDelegate {
 
-  func remoteImageDidLoad(_ image: UIImage?) {
-    guard let image = image , dynamicBackground else { return }
+  func remoteImageDidLoad(_ image: UIImage?, imageView: UIImageView) {
+    guard let image = image, dynamicBackground else {
+      return
+    }
+
+    let imageViewFrame = imageView.convert(imageView.frame, to: view)
+    guard view.frame.intersects(imageViewFrame) else {
+      return
+    }
+
     loadDynamicBackground(image)
   }
 

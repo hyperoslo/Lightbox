@@ -3,7 +3,7 @@ import UIKit
 protocol PageViewDelegate: class {
 
   func pageViewDidZoom(_ pageView: PageView)
-  func remoteImageDidLoad(_ image: UIImage?)
+  func remoteImageDidLoad(_ image: UIImage?, imageView: UIImageView)
   func pageView(_ pageView: PageView, didTouchPlayButton videoURL: URL)
   func pageViewDidTouch(_ pageView: PageView)
 }
@@ -52,13 +52,17 @@ class PageView: UIScrollView {
     configure()
 
     activityIndicator.alpha = 1
-    self.image.addImageTo(imageView) { image in
-      self.isUserInteractionEnabled = true
-      self.configureImageView()
-      self.pageViewDelegate?.remoteImageDidLoad(image)
+    self.image.addImageTo(imageView) { [weak self] image in
+      guard let strongSelf = self else {
+        return
+      }
+
+      strongSelf.isUserInteractionEnabled = true
+      strongSelf.configureImageView()
+      strongSelf.pageViewDelegate?.remoteImageDidLoad(image, imageView: strongSelf.imageView)
 
       UIView.animate(withDuration: 0.4) {
-        self.activityIndicator.alpha = 0
+        strongSelf.activityIndicator.alpha = 0
       }
     }
   }

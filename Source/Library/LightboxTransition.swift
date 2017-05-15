@@ -128,13 +128,13 @@ extension LightboxTransition: UIViewControllerAnimatedTransitioning {
     let duration = transitionDuration(using: transitionContext)
 
     DispatchQueue.main.async {
-        UIView.animate(withDuration: duration, animations: {
-            self.transition(!self.dismissing)
+      UIView.animate(withDuration: duration, animations: {
+        self.transition(!self.dismissing)
         }, completion: { _ in
-          transitionContext.transitionWasCancelled
-            ? transitionContext.completeTransition(false)
-            : transitionContext.completeTransition(true)
-        })
+        transitionContext.transitionWasCancelled
+          ? transitionContext.completeTransition(false)
+          : transitionContext.completeTransition(true)
+      })
     }
   }
 }

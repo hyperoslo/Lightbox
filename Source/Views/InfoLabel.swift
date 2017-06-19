@@ -56,7 +56,9 @@ open class InfoLabel: UILabel {
 
     while numberOfLines(truncatedText) > numberOfVisibleLines {
       truncatedText.removeSubrange(range)
-      range = truncatedText.index(range.lowerBound, offsetBy: -1)..<truncatedText.index(range.upperBound, offsetBy: -1)
+      let newStart = truncatedText.characters.index(truncatedText.endIndex, offsetBy: -(ellipsis.characters.count + 1))
+      let newEnd = truncatedText.characters.index(truncatedText.endIndex, offsetBy: -ellipsis.characters.count)
+      range = newStart..<newEnd
     }
 
     return truncatedText

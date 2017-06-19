@@ -82,7 +82,7 @@ open class LightboxController: UIViewController {
     }()
 
   var screenBounds: CGRect {
-    return UIScreen.main.bounds
+    return UIApplication.shared.delegate?.window??.bounds ?? .zero
   }
 
   // MARK: - Properties
@@ -267,7 +267,7 @@ open class LightboxController: UIViewController {
 
   // MARK: - Layout
 
-  open func configureLayout(_ size: CGSize = UIScreen.main.bounds.size) {
+  open func configureLayout(_ size: CGSize = UIApplication.shared.delegate?.window??.bounds.size ?? .zero) {
     scrollView.frame.size = size
     scrollView.contentSize = CGSize(
       width: size.width * CGFloat(numberOfPages) + spacing * CGFloat(numberOfPages - 1),

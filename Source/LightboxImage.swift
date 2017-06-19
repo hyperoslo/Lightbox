@@ -27,6 +27,7 @@ open class LightboxImage {
       completion?(image)
     } else if let imageURL = imageURL {
       LightboxConfig.loadImage(imageView, imageURL) { error, image in
+        self.image = image
         completion?(image)
       }
     }

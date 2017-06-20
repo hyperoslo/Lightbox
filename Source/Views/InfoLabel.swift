@@ -47,6 +47,10 @@ open class InfoLabel: UILabel {
     guard numberOfLines(fullText) > numberOfVisibleLines else {
       return truncatedText
     }
+    
+    while numberOfLines(truncatedText) > numberOfVisibleLines * 2 {
+        truncatedText = String(truncatedText.characters.prefix(truncatedText.characters.count / 2))
+    }
 
     truncatedText += ellipsis
 

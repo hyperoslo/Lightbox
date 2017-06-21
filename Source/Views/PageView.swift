@@ -1,5 +1,4 @@
 import UIKit
-import CTPanoramaView
 
 protocol PageViewDelegate: class {
 
@@ -19,12 +18,6 @@ class PageView: UIScrollView {
 
     return imageView
   }()
-    
-    lazy var panoramaView: CTPanoramaView = {
-        let panoramaView = CTPanoramaView()
-        panoramaView.controlMethod = .motion
-        return panoramaView
-    }()
 
   lazy var playButton: UIButton = {
     let button = UIButton(type: .custom)
@@ -56,11 +49,7 @@ class PageView: UIScrollView {
     self.image = image
     super.init(frame: CGRect.zero)
 
-    if image.panoramaMode == true {
-        configureForPanorama()
-    } else {
-        configure()
-    }
+    configure()
 
     activityIndicator.alpha = 1
     self.image.addImageTo(imageView) { [weak self] image in
@@ -84,11 +73,6 @@ class PageView: UIScrollView {
 
   // MARK: - Configuration
 
-  func configureForPanorama() {
-    panoramaView.image = self.image.image
-    addSubview(panoramaView)
-  }
-    
   func configure() {
     addSubview(imageView)
 
@@ -218,7 +202,6 @@ extension PageView: LayoutConfigurable {
     contentFrame = frame
     contentSize = frame.size
     imageView.frame = frame
-    panoramaView.frame = frame
     zoomScale = minimumZoomScale
 
     configureImageView()

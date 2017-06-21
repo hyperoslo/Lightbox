@@ -26,7 +26,6 @@ open class LightboxImage {
 
   open func addImageTo(_ imageView: UIImageView, completion: ((_ image: UIImage?) -> Void)? = nil) {
     if let image = image {
-      imageView.image = image
       completion?(image)
     } else if let imageURL = imageURL {
       LightboxConfig.loadImage(imageView, imageURL) { [weak self] error, image in

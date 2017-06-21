@@ -67,9 +67,16 @@ class PageView: UIScrollView {
       guard let strongSelf = self else {
         return
       }
+     
+      if !strongSelf.image.panoramaMode {
+        strongSelf.imageView.image = image
+        strongSelf.configureImageView()
+      } else {
+        strongSelf.panoramaView.image = image
+        strongSelf.configurePanorama()
+      }
 
       strongSelf.isUserInteractionEnabled = true
-      strongSelf.configureImageView()
       strongSelf.pageViewDelegate?.remoteImageDidLoad(image, imageView: strongSelf.imageView)
 
       UIView.animate(withDuration: 0.4) {
@@ -85,8 +92,13 @@ class PageView: UIScrollView {
   // MARK: - Configuration
 
   func configureForPanorama() {
-    panoramaView.image = self.image.image
     addSubview(panoramaView)
+    addSubview(activityIndicator)
+    
+    delegate = self
+    isMultipleTouchEnabled = false
+    showsHorizontalScrollIndicator = false
+    showsVerticalScrollIndicator = false
   }
     
   func configure() {
@@ -171,6 +183,11 @@ class PageView: UIScrollView {
 
     centerImageView()
   }
+    
+  func configurePanorama() {
+    panoramaView.frame = CGRect(origin: CGPoint.zero, size: frame.size)
+    centerImageView()
+  }
 
   func centerImageView() {
     let boundsSize = contentFrame.size
@@ -218,7 +235,6 @@ extension PageView: LayoutConfigurable {
     contentFrame = frame
     contentSize = frame.size
     imageView.frame = frame
-    panoramaView.frame = frame
     zoomScale = minimumZoomScale
 
     configureImageView()

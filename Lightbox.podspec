@@ -14,6 +14,7 @@ Pod::Spec.new do |s|
 
   s.frameworks = 'UIKit', 'AVFoundation', 'AVKit'
   s.dependency 'Hue'
+  s.dependency 'CTPanoramaView'
 
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
 end

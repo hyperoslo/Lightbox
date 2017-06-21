@@ -185,7 +185,7 @@ class PageView: UIScrollView {
   }
     
   func configurePanorama() {
-    panoramaView.frame = CGRect(origin: CGPoint.zero, size: frame.size)
+    panoramaView.frame = CGRect(origin: CGPoint.zero, size: UIScreen.main.bounds.size)
     centerImageView()
   }
 

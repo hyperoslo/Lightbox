@@ -1,1 +1,2 @@
 github "hyperoslo/Hue" "master"
+github "scihant/CTPanoramaView" ~> 1.0

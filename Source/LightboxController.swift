@@ -188,23 +188,14 @@ open class LightboxController: UIViewController {
 
   open override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-
-    if LightboxConfig.hideStatusBar {
-      UIApplication.shared.setStatusBarHidden(true, with: .fade)
-    }
-
     if !presented {
       presented = true
       configureLayout()
     }
   }
 
-  open override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-
-    if LightboxConfig.hideStatusBar {
-      UIApplication.shared.setStatusBarHidden(statusBarHidden, with: .fade)
-    }
+  open override var prefersStatusBarHidden: Bool {
+    return LightboxConfig.hideStatusBar
   }
 
   // MARK: - Rotation

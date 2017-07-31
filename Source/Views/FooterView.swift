@@ -110,10 +110,10 @@ extension FooterView: InfoLabelDelegate {
 
   public func infoLabel(_ infoLabel: InfoLabel, didExpand expanded: Bool) {
     resetFrames()
-    if let _ = expanded {
-        removeGradientLayer()
+    if(expanded) {
+        _ = removeGradientLayer()
     }else if(!LightboxConfig.InfoLabel.gradientDisabled){
-        addGradientLayer(gradientColors)
+        _ = addGradientLayer(gradientColors)
     }
     delegate?.footerView(self, didExpand: expanded)
   }

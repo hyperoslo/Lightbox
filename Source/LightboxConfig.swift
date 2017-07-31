@@ -87,6 +87,7 @@ open class LightboxConfig {
     public static var textColor = UIColor.white
     public static var ellipsisText = NSLocalizedString("Show more", comment: "")
     public static var ellipsisColor = UIColor(hex: "899AB9")
+    public static var gradientDisabled = false
 
     public static var textAttributes = [
       NSFontAttributeName: UIFont.systemFont(ofSize: 12),

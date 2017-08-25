@@ -246,7 +246,7 @@ open class LightboxController: UIViewController {
     var offset = scrollView.contentOffset
     offset.x = CGFloat(page) * (scrollView.frame.width + spacing)
 
-    var shouldAnimated = view.window != nil ? animated : false
+    let shouldAnimated = view.window != nil ? animated : false
 
     scrollView.setContentOffset(offset, animated: shouldAnimated)
   }

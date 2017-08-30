@@ -98,7 +98,7 @@ open class LightboxConfig {
     public static var minimumScale: CGFloat = 1.0
     public static var maximumScale: CGFloat = 3.0
   }
-  
+
   public struct LoadingIndicator {
     public static var configure: ((UIActivityIndicatorView) -> Void)? = nil
   }

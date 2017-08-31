@@ -147,8 +147,8 @@ extension LightboxTransition: UIViewControllerTransitioningDelegate {
   }
 
   func animationController(forPresented presented: UIViewController,
-                                                 presenting: UIViewController,
-                                                                      source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+                           presenting: UIViewController,
+                           source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     dismissing = false
     return self
   }

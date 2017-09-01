@@ -189,23 +189,14 @@ open class LightboxController: UIViewController {
 
   open override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-
-    if LightboxConfig.hideStatusBar {
-      UIApplication.shared.setStatusBarHidden(true, with: .fade)
-    }
-
     if !presented {
       presented = true
       configureLayout()
     }
   }
 
-  open override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-
-    if LightboxConfig.hideStatusBar {
-      UIApplication.shared.setStatusBarHidden(statusBarHidden, with: .fade)
-    }
+  open override var prefersStatusBarHidden: Bool {
+    return LightboxConfig.hideStatusBar
   }
 
   // MARK: - Rotation
@@ -247,7 +238,7 @@ open class LightboxController: UIViewController {
     var offset = scrollView.contentOffset
     offset.x = CGFloat(page) * (scrollView.frame.width + spacing)
 
-    var shouldAnimated = view.window != nil ? animated : false
+    let shouldAnimated = view.window != nil ? animated : false
 
     scrollView.setContentOffset(offset, animated: shouldAnimated)
   }

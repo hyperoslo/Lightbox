@@ -123,7 +123,7 @@ open class InfoLabel: UILabel {
     return string.boundingRect(
       with: CGSize(width: bounds.size.width, height: CGFloat.greatestFiniteMagnitude),
       options: [.usesLineFragmentOrigin, .usesFontLeading],
-      attributes: [NSFontAttributeName : font],
+      attributes: [NSFontAttributeName: font],
       context: nil).height
   }
 

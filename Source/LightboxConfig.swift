@@ -15,7 +15,7 @@ open class LightboxConfig {
 
     NSURLConnection.sendAsynchronousRequest(imageRequest,
       queue: OperationQueue.main,
-      completionHandler: { response, data, error in
+      completionHandler: { _, data, error in
         if let data = data, let image = UIImage(data: data) {
           imageView.image = image
         }

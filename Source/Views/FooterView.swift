@@ -108,7 +108,7 @@ extension FooterView: InfoLabelDelegate {
 
   public func infoLabel(_ infoLabel: InfoLabel, didExpand expanded: Bool) {
     resetFrames()
-    _ = expanded ? removeGradientLayer() : addGradientLayer(gradientColors)
+    _ = (expanded || infoLabel.fullText.isEmpty) ? removeGradientLayer() : addGradientLayer(gradientColors)
     delegate?.footerView(self, didExpand: expanded)
   }
 }

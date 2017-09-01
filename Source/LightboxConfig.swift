@@ -100,6 +100,6 @@ open class LightboxConfig {
   }
 
   public struct LoadingIndicator {
-    public static var configure: ((UIActivityIndicatorView) -> Void)? = nil
+    public static var configure: ((UIActivityIndicatorView) -> Void)?
   }
 }

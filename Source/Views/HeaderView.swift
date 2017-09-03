@@ -54,7 +54,7 @@ open class HeaderView: UIView {
     } else {
       button.sizeToFit()
     }
-    
+
     button.addTarget(self, action: #selector(deleteButtonDidPress(_:)),
       for: .touchUpInside)
 

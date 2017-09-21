@@ -98,7 +98,7 @@ open class HeaderView: UIView {
 
 extension HeaderView: LayoutConfigurable {
 
-  public func configureLayout() {
+  @objc public func configureLayout() {
     closeButton.frame.origin = CGPoint(
       x: bounds.width - closeButton.frame.width - 17, y: 0)
 

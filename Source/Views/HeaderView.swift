@@ -85,11 +85,11 @@ open class HeaderView: UIView {
 
   // MARK: - Actions
 
-  func deleteButtonDidPress(_ button: UIButton) {
+  @objc func deleteButtonDidPress(_ button: UIButton) {
     delegate?.headerView(self, didPressDeleteButton: button)
   }
 
-  func closeButtonDidPress(_ button: UIButton) {
+  @objc func closeButtonDidPress(_ button: UIButton) {
     delegate?.headerView(self, didPressCloseButton: button)
   }
 }

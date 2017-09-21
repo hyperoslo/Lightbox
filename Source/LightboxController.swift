@@ -252,7 +252,7 @@ open class LightboxController: UIViewController {
 
   // MARK: - Actions
 
-  func overlayViewDidTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
+  @objc func overlayViewDidTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
     footerView.expand(false)
   }
 

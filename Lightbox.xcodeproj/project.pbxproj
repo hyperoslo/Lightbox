@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D22006741DFB4D9700E92898 /* Lightbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D22006731DFB4D9700E92898 /* Lightbox.bundle */; };
+		D2A58F5E1F7943A30064F14E /* Imaginary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A58F5D1F7943A30064F14E /* Imaginary.framework */; };
 		D2D71BBC1D54DA77006AB907 /* AssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D71BBB1D54DA77006AB907 /* AssetManager.swift */; };
 		D5026B3C1C5BF3FD003BC1A3 /* LightboxImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */; };
 		D523B0BD1C43AA8B001AD1EC /* LightboxConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B61C43AA8A001AD1EC /* LightboxConfig.swift */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		D22006731DFB4D9700E92898 /* Lightbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Lightbox.bundle; sourceTree = "<group>"; };
+		D2A58F5D1F7943A30064F14E /* Imaginary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Imaginary.framework; path = Carthage/Build/iOS/Imaginary.framework; sourceTree = "<group>"; };
 		D2D71BBB1D54DA77006AB907 /* AssetManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetManager.swift; sourceTree = "<group>"; };
 		D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxImage.swift; sourceTree = "<group>"; };
 		D523B0A91C43AA2A001AD1EC /* Lightbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lightbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2A58F5E1F7943A30064F14E /* Imaginary.framework in Frameworks */,
 				D54DFCC21C5AAAF100ADEA0E /* Hue.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,6 +65,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		D2A58F5C1F7943A30064F14E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D2A58F5D1F7943A30064F14E /* Imaginary.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D523B09F1C43AA2A001AD1EC = {
 			isa = PBXGroup;
 			children = (
@@ -70,6 +81,7 @@
 				D523B0B41C43AA8A001AD1EC /* Source */,
 				D523B0AB1C43AA2A001AD1EC /* Lightbox */,
 				D523B0AA1C43AA2A001AD1EC /* Products */,
+				D2A58F5C1F7943A30064F14E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -221,6 +233,9 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Hue.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Imaginary.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Cache.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftHash.framework",
 			);
 			name = "Copy frameworks with Carthage";
 			outputPaths = (

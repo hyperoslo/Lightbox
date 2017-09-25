@@ -4,9 +4,6 @@ import AVKit
 import AVFoundation
 
 public class LightboxConfig {
-
-  public typealias LoadImageCompletion = (_ error: NSError?, _ image: UIImage?) -> Void
-
   public static var hideStatusBar = true
 
   open static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in

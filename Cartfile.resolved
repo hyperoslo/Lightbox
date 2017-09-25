@@ -1,1 +1,4 @@
-github "hyperoslo/Hue" "b0714f1b2a3d8d9e306eef4b8d86a2547baff556"
+github "hyperoslo/Cache" "4.0.0"
+github "hyperoslo/Hue" "3.0.0"
+github "hyperoslo/Imaginary" "3.0.0"
+github "onmyway133/SwiftHash" "2.0.1"

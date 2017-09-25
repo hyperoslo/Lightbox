@@ -3,26 +3,8 @@ import Hue
 import AVKit
 import AVFoundation
 
-open class LightboxConfig {
-
-  public typealias LoadImageCompletion = (_ error: NSError?, _ image: UIImage?) -> Void
-
-  open static var hideStatusBar = true
-
-  open static var loadImage: (_ imageView: UIImageView, _ URL: URL, _ completion: LoadImageCompletion?) -> Void = {
-    imageView, URL, completion in
-    let imageRequest: URLRequest = URLRequest(url: URL)
-
-    NSURLConnection.sendAsynchronousRequest(imageRequest,
-      queue: OperationQueue.main,
-      completionHandler: { _, data, error in
-        if let data = data, let image = UIImage(data: data) {
-          imageView.image = image
-        }
-
-        completion?(error as NSError?, imageView.image)
-    })
-  }
+public class LightboxConfig {
+  public static var hideStatusBar = true
 
   open static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in
     let videoController = AVPlayerViewController()
@@ -37,14 +19,14 @@ open class LightboxConfig {
     public static var enabled = true
     public static var separatorColor = UIColor(hex: "3D4757")
 
-    public static var textAttributes = [
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12),
-      NSAttributedStringKey.foregroundColor: UIColor(hex: "899AB8"),
-      NSAttributedStringKey.paragraphStyle: {
+    public static var textAttributes: [NSAttributedStringKey: Any] = [
+      .font: UIFont.systemFont(ofSize: 12),
+      .foregroundColor: UIColor(hex: "899AB8"),
+      .paragraphStyle: {
         var style = NSMutableParagraphStyle()
         style.alignment = .center
         return style
-        }()
+      }()
     ]
   }
 
@@ -54,14 +36,14 @@ open class LightboxConfig {
     public static var text = NSLocalizedString("Close", comment: "")
     public static var image: UIImage?
 
-    public static var textAttributes = [
-      NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16),
-      NSAttributedStringKey.foregroundColor: UIColor.white,
-      NSAttributedStringKey.paragraphStyle: {
+    public static var textAttributes: [NSAttributedStringKey: Any] = [
+      .font: UIFont.boldSystemFont(ofSize: 16),
+      .foregroundColor: UIColor.white,
+      .paragraphStyle: {
         var style = NSMutableParagraphStyle()
         style.alignment = .center
         return style
-        }()
+      }()
     ]
   }
 
@@ -71,14 +53,14 @@ open class LightboxConfig {
     public static var text = NSLocalizedString("Delete", comment: "")
     public static var image: UIImage?
 
-    public static var textAttributes = [
-      NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16),
-      NSAttributedStringKey.foregroundColor: UIColor(hex: "FA2F5B"),
-      NSAttributedStringKey.paragraphStyle: {
+    public static var textAttributes: [NSAttributedStringKey: Any] = [
+      .font: UIFont.boldSystemFont(ofSize: 16),
+      .foregroundColor: UIColor(hex: "FA2F5B"),
+      .paragraphStyle: {
         var style = NSMutableParagraphStyle()
         style.alignment = .center
         return style
-        }()
+      }()
     ]
   }
 
@@ -88,9 +70,9 @@ open class LightboxConfig {
     public static var ellipsisText = NSLocalizedString("Show more", comment: "")
     public static var ellipsisColor = UIColor(hex: "899AB9")
 
-    public static var textAttributes = [
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12),
-      NSAttributedStringKey.foregroundColor: UIColor(hex: "DBDBDB")
+    public static var textAttributes: [NSAttributedStringKey: Any] = [
+      .font: UIFont.systemFont(ofSize: 12),
+      .foregroundColor: UIColor(hex: "DBDBDB")
     ]
   }
 

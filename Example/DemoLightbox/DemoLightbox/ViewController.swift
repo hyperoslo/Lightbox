@@ -25,7 +25,7 @@ class ViewController: UIViewController {
   
   // MARK: - Action methods
   
-  func showLightbox() {
+  @objc func showLightbox() {
     let images = [
       LightboxImage(imageURL: URL(string: "https://cdn.arstechnica.net/2011/10/05/iphone4s_sample_apple-4e8c706-intro.jpg")!),
       LightboxImage(

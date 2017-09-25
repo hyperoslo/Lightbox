@@ -1,11 +1,10 @@
 # Lightbox
 
-[![Version](https://img.shields.io/cocoapods/v/Lightbox.svg?style=flat)](http://cocoadocs.org/docsets/Lightbox)
 [![CI Status](http://img.shields.io/travis/hyperoslo/Lightbox.svg?style=flat)](https://travis-ci.org/hyperoslo/Lightbox)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/Lightbox.svg?style=flat)](http://cocoadocs.org/docsets/Lightbox)
 [![Platform](https://img.shields.io/cocoapods/p/Lightbox.svg?style=flat)](http://cocoadocs.org/docsets/Lightbox)
-![Swift](https://img.shields.io/badge/%20in-swift%203.0-orange.svg)
+![Swift](https://img.shields.io/badge/%20in-swift%204.0-orange.svg)
 
 [Demo](https://appetize.io/app/wfgwc2uvg82m9pzbt17p4rrgh4?device=iphone5s&scale=75&orientation=portrait&osVersion=9.3)
 

@@ -38,9 +38,9 @@ open class LightboxConfig {
     public static var separatorColor = UIColor(hex: "3D4757")
 
     public static var textAttributes = [
-      NSFontAttributeName: UIFont.systemFont(ofSize: 12),
-      NSForegroundColorAttributeName: UIColor(hex: "899AB8"),
-      NSParagraphStyleAttributeName: {
+      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12),
+      NSAttributedStringKey.foregroundColor: UIColor(hex: "899AB8"),
+      NSAttributedStringKey.paragraphStyle: {
         var style = NSMutableParagraphStyle()
         style.alignment = .center
         return style
@@ -55,9 +55,9 @@ open class LightboxConfig {
     public static var image: UIImage?
 
     public static var textAttributes = [
-      NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16),
-      NSForegroundColorAttributeName: UIColor.white,
-      NSParagraphStyleAttributeName: {
+      NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16),
+      NSAttributedStringKey.foregroundColor: UIColor.white,
+      NSAttributedStringKey.paragraphStyle: {
         var style = NSMutableParagraphStyle()
         style.alignment = .center
         return style
@@ -72,9 +72,9 @@ open class LightboxConfig {
     public static var image: UIImage?
 
     public static var textAttributes = [
-      NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16),
-      NSForegroundColorAttributeName: UIColor(hex: "FA2F5B"),
-      NSParagraphStyleAttributeName: {
+      NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16),
+      NSAttributedStringKey.foregroundColor: UIColor(hex: "FA2F5B"),
+      NSAttributedStringKey.paragraphStyle: {
         var style = NSMutableParagraphStyle()
         style.alignment = .center
         return style
@@ -89,8 +89,8 @@ open class LightboxConfig {
     public static var ellipsisColor = UIColor(hex: "899AB9")
 
     public static var textAttributes = [
-      NSFontAttributeName: UIFont.systemFont(ofSize: 12),
-      NSForegroundColorAttributeName: UIColor(hex: "DBDBDB")
+      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12),
+      NSAttributedStringKey.foregroundColor: UIColor(hex: "DBDBDB")
     ]
   }
 

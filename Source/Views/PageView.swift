@@ -102,7 +102,7 @@ class PageView: UIScrollView {
 
   // MARK: - Recognizers
 
-  func scrollViewDoubleTapped(_ recognizer: UITapGestureRecognizer) {
+  @objc func scrollViewDoubleTapped(_ recognizer: UITapGestureRecognizer) {
     let pointInView = recognizer.location(in: imageView)
     let newZoomScale = zoomScale > minimumZoomScale
       ? minimumZoomScale
@@ -118,7 +118,7 @@ class PageView: UIScrollView {
     zoom(to: rectToZoomTo, animated: true)
   }
 
-  func viewTapped(_ recognizer: UITapGestureRecognizer) {
+  @objc func viewTapped(_ recognizer: UITapGestureRecognizer) {
     pageViewDelegate?.pageViewDidTouch(self)
   }
 
@@ -177,7 +177,7 @@ class PageView: UIScrollView {
 
   // MARK: - Action
 
-  func playButtonTouched(_ button: UIButton) {
+  @objc func playButtonTouched(_ button: UIButton) {
     guard let videoURL = image.videoURL else { return }
 
     pageViewDelegate?.pageView(self, didTouchPlayButton: videoURL as URL)
@@ -198,7 +198,7 @@ class PageView: UIScrollView {
 
 extension PageView: LayoutConfigurable {
 
-  func configureLayout() {
+  @objc func configureLayout() {
     contentFrame = frame
     contentSize = frame.size
     imageView.frame = frame

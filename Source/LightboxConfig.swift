@@ -3,26 +3,11 @@ import Hue
 import AVKit
 import AVFoundation
 
-open class LightboxConfig {
+public class LightboxConfig {
 
   public typealias LoadImageCompletion = (_ error: NSError?, _ image: UIImage?) -> Void
 
-  open static var hideStatusBar = true
-
-  open static var loadImage: (_ imageView: UIImageView, _ URL: URL, _ completion: LoadImageCompletion?) -> Void = {
-    imageView, URL, completion in
-    let imageRequest: URLRequest = URLRequest(url: URL)
-
-    NSURLConnection.sendAsynchronousRequest(imageRequest,
-      queue: OperationQueue.main,
-      completionHandler: { _, data, error in
-        if let data = data, let image = UIImage(data: data) {
-          imageView.image = image
-        }
-
-        completion?(error as NSError?, imageView.image)
-    })
-  }
+  public static var hideStatusBar = true
 
   open static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in
     let videoController = AVPlayerViewController()

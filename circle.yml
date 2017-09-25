@@ -1,0 +1,13 @@
+machine:
+  xcode:
+    version: "9.0"
+
+dependencies:
+  override:
+    - bin/bootstrap-if-needed
+  cache_directories:
+    - "Carthage"
+
+test:
+  override:
+    - set -o pipefail && xcodebuild -project Lightbox.xcodeproj -scheme "Lightbox-iOS" -sdk iphonesimulator clean build

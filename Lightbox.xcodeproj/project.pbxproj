@@ -381,7 +381,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Lightbox;
 				PRODUCT_NAME = Lightbox;
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 			};
 			name = Debug;
 		};
@@ -404,7 +403,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Lightbox;
 				PRODUCT_NAME = Lightbox;
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 			};
 			name = Release;
 		};

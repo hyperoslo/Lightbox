@@ -4,15 +4,22 @@ import AVKit
 import AVFoundation
 
 public class LightboxConfig {
+  /// Whether to show status bar while Lightbox is presented
   public static var hideStatusBar = true
 
-  open static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in
+  /// Provide a closure to handle selected video
+  public static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in
     let videoController = AVPlayerViewController()
     videoController.player = AVPlayer(url: videoURL)
 
     from.present(videoController, animated: true) {
       videoController.player?.play()
     }
+  }
+
+  /// Indicator is used to show while image is being fetched
+  public static var makeLoadingIndicator: () -> UIView = {
+    return LoadingIndicator()
   }
 
   public struct PageIndicator {
@@ -79,9 +86,5 @@ public class LightboxConfig {
   public struct Zoom {
     public static var minimumScale: CGFloat = 1.0
     public static var maximumScale: CGFloat = 3.0
-  }
-
-  public struct LoadingIndicator {
-    public static var configure: ((UIActivityIndicatorView) -> Void)?
   }
 }

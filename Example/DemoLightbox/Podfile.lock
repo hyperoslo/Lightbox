@@ -5,8 +5,8 @@ PODS:
   - Imaginary (3.0.0):
     - Cache (~> 4.0)
   - Lightbox (2.0.0):
-    - Hue
-    - Imaginary
+    - Hue (~> 3.0)
+    - Imaginary (~> 3.0)
   - SwiftHash (2.0.0)
 
 DEPENDENCIES:
@@ -20,7 +20,7 @@ SPEC CHECKSUMS:
   Cache: 363b6899cee63c82ccbd291e64a6c202abc17a88
   Hue: b8fe1e43eef13631331eebecb2198b68e2622f95
   Imaginary: 2765d293d425cbed3b07fa11642554cbaebe913d
-  Lightbox: e7de1d134eee502ca578a6ab13382c820965b7b3
+  Lightbox: f7f1cc942d81e84d85095531208f5fe1bfd9c639
   SwiftHash: d2e09b13495447178cdfb8e46e54a5c46f15f5a9
 
 PODFILE CHECKSUM: 408ae3477507a1d4b7ff06ffb3f162eda443424f

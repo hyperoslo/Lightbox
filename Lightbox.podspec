@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = "Lightbox"
   s.summary          = "A a convenient and easy to use image viewer for your iOS app, packed with all the features you expect"
-  s.version          = "1.0.0"
+  s.version          = "1.1.0"
   s.homepage         = "https://github.com/hyperoslo/Lightbox"
   s.license          = 'MIT'
   s.author           = { "Hyper Interaktiv AS" => "ios@hyper.no" }

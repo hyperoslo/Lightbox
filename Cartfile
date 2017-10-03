@@ -1,1 +1,2 @@
-github "hyperoslo/Hue" ~> 2.0
+github "hyperoslo/Hue" ~> 3.0
+github "hyperoslo/Imaginary" ~> 3.0

@@ -85,7 +85,7 @@ open class InfoLabel: UILabel {
 
   // MARK: - Actions
 
-  func labelDidTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
+  @objc func labelDidTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
     shortText = truncatedText
     expanded ? collapse() : expand()
   }
@@ -110,7 +110,7 @@ open class InfoLabel: UILabel {
 
     if string.range(of: ellipsis) != nil {
       let range = (string as NSString).range(of: ellipsis)
-      attributedString.addAttribute(NSForegroundColorAttributeName,
+      attributedString.addAttribute(NSAttributedStringKey.foregroundColor,
         value: LightboxConfig.InfoLabel.ellipsisColor, range: range)
     }
 
@@ -123,12 +123,12 @@ open class InfoLabel: UILabel {
     return string.boundingRect(
       with: CGSize(width: bounds.size.width, height: CGFloat.greatestFiniteMagnitude),
       options: [.usesLineFragmentOrigin, .usesFontLeading],
-      attributes: [NSFontAttributeName: font],
+      attributes: [NSAttributedStringKey.font: font],
       context: nil).height
   }
 
   fileprivate func numberOfLines(_ string: String) -> Int {
-    let lineHeight = "A".size(attributes: [NSFontAttributeName: font]).height
+    let lineHeight = "A".size(withAttributes: [NSAttributedStringKey.font: font]).height
     let totalHeight = heightForString(string)
 
     return Int(totalHeight / lineHeight)
@@ -139,7 +139,7 @@ open class InfoLabel: UILabel {
 
 extension InfoLabel: LayoutConfigurable {
 
-  public func configureLayout() {
+  @objc public func configureLayout() {
     shortText = truncatedText
     expanded ? expand() : collapse()
   }

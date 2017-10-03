@@ -1,5 +1,5 @@
 PODS:
-  - Cache (4.0.0):
+  - Cache (4.0.2):
     - SwiftHash (~> 2.0.0)
   - Hue (3.0.0)
   - Imaginary (3.0.0):
@@ -17,7 +17,7 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  Cache: e73353960c614ab79b0c6911b8c39da05b334470
+  Cache: 363b6899cee63c82ccbd291e64a6c202abc17a88
   Hue: b8fe1e43eef13631331eebecb2198b68e2622f95
   Imaginary: 2765d293d425cbed3b07fa11642554cbaebe913d
   Lightbox: e7de1d134eee502ca578a6ab13382c820965b7b3

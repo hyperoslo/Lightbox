@@ -48,19 +48,20 @@ open class InfoLabel: UILabel {
       return truncatedText
     }
 
+    // Perform quick "rough cut"
     while numberOfLines(truncatedText) > numberOfVisibleLines * 2 {
         truncatedText = String(truncatedText.characters.prefix(truncatedText.characters.count / 2))
     }
 
+    // Capture the endIndex of truncatedText before appending ellipsis
+    var truncatedTextCursor = truncatedText.endIndex
+
     truncatedText += ellipsis
 
-    let start = truncatedText.characters.index(truncatedText.endIndex, offsetBy: -(ellipsis.characters.count + 1))
-    let end = truncatedText.characters.index(truncatedText.endIndex, offsetBy: -ellipsis.characters.count)
-    var range = start..<end
-
+    // Remove characters ahead of ellipsis until the text is the right number of lines
     while numberOfLines(truncatedText) > numberOfVisibleLines {
-      truncatedText.removeSubrange(range)
-      range = truncatedText.index(range.lowerBound, offsetBy: -1)..<truncatedText.index(range.upperBound, offsetBy: -1)
+        truncatedTextCursor = truncatedText.index(before: truncatedTextCursor)
+        truncatedText.remove(at: truncatedTextCursor)
     }
 
     return truncatedText
@@ -105,13 +106,13 @@ open class InfoLabel: UILabel {
   }
 
   fileprivate func updateText(_ string: String) {
-    let attributedString = NSMutableAttributedString(string: string,
-      attributes: LightboxConfig.InfoLabel.textAttributes)
+    let textAttributes = LightboxConfig.InfoLabel.textAttributes
+    let attributedString = NSMutableAttributedString(string: string, attributes: textAttributes)
 
-    if string.range(of: ellipsis) != nil {
-      let range = (string as NSString).range(of: ellipsis)
-      attributedString.addAttribute(NSAttributedStringKey.foregroundColor,
-        value: LightboxConfig.InfoLabel.ellipsisColor, range: range)
+    if let range = string.range(of: ellipsis) {
+        let ellipsisColor = LightboxConfig.InfoLabel.ellipsisColor
+        let ellipsisRange = NSRange(range, in: string)
+        attributedString.addAttribute(.foregroundColor, value: ellipsisColor, range: ellipsisRange)
     }
 
     attributedText = attributedString

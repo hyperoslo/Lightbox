@@ -32,13 +32,18 @@ public class LightboxConfig {
       return URLSession(configuration: configuration)
     }()
         
-    sessionManager.dataTask(with: imageRequest, completionHandler: { (data, response, error) -> Void in
-      if let data = data, let image = UIImage(data: data) {
-        imageView.image = image
-      }  
-      completion?(error as NSError?, imageView.image)
+    let task = sessionManager.dataTask(with: imageRequest, completionHandler: { (data, _, error) -> Void in
+        if let data = data, let image = UIImage(data: data) {
+            DispatchQueue.main.sync {
+                imageView.image = image
+            }
+        }
+        completion?(error as NSError?, imageView.image)
     })
-    }
+    
+    task.resume()
+    
+  }
 
   /// Indicator is used to show while image is being fetched
   public static var makeLoadingIndicator: () -> UIView = {

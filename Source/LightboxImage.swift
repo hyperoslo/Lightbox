@@ -37,7 +37,11 @@ open class LightboxImage {
       completion?(image)
     } else if let imageURL = imageURL {
         LightboxConfig.loadImage(imageView, imageURL, httpHeaders) { error, image in
+          if error != nil {
+            completion?(nil)
+          } else {
             completion?(image)
+          }
         }
     }
   }

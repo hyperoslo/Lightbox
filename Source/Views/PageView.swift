@@ -51,7 +51,7 @@ class PageView: UIScrollView {
 
     configure()
 
-    loadingIndicator.alpha = 1
+    loadingIndicator.alpha = 0.3
     self.image.addImageTo(imageView) { [weak self] image in
       guard let strongSelf = self else {
         return

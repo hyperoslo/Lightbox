@@ -33,12 +33,14 @@ public class LightboxConfig {
     }()
         
     let task = sessionManager.dataTask(with: imageRequest, completionHandler: { (data, _, error) -> Void in
-        if let data = data, let image = UIImage(data: data) {
-            DispatchQueue.main.sync {
-                imageView.image = image
-            }
+        guard let data = data, let image = UIImage(data: data) else {
+            completion?(error as NSError?, nil)
+            return
         }
-        completion?(error as NSError?, imageView.image)
+        DispatchQueue.main.sync {
+            imageView.image = image
+        }
+        completion?(error as NSError?, image)
     })
     
     task.resume()

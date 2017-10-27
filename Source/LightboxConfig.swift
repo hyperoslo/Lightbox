@@ -6,7 +6,9 @@ import AVFoundation
 public class LightboxConfig {
   /// Whether to show status bar while Lightbox is presented
   public static var hideStatusBar = true
-
+  
+  public typealias LoadImageCompletion = (_ error: NSError?, _ image: UIImage?) -> Void
+    
   /// Provide a closure to handle selected video
   public static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in
     let videoController = AVPlayerViewController()
@@ -16,6 +18,27 @@ public class LightboxConfig {
       videoController.player?.play()
     }
   }
+    
+  public static var loadImage: (_ imageView: UIImageView, _ URL: URL, _ httpHeaders: [String: String]?, _ completion: LoadImageCompletion?) -> Void = {
+    imageView, URL, httpHeaders, completion in
+        
+    var imageRequest: URLRequest = URLRequest(url: URL)
+    imageRequest.allHTTPHeaderFields = httpHeaders
+        
+    let sessionManager: URLSession = {
+      let configuration =  URLSessionConfiguration.default
+      let cache = URLCache(memoryCapacity: 0, diskCapacity: 0, diskPath: nil)
+      configuration.urlCache = cache
+      return URLSession(configuration: configuration)
+    }()
+        
+    sessionManager.dataTask(with: imageRequest, completionHandler: { (data, response, error) -> Void in
+      if let data = data, let image = UIImage(data: data) {
+        imageView.image = image
+      }  
+      completion?(error as NSError?, imageView.image)
+    })
+    }
 
   /// Indicator is used to show while image is being fetched
   public static var makeLoadingIndicator: () -> UIView = {

@@ -235,7 +235,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Hue.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Imaginary.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Cache.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftHash.framework",
 			);
 			name = "Copy frameworks with Carthage";
 			outputPaths = (

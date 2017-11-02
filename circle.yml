@@ -4,9 +4,8 @@ machine:
 
 dependencies:
   override:
-    - bin/bootstrap-if-needed
-  cache_directories:
-    - "Carthage"
+    - rm -rf Carthage
+    - carthage update
 
 test:
   override:

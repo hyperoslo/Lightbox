@@ -1,6 +1,6 @@
 # Lightbox
 
-[![CI Status](http://img.shields.io/travis/hyperoslo/Lightbox.svg?style=flat)](https://travis-ci.org/hyperoslo/Lightbox)
+[![CI Status](https://circleci.com/gh/hyperoslo/Lightbox.png)](https://circleci.com/gh/hyperoslo/Lightbox)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/Lightbox.svg?style=flat)](http://cocoadocs.org/docsets/Lightbox)
 [![Platform](https://img.shields.io/cocoapods/p/Lightbox.svg?style=flat)](http://cocoadocs.org/docsets/Lightbox)

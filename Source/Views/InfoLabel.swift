@@ -50,7 +50,7 @@ open class InfoLabel: UILabel {
 
     // Perform quick "rough cut"
     while numberOfLines(truncatedText) > numberOfVisibleLines * 2 {
-        truncatedText = String(truncatedText.characters.prefix(truncatedText.characters.count / 2))
+        truncatedText = String(truncatedText.prefix(truncatedText.count / 2))
     }
 
     // Capture the endIndex of truncatedText before appending ellipsis

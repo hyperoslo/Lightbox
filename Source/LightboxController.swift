@@ -22,7 +22,6 @@ open class LightboxController: UIViewController {
 
   lazy var scrollView: UIScrollView = { [unowned self] in
     let scrollView = UIScrollView()
-    scrollView.frame = self.screenBounds
     scrollView.isPagingEnabled = false
     scrollView.delegate = self
     scrollView.isUserInteractionEnabled = true
@@ -30,7 +29,7 @@ open class LightboxController: UIViewController {
     scrollView.decelerationRate = UIScrollViewDecelerationRateFast
 
     return scrollView
-    }()
+  }()
 
   lazy var overlayTapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
@@ -61,14 +60,14 @@ open class LightboxController: UIViewController {
     view.delegate = self
 
     return view
-    }()
+  }()
 
   open fileprivate(set) lazy var footerView: FooterView = { [unowned self] in
     let view = FooterView()
     view.delegate = self
 
     return view
-    }()
+  }()
 
   open fileprivate(set) lazy var overlayView: UIView = { [unowned self] in
     let view = UIView(frame: CGRect.zero)
@@ -79,11 +78,7 @@ open class LightboxController: UIViewController {
     view.alpha = 0
 
     return view
-    }()
-
-  var screenBounds: CGRect {
-    return UIApplication.shared.delegate?.window??.bounds ?? .zero
-  }
+  }()
 
   // MARK: - Properties
 
@@ -192,6 +187,12 @@ open class LightboxController: UIViewController {
       presented = true
       configureLayout()
     }
+  }
+
+  open override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    scrollView.frame = view.bounds
   }
 
   open override var prefersStatusBarHidden: Bool {
@@ -332,7 +333,7 @@ extension LightboxController: UIScrollViewDelegate {
     }
 
     targetContentOffset.pointee.x = x
-    currentPage = Int(x / screenBounds.width)
+    currentPage = Int(x / view.bounds.width)
   }
 }
 
@@ -398,7 +399,7 @@ extension LightboxController: HeaderViewDelegate {
 
     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
       self.configureLayout()
-      self.currentPage = Int(self.scrollView.contentOffset.x / self.screenBounds.width)
+      self.currentPage = Int(self.scrollView.contentOffset.x / self.view.bounds.width)
       deleteButton.isEnabled = true
     }
   }
@@ -416,7 +417,7 @@ extension LightboxController: HeaderViewDelegate {
 extension LightboxController: FooterViewDelegate {
 
   public func footerView(_ footerView: FooterView, didExpand expanded: Bool) {
-    footerView.frame.origin.y = screenBounds.height - footerView.frame.height
+    footerView.frame.origin.y = view.bounds.height - footerView.frame.height
 
     UIView.animate(withDuration: 0.25, animations: {
       self.overlayView.alpha = expanded ? 1.0 : 0.0

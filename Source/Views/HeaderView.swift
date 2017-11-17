@@ -6,13 +6,6 @@ protocol HeaderViewDelegate: class {
 }
 
 open class HeaderView: UIView {
-
-  var centerTextStyle: NSMutableParagraphStyle = {
-    var style = NSMutableParagraphStyle()
-    style.alignment = .center
-    return style
-  }()
-
   open fileprivate(set) lazy var closeButton: UIButton = { [unowned self] in
     let title = NSAttributedString(
       string: LightboxConfig.CloseButton.text,

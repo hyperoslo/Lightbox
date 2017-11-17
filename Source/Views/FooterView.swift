@@ -81,12 +81,26 @@ open class FooterView: UIView {
   fileprivate func resetFrames() {
     frame.size.height = infoLabel.frame.height + 40 + 0.5
 
-    pageLabel.frame.origin = CGPoint(
-      x: (frame.width - pageLabel.frame.width) / 2,
-      y: frame.height - pageLabel.frame.height - 2)
+    do {
+      let bottomPadding: CGFloat
+      if #available(iOS 11, *) {
+        bottomPadding = safeAreaInsets.bottom
+      } else {
+        bottomPadding = 0
+      }
 
-    separatorView.frame = CGRect(x: 0, y: pageLabel.frame.minY - 2.5,
-      width: frame.width, height: 0.5)
+      pageLabel.frame.origin = CGPoint(
+        x: (frame.width - pageLabel.frame.width) / 2,
+        y: frame.height - pageLabel.frame.height - 2 - bottomPadding
+      )
+    }
+
+    separatorView.frame = CGRect(
+      x: 0,
+      y: pageLabel.frame.minY - 2.5,
+      width: frame.width,
+      height: 0.5
+    )
 
     infoLabel.frame.origin.y = separatorView.frame.minY - infoLabel.frame.height - 15
 

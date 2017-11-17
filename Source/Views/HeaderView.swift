@@ -38,7 +38,7 @@ open class HeaderView: UIView {
     button.isHidden = !LightboxConfig.CloseButton.enabled
 
     return button
-    }()
+  }()
 
   open fileprivate(set) lazy var deleteButton: UIButton = { [unowned self] in
     let title = NSAttributedString(
@@ -65,7 +65,7 @@ open class HeaderView: UIView {
     button.isHidden = !LightboxConfig.DeleteButton.enabled
 
     return button
-    }()
+  }()
 
   weak var delegate: HeaderViewDelegate?
 

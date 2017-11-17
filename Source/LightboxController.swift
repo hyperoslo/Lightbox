@@ -198,6 +198,13 @@ open class LightboxController: UIViewController {
       width: view.bounds.width,
       height: 100
     )
+
+    headerView.frame = CGRect(
+      x: 0,
+      y: 16,
+      width: view.bounds.width,
+      height: 100
+    )
   }
 
   open override var prefersStatusBarHidden: Bool {
@@ -280,13 +287,6 @@ open class LightboxController: UIViewController {
         pageView.frame.size.width += spacing
       }
     }
-
-    let bounds = scrollView.bounds
-    let headerViewHeight = headerView.closeButton.frame.height > headerView.deleteButton.frame.height
-      ? headerView.closeButton.frame.height
-      : headerView.deleteButton.frame.height
-
-    headerView.frame = CGRect(x: 0, y: 16, width: bounds.width, height: headerViewHeight)
 
     [headerView, footerView].forEach { ($0 as AnyObject).configureLayout() }
 

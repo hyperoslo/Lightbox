@@ -22,19 +22,12 @@ open class LightboxImage {
     self.videoURL = videoURL
   }
 
-  open func addImageTo(_ imageView: UIImageView, completion: ((_ image: UIImage?) -> Void)? = nil) {
+  open func addImageTo(_ imageView: UIImageView, completion: ((UIImage?) -> Void)? = nil) {
     if let image = image {
       imageView.image = image
       completion?(image)
     } else if let imageURL = imageURL {
-      imageView.setImage(url: imageURL, placeholder: nil, completion: { result in
-        switch result {
-        case .value(let image):
-          completion?(image)
-        case .error:
-          completion?(nil)
-        }
-      })
+      LightboxConfig.loadImage(imageView, imageURL, completion)
     }
   }
 }

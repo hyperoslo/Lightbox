@@ -28,14 +28,6 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
   func transition(_ show: Bool) {
     guard let controller = lightboxController else { return }
 
-    controller.headerView.transform = show
-      ? CGAffineTransform.identity
-      : CGAffineTransform(translationX: 0, y: -200)
-
-    controller.footerView.transform = show
-      ? CGAffineTransform.identity
-      : CGAffineTransform(translationX: 0, y: 250)
-
     if interactive {
       controller.view.backgroundColor = UIColor.black.withAlphaComponent(show ? 1 : 0)
     } else {

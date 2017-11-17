@@ -15,7 +15,8 @@ packed with all the features you expect:
 - [x] Video support.
 - [x] Double-tap to zoom.
 - [x] Image caption.
-- [x] Dynamic background.
+- [x] Dynamic background based on [Hue](https://github.com/hyperoslo/Hue)
+- [x] Remote image loading and caching based on [Imaginary](https://github.com/hyperoslo/Imaginary)
 - [x] Interactive transition animations.
 - [x] Powerful configuration.
 - [x] [Live Demo](https://appetize.io/app/wfgwc2uvg82m9pzbt17p4rrgh4?device=iphone5s&scale=75&orientation=portrait&osVersion=9.3)

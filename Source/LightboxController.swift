@@ -193,6 +193,12 @@ open class LightboxController: UIViewController {
     super.viewDidLayoutSubviews()
 
     scrollView.frame = view.bounds
+    footerView.frame = CGRect(
+      x: 0,
+      y: view.bounds.height - footerView.frame.height,
+      width: view.bounds.width,
+      height: 100
+    )
   }
 
   open override var prefersStatusBarHidden: Bool {
@@ -282,11 +288,8 @@ open class LightboxController: UIViewController {
       : headerView.deleteButton.frame.height
 
     headerView.frame = CGRect(x: 0, y: 16, width: bounds.width, height: headerViewHeight)
-    footerView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 70)
 
     [headerView, footerView].forEach { ($0 as AnyObject).configureLayout() }
-
-    footerView.frame.origin.y = bounds.height - footerView.frame.height
 
     overlayView.frame = scrollView.frame
     overlayView.resizeGradientLayer()
@@ -417,8 +420,6 @@ extension LightboxController: HeaderViewDelegate {
 extension LightboxController: FooterViewDelegate {
 
   public func footerView(_ footerView: FooterView, didExpand expanded: Bool) {
-    footerView.frame.origin.y = view.bounds.height - footerView.frame.height
-
     UIView.animate(withDuration: 0.25, animations: {
       self.overlayView.alpha = expanded ? 1.0 : 0.0
       self.headerView.deleteButton.alpha = expanded ? 0.0 : 1.0

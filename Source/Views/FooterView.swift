@@ -16,7 +16,7 @@ open class FooterView: UIView {
     label.delegate = self
 
     return label
-    }()
+  }()
 
   open fileprivate(set) lazy var pageLabel: UILabel = { [unowned self] in
     let label = UILabel(frame: CGRect.zero)
@@ -24,7 +24,7 @@ open class FooterView: UIView {
     label.numberOfLines = 1
 
     return label
-    }()
+  }()
 
   open fileprivate(set) lazy var separatorView: UIView = { [unowned self] in
     let view = UILabel(frame: CGRect.zero)
@@ -32,7 +32,7 @@ open class FooterView: UIView {
     view.backgroundColor = LightboxConfig.PageIndicator.separatorColor
 
     return view
-    }()
+  }()
 
   let gradientColors = [UIColor(hex: "040404").alpha(0.1), UIColor(hex: "040404")]
   open weak var delegate: FooterViewDelegate?
@@ -76,10 +76,8 @@ open class FooterView: UIView {
     }
   }
 
-  // MARK: - Layout
-
-  fileprivate func resetFrames() {
-    frame.size.height = infoLabel.frame.height + 40 + 0.5
+  open override func layoutSubviews() {
+    super.layoutSubviews()
 
     do {
       let bottomPadding: CGFloat
@@ -121,7 +119,6 @@ extension FooterView: LayoutConfigurable {
 extension FooterView: InfoLabelDelegate {
 
   public func infoLabel(_ infoLabel: InfoLabel, didExpand expanded: Bool) {
-    resetFrames()
     _ = (expanded || infoLabel.fullText.isEmpty) ? removeGradientLayer() : addGradientLayer(gradientColors)
     delegate?.footerView(self, didExpand: expanded)
   }

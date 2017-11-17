@@ -13,11 +13,11 @@ class ViewController: UIViewController {
     button.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleBottomMargin]
     
     return button
-    }()
+  }()
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     view.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleBottomMargin]
     view.backgroundColor = UIColor.white
     view.addSubview(showButton)

@@ -60,7 +60,7 @@ open class InfoLabel: UILabel {
 
     // Remove characters ahead of ellipsis until the text is the right number of lines
     while numberOfLines(truncatedText) > numberOfVisibleLines {
-      // To avoid Cannot decrement before startIndex
+      // To avoid "Cannot decrement before startIndex"
       guard truncatedTextCursor > truncatedText.startIndex else {
         break
       }

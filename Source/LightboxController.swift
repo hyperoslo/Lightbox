@@ -121,7 +121,7 @@ open class LightboxController: UIViewController {
 
   open var spacing: CGFloat = 20 {
     didSet {
-      configureLayout()
+      configureLayout(view.bounds.size)
     }
   }
 
@@ -184,7 +184,7 @@ open class LightboxController: UIViewController {
     super.viewDidAppear(animated)
     if !presented {
       presented = true
-      configureLayout()
+      configureLayout(view.bounds.size)
     }
   }
 
@@ -235,7 +235,7 @@ open class LightboxController: UIViewController {
       pageViews.append(pageView)
     }
 
-    configureLayout()
+    configureLayout(view.bounds.size)
   }
 
   // MARK: - Pagination
@@ -271,7 +271,7 @@ open class LightboxController: UIViewController {
 
   // MARK: - Layout
 
-  open func configureLayout(_ size: CGSize = UIApplication.shared.delegate?.window??.bounds.size ?? .zero) {
+  open func configureLayout(_ size: CGSize) {
     scrollView.frame.size = size
     scrollView.contentSize = CGSize(
       width: size.width * CGFloat(numberOfPages) + spacing * CGFloat(numberOfPages - 1),
@@ -400,7 +400,7 @@ extension LightboxController: HeaderViewDelegate {
     self.pageViews.remove(at: prevIndex).removeFromSuperview()
 
     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-      self.configureLayout()
+      self.configureLayout(self.view.bounds.size)
       self.currentPage = Int(self.scrollView.contentOffset.x / self.view.bounds.width)
       deleteButton.isEnabled = true
     }

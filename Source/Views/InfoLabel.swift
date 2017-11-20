@@ -41,7 +41,7 @@ open class InfoLabel: UILabel {
     }
   }
 
-  fileprivate var truncatedText: String {
+  var truncatedText: String {
     var truncatedText = fullText
 
     guard numberOfLines(fullText) > numberOfVisibleLines else {

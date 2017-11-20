@@ -19,8 +19,7 @@ public class LightboxConfig {
   }
 
   /// How to load image onto UIImageView
-  public static var loadImage: (UIImageView, URL, ((UIImage?) -> Void)?) -> Void =
-    { (imageView, imageURL , completion) in
+  public static var loadImage: (UIImageView, URL, ((UIImage?) -> Void)?) -> Void = { (imageView, imageURL, completion) in
 
     // Use Imaginary by default
     imageView.setImage(url: imageURL, placeholder: nil, completion: { result in

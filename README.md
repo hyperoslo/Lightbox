@@ -110,7 +110,7 @@ extension ViewController: LightboxControllerDismissalDelegate: class {
 
 ### Image loading
 
-By default images are loaded using [Imagary](https://github.com/hyperoslo/Imaginary) for reliable loading and caching. But it's easy to change this behavior using **LightboxConfig**
+By default images are loaded using [Imaginary](https://github.com/hyperoslo/Imaginary) for reliable loading and caching. But it's easy to change this behavior using **LightboxConfig**
 
 ```swift
 LightboxConfig.loadImage = {

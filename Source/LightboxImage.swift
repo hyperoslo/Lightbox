@@ -1,4 +1,5 @@
 import UIKit
+import Imaginary
 
 open class LightboxImage {
 
@@ -24,14 +25,11 @@ open class LightboxImage {
     self.panoramaMode = panoramaMode
   }
 
-  open func addImageTo(_ imageView: UIImageView, completion: ((_ image: UIImage?) -> Void)? = nil) {
+  open func addImageTo(_ imageView: UIImageView, completion: ((UIImage?) -> Void)? = nil) {
     if let image = image {
       completion?(image)
     } else if let imageURL = imageURL {
-      LightboxConfig.loadImage(imageView, imageURL) { [weak self] error, image in
-        self?.image = image
-        completion?(image)
-      }
+      LightboxConfig.loadImage(imageView, imageURL, completion)
     }
   }
 }

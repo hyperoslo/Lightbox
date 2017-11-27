@@ -40,7 +40,7 @@ class PageView: UIScrollView {
     return button
   }()
 
-  lazy var activityIndicator: LoadingIndicator = LoadingIndicator()
+  lazy var loadingIndicator: UIView = LightboxConfig.makeLoadingIndicator()
 
   var image: LightboxImage
   var contentFrame = CGRect.zero
@@ -62,7 +62,7 @@ class PageView: UIScrollView {
         configure()
     }
 
-    activityIndicator.alpha = 1
+    loadingIndicator.alpha = 1
     self.image.addImageTo(imageView) { [weak self] image in
       guard let strongSelf = self else {
         return
@@ -80,7 +80,7 @@ class PageView: UIScrollView {
       strongSelf.pageViewDelegate?.remoteImageDidLoad(image, imageView: strongSelf.imageView)
 
       UIView.animate(withDuration: 0.4) {
-        strongSelf.activityIndicator.alpha = 0
+        strongSelf.loadingIndicator.alpha = 0
       }
     }
   }
@@ -93,7 +93,7 @@ class PageView: UIScrollView {
 
   func configureForPanorama() {
     addSubview(panoramaView)
-    addSubview(activityIndicator)
+    addSubview(loadingIndicator)
     
     delegate = self
     isMultipleTouchEnabled = false
@@ -108,7 +108,7 @@ class PageView: UIScrollView {
       addSubview(playButton)
     }
 
-    addSubview(activityIndicator)
+    addSubview(loadingIndicator)
 
     delegate = self
     isMultipleTouchEnabled = true
@@ -130,7 +130,7 @@ class PageView: UIScrollView {
 
   // MARK: - Recognizers
 
-  func scrollViewDoubleTapped(_ recognizer: UITapGestureRecognizer) {
+  @objc func scrollViewDoubleTapped(_ recognizer: UITapGestureRecognizer) {
     let pointInView = recognizer.location(in: imageView)
     let newZoomScale = zoomScale > minimumZoomScale
       ? minimumZoomScale
@@ -146,7 +146,7 @@ class PageView: UIScrollView {
     zoom(to: rectToZoomTo, animated: true)
   }
 
-  func viewTapped(_ recognizer: UITapGestureRecognizer) {
+  @objc func viewTapped(_ recognizer: UITapGestureRecognizer) {
     pageViewDelegate?.pageViewDidTouch(self)
   }
 
@@ -155,7 +155,7 @@ class PageView: UIScrollView {
   override func layoutSubviews() {
     super.layoutSubviews()
 
-    activityIndicator.center = imageView.center
+    loadingIndicator.center = imageView.center
     playButton.center = imageView.center
   }
 
@@ -210,20 +210,10 @@ class PageView: UIScrollView {
 
   // MARK: - Action
 
-  func playButtonTouched(_ button: UIButton) {
+  @objc func playButtonTouched(_ button: UIButton) {
     guard let videoURL = image.videoURL else { return }
 
     pageViewDelegate?.pageView(self, didTouchPlayButton: videoURL as URL)
-  }
-
-  // MARK: - Controls
-
-  func makeActivityIndicator() -> UIActivityIndicatorView {
-    let view = UIActivityIndicatorView(activityIndicatorStyle: .white)
-    LightboxConfig.LoadingIndicator.configure?(view)
-    view.startAnimating()
-
-    return view
   }
 }
 
@@ -231,7 +221,7 @@ class PageView: UIScrollView {
 
 extension PageView: LayoutConfigurable {
 
-  func configureLayout() {
+  @objc func configureLayout() {
     contentFrame = frame
     contentSize = frame.size
     imageView.frame = frame

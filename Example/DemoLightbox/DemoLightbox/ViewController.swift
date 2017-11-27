@@ -13,11 +13,11 @@ class ViewController: UIViewController {
     button.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleBottomMargin]
     
     return button
-    }()
+  }()
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     view.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleBottomMargin]
     view.backgroundColor = UIColor.white
     view.addSubview(showButton)
@@ -25,21 +25,21 @@ class ViewController: UIViewController {
   
   // MARK: - Action methods
   
-  func showLightbox() {
+  @objc func showLightbox() {
     let images = [
       LightboxImage(imageURL: URL(string: "https://cdn.arstechnica.net/2011/10/05/iphone4s_sample_apple-4e8c706-intro.jpg")!),
       LightboxImage(
         image: UIImage(named: "photo1")!,
-        text: "Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text. Some very long lorem ipsum text"
+        text: "Photography is the science, art, application and practice of creating durable images by recording light or other electromagnetic radiation, either electronically by means of an image sensor, or chemically by means of a light-sensitive material such as photographic film"
       ),
       LightboxImage(
         image: UIImage(named: "photo2")!,
-        text: "🌲 🌲 🌲 🌲 🌲 🌲 🌲 🌲 🌲 🌲 🌲    🏃 🌲 🏃‍♀️ 🌲 🌲 🌲 🌲  🌲 🌲 🌲 🌲\n\nSuspendisse massa massa, maximus et finibus ac, auctor volutpat diam.\n\nPellentesque consequat magna condimentum mauris bibendum, nec ornare nisl hendrerit. Phasellus nec ultrices sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\nSuspendisse sit amet facilisis ante, ac suscipit sem. Integer feugiat sit amet erat sit amet mattis. Donec tristique, nunc ut varius elementum, nisi elit viverra ipsum, vitae aliquam justo libero in arcu. Quisque tempor et justo at malesuada. Curabitur justo dolor, ornare convallis sollicitudin sed, consectetur eu turpis. \n\nNulla et dui condimentum, laoreet lacus eu, ultrices nisl. Vivamus in ante volutpat, gravida nunc scelerisque, sagittis tellus. Nullam justo purus, sagittis a tincidunt a, maximus nec sem.",
+        text: "Emoji 😍 (/ɪˈmoʊdʒi/; singular emoji, plural emoji or emojis;[4] from the Japanese 絵文字えもじ, pronounced [emodʑi]) are ideograms and smileys used in electronic messages and web pages. Emoji are used much like emoticons and exist in various genres, including facial expressions, common objects, places and types of weather 🌅☔️💦, and animals 🐶🐱",
         videoURL: URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
       ),
       LightboxImage(
         image: UIImage(named: "photo3")!,
-        text: "Some very long lorem ipsum text."
+        text: "A lightbox is a translucent surface illuminated from behind, used for situations where a shape laid upon the surface needs to be seen with high contrast."
       )
     ]
     

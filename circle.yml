@@ -1,0 +1,12 @@
+machine:
+  xcode:
+    version: "9.0"
+
+dependencies:
+  override:
+    - rm -rf Carthage
+    - carthage update
+
+test:
+  override:
+    - set -o pipefail && xcodebuild -project Lightbox.xcodeproj -scheme "Lightbox-iOS" -sdk iphonesimulator clean build

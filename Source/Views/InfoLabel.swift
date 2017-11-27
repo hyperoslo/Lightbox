@@ -41,28 +41,32 @@ open class InfoLabel: UILabel {
     }
   }
 
-  fileprivate var truncatedText: String {
+  var truncatedText: String {
     var truncatedText = fullText
 
     guard numberOfLines(fullText) > numberOfVisibleLines else {
       return truncatedText
     }
-    
+
+    // Perform quick "rough cut"
     while numberOfLines(truncatedText) > numberOfVisibleLines * 2 {
-        truncatedText = String(truncatedText.characters.prefix(truncatedText.characters.count / 2))
+        truncatedText = String(truncatedText.prefix(truncatedText.count / 2))
     }
+
+    // Capture the endIndex of truncatedText before appending ellipsis
+    var truncatedTextCursor = truncatedText.endIndex
 
     truncatedText += ellipsis
 
-    let start = truncatedText.characters.index(truncatedText.endIndex, offsetBy: -(ellipsis.characters.count + 1))
-    let end = truncatedText.characters.index(truncatedText.endIndex, offsetBy: -ellipsis.characters.count)
-    var range = start..<end
-
+    // Remove characters ahead of ellipsis until the text is the right number of lines
     while numberOfLines(truncatedText) > numberOfVisibleLines {
-        truncatedText.removeSubrange(range)
-        let newStart = truncatedText.characters.index(truncatedText.endIndex, offsetBy: -(ellipsis.characters.count + 1))
-        let newEnd = truncatedText.characters.index(truncatedText.endIndex, offsetBy: -ellipsis.characters.count)
-        range = newStart..<newEnd
+      // To avoid "Cannot decrement before startIndex"
+      guard truncatedTextCursor > truncatedText.startIndex else {
+        break
+      }
+
+      truncatedTextCursor = truncatedText.index(before: truncatedTextCursor)
+      truncatedText.remove(at: truncatedTextCursor)
     }
 
     return truncatedText
@@ -87,7 +91,7 @@ open class InfoLabel: UILabel {
 
   // MARK: - Actions
 
-  func labelDidTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
+  @objc func labelDidTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
     shortText = truncatedText
     expanded ? collapse() : expand()
   }
@@ -107,13 +111,13 @@ open class InfoLabel: UILabel {
   }
 
   fileprivate func updateText(_ string: String) {
-    let attributedString = NSMutableAttributedString(string: string,
-      attributes: LightboxConfig.InfoLabel.textAttributes)
+    let textAttributes = LightboxConfig.InfoLabel.textAttributes
+    let attributedString = NSMutableAttributedString(string: string, attributes: textAttributes)
 
-    if string.range(of: ellipsis) != nil {
-      let range = (string as NSString).range(of: ellipsis)
-      attributedString.addAttribute(NSForegroundColorAttributeName,
-        value: LightboxConfig.InfoLabel.ellipsisColor, range: range)
+    if let range = string.range(of: ellipsis) {
+        let ellipsisColor = LightboxConfig.InfoLabel.ellipsisColor
+        let ellipsisRange = NSRange(range, in: string)
+        attributedString.addAttribute(.foregroundColor, value: ellipsisColor, range: ellipsisRange)
     }
 
     attributedText = attributedString
@@ -125,12 +129,12 @@ open class InfoLabel: UILabel {
     return string.boundingRect(
       with: CGSize(width: bounds.size.width, height: CGFloat.greatestFiniteMagnitude),
       options: [.usesLineFragmentOrigin, .usesFontLeading],
-      attributes: [NSFontAttributeName : font],
+      attributes: [NSAttributedStringKey.font: font],
       context: nil).height
   }
 
   fileprivate func numberOfLines(_ string: String) -> Int {
-    let lineHeight = "A".size(attributes: [NSFontAttributeName: font]).height
+    let lineHeight = "A".size(withAttributes: [NSAttributedStringKey.font: font]).height
     let totalHeight = heightForString(string)
 
     return Int(totalHeight / lineHeight)
@@ -141,7 +145,7 @@ open class InfoLabel: UILabel {
 
 extension InfoLabel: LayoutConfigurable {
 
-  public func configureLayout() {
+  @objc public func configureLayout() {
     shortText = truncatedText
     expanded ? expand() : collapse()
   }

@@ -335,7 +335,7 @@ extension LightboxController: UIScrollViewDelegate {
     }
 
     targetContentOffset.pointee.x = x
-    currentPage = Int(x / view.bounds.width)
+    currentPage = Int(x / pageWidth)
   }
 }
 

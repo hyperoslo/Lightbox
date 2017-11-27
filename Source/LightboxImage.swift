@@ -29,7 +29,10 @@ open class LightboxImage {
     if let image = image {
       completion?(image)
     } else if let imageURL = imageURL {
-      LightboxConfig.loadImage(imageView, imageURL, completion)
+        LightboxConfig.loadImage(imageView, imageURL, completion) { [weak self] in
+            self?.image = imageView
+            completion?(image)
+        }
     }
   }
 }

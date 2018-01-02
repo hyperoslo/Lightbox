@@ -192,11 +192,14 @@ open class LightboxController: UIViewController {
     super.viewDidLayoutSubviews()
 
     scrollView.frame = view.bounds
-    footerView.frame = CGRect(
-      x: 0,
-      y: view.bounds.height - footerView.frame.height,
+    footerView.frame.size = CGSize(
       width: view.bounds.width,
       height: 100
+    )
+
+    footerView.frame.origin = CGPoint(
+      x: 0,
+      y: view.bounds.height - footerView.frame.height
     )
 
     headerView.frame = CGRect(

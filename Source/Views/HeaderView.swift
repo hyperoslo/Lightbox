@@ -95,9 +95,9 @@ extension HeaderView: LayoutConfigurable {
     let topPadding: CGFloat
 
     if #available(iOS 11, *) {
-      topPadding = safeAreaInsets.top
+      topPadding = safeAreaInsets.top + LightboxConfig.Header.topPadding
     } else {
-      topPadding = 0
+      topPadding = LightboxConfig.Header.topPadding
     }
 
     closeButton.frame.origin = CGPoint(

@@ -321,7 +321,10 @@ open class LightboxController: UIViewController {
     pageView?.playButton.isHidden = !visible
 
     UIView.animate(withDuration: duration, delay: delay, options: [], animations: {
-      self.headerView.alpha = alpha
+      if LightboxConfig.hideControlsInZoom {
+        self.headerView.alpha = alpha
+      }
+      
       self.footerView.alpha = alpha
       pageView?.playButton.alpha = alpha
     }, completion: nil)

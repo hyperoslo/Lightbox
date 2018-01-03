@@ -57,6 +57,7 @@ public class LightboxConfig {
     public static var size: CGSize?
     public static var text = NSLocalizedString("Close", comment: "")
     public static var image: UIImage?
+    public static var position = HeaderViewChildPosition.start
 
     public static var textAttributes: [NSAttributedStringKey: Any] = [
       .font: UIFont.boldSystemFont(ofSize: 16),
@@ -69,11 +70,30 @@ public class LightboxConfig {
     ]
   }
 
+  public struct DownloadButton {
+    public static var enabled = true
+    public static var size: CGSize?
+    public static var text = NSLocalizedString("Download", comment: "")
+    public static var image: UIImage?
+    public static var position = HeaderViewChildPosition.end
+    
+    public static var textAttributes: [NSAttributedStringKey: Any] = [
+      .font: UIFont.boldSystemFont(ofSize: 16),
+      .foregroundColor: UIColor.white,
+      .paragraphStyle: {
+        var style = NSMutableParagraphStyle()
+        style.alignment = .center
+        return style
+      }()
+    ]
+  }
+  
   public struct DeleteButton {
     public static var enabled = false
     public static var size: CGSize?
     public static var text = NSLocalizedString("Delete", comment: "")
     public static var image: UIImage?
+    public static var position = HeaderViewChildPosition.center
 
     public static var textAttributes: [NSAttributedStringKey: Any] = [
       .font: UIFont.boldSystemFont(ofSize: 16),

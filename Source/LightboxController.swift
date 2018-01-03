@@ -16,6 +16,16 @@ public protocol LightboxControllerTouchDelegate: class {
   func lightboxController(_ controller: LightboxController, didTouch image: LightboxImage, at index: Int)
 }
 
+public protocol LightboxControllerDownloadSuccessDelegate: class {
+  
+  func lightboxControllerDownloadSuccess(_ controller: LightboxController)
+}
+
+public protocol LightboxControllerDownloadFailDelegate: class {
+  
+  func lightboxControllerDownloadFail(_ controller: LightboxController, error: Error)
+}
+
 open class LightboxController: UIViewController {
 
   // MARK: - Internal views
@@ -137,6 +147,9 @@ open class LightboxController: UIViewController {
   open weak var pageDelegate: LightboxControllerPageDelegate?
   open weak var dismissalDelegate: LightboxControllerDismissalDelegate?
   open weak var imageTouchDelegate: LightboxControllerTouchDelegate?
+  open weak var downloadSuccessDelegate: LightboxControllerDownloadSuccessDelegate?
+  open weak var downloadFailDelegate: LightboxControllerDownloadFailDelegate?
+  
   open internal(set) var presented = false
   open fileprivate(set) var seen = false
 
@@ -414,6 +427,20 @@ extension LightboxController: HeaderViewDelegate {
     presented = false
     dismissalDelegate?.lightboxControllerWillDismiss(self)
     dismiss(animated: true, completion: nil)
+  }
+  
+  func headerView(_ headerView: HeaderView, didPressDownloadButton downloadButton: UIButton) {
+    if let image = pageViews[currentPage].imageView.image {
+      UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+  }
+  
+  @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+    if let error = error {
+      downloadFailDelegate?.lightboxControllerDownloadFail(self, error: error)
+    } else {
+      downloadSuccessDelegate?.lightboxControllerDownloadSuccess(self)
+    }
   }
 }
 

@@ -66,6 +66,20 @@ open class HeaderView: UIView {
     return button
     }()
 
+  open fileprivate(set) lazy var activityIndicator: UIActivityIndicatorView = { [unowned self] in
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+    
+    if let size = LightboxConfig.DownloadButton.size {
+      activityIndicator.frame.size = size
+    } else {
+      activityIndicator.sizeToFit()
+    }
+    
+    activityIndicator.isHidden = true
+    
+    return activityIndicator
+    }()
+  
   open fileprivate(set) lazy var deleteButton: UIButton = { [unowned self] in
     let title = NSAttributedString(
       string: LightboxConfig.DeleteButton.text,
@@ -102,7 +116,7 @@ open class HeaderView: UIView {
 
     backgroundColor = UIColor.clear
 
-    [closeButton, deleteButton, downloadButton].forEach { addSubview($0) }
+    [closeButton, deleteButton, downloadButton, activityIndicator].forEach { addSubview($0) }
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -120,6 +134,18 @@ open class HeaderView: UIView {
   
   @objc func downloadButtonDidPress(_ button: UIButton) {
     delegate?.headerView(self, didPressDownloadButton: button)
+  }
+  
+  func showActivityIndicator() {
+    activityIndicator.startAnimating()
+    activityIndicator.isHidden = false
+    downloadButton.isHidden = true
+  }
+  
+  func hideActivityIndicator() {
+    activityIndicator.stopAnimating()
+    activityIndicator.isHidden = true
+    downloadButton.isHidden = false
   }
 
 }
@@ -147,6 +173,8 @@ extension HeaderView: LayoutConfigurable {
       y: topPadding
     )
 
+    activityIndicator.frame.origin = downloadButton.frame.origin
+    
     deleteButton.frame.origin = CGPoint(
       x: getX(position: LightboxConfig.DeleteButton.position, buttonWidth: deleteButton.frame.width),
       y: topPadding

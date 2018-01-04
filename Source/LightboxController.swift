@@ -433,8 +433,39 @@ extension LightboxController: HeaderViewDelegate {
   }
   
   func headerView(_ headerView: HeaderView, didPressDownloadButton downloadButton: UIButton) {
-    if let image = pageViews[currentPage].imageView.image {
-      UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    headerView.showActivityIndicator()
+    
+    // Fetch the download URL image in case it has been provided, otherwise, use the preview image.
+    let currentImage = initialImages[currentPage]
+    if let downloadURL = currentImage.imageDownloadURL ?? currentImage.imageURL {
+      let option = Option()
+      
+      self.imageFetcher = ImageFetcher(
+        downloader: option.downloaderMaker(),
+        storage: option.storageMaker()
+      )
+      
+      self.imageFetcher?.fetch(url: downloadURL, completion: { [weak self] result in
+        guard let `self` = self else {
+          return
+        }
+        
+        switch result {
+        case .value(let image):
+          // Save the image to the iOS Photos app.
+          let processedImage = option.imagePreprocessor?.process(image: image) ?? image
+          UIImageWriteToSavedPhotosAlbum(processedImage, `self`, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+          
+        case .error(let error):
+          // Call the downloadFailDelegate.
+          self.downloadFailDelegate?.lightboxControllerDownloadFail(self, error: error)
+        }
+        
+        // Hide the activity indicator and show the "Download" button.
+        DispatchQueue.main.async {
+          headerView.hideActivityIndicator()
+        }
+      })
     }
   }
   

@@ -1,5 +1,6 @@
 import UIKit
 import Hue
+import Imaginary
 
 public protocol LightboxControllerPageDelegate: class {
 
@@ -160,6 +161,8 @@ open class LightboxController: UIViewController {
   fileprivate let initialImages: [LightboxImage]
   fileprivate let initialPage: Int
 
+  fileprivate var imageFetcher: ImageFetcher?
+  
   // MARK: - Initializers
 
   public init(images: [LightboxImage] = [], startIndex index: Int = 0) {

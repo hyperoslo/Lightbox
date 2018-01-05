@@ -437,13 +437,10 @@ extension LightboxController: HeaderViewDelegate {
   
   func headerView(_ headerView: HeaderView, didPressDownloadButton downloadButton: UIButton) {
     headerView.showActivityIndicator()
-
     let option = Option()
     
     // Fetch the download URL image in case it has been provided, otherwise, use the preview image.
-    let currentImage = initialImages[currentPage]
-    
-    if let downloadURL = currentImage.imageDownloadURL {
+    if let downloadURL = initialImages[currentPage].imageDownloadURL {
       self.imageFetcher = ImageFetcher(
         downloader: option.downloaderMaker(),
         storage: option.storageMaker()
@@ -470,14 +467,24 @@ extension LightboxController: HeaderViewDelegate {
           headerView.hideActivityIndicator()
         }
       })
-    } else if let previewImage = initialImages[currentPage].image {
+    } else if let previewImage = pageViews[currentPage].imageView.image {
       // Save the preview image (that is already being displayed in the image view).
       UIImageWriteToSavedPhotosAlbum(previewImage, `self`, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
       self.downloadSuccessDelegate?.lightboxControllerDownloadSuccess(self)
       
+      // Hide the activity indicator and show the "Download" button.
+      DispatchQueue.main.async {
+        headerView.hideActivityIndicator()
+      }
+      
     } else {
       // Call the downloadFailDelegate in case the preview image is unavailable and there isn't a "imageDownloadURL" defined.
       downloadFailDelegate?.lightboxControllerDownloadFail(self, error: NSError(domain: "", code: NSURLErrorFileDoesNotExist, userInfo:nil))
+      
+      // Hide the activity indicator and show the "Download" button.
+      DispatchQueue.main.async {
+        headerView.hideActivityIndicator()
+      }
     }
   }
   

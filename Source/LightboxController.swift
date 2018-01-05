@@ -459,7 +459,6 @@ extension LightboxController: HeaderViewDelegate {
           // Save the image to the iOS Photos app.
           let processedImage = option.imagePreprocessor?.process(image: image) ?? image
           UIImageWriteToSavedPhotosAlbum(processedImage, `self`, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
-          self.downloadSuccessDelegate?.lightboxControllerDownloadSuccess(self)
           
         case .error(let error):
           // Call the downloadFailDelegate.
@@ -472,9 +471,12 @@ extension LightboxController: HeaderViewDelegate {
         }
       })
     } else if let previewImage = initialImages[currentPage].image {
+      // Save the preview image (that is already being displayed in the image view).
       UIImageWriteToSavedPhotosAlbum(previewImage, `self`, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
       self.downloadSuccessDelegate?.lightboxControllerDownloadSuccess(self)
+      
     } else {
+      // Call the downloadFailDelegate in case the preview image is unavailable and there isn't a "imageDownloadURL" defined.
       downloadFailDelegate?.lightboxControllerDownloadFail(self, error: NSError(domain: "", code: NSURLErrorFileDoesNotExist, userInfo:nil))
     }
   }

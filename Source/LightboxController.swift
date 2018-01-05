@@ -437,12 +437,13 @@ extension LightboxController: HeaderViewDelegate {
   
   func headerView(_ headerView: HeaderView, didPressDownloadButton downloadButton: UIButton) {
     headerView.showActivityIndicator()
+
+    let option = Option()
     
     // Fetch the download URL image in case it has been provided, otherwise, use the preview image.
     let currentImage = initialImages[currentPage]
-    if let downloadURL = currentImage.imageDownloadURL ?? currentImage.imageURL {
-      let option = Option()
-      
+    
+    if let downloadURL = currentImage.imageDownloadURL {
       self.imageFetcher = ImageFetcher(
         downloader: option.downloaderMaker(),
         storage: option.storageMaker()
@@ -458,6 +459,7 @@ extension LightboxController: HeaderViewDelegate {
           // Save the image to the iOS Photos app.
           let processedImage = option.imagePreprocessor?.process(image: image) ?? image
           UIImageWriteToSavedPhotosAlbum(processedImage, `self`, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+          self.downloadSuccessDelegate?.lightboxControllerDownloadSuccess(self)
           
         case .error(let error):
           // Call the downloadFailDelegate.
@@ -469,6 +471,11 @@ extension LightboxController: HeaderViewDelegate {
           headerView.hideActivityIndicator()
         }
       })
+    } else if let previewImage = initialImages[currentPage].image {
+      UIImageWriteToSavedPhotosAlbum(previewImage, `self`, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+      self.downloadSuccessDelegate?.lightboxControllerDownloadSuccess(self)
+    } else {
+      downloadFailDelegate?.lightboxControllerDownloadFail(self, error: NSError(domain: "", code: NSURLErrorFileDoesNotExist, userInfo:nil))
     }
   }
   

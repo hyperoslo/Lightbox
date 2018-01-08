@@ -128,4 +128,8 @@ public class LightboxConfig {
   public struct Header {
     public static var topPadding: CGFloat = 0
   }
+  
+  public struct Footer {
+    public static var gradientColors = [UIColor(hex: "040404").alpha(0.1), UIColor(hex: "040404")]
+  }
 }

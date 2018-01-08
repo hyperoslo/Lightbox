@@ -388,7 +388,7 @@ extension LightboxController: PageViewDelegate {
   }
 
   func pageViewDidTouch(_ pageView: PageView) {
-    guard !pageView.hasZoomed else { return }
+    guard LightboxConfig.toggleControlsOnTouchWhenZoomed || (!LightboxConfig.toggleControlsOnTouchWhenZoomed && !pageView.hasZoomed) else { return }
 
     imageTouchDelegate?.lightboxController(self, didTouch: images[currentPage], at: currentPage)
 

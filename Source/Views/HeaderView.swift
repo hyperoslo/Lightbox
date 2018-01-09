@@ -107,14 +107,19 @@ open class HeaderView: UIView {
     return button
   }()
 
+  let gradientColors = LightboxConfig.Header.gradientColors
   weak var delegate: HeaderViewDelegate?
 
   // MARK: - Initializers
 
   public init() {
     super.init(frame: CGRect.zero)
-
+    
     backgroundColor = UIColor.clear
+    
+    if LightboxConfig.Header.displayGradient {
+      _ = addGradientLayer(gradientColors)
+    }
 
     [closeButton, deleteButton, downloadButton, activityIndicator].forEach { addSubview($0) }
   }

@@ -59,7 +59,7 @@ open class LightboxController: UIViewController {
   lazy var backgroundView: UIImageView = {
     let view = UIImageView()
     view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
+    
     return view
   }()
 
@@ -218,9 +218,17 @@ open class LightboxController: UIViewController {
       y: view.bounds.height - footerView.frame.height
     )
 
+    var yHeader: CGFloat
+    
+    if LightboxConfig.Header.displayGradient {
+      yHeader = LightboxConfig.hideStatusBar ? 0 : 16
+    } else {
+      yHeader = 16
+    }
+    
     headerView.frame = CGRect(
       x: 0,
-      y: 16,
+      y: yHeader,
       width: view.bounds.width,
       height: 100
     )

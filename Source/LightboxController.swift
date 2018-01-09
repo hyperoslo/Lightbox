@@ -59,7 +59,7 @@ open class LightboxController: UIViewController {
   lazy var backgroundView: UIImageView = {
     let view = UIImageView()
     view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    
+    view.contentMode = .scaleAspectFill
     return view
   }()
 

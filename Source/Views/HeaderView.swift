@@ -123,9 +123,17 @@ open class HeaderView: UIView {
 
     [closeButton, deleteButton, downloadButton, activityIndicator].forEach { addSubview($0) }
   }
-
+  
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  open override func layoutSubviews() {
+    super.layoutSubviews()
+    
+    if LightboxConfig.Header.displayGradient {
+      resizeGradientLayer()
+    }
   }
 
   // MARK: - Actions

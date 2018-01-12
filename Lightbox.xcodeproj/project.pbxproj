@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D0C3D4F20068BF70017FB2F /* UIView+Origin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0C3D4E20068BF70017FB2F /* UIView+Origin.swift */; };
 		D22006741DFB4D9700E92898 /* Lightbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D22006731DFB4D9700E92898 /* Lightbox.bundle */; };
 		D229B5E61FC3123F00F04123 /* Lightbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D523B0A91C43AA2A001AD1EC /* Lightbox.framework */; };
 		D229B5ED1FC3125D00F04123 /* InfoLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D229B5EC1FC3125D00F04123 /* InfoLabelTests.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5D0C3D4E20068BF70017FB2F /* UIView+Origin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Origin.swift"; sourceTree = "<group>"; };
 		D22006731DFB4D9700E92898 /* Lightbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Lightbox.bundle; sourceTree = "<group>"; };
 		D229B5E11FC3123F00F04123 /* Lightbox-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lightbox-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D229B5E51FC3123F00F04123 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				D573A2F41C5B5CA4006053DD /* LightboxTransition.swift */,
 				D573A2F21C5B5C7B006053DD /* LayoutConfigurable.swift */,
 				D573A2F61C5B5E55006053DD /* UIView+Gradient.swift */,
+				5D0C3D4E20068BF70017FB2F /* UIView+Origin.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				D573A2F71C5B5E55006053DD /* UIView+Gradient.swift in Sources */,
 				D523B0BD1C43AA8B001AD1EC /* LightboxConfig.swift in Sources */,
 				D573A2F31C5B5C7B006053DD /* LayoutConfigurable.swift in Sources */,
+				5D0C3D4F20068BF70017FB2F /* UIView+Origin.swift in Sources */,
 				D5026B3C1C5BF3FD003BC1A3 /* LightboxImage.swift in Sources */,
 				D523B0BE1C43AA8B001AD1EC /* LightboxController.swift in Sources */,
 				D54DFCBE1C5AAAD600ADEA0E /* InfoLabel.swift in Sources */,

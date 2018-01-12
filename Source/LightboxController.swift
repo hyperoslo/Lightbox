@@ -207,10 +207,13 @@ open class LightboxController: UIViewController {
   open override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
 
+    // 15 % of the view's height, so the header and footer have a proper height in both portrait and landscape orientations.
+    let height = view.bounds.height * 0.15
+    
     scrollView.frame = view.bounds
     footerView.frame.size = CGSize(
       width: view.bounds.width,
-      height: 100
+      height: height
     )
 
     footerView.frame.origin = CGPoint(
@@ -230,7 +233,7 @@ open class LightboxController: UIViewController {
       x: 0,
       y: yHeader,
       width: view.bounds.width,
-      height: 100
+      height: height
     )
   }
 

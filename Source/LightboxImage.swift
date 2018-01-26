@@ -27,11 +27,7 @@ open class LightboxImage {
     self.httpHeaders = httpHeaders
   }
 
-  open func addImageTo(_ imageView: UIImageView, completion: ((_ image: UIImage?) -> Void)? = nil) {
-    if let placeholder = imagePlaceholder {
-        imageView.image = placeholder
-    }
-    
+  open func addImageTo(_ imageView: UIImageView, completion: ((UIImage?) -> Void)? = nil) {
     if let image = image {
       imageView.image = image
       completion?(image)

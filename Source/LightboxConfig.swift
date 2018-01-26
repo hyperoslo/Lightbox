@@ -49,6 +49,20 @@ public class LightboxConfig {
     
   }
 
+  /// How to load image onto UIImageView
+  public static var loadImage: (UIImageView, URL, ((UIImage?) -> Void)?) -> Void = { (imageView, imageURL, completion) in
+
+    // Use Imaginary by default
+    imageView.setImage(url: imageURL, placeholder: nil, completion: { result in
+      switch result {
+      case .value(let image):
+        completion?(image)
+      case .error:
+        completion?(nil)
+      }
+    })
+  }
+
   /// Indicator is used to show while image is being fetched
   public static var makeLoadingIndicator: () -> UIView = {
     return LoadingIndicator()

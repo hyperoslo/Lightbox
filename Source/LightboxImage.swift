@@ -10,6 +10,10 @@ open class LightboxImage {
   open var text: String
 
   // MARK: - Initialization
+  
+  internal init(text: String = "") {
+    self.text = text
+  }
 
   public init(image: UIImage, text: String = "", videoURL: URL? = nil) {
     self.image = image

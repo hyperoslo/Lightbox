@@ -175,9 +175,8 @@ open class LightboxController: UIViewController {
     overlayView.addGestureRecognizer(overlayTapGestureRecognizer)
 
     configurePages(initialImages)
-    currentPage = initialPage
 
-    goTo(currentPage, animated: false)
+    goTo(initialPage, animated: false)
   }
 
   open override func viewDidAppear(_ animated: Bool) {

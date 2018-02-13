@@ -342,8 +342,8 @@ open class LightboxController: UIViewController {
     let preload = LightboxConfig.preload
     if preload > 0 {
       let lb = max(0, currentPage - preload)
-      let rb = min(initialImages.count - 1, currentPage + preload)
-      for i in lb...rb {
+      let rb = min(initialImages.count, currentPage + preload)
+      for i in lb..<rb {
         preloadIndicies.append(i)
       }
     } else {

@@ -43,6 +43,9 @@ open class LightboxImage {
       let img = imageClosure()
       imageView.image = img
       completion?(img)
+    } else {
+      imageView.image = nil
+      completion?(nil)
     }
   }
 }

@@ -91,7 +91,7 @@ open class LightboxController: UIViewController {
         seen = true
       }
 
-      reconfigurePreloadedPages()
+      reconfigurePagesForPreload()
       
       pageDelegate?.lightboxController(self, didMoveToPage: currentPage)
       

@@ -38,7 +38,10 @@ open class LightboxImage {
       imageView.image = image
       completion?(image)
     } else if let imageURL = imageURL {
-      LightboxConfig.loadImage(imageView, imageURL, completion)
+      LightboxConfig.loadImage(imageView, imageURL) { [weak self] result in
+        self?.image = result
+        completion?(result)
+      }
     } else if let imageClosure = imageClosure {
       let img = imageClosure()
       imageView.image = img

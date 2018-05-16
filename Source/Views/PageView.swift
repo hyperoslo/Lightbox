@@ -51,20 +51,7 @@ class PageView: UIScrollView {
 
     configure()
 
-    loadingIndicator.alpha = 1
-    self.image.addImageTo(imageView) { [weak self] image in
-      guard let strongSelf = self else {
-        return
-      }
-
-      strongSelf.isUserInteractionEnabled = true
-      strongSelf.configureImageView()
-      strongSelf.pageViewDelegate?.remoteImageDidLoad(image, imageView: strongSelf.imageView)
-
-      UIView.animate(withDuration: 0.4) {
-        strongSelf.loadingIndicator.alpha = 0
-      }
-    }
+    fetchImage()
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -76,9 +63,7 @@ class PageView: UIScrollView {
   func configure() {
     addSubview(imageView)
 
-    if image.videoURL != nil {
-      addSubview(playButton)
-    }
+    updatePlayButton()
 
     addSubview(loadingIndicator)
 
@@ -98,6 +83,41 @@ class PageView: UIScrollView {
     addGestureRecognizer(tapRecognizer)
 
     tapRecognizer.require(toFail: doubleTapRecognizer)
+  }
+  
+  // MARK: - Update
+  
+  func update(with image: LightboxImage) {
+    self.image = image
+    updatePlayButton()
+    fetchImage()
+  }
+  
+  func updatePlayButton () {
+    if self.image.videoURL != nil && !subviews.contains(playButton) {
+      addSubview(playButton)
+    } else if self.image.videoURL == nil && subviews.contains(playButton) {
+      playButton.removeFromSuperview()
+    }
+  }
+  
+  //MARK: - Fetch
+  
+  private func fetchImage () {
+    loadingIndicator.alpha = 1
+    self.image.addImageTo(imageView) { [weak self] image in
+      guard let strongSelf = self else {
+        return
+      }
+      
+      strongSelf.isUserInteractionEnabled = true
+      strongSelf.configureImageView()
+      strongSelf.pageViewDelegate?.remoteImageDidLoad(image, imageView: strongSelf.imageView)
+      
+      UIView.animate(withDuration: 0.4) {
+        strongSelf.loadingIndicator.alpha = 0
+      }
+    }
   }
 
   // MARK: - Recognizers

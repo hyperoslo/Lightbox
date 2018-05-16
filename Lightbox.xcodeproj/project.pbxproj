@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		166E3BA920333E04006799C1 /* LightboxImageStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166E3BA820333E04006799C1 /* LightboxImageStub.swift */; };
 		D22006741DFB4D9700E92898 /* Lightbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D22006731DFB4D9700E92898 /* Lightbox.bundle */; };
 		D229B5E61FC3123F00F04123 /* Lightbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D523B0A91C43AA2A001AD1EC /* Lightbox.framework */; };
 		D229B5ED1FC3125D00F04123 /* InfoLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D229B5EC1FC3125D00F04123 /* InfoLabelTests.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		166E3BA820333E04006799C1 /* LightboxImageStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightboxImageStub.swift; sourceTree = "<group>"; };
 		D22006731DFB4D9700E92898 /* Lightbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Lightbox.bundle; sourceTree = "<group>"; };
 		D229B5E11FC3123F00F04123 /* Lightbox-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lightbox-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D229B5E51FC3123F00F04123 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				D523B0B61C43AA8A001AD1EC /* LightboxConfig.swift */,
 				D523B0B71C43AA8A001AD1EC /* LightboxController.swift */,
 				D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */,
+				166E3BA820333E04006799C1 /* LightboxImageStub.swift */,
 				D2D71BBB1D54DA77006AB907 /* AssetManager.swift */,
 			);
 			path = Source;
@@ -316,6 +319,7 @@
 				D58A18CB1C5ABF8F000024BB /* FooterView.swift in Sources */,
 				D573A2F01C5B5605006053DD /* HeaderView.swift in Sources */,
 				D573A2F51C5B5CA4006053DD /* LightboxTransition.swift in Sources */,
+				166E3BA920333E04006799C1 /* LightboxImageStub.swift in Sources */,
 				D2D71BBC1D54DA77006AB907 /* AssetManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

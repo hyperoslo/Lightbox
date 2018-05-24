@@ -3,16 +3,21 @@ import Hue
 import AVKit
 import AVFoundation
 import Imaginary
+import VIMediaCache
 
 public class LightboxConfig {
   /// Whether to show status bar while Lightbox is presented
   public static var hideStatusBar = true
-
+  public static var videoController = AVPlayerViewController()
+  public static var resourceLoaderManager = VIResourceLoaderManager()
+  
   /// Provide a closure to handle selected video
   public static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in
-    let videoController = AVPlayerViewController()
-    videoController.player = AVPlayer(url: videoURL)
-
+    let playerItem = resourceLoaderManager.playerItem(with: videoURL)    
+    videoController.player = AVPlayer(playerItem: playerItem)
+    if #available(iOS 10.0, *) {
+        videoController.player?.automaticallyWaitsToMinimizeStalling = false
+    }
     from.present(videoController, animated: true) {
       videoController.player?.play()
     }

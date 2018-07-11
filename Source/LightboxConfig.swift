@@ -2,7 +2,7 @@ import UIKit
 import Hue
 import AVKit
 import AVFoundation
-import Imaginary
+//import Imaginary
 
 public class LightboxConfig {
   /// Whether to show status bar while Lightbox is presented

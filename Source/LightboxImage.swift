@@ -8,6 +8,7 @@ open class LightboxImage {
   open fileprivate(set) var videoURL: URL?
   open fileprivate(set) var imageClosure: (() -> UIImage)?
   open var text: String
+  open var isDocument: Bool? = false
 
   // MARK: - Initialization
   

@@ -37,6 +37,7 @@ class PageView: UIScrollView {
 
   var image: LightboxImage
   var contentFrame = CGRect.zero
+  var videoPlayer: VideoPlayerController?
   weak var pageViewDelegate: PageViewDelegate?
 
   var hasZoomed: Bool {
@@ -56,6 +57,22 @@ class PageView: UIScrollView {
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  func viewMovedToCurrentPage() {
+    guard let videoURL = image.videoURL,
+      LightboxConfig.videoPlayOption == .custom else { return }
+
+    if videoPlayer == nil {
+      addVideoPlayer()
+      videoPlayer?.playVideo(with: videoURL)
+    } else {
+      videoPlayer?.resume()
+    }
+  }
+
+  func viewMovedFromCurrentPage() {
+    videoPlayer?.pause()
   }
 
   // MARK: - Configuration
@@ -84,36 +101,38 @@ class PageView: UIScrollView {
 
     tapRecognizer.require(toFail: doubleTapRecognizer)
   }
-  
+
   // MARK: - Update
-  
+
   func update(with image: LightboxImage) {
     self.image = image
     updatePlayButton()
     fetchImage()
   }
-  
+
   func updatePlayButton () {
-    if self.image.videoURL != nil && !subviews.contains(playButton) {
+    let shouldShowPlayButton = LightboxConfig.videoPlayOption == .fullScreen && image.videoURL != nil
+
+    if shouldShowPlayButton && !subviews.contains(playButton) {
       addSubview(playButton)
-    } else if self.image.videoURL == nil && subviews.contains(playButton) {
+    } else if !shouldShowPlayButton && subviews.contains(playButton) {
       playButton.removeFromSuperview()
     }
   }
-  
-  //MARK: - Fetch
-  
+
+  // MARK: - Fetch
   private func fetchImage () {
     loadingIndicator.alpha = 1
+
     self.image.addImageTo(imageView) { [weak self] image in
       guard let strongSelf = self else {
         return
       }
-      
+
       strongSelf.isUserInteractionEnabled = true
       strongSelf.configureImageView()
       strongSelf.pageViewDelegate?.remoteImageDidLoad(image, imageView: strongSelf.imageView)
-      
+
       UIView.animate(withDuration: 0.4) {
         strongSelf.loadingIndicator.alpha = 0
       }
@@ -149,6 +168,16 @@ class PageView: UIScrollView {
 
     loadingIndicator.center = imageView.center
     playButton.center = imageView.center
+  }
+
+  func addVideoPlayer() {
+    videoPlayer = LightboxConfig.customVideoPlayer?()
+
+    guard let videoView = videoPlayer?.view else { return }
+
+    videoView.frame = imageView.frame
+    addSubview(videoView)
+    imageView.isHidden = true
   }
 
   func configureImageView() {
@@ -193,6 +222,7 @@ class PageView: UIScrollView {
     }
 
     imageView.frame = imageViewFrame
+    videoPlayer?.view.frame = imageViewFrame
   }
 
   // MARK: - Action

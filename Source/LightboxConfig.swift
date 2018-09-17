@@ -4,7 +4,22 @@ import AVKit
 import AVFoundation
 import Imaginary
 
+public protocol VideoPlayer {
+  func playVideo(with url: URL)
+  func resume()
+  func pause()
+}
+
+public typealias VideoPlayerController = VideoPlayer & UIViewController
+
 public class LightboxConfig {
+  public enum VideoPlayOption {
+    case custom
+    case fullScreen
+  }
+
+  public static var videoPlayOption: VideoPlayOption = .fullScreen
+
   /// Whether to show status bar while Lightbox is presented
   public static var hideStatusBar = true
 
@@ -17,6 +32,8 @@ public class LightboxConfig {
       videoController.player?.play()
     }
   }
+
+  public static var customVideoPlayer: (() -> VideoPlayerController)?
 
   /// How to load image onto UIImageView
   public static var loadImage: (UIImageView, URL, ((UIImage?) -> Void)?) -> Void = { (imageView, imageURL, completion) in
@@ -36,7 +53,7 @@ public class LightboxConfig {
   public static var makeLoadingIndicator: () -> UIView = {
     return LoadingIndicator()
   }
-  
+
   /// Number of images to preload.
   ///
   /// 0 - Preload all images (default).

@@ -92,9 +92,18 @@ open class LightboxController: UIViewController {
       }
 
       reconfigurePagesForPreload()
-      
+
       pageDelegate?.lightboxController(self, didMoveToPage: currentPage)
-      
+
+      DispatchQueue.main.async {
+        self.pageViews[self.currentPage].viewMovedToCurrentPage()
+        self.pageViews.enumerated()
+          .filter { $0.offset != self.currentPage }
+          .forEach {
+            $0.element.viewMovedFromCurrentPage()
+        }
+      }
+
       if let image = pageViews[currentPage].imageView.image, dynamicBackground {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.125) {
           self.loadDynamicBackground(image)
@@ -231,28 +240,28 @@ open class LightboxController: UIViewController {
   func configurePages(_ images: [LightboxImage]) {
     pageViews.forEach { $0.removeFromSuperview() }
     pageViews = []
-    
+
     let preloadIndicies = calculatePreloadIndicies()
-    
-    for i in 0..<images.count {
-      let pageView = PageView(image: preloadIndicies.contains(i) ? images[i] : LightboxImageStub())
+
+    for index in 0..<images.count {
+      let pageView = PageView(image: preloadIndicies.contains(index) ? images[index] : LightboxImageStub())
       pageView.pageViewDelegate = self
-      
+
       scrollView.addSubview(pageView)
       pageViews.append(pageView)
     }
-    
+
     configureLayout(view.bounds.size)
   }
-  
+
   func reconfigurePagesForPreload() {
     let preloadIndicies = calculatePreloadIndicies()
-    
-    for i in 0..<initialImages.count {
-      let pageView = pageViews[i]
-      if preloadIndicies.contains(i) {
+
+    for index in 0..<initialImages.count {
+      let pageView = pageViews[index]
+      if preloadIndicies.contains(index) {
         if type(of: pageView.image) == LightboxImageStub.self {
-          pageView.update(with: initialImages[i])
+          pageView.update(with: initialImages[index])
         }
       } else {
         if type(of: pageView.image) != LightboxImageStub.self {
@@ -334,17 +343,17 @@ open class LightboxController: UIViewController {
       pageView?.playButton.alpha = alpha
     }, completion: nil)
   }
-  
+
   // MARK: - Helper functions
-  
+
   func calculatePreloadIndicies () -> [Int] {
     var preloadIndicies: [Int] = []
     let preload = LightboxConfig.preload
     if preload > 0 {
-      let lb = max(0, currentPage - preload)
-      let rb = min(initialImages.count, currentPage + preload)
-      for i in lb..<rb {
-        preloadIndicies.append(i)
+      let leftB = max(0, currentPage - preload)
+      let rightB = min(initialImages.count, currentPage + preload)
+      for index in leftB..<rightB {
+        preloadIndicies.append(index)
       }
     } else {
       preloadIndicies = [Int](0..<initialImages.count)

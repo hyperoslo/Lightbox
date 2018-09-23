@@ -22,7 +22,7 @@ class PageView: UIScrollView {
   lazy var playButton: UIButton = {
     let button = UIButton(type: .custom)
     button.frame.size = CGSize(width: 60, height: 60)
-    button.setBackgroundImage(AssetManager.image("lightbox_play"), for: UIControlState())
+    button.setBackgroundImage(AssetManager.image("lightbox_play"), for: UIControl.State())
     button.addTarget(self, action: #selector(playButtonTouched(_:)), for: .touchUpInside)
 
     button.layer.shadowOffset = CGSize(width: 1, height: 1)
@@ -84,15 +84,14 @@ class PageView: UIScrollView {
 
     tapRecognizer.require(toFail: doubleTapRecognizer)
   }
-  
+
   // MARK: - Update
-  
   func update(with image: LightboxImage) {
     self.image = image
     updatePlayButton()
     fetchImage()
   }
-  
+
   func updatePlayButton () {
     if self.image.videoURL != nil && !subviews.contains(playButton) {
       addSubview(playButton)
@@ -100,22 +99,21 @@ class PageView: UIScrollView {
       playButton.removeFromSuperview()
     }
   }
-  
-  //MARK: - Fetch
-  
+
+  // MARK: - Fetch
   private func fetchImage () {
     loadingIndicator.alpha = 1
     self.image.addImageTo(imageView) { [weak self] image in
-      guard let strongSelf = self else {
+      guard let self = self else {
         return
       }
-      
-      strongSelf.isUserInteractionEnabled = true
-      strongSelf.configureImageView()
-      strongSelf.pageViewDelegate?.remoteImageDidLoad(image, imageView: strongSelf.imageView)
-      
+
+      self.isUserInteractionEnabled = true
+      self.configureImageView()
+      self.pageViewDelegate?.remoteImageDidLoad(image, imageView: self.imageView)
+
       UIView.animate(withDuration: 0.4) {
-        strongSelf.loadingIndicator.alpha = 0
+        self.loadingIndicator.alpha = 0
       }
     }
   }

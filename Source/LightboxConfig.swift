@@ -4,14 +4,6 @@ import AVKit
 import AVFoundation
 import Imaginary
 
-public protocol VideoPlayer {
-  func playVideo(with url: URL)
-  func resume()
-  func pause()
-}
-
-public typealias VideoPlayerController = VideoPlayer & UIViewController
-
 public class LightboxConfig {
   public enum VideoPlayOption {
     case custom
@@ -32,8 +24,6 @@ public class LightboxConfig {
       videoController.player?.play()
     }
   }
-
-  public static var customVideoPlayer: (() -> VideoPlayerController)?
 
   /// How to load image onto UIImageView
   public static var loadImage: (UIImageView, URL, ((UIImage?) -> Void)?) -> Void = { (imageView, imageURL, completion) in

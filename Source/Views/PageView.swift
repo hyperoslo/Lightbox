@@ -6,6 +6,7 @@ protocol PageViewDelegate: class {
   func remoteImageDidLoad(_ image: UIImage?, imageView: UIImageView)
   func pageView(_ pageView: PageView, didTouchPlayButton videoURL: URL)
   func pageViewDidTouch(_ pageView: PageView)
+  func videoPlayerController(for pageView: PageView) -> VideoPlayerController?
 }
 
 class PageView: UIScrollView {
@@ -171,7 +172,7 @@ class PageView: UIScrollView {
   }
 
   func addVideoPlayer() {
-    videoPlayer = LightboxConfig.customVideoPlayer?()
+    videoPlayer = pageViewDelegate?.videoPlayerController(for: self)
 
     guard let videoView = videoPlayer?.view else { return }
 

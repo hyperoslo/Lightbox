@@ -16,6 +16,11 @@ public protocol LightboxControllerTouchDelegate: class {
   func lightboxController(_ controller: LightboxController, didTouch image: LightboxImage, at index: Int)
 }
 
+public protocol LightboxControllerVideoPlayerSource: class {
+
+  func videoPlayerController(for controller: LightboxController) -> VideoPlayerController
+}
+
 open class LightboxController: UIViewController {
 
   // MARK: - Internal views
@@ -147,6 +152,7 @@ open class LightboxController: UIViewController {
   open weak var pageDelegate: LightboxControllerPageDelegate?
   open weak var dismissalDelegate: LightboxControllerDismissalDelegate?
   open weak var imageTouchDelegate: LightboxControllerTouchDelegate?
+  open weak var videoPlayerSource: LightboxControllerVideoPlayerSource?
   open internal(set) var presented = false
   open fileprivate(set) var seen = false
 
@@ -425,6 +431,10 @@ extension LightboxController: PageViewDelegate {
 
     let visible = (headerView.alpha == 1.0)
     toggleControls(pageView: pageView, visible: !visible)
+  }
+
+  func videoPlayerController(for pageView: PageView) -> VideoPlayerController? {
+    return videoPlayerSource?.videoPlayerController(for: self)
   }
 }
 

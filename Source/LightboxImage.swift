@@ -1,6 +1,5 @@
 import UIKit
 import Imaginary
-import AVKit
 
 open class LightboxImage {
 

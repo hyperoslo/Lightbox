@@ -95,13 +95,11 @@ open class LightboxController: UIViewController {
 
       pageDelegate?.lightboxController(self, didMoveToPage: currentPage)
 
-      DispatchQueue.main.async {
-        self.pageViews[self.currentPage].viewMovedToCurrentPage()
-        self.pageViews.enumerated()
-          .filter { $0.offset != self.currentPage }
-          .forEach {
-            $0.element.viewMovedFromCurrentPage()
-        }
+      self.pageViews[self.currentPage].viewMovedToCurrentPage()
+      self.pageViews.enumerated()
+        .filter { $0.offset != self.currentPage }
+        .forEach {
+          $0.element.viewMovedFromCurrentPage()
       }
 
       if let image = pageViews[currentPage].imageView.image, dynamicBackground {
@@ -243,8 +241,9 @@ open class LightboxController: UIViewController {
 
     let preloadIndicies = calculatePreloadIndicies()
 
-    for index in 0..<images.count {
-      let pageView = PageView(image: preloadIndicies.contains(index) ? images[index] : LightboxImageStub())
+    // swiftlint:disable:next identifier_name
+    for i in 0..<images.count {
+      let pageView = PageView(image: preloadIndicies.contains(i) ? images[i] : LightboxImageStub())
       pageView.pageViewDelegate = self
 
       scrollView.addSubview(pageView)
@@ -257,11 +256,12 @@ open class LightboxController: UIViewController {
   func reconfigurePagesForPreload() {
     let preloadIndicies = calculatePreloadIndicies()
 
-    for index in 0..<initialImages.count {
-      let pageView = pageViews[index]
-      if preloadIndicies.contains(index) {
+    // swiftlint:disable:next identifier_name
+    for i in 0..<initialImages.count {
+      let pageView = pageViews[i]
+      if preloadIndicies.contains(i) {
         if type(of: pageView.image) == LightboxImageStub.self {
-          pageView.update(with: initialImages[index])
+          pageView.update(with: initialImages[i])
         }
       } else {
         if type(of: pageView.image) != LightboxImageStub.self {
@@ -346,20 +346,23 @@ open class LightboxController: UIViewController {
 
   // MARK: - Helper functions
 
+  // swiftlint:disable identifier_name
   func calculatePreloadIndicies () -> [Int] {
     var preloadIndicies: [Int] = []
     let preload = LightboxConfig.preload
     if preload > 0 {
-      let leftB = max(0, currentPage - preload)
-      let rightB = min(initialImages.count, currentPage + preload)
-      for index in leftB..<rightB {
-        preloadIndicies.append(index)
+      let lb = max(0, currentPage - preload)
+      let rb = min(initialImages.count, currentPage + preload)
+      for i in lb..<rb {
+        preloadIndicies.append(i)
       }
     } else {
       preloadIndicies = [Int](0..<initialImages.count)
     }
     return preloadIndicies
   }
+
+  // swiftlint:enable identifier_name
 }
 
 // MARK: - UIScrollViewDelegate

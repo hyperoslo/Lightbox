@@ -5,12 +5,12 @@ import AVFoundation
 import Imaginary
 
 public class LightboxConfig {
-  public enum VideoPlayOption {
+  public enum VideoPlayerOption {
     case custom
     case fullScreen
   }
 
-  public static var videoPlayOption: VideoPlayOption = .fullScreen
+  public static var videoPlayerOption: VideoPlayerOption = .fullScreen
 
   /// Whether to show status bar while Lightbox is presented
   public static var hideStatusBar = true

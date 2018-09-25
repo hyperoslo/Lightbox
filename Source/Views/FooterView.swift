@@ -1,11 +1,18 @@
 import UIKit
 
-public protocol FooterViewDelegate: class {
-
-  func footerView(_ footerView: FooterView, didExpand expanded: Bool)
+public protocol FooterViewing: class {
+  var delegate: FooterViewDelegate? { get set }
+  func expand(_ expand: Bool)
+  func updatePage(_ page: Int, _ numberOfPages: Int)
+  func updateText(_ text: String)
 }
 
-open class FooterView: UIView {
+public protocol FooterViewDelegate: class {
+
+  func footerView(_ footerView: FooterViewing, didExpand expanded: Bool)
+}
+
+open class FooterView: UIView, FooterViewing {
 
   open fileprivate(set) lazy var infoLabel: InfoLabel = { [unowned self] in
     let label = InfoLabel(text: "")
@@ -54,11 +61,11 @@ open class FooterView: UIView {
 
   // MARK: - Helpers
 
-  func expand(_ expand: Bool) {
+  public func expand(_ expand: Bool) {
     expand ? infoLabel.expand() : infoLabel.collapse()
   }
 
-  func updatePage(_ page: Int, _ numberOfPages: Int) {
+  public func updatePage(_ page: Int, _ numberOfPages: Int) {
     let text = "\(page)/\(numberOfPages)"
 
     pageLabel.attributedText = NSAttributedString(string: text,
@@ -66,7 +73,7 @@ open class FooterView: UIView {
     pageLabel.sizeToFit()
   }
 
-  func updateText(_ text: String) {
+  public func updateText(_ text: String) {
     infoLabel.fullText = text
 
     if text.isEmpty {

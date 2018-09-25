@@ -328,7 +328,7 @@ open class LightboxController: UIViewController {
       }
     }
 
-    [headerView, footerView].forEach { ($0 as AnyObject).configureLayout() }
+    [headerView, footerView].forEach { ($0 as? LayoutConfigurable)?.configureLayout() }
 
     overlayView.frame = scrollView.frame
     overlayView.resizeGradientLayer()

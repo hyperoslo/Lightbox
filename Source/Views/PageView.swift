@@ -62,7 +62,7 @@ class PageView: UIScrollView {
 
   func viewMovedToCurrentPage() {
     guard let videoURL = image.videoURL,
-      LightboxConfig.videoPlayOption == .custom else { return }
+      LightboxConfig.videoPlayerOption == .custom else { return }
 
     if videoPlayer == nil {
       addVideoPlayer()
@@ -112,7 +112,7 @@ class PageView: UIScrollView {
   }
 
   func updatePlayButton () {
-    let shouldShowPlayButton = LightboxConfig.videoPlayOption == .fullScreen && image.videoURL != nil
+    let shouldShowPlayButton = LightboxConfig.videoPlayerOption == .fullScreen && image.videoURL != nil
 
     if shouldShowPlayButton && !subviews.contains(playButton) {
       addSubview(playButton)

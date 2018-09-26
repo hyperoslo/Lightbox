@@ -16,9 +16,10 @@ public protocol LightboxControllerTouchDelegate: class {
   func lightboxController(_ controller: LightboxController, didTouch image: LightboxImage, at index: Int)
 }
 
-public protocol LightboxControllerVideoPlayerSource: class {
+public protocol LightboxControllerViewSource: class {
 
   func videoPlayerController(for controller: LightboxController) -> VideoPlayerController
+  func footerView(for controller: LightboxController) -> (FooterViewing & UIView)?
 }
 
 open class LightboxController: UIViewController {
@@ -66,8 +67,8 @@ open class LightboxController: UIViewController {
     return view
   }()
 
-  open fileprivate(set) lazy var footerView: FooterView = { [unowned self] in
-    let view = FooterView()
+  open fileprivate(set) lazy var footerView: FooterViewing & UIView = { [unowned self] in
+    let view = viewSource?.footerView(for: self) ?? FooterView()
     view.delegate = self
 
     return view
@@ -152,7 +153,7 @@ open class LightboxController: UIViewController {
   open weak var pageDelegate: LightboxControllerPageDelegate?
   open weak var dismissalDelegate: LightboxControllerDismissalDelegate?
   open weak var imageTouchDelegate: LightboxControllerTouchDelegate?
-  open weak var videoPlayerSource: LightboxControllerVideoPlayerSource?
+  open weak var viewSource: LightboxControllerViewSource?
   open internal(set) var presented = false
   open fileprivate(set) var seen = false
 
@@ -327,7 +328,7 @@ open class LightboxController: UIViewController {
       }
     }
 
-    [headerView, footerView].forEach { ($0 as AnyObject).configureLayout() }
+    [headerView, footerView].forEach { ($0 as? LayoutConfigurable)?.configureLayout() }
 
     overlayView.frame = scrollView.frame
     overlayView.resizeGradientLayer()
@@ -434,7 +435,7 @@ extension LightboxController: PageViewDelegate {
   }
 
   func videoPlayerController(for pageView: PageView) -> VideoPlayerController? {
-    return videoPlayerSource?.videoPlayerController(for: self)
+    return viewSource?.videoPlayerController(for: self)
   }
 }
 
@@ -481,7 +482,7 @@ extension LightboxController: HeaderViewDelegate {
 
 extension LightboxController: FooterViewDelegate {
 
-  public func footerView(_ footerView: FooterView, didExpand expanded: Bool) {
+  public func footerView(_ footerView: FooterViewing, didExpand expanded: Bool) {
     UIView.animate(withDuration: 0.25, animations: {
       self.overlayView.alpha = expanded ? 1.0 : 0.0
       self.headerView.deleteButton.alpha = expanded ? 0.0 : 1.0

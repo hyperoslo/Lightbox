@@ -1,11 +1,9 @@
 PODS:
-  - Cache (4.2.0)
-  - Hue (3.0.1)
-  - Imaginary (3.0.3):
-    - Cache (~> 4.0)
-  - Lightbox (2.1.2):
-    - Hue (~> 3.0)
-    - Imaginary (~> 3.0)
+  - Cache (5.2.0)
+  - Imaginary (4.2.0):
+    - Cache (~> 5.0)
+  - Lightbox (2.2.0):
+    - Imaginary (~> 4.0)
 
 DEPENDENCIES:
   - Lightbox (from `../../`)
@@ -13,7 +11,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Cache
-    - Hue
     - Imaginary
 
 EXTERNAL SOURCES:
@@ -21,10 +18,9 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  Cache: f28f8dd64b632155aabf9b3906b036a659048251
-  Hue: 93e852fa6211ab35922ad8c293f51c43d6c79eb2
-  Imaginary: 9b45836a5af881f452a86e0a1215772ae4712d00
-  Lightbox: 5e022968d3ed1bd717eacbc70f03c8cd2a86407a
+  Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
+  Imaginary: dae33d06dbc2ada22f98afef5eb45cc061311a2c
+  Lightbox: af4d61903506aa3151a314daa853f7cb3ad39301
 
 PODFILE CHECKSUM: 408ae3477507a1d4b7ff06ffb3f162eda443424f
 

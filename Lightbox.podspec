@@ -13,8 +13,7 @@ Pod::Spec.new do |s|
   s.ios.resource = 'Resources/Lightbox.bundle'
 
   s.frameworks = 'UIKit', 'AVFoundation', 'AVKit'
-  s.dependency 'Hue', '~> 3.0'
-  s.dependency 'Imaginary', '~> 3.0'
+  s.dependency 'Imaginary', '~> 4.0'
 
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.2' }
 end

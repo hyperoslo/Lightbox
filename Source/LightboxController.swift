@@ -1,5 +1,4 @@
 import UIKit
-import Hue
 
 public protocol LightboxControllerPageDelegate: class {
 
@@ -25,7 +24,7 @@ open class LightboxController: UIViewController {
     scrollView.isPagingEnabled = false
     scrollView.delegate = self
     scrollView.showsHorizontalScrollIndicator = false
-    scrollView.decelerationRate = UIScrollViewDecelerationRateFast
+    scrollView.decelerationRate = UIScrollView.DecelerationRate.fast
 
     return scrollView
   }()
@@ -71,7 +70,7 @@ open class LightboxController: UIViewController {
   open fileprivate(set) lazy var overlayView: UIView = { [unowned self] in
     let view = UIView(frame: CGRect.zero)
     let gradient = CAGradientLayer()
-    let colors = [UIColor(hex: "090909").alpha(0), UIColor(hex: "040404")]
+    let colors = [UIColor(hex: "090909").withAlphaComponent(0), UIColor(hex: "040404")]
 
     view.addGradientLayer(colors)
     view.alpha = 0
@@ -90,6 +89,8 @@ open class LightboxController: UIViewController {
       if currentPage == numberOfPages - 1 {
         seen = true
       }
+
+      reconfigurePagesForPreload()
 
       pageDelegate?.lightboxController(self, didMoveToPage: currentPage)
 
@@ -130,6 +131,7 @@ open class LightboxController: UIViewController {
       return pageViews.map { $0.image }
     }
     set(value) {
+      initialImages = value
       configurePages(value)
     }
   }
@@ -144,7 +146,7 @@ open class LightboxController: UIViewController {
   var pageViews = [PageView]()
   var statusBarHidden = false
 
-  fileprivate let initialImages: [LightboxImage]
+  fileprivate var initialImages: [LightboxImage]
   fileprivate let initialPage: Int
 
   // MARK: - Initializers
@@ -175,9 +177,8 @@ open class LightboxController: UIViewController {
     overlayView.addGestureRecognizer(overlayTapGestureRecognizer)
 
     configurePages(initialImages)
-    currentPage = initialPage
 
-    goTo(currentPage, animated: false)
+    goTo(initialPage, animated: false)
   }
 
   open override func viewDidAppear(_ animated: Bool) {
@@ -192,11 +193,14 @@ open class LightboxController: UIViewController {
     super.viewDidLayoutSubviews()
 
     scrollView.frame = view.bounds
-    footerView.frame = CGRect(
-      x: 0,
-      y: view.bounds.height - footerView.frame.height,
+    footerView.frame.size = CGSize(
       width: view.bounds.width,
       height: 100
+    )
+
+    footerView.frame.origin = CGPoint(
+      x: 0,
+      y: view.bounds.height - footerView.frame.height
     )
 
     headerView.frame = CGRect(
@@ -227,8 +231,10 @@ open class LightboxController: UIViewController {
     pageViews.forEach { $0.removeFromSuperview() }
     pageViews = []
 
-    for image in images {
-      let pageView = PageView(image: image)
+    let preloadIndicies = calculatePreloadIndicies()
+
+    for i in 0..<images.count {
+      let pageView = PageView(image: preloadIndicies.contains(i) ? images[i] : LightboxImageStub())
       pageView.pageViewDelegate = self
 
       scrollView.addSubview(pageView)
@@ -236,6 +242,23 @@ open class LightboxController: UIViewController {
     }
 
     configureLayout(view.bounds.size)
+  }
+
+  func reconfigurePagesForPreload() {
+    let preloadIndicies = calculatePreloadIndicies()
+
+    for i in 0..<initialImages.count {
+      let pageView = pageViews[i]
+      if preloadIndicies.contains(i) {
+        if type(of: pageView.image) == LightboxImageStub.self {
+          pageView.update(with: initialImages[i])
+        }
+      } else {
+        if type(of: pageView.image) != LightboxImageStub.self {
+          pageView.update(with: LightboxImageStub())
+        }
+      }
+    }
   }
 
   // MARK: - Pagination
@@ -296,7 +319,7 @@ open class LightboxController: UIViewController {
 
   fileprivate func loadDynamicBackground(_ image: UIImage) {
     backgroundView.image = image
-    backgroundView.layer.add(CATransition(), forKey: kCATransitionFade)
+    backgroundView.layer.add(CATransition(), forKey: "fade")
   }
 
   func toggleControls(pageView: PageView?, visible: Bool, duration: TimeInterval = 0.1, delay: TimeInterval = 0) {
@@ -309,6 +332,22 @@ open class LightboxController: UIViewController {
       self.footerView.alpha = alpha
       pageView?.playButton.alpha = alpha
     }, completion: nil)
+  }
+
+  // MARK: - Helper functions
+  func calculatePreloadIndicies () -> [Int] {
+    var preloadIndicies: [Int] = []
+    let preload = LightboxConfig.preload
+    if preload > 0 {
+      let lb = max(0, currentPage - preload)
+      let rb = min(initialImages.count, currentPage + preload)
+      for i in lb..<rb {
+        preloadIndicies.append(i)
+      }
+    } else {
+      preloadIndicies = [Int](0..<initialImages.count)
+    }
+    return preloadIndicies
   }
 }
 

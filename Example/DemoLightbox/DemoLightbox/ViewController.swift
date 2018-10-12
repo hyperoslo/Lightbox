@@ -6,8 +6,8 @@ class ViewController: UIViewController {
   lazy var showButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.addTarget(self, action: #selector(showLightbox), for: .touchUpInside)
-    button.setTitle("Show me the lightbox", for: UIControlState())
-    button.setTitleColor(UIColor(red:0.47, green:0.6, blue:0.13, alpha:1), for: UIControlState())
+    button.setTitle("Show me the lightbox", for: UIControl.State())
+    button.setTitleColor(UIColor(red:0.47, green:0.6, blue:0.13, alpha:1), for: UIControl.State())
     button.titleLabel?.font = UIFont(name: "AvenirNextCondensed-DemiBold", size: 30)
     button.frame = UIScreen.main.bounds
     button.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleBottomMargin]

@@ -7,23 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		166E3BA920333E04006799C1 /* LightboxImageStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166E3BA820333E04006799C1 /* LightboxImageStub.swift */; };
 		D22006741DFB4D9700E92898 /* Lightbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D22006731DFB4D9700E92898 /* Lightbox.bundle */; };
+		D2258CC4215CD035005A9A1C /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2258CC3215CD035005A9A1C /* Color+Extensions.swift */; };
 		D229B5E61FC3123F00F04123 /* Lightbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D523B0A91C43AA2A001AD1EC /* Lightbox.framework */; };
 		D229B5ED1FC3125D00F04123 /* InfoLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D229B5EC1FC3125D00F04123 /* InfoLabelTests.swift */; };
-		D2A58F5E1F7943A30064F14E /* Imaginary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A58F5D1F7943A30064F14E /* Imaginary.framework */; };
 		D2D71BBC1D54DA77006AB907 /* AssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D71BBB1D54DA77006AB907 /* AssetManager.swift */; };
 		D5026B3C1C5BF3FD003BC1A3 /* LightboxImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */; };
 		D523B0BD1C43AA8B001AD1EC /* LightboxConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B61C43AA8A001AD1EC /* LightboxConfig.swift */; };
 		D523B0BE1C43AA8B001AD1EC /* LightboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B71C43AA8A001AD1EC /* LightboxController.swift */; };
 		D54DFCBE1C5AAAD600ADEA0E /* InfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54DFCBC1C5AAAD600ADEA0E /* InfoLabel.swift */; };
 		D54DFCBF1C5AAAD600ADEA0E /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54DFCBD1C5AAAD600ADEA0E /* PageView.swift */; };
-		D54DFCC21C5AAAF100ADEA0E /* Hue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54DFCC01C5AAAF100ADEA0E /* Hue.framework */; };
 		D56F15C81E0AB79800F128AF /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56F15C71E0AB79800F128AF /* LoadingIndicator.swift */; };
 		D573A2F01C5B5605006053DD /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2EF1C5B5605006053DD /* HeaderView.swift */; };
 		D573A2F31C5B5C7B006053DD /* LayoutConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2F21C5B5C7B006053DD /* LayoutConfigurable.swift */; };
 		D573A2F51C5B5CA4006053DD /* LightboxTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2F41C5B5CA4006053DD /* LightboxTransition.swift */; };
 		D573A2F71C5B5E55006053DD /* UIView+Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573A2F61C5B5E55006053DD /* UIView+Gradient.swift */; };
 		D58A18CB1C5ABF8F000024BB /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58A18CA1C5ABF8F000024BB /* FooterView.swift */; };
+		FEFBAD5E21709B2700520071 /* CTPanoramaView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFBAD5D21709B2700520071 /* CTPanoramaView.framework */; };
+		FEFBAD6021709C3D00520071 /* Imaginary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEFBAD5F21709C3D00520071 /* Imaginary.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,11 +39,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		166E3BA820333E04006799C1 /* LightboxImageStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightboxImageStub.swift; sourceTree = "<group>"; };
 		D22006731DFB4D9700E92898 /* Lightbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Lightbox.bundle; sourceTree = "<group>"; };
+		D2258CC3215CD035005A9A1C /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		D229B5E11FC3123F00F04123 /* Lightbox-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lightbox-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D229B5E51FC3123F00F04123 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D229B5EC1FC3125D00F04123 /* InfoLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoLabelTests.swift; sourceTree = "<group>"; };
-		D2A58F5D1F7943A30064F14E /* Imaginary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Imaginary.framework; path = Carthage/Build/iOS/Imaginary.framework; sourceTree = "<group>"; };
 		D2D71BBB1D54DA77006AB907 /* AssetManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetManager.swift; sourceTree = "<group>"; };
 		D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxImage.swift; sourceTree = "<group>"; };
 		D523B0A91C43AA2A001AD1EC /* Lightbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lightbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,6 +60,8 @@
 		D573A2F41C5B5CA4006053DD /* LightboxTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxTransition.swift; sourceTree = "<group>"; };
 		D573A2F61C5B5E55006053DD /* UIView+Gradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Gradient.swift"; sourceTree = "<group>"; };
 		D58A18CA1C5ABF8F000024BB /* FooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
+		FEFBAD5D21709B2700520071 /* CTPanoramaView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CTPanoramaView.framework; path = Carthage/Build/iOS/CTPanoramaView.framework; sourceTree = "<group>"; };
+		FEFBAD5F21709C3D00520071 /* Imaginary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Imaginary.framework; path = Carthage/Build/iOS/Imaginary.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,8 +77,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2A58F5E1F7943A30064F14E /* Imaginary.framework in Frameworks */,
-				D54DFCC21C5AAAF100ADEA0E /* Hue.framework in Frameworks */,
+				FEFBAD6021709C3D00520071 /* Imaginary.framework in Frameworks */,
+				FEFBAD5E21709B2700520071 /* CTPanoramaView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,7 +105,8 @@
 		D2A58F5C1F7943A30064F14E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D2A58F5D1F7943A30064F14E /* Imaginary.framework */,
+				FEFBAD5F21709C3D00520071 /* Imaginary.framework */,
+				FEFBAD5D21709B2700520071 /* CTPanoramaView.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -116,7 +122,9 @@
 				D523B0AA1C43AA2A001AD1EC /* Products */,
 				D2A58F5C1F7943A30064F14E /* Frameworks */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		D523B0AA1C43AA2A001AD1EC /* Products */ = {
 			isa = PBXGroup;
@@ -143,6 +151,7 @@
 				D523B0B61C43AA8A001AD1EC /* LightboxConfig.swift */,
 				D523B0B71C43AA8A001AD1EC /* LightboxController.swift */,
 				D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */,
+				166E3BA820333E04006799C1 /* LightboxImageStub.swift */,
 				D2D71BBB1D54DA77006AB907 /* AssetManager.swift */,
 			);
 			path = Source;
@@ -166,6 +175,7 @@
 				D573A2F41C5B5CA4006053DD /* LightboxTransition.swift */,
 				D573A2F21C5B5C7B006053DD /* LayoutConfigurable.swift */,
 				D573A2F61C5B5E55006053DD /* UIView+Gradient.swift */,
+				D2258CC3215CD035005A9A1C /* Color+Extensions.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -209,8 +219,6 @@
 				D523B0A51C43AA2A001AD1EC /* Frameworks */,
 				D523B0A61C43AA2A001AD1EC /* Headers */,
 				D523B0A71C43AA2A001AD1EC /* Resources */,
-				D54DFCC41C5AAAF600ADEA0E /* Copy frameworks with Carthage */,
-				5CF8A88D1F50B4EA00C28475 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -228,7 +236,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0910;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Hyper Interaktiv AS";
 				TargetAttributes = {
 					D229B5E01FC3123F00F04123 = {
@@ -277,39 +285,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		5CF8A88D1F50B4EA00C28475 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-		};
-		D54DFCC41C5AAAF600ADEA0E /* Copy frameworks with Carthage */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Hue.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Imaginary.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Cache.framework",
-			);
-			name = "Copy frameworks with Carthage";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		D229B5DD1FC3123F00F04123 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -334,6 +309,8 @@
 				D58A18CB1C5ABF8F000024BB /* FooterView.swift in Sources */,
 				D573A2F01C5B5605006053DD /* HeaderView.swift in Sources */,
 				D573A2F51C5B5CA4006053DD /* LightboxTransition.swift in Sources */,
+				D2258CC4215CD035005A9A1C /* Color+Extensions.swift in Sources */,
+				166E3BA920333E04006799C1 /* LightboxImageStub.swift in Sources */,
 				D2D71BBC1D54DA77006AB907 /* AssetManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,7 +343,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fantageek.Lightbox-iOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -387,7 +363,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fantageek.Lightbox-iOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -404,12 +379,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -442,7 +419,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -461,12 +438,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -492,7 +471,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";

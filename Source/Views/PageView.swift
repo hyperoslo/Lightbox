@@ -143,6 +143,10 @@ class PageView: UIScrollView {
   // MARK: - Recognizers
 
   @objc func scrollViewDoubleTapped(_ recognizer: UITapGestureRecognizer) {
+    if image.videoURL != nil {
+        return
+    }
+
     let pointInView = recognizer.location(in: imageView)
     let newZoomScale = zoomScale > minimumZoomScale
       ? minimumZoomScale

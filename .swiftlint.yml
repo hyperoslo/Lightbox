@@ -41,4 +41,7 @@ variable_name:
     - id
     - URL
     - GlobalAPIKey
+    - i
+    - lb
+    - rb
 reporter: "xcode" # reporter type (xcode, json, csv, checkstyle)

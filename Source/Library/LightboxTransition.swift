@@ -163,7 +163,7 @@ extension LightboxTransition: UIGestureRecognizerDelegate {
 
     if let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer {
       let translation = panGestureRecognizer.translation(in: gestureRecognizer.view)
-      if fabs(translation.x) < fabs(translation.y) {
+        if abs(translation.x) < abs(translation.y) {
         result = true
       }
     }

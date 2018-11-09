@@ -19,9 +19,9 @@ open class HeaderView: UIView {
       attributes: LightboxConfig.CloseButton.textAttributes)
     
     let button = UIButton(type: .system)
-    
-    button.setAttributedTitle(title, for: UIControlState())
-    
+
+    button.setAttributedTitle(title, for: UIControl.State())
+
     if let size = LightboxConfig.CloseButton.size {
       button.frame.size = size
     } else {
@@ -32,7 +32,7 @@ open class HeaderView: UIView {
                      for: .touchUpInside)
     
     if let image = LightboxConfig.CloseButton.image {
-      button.setBackgroundImage(image, for: UIControlState())
+        button.setBackgroundImage(image, for: UIControl.State())
     }
     
     button.isHidden = !LightboxConfig.CloseButton.enabled
@@ -99,7 +99,7 @@ open class HeaderView: UIView {
                      for: .touchUpInside)
     
     if let image = LightboxConfig.DeleteButton.image {
-      button.setBackgroundImage(image, for: UIControlState())
+        button.setBackgroundImage(image, for: UIControl.State())
     }
     
     button.isHidden = !LightboxConfig.DeleteButton.enabled

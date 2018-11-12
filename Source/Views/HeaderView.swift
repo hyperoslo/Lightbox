@@ -47,7 +47,7 @@ open class HeaderView: UIView {
     
     let button = UIButton(type: .system)
     
-    button.setAttributedTitle(title, for: UIControlState())
+    button.setAttributedTitle(title, for: UIControl.State())
     
     if let size = LightboxConfig.DownloadButton.size {
       button.frame.size = size
@@ -58,7 +58,7 @@ open class HeaderView: UIView {
     button.addTarget(self, action: #selector(downloadButtonDidPress(_:)), for: .touchUpInside)
     
     if let image = LightboxConfig.DownloadButton.image {
-      button.setBackgroundImage(image, for: UIControlState())
+      button.setBackgroundImage(image, for: UIControl.State())
     }
     
     button.isHidden = !LightboxConfig.DownloadButton.enabled
@@ -67,7 +67,7 @@ open class HeaderView: UIView {
     }()
   
   open fileprivate(set) lazy var activityIndicator: UIActivityIndicatorView = { [unowned self] in
-    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+    let activityIndicator = UIActivityIndicatorView(style: .white)
     
     if let size = LightboxConfig.DownloadButton.size {
       activityIndicator.frame.size = size

@@ -133,12 +133,12 @@ public class LightboxConfig {
   public struct Header {
     public static var displayGradient = false
     public static var topPadding: CGFloat = 0
-    public static var gradientColors = [UIColor(hex: "040404"), UIColor(hex: "040404").alpha(0.1)]
+    public static var gradientColors = [UIColor(hex: "040404"), UIColor(hex: "040404").withAlphaComponent(0.1)]
   }
   
   public struct Footer {
     public static var bottomPadding: CGFloat = 0
-    public static var gradientColors = [UIColor(hex: "040404").alpha(0.1), UIColor(hex: "040404")]
+    public static var gradientColors = [UIColor(hex: "040404").withAlphaComponent(0.1), UIColor(hex: "040404")]
   }
 }
 

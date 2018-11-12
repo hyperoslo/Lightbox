@@ -21,6 +21,12 @@ open class LightboxImage {
     self.text = text
     self.videoURL = videoURL
   }
+    
+  public init(imageURL: URL, text: String = "", videoURL: URL? = nil) {
+    self.imageURL = imageURL
+    self.text = text
+    self.videoURL = videoURL
+  }
   
   public init(imageURL: URL, imageDownloadURL: URL, text: String = "", videoURL: URL? = nil) {
     self.imageURL = imageURL

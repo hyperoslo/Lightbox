@@ -183,7 +183,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DemoLightbox/Pods-DemoLightbox-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-DemoLightbox/Pods-DemoLightbox-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/Imaginary/Imaginary.framework",
 				"${BUILT_PRODUCTS_DIR}/Lightbox/Lightbox.framework",
@@ -196,7 +196,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DemoLightbox/Pods-DemoLightbox-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DemoLightbox/Pods-DemoLightbox-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -333,7 +333,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6096248776155BE47C0A196A /* Pods-DemoLightbox.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = LG4DBY4QF9;
 				INFOPLIST_FILE = DemoLightbox/Info.plist;
@@ -348,7 +347,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 064155DBC618EBACF5C257C6 /* Pods-DemoLightbox.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = LG4DBY4QF9;
 				INFOPLIST_FILE = DemoLightbox/Info.plist;

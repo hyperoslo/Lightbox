@@ -15,7 +15,7 @@ packed with all the features you expect:
 - [x] Video support.
 - [x] Double-tap to zoom.
 - [x] Image caption.
-- [x] Dynamic background based on [Hue](https://github.com/hyperoslo/Hue)
+- [x] Dynamic background.
 - [x] Remote image loading and caching based on [Imaginary](https://github.com/hyperoslo/Imaginary)
 - [x] Interactive transition animations.
 - [x] Powerful configuration.

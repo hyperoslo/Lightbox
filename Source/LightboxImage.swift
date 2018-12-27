@@ -33,12 +33,14 @@ open class LightboxImage {
     self.videoURL = videoURL
   }
 
-  open func addImageTo(_ imageView: UIImageView, completion: ((UIImage?) -> Void)? = nil) {
+  open func addImageTo(_ imageView: UIImageView, completion: ((UIImage?) -> Void)? = nil) -> (() -> Void)? {
     if let image = image {
       imageView.image = image
       completion?(image)
     } else if let imageURL = imageURL {
-      LightboxConfig.loadImage(imageView, imageURL, completion)
+      var cancelOperation: (() -> Void)? = nil
+      LightboxConfig.loadImage(imageView, imageURL, &cancelOperation, completion)
+      return cancelOperation
     } else if let imageClosure = imageClosure {
       let img = imageClosure()
       imageView.image = img
@@ -47,5 +49,6 @@ open class LightboxImage {
       imageView.image = nil
       completion?(nil)
     }
+    return nil
   }
 }

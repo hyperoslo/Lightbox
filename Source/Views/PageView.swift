@@ -39,6 +39,8 @@ class PageView: UIScrollView {
   var contentFrame = CGRect.zero
   weak var pageViewDelegate: PageViewDelegate?
 
+  private var cancelCurrentImageLoading: (() -> Void)?
+
   var hasZoomed: Bool {
     return zoomScale != 1.0
   }
@@ -102,11 +104,15 @@ class PageView: UIScrollView {
 
   // MARK: - Fetch
   private func fetchImage () {
+    cancelCurrentImageLoading?()
+
     loadingIndicator.alpha = 1
-    self.image.addImageTo(imageView) { [weak self] image in
+    cancelCurrentImageLoading = self.image.addImageTo(imageView) { [weak self] image in
       guard let self = self else {
         return
       }
+
+      self.cancelCurrentImageLoading = nil
 
       self.isUserInteractionEnabled = true
       self.configureImageView()

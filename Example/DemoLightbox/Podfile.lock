@@ -2,7 +2,7 @@ PODS:
   - Cache (5.2.0)
   - Imaginary (4.2.0):
     - Cache (~> 5.0)
-  - Lightbox (2.2.0):
+  - Lightbox (2.3.0):
     - Imaginary (~> 4.0)
 
 DEPENDENCIES:
@@ -20,8 +20,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
   Imaginary: dae33d06dbc2ada22f98afef5eb45cc061311a2c
-  Lightbox: af4d61903506aa3151a314daa853f7cb3ad39301
+  Lightbox: 63b567b8aa7be5a786aa6a60f17b51efa5091b45
 
 PODFILE CHECKSUM: 408ae3477507a1d4b7ff06ffb3f162eda443424f
 
-COCOAPODS: 1.6.0.beta.1
+COCOAPODS: 1.5.3

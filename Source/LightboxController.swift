@@ -15,6 +15,10 @@ public protocol LightboxControllerTouchDelegate: class {
   func lightboxController(_ controller: LightboxController, didTouch image: LightboxImage, at index: Int)
 }
 
+public protocol LightboxControllerDeleteDelegate: class {
+    
+    func lightboxController(_ controller: LightboxController, didDeleteImageAt index: Int)
+}
 open class LightboxController: UIViewController {
 
   // MARK: - Internal views
@@ -139,6 +143,7 @@ open class LightboxController: UIViewController {
   open weak var pageDelegate: LightboxControllerPageDelegate?
   open weak var dismissalDelegate: LightboxControllerDismissalDelegate?
   open weak var imageTouchDelegate: LightboxControllerTouchDelegate?
+  open weak var imageDeleteDelegate: LightboxControllerDeleteDelegate?
   open internal(set) var presented = false
   open fileprivate(set) var seen = false
 
@@ -248,16 +253,18 @@ open class LightboxController: UIViewController {
     let preloadIndicies = calculatePreloadIndicies()
 
     for i in 0..<initialImages.count {
-      let pageView = pageViews[i]
-      if preloadIndicies.contains(i) {
-        if type(of: pageView.image) == LightboxImageStub.self {
-          pageView.update(with: initialImages[i])
+        if i <= pageViews.count-1 {
+            let pageView = pageViews[i]
+            if preloadIndicies.contains(i) {
+                if type(of: pageView.image) == LightboxImageStub.self {
+                    pageView.update(with: initialImages[i])
+                }
+            } else {
+                if type(of: pageView.image) != LightboxImageStub.self {
+                    pageView.update(with: LightboxImageStub())
+                }
+            }
         }
-      } else {
-        if type(of: pageView.image) != LightboxImageStub.self {
-          pageView.update(with: LightboxImageStub())
-        }
-      }
     }
   }
 
@@ -424,6 +431,7 @@ extension LightboxController: HeaderViewDelegate {
     guard numberOfPages != 1 else {
       pageViews.removeAll()
       self.headerView(headerView, didPressCloseButton: headerView.closeButton)
+      self.imageDeleteDelegate?.lightboxController(self, didDeleteImageAt: self.currentPage)
       return
     }
 
@@ -442,6 +450,7 @@ extension LightboxController: HeaderViewDelegate {
       self.configureLayout(self.view.bounds.size)
       self.currentPage = Int(self.scrollView.contentOffset.x / self.view.bounds.width)
       deleteButton.isEnabled = true
+      self.imageDeleteDelegate?.lightboxController(self, didDeleteImageAt: self.currentPage)
     }
   }
 

@@ -43,10 +43,19 @@ class ViewController: UIViewController {
       )
     ]
     
+    LightboxConfig.DeleteButton.enabled = true
+
     let controller = LightboxController(images: images)
     controller.dynamicBackground = true
-    
+    controller.imageDeleteDelegate = self
+
     present(controller, animated: true, completion: nil)
   }
+}
+
+extension ViewController: LightboxControllerDeleteDelegate {
+    func lightboxController(_ controller: LightboxController, didDeleteImageAt index: Int) {
+        print("did Delete Image at index: \(index)")
+    }
 }
 

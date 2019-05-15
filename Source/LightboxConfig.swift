@@ -1,12 +1,14 @@
 import UIKit
 import AVKit
 import AVFoundation
-import Imaginary
+//import Imaginary
 
 public class LightboxConfig {
   /// Whether to show status bar while Lightbox is presented
   public static var hideStatusBar = true
-
+  
+  public typealias LoadImageCompletion = (_ error: NSError?, _ image: UIImage?) -> Void
+    
   /// Provide a closure to handle selected video
   public static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in
     let videoController = AVPlayerViewController()
@@ -16,19 +18,34 @@ public class LightboxConfig {
       videoController.player?.play()
     }
   }
-
+    
   /// How to load image onto UIImageView
-  public static var loadImage: (UIImageView, URL, ((UIImage?) -> Void)?) -> Void = { (imageView, imageURL, completion) in
-
-    // Use Imaginary by default
-    imageView.setImage(url: imageURL, placeholder: nil, completion: { result in
-      switch result {
-      case .value(let image):
-        completion?(image)
-      case .error:
-        completion?(nil)
-      }
+  public static var loadImage: (_ imageView: UIImageView, _ URL: URL, _ httpHeaders: [String: String]?, _ completion: LoadImageCompletion?) -> Void = {
+    imageView, URL, httpHeaders, completion in
+        
+    var imageRequest: URLRequest = URLRequest(url: URL)
+    imageRequest.allHTTPHeaderFields = httpHeaders
+        
+    let sessionManager: URLSession = {
+      let configuration =  URLSessionConfiguration.default
+      let cache = URLCache(memoryCapacity: 0, diskCapacity: 0, diskPath: nil)
+      configuration.urlCache = cache
+      return URLSession(configuration: configuration)
+    }()
+        
+    let task = sessionManager.dataTask(with: imageRequest, completionHandler: { (data, _, error) -> Void in
+        guard let data = data, let image = UIImage(data: data) else {
+            completion?(error as NSError?, nil)
+            return
+        }
+        DispatchQueue.main.sync {
+            imageView.image = image
+        }
+        completion?(error as NSError?, image)
     })
+    
+    task.resume()
+    
   }
 
   /// Indicator is used to show while image is being fetched

@@ -43,14 +43,13 @@ open class LightboxImage {
       imageView.image = image
       completion?(image)
     } else if let imageURL = imageURL {
-//        LightboxConfig.loadImage(imageView, imageURL, httpHeaders) { error, image in
-//            if error != nil {
-//                completion?(nil)
-//            } else {
-//                completion?(image)
-//            }
-//        }
-      LightboxConfig.loadImage(imageView, imageURL, httpHeaders, completion)
+        LightboxConfig.loadImage(imageView, imageURL, httpHeaders) { error, image in
+            if error != nil {
+                completion?(nil)
+            } else {
+                completion?(image)
+            }
+        }
     } else if let imageClosure = imageClosure {
       let img = imageClosure()
       imageView.image = img

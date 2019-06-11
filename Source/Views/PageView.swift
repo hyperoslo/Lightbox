@@ -6,6 +6,7 @@ protocol PageViewDelegate: class {
   func remoteImageDidLoad(_ image: UIImage?, imageView: UIImageView)
   func pageView(_ pageView: PageView, didTouchPlayButton videoURL: URL)
   func pageViewDidTouch(_ pageView: PageView)
+  func pageViewLongPressed(_ pageView: PageView)
 }
 
 class PageView: UIScrollView {
@@ -81,6 +82,9 @@ class PageView: UIScrollView {
 
     let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:)))
     addGestureRecognizer(tapRecognizer)
+    
+    let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(viewLongPressed(_:)))
+    addGestureRecognizer(longPressRecognizer)
 
     tapRecognizer.require(toFail: doubleTapRecognizer)
   }
@@ -139,6 +143,10 @@ class PageView: UIScrollView {
   @objc func viewTapped(_ recognizer: UITapGestureRecognizer) {
     pageViewDelegate?.pageViewDidTouch(self)
   }
+    
+    @objc func viewLongPressed(_ recognizer: UILongPressGestureRecognizer) {
+        pageViewDelegate?.pageViewLongPressed(self)
+    }
 
   // MARK: - Layout
 

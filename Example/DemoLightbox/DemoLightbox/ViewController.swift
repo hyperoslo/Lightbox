@@ -48,12 +48,24 @@ class ViewController: UIViewController {
     let controller = LightboxController(images: images)
     controller.dynamicBackground = true
     controller.imageDeleteDelegate = self
+    controller.imageTouchDelegate = self
+    controller.imageLongpressedDelegate = self
 
     present(controller, animated: true, completion: nil)
   }
 }
 
-extension ViewController: LightboxControllerDeleteDelegate {
+extension ViewController: LightboxControllerDeleteDelegate, LightboxControllerTouchDelegate, LightboxControllerLongPressedDelegate {
+    func lightboxController(_ controller: LightboxController, didTouch image: LightboxImage, at index: Int) {
+        print("did Touch Image at index: \(index)")
+    }
+    
+    
+    func lightboxController(_ controller: LightboxController, longPressed image: LightboxImage, at index: Int) {
+        print("long Pressed Image at index: \(index)")
+    }
+    
+    
     func lightboxController(_ controller: LightboxController, didDeleteImageAt index: Int) {
         print("did Delete Image at index: \(index)")
     }

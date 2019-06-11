@@ -15,6 +15,11 @@ public protocol LightboxControllerTouchDelegate: class {
   func lightboxController(_ controller: LightboxController, didTouch image: LightboxImage, at index: Int)
 }
 
+public protocol LightboxControllerLongPressedDelegate: class {
+    
+    func lightboxController(_ controller: LightboxController, longPressed image: LightboxImage, at index: Int)
+}
+
 public protocol LightboxControllerDeleteDelegate: class {
     
     func lightboxController(_ controller: LightboxController, didDeleteImageAt index: Int)
@@ -143,6 +148,7 @@ open class LightboxController: UIViewController {
   open weak var pageDelegate: LightboxControllerPageDelegate?
   open weak var dismissalDelegate: LightboxControllerDismissalDelegate?
   open weak var imageTouchDelegate: LightboxControllerTouchDelegate?
+  open weak var imageLongpressedDelegate: LightboxControllerLongPressedDelegate?
   open weak var imageDeleteDelegate: LightboxControllerDeleteDelegate?
   open internal(set) var presented = false
   open fileprivate(set) var seen = false
@@ -419,6 +425,10 @@ extension LightboxController: PageViewDelegate {
     let visible = (headerView.alpha == 1.0)
     toggleControls(pageView: pageView, visible: !visible)
   }
+    
+    func pageViewLongPressed(_ pageView: PageView) {
+        imageLongpressedDelegate?.lightboxController(self, longPressed: images[currentPage], at: currentPage)
+    }
 }
 
 // MARK: - HeaderViewDelegate

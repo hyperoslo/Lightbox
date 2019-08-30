@@ -47,7 +47,9 @@ open class LightboxImage {
             if error != nil {
                 completion?(nil)
             } else {
-                completion?(image)
+                DispatchQueue.main.sync {
+                    completion?(image)
+                }
             }
         }
     } else if let imageClosure = imageClosure {

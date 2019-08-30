@@ -119,16 +119,14 @@ class PageView: UIScrollView {
     loadingIndicator.alpha = 1
     self.image.addImageTo(imageView) { [weak self] image in
         DispatchQueue.main.sync {
-            guard let self = self else {
-              return
-            }
+            guard let strongSelf = self else { return }
 
-            self.isUserInteractionEnabled = true
-            self.configureImageView()
-            self.pageViewDelegate?.remoteImageDidLoad(image, imageView: self.imageView)
+            strongSelf.isUserInteractionEnabled = true
+            strongSelf.configureImageView()
+            strongSelf.pageViewDelegate?.remoteImageDidLoad(image, imageView: strongSelf.imageView)
 
             UIView.animate(withDuration: 0.4) {
-              self.loadingIndicator.alpha = 0
+              strongSelf.loadingIndicator.alpha = 0
             }
         }
     }

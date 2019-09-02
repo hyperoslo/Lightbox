@@ -72,15 +72,15 @@ class PageView: UIScrollView {
     showsHorizontalScrollIndicator = false
     showsVerticalScrollIndicator = false
 
-//    let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(scrollViewDoubleTapped(_:)))
-//    doubleTapRecognizer.numberOfTapsRequired = 2
-//    doubleTapRecognizer.numberOfTouchesRequired = 1
-//    addGestureRecognizer(doubleTapRecognizer)
+    let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(scrollViewDoubleTapped(_:)))
+    doubleTapRecognizer.numberOfTapsRequired = 2
+    doubleTapRecognizer.numberOfTouchesRequired = 1
+    addGestureRecognizer(doubleTapRecognizer)
 
     let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:)))
     addGestureRecognizer(tapRecognizer)
 
-//    tapRecognizer.require(toFail: doubleTapRecognizer)
+    tapRecognizer.require(toFail: doubleTapRecognizer)
   }
 
   // MARK: - Update
@@ -120,21 +120,21 @@ class PageView: UIScrollView {
   }
 
   // MARK: - Recognizers
-//  @objc func scrollViewDoubleTapped(_ recognizer: UITapGestureRecognizer) {
-//    let pointInView = recognizer.location(in: imageView)
-//    let newZoomScale = zoomScale > minimumZoomScale
-//      ? minimumZoomScale
-//      : maximumZoomScale
-//
-//    let width = contentFrame.size.width / newZoomScale
-//    let height = contentFrame.size.height / newZoomScale
-//    let x = pointInView.x - (width / 2.0)
-//    let y = pointInView.y - (height / 2.0)
-//
-//    let rectToZoomTo = CGRect(x: x, y: y, width: width, height: height)
-//
-//    zoom(to: rectToZoomTo, animated: true)
-//  }
+  @objc func scrollViewDoubleTapped(_ recognizer: UITapGestureRecognizer) {
+    let pointInView = recognizer.location(in: imageView)
+    let newZoomScale = zoomScale > minimumZoomScale
+      ? minimumZoomScale
+      : maximumZoomScale
+
+    let width = contentFrame.size.width / newZoomScale
+    let height = contentFrame.size.height / newZoomScale
+    let x = pointInView.x - (width / 2.0)
+    let y = pointInView.y - (height / 2.0)
+
+    let rectToZoomTo = CGRect(x: x, y: y, width: width, height: height)
+
+    zoom(to: rectToZoomTo, animated: true)
+  }
 
   @objc func viewTapped(_ recognizer: UITapGestureRecognizer) {
     pageViewDelegate?.pageViewDidTouch(self)

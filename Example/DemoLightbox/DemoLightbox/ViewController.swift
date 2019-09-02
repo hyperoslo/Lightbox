@@ -44,6 +44,7 @@ class ViewController: UIViewController {
     ]
     
     let controller = LightboxController(images: images)
+//    controller.modalPresentationStyle = .fullScreen
     controller.dynamicBackground = true
     
     present(controller, animated: true, completion: nil)

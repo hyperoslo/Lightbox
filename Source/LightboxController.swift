@@ -154,7 +154,10 @@ open class LightboxController: UIViewController {
   public init(images: [LightboxImage] = [], startIndex index: Int = 0) {
     self.initialImages = images
     self.initialPage = index
+    
     super.init(nibName: nil, bundle: nil)
+    
+    self.modalPresentationStyle = .fullScreen
   }
 
   public required init?(coder aDecoder: NSCoder) {

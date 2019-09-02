@@ -44,27 +44,12 @@ class PageView: UIScrollView {
   }
 
   // MARK: - Initializers
-
   init(image: LightboxImage) {
     self.image = image
     super.init(frame: CGRect.zero)
 
     configure()
 
-    loadingIndicator.alpha = 0.3
-    self.image.addImageTo(imageView) { [weak self] image in
-        DispatchQueue.main.async {
-            guard let strongSelf = self else { return }
-            strongSelf.isUserInteractionEnabled = true
-            strongSelf.configureImageView()
-            strongSelf.pageViewDelegate?.remoteImageDidLoad(image, imageView: strongSelf.imageView)
-            
-            UIView.animate(withDuration: 0.4) {
-                strongSelf.loadingIndicator.alpha = 0
-            }
-        }
-    }
-    
     fetchImage()
   }
 
@@ -73,7 +58,6 @@ class PageView: UIScrollView {
   }
 
   // MARK: - Configuration
-
   func configure() {
     addSubview(imageView)
 
@@ -88,15 +72,15 @@ class PageView: UIScrollView {
     showsHorizontalScrollIndicator = false
     showsVerticalScrollIndicator = false
 
-    let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(scrollViewDoubleTapped(_:)))
-    doubleTapRecognizer.numberOfTapsRequired = 2
-    doubleTapRecognizer.numberOfTouchesRequired = 1
-    addGestureRecognizer(doubleTapRecognizer)
+//    let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(scrollViewDoubleTapped(_:)))
+//    doubleTapRecognizer.numberOfTapsRequired = 2
+//    doubleTapRecognizer.numberOfTouchesRequired = 1
+//    addGestureRecognizer(doubleTapRecognizer)
 
     let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:)))
     addGestureRecognizer(tapRecognizer)
 
-    tapRecognizer.require(toFail: doubleTapRecognizer)
+//    tapRecognizer.require(toFail: doubleTapRecognizer)
   }
 
   // MARK: - Update
@@ -117,9 +101,11 @@ class PageView: UIScrollView {
   // MARK: - Fetch
   private func fetchImage () {
     loadingIndicator.alpha = 1
-    self.image.addImageTo(imageView) { [weak self] image in
-        DispatchQueue.main.sync {
-            guard let strongSelf = self else { return }
+    self.image.addImageTo(imageView) { image in
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else {
+              return
+            }
 
             strongSelf.isUserInteractionEnabled = true
             strongSelf.configureImageView()
@@ -129,33 +115,32 @@ class PageView: UIScrollView {
               strongSelf.loadingIndicator.alpha = 0
             }
         }
+      
     }
   }
 
   // MARK: - Recognizers
-
-  @objc func scrollViewDoubleTapped(_ recognizer: UITapGestureRecognizer) {
-    let pointInView = recognizer.location(in: imageView)
-    let newZoomScale = zoomScale > minimumZoomScale
-      ? minimumZoomScale
-      : maximumZoomScale
-
-    let width = contentFrame.size.width / newZoomScale
-    let height = contentFrame.size.height / newZoomScale
-    let x = pointInView.x - (width / 2.0)
-    let y = pointInView.y - (height / 2.0)
-
-    let rectToZoomTo = CGRect(x: x, y: y, width: width, height: height)
-
-    zoom(to: rectToZoomTo, animated: true)
-  }
+//  @objc func scrollViewDoubleTapped(_ recognizer: UITapGestureRecognizer) {
+//    let pointInView = recognizer.location(in: imageView)
+//    let newZoomScale = zoomScale > minimumZoomScale
+//      ? minimumZoomScale
+//      : maximumZoomScale
+//
+//    let width = contentFrame.size.width / newZoomScale
+//    let height = contentFrame.size.height / newZoomScale
+//    let x = pointInView.x - (width / 2.0)
+//    let y = pointInView.y - (height / 2.0)
+//
+//    let rectToZoomTo = CGRect(x: x, y: y, width: width, height: height)
+//
+//    zoom(to: rectToZoomTo, animated: true)
+//  }
 
   @objc func viewTapped(_ recognizer: UITapGestureRecognizer) {
     pageViewDelegate?.pageViewDidTouch(self)
   }
 
   // MARK: - Layout
-
   override func layoutSubviews() {
     super.layoutSubviews()
 
@@ -164,28 +149,30 @@ class PageView: UIScrollView {
   }
 
   func configureImageView() {
-    guard let image = imageView.image else {
-        centerImageView()
-        return
+    DispatchQueue.main.async { [weak self] in
+        guard let strongSelf = self, let image = self?.imageView.image else {
+            self?.centerImageView()
+            return
+        }
+
+        let imageViewSize = strongSelf.imageView.frame.size
+        let imageSize = image.size
+        let realImageViewSize: CGSize
+
+        if imageSize.width / imageSize.height > imageViewSize.width / imageViewSize.height {
+          realImageViewSize = CGSize(
+            width: imageViewSize.width,
+            height: imageViewSize.width / imageSize.width * imageSize.height)
+        } else {
+          realImageViewSize = CGSize(
+            width: imageViewSize.height / imageSize.height * imageSize.width,
+            height: imageViewSize.height)
+        }
+
+        strongSelf.imageView.frame = CGRect(origin: CGPoint.zero, size: realImageViewSize)
+
+        strongSelf.centerImageView()
     }
-
-    let imageViewSize = imageView.frame.size
-    let imageSize = image.size
-    let realImageViewSize: CGSize
-
-    if imageSize.width / imageSize.height > imageViewSize.width / imageViewSize.height {
-      realImageViewSize = CGSize(
-        width: imageViewSize.width,
-        height: imageViewSize.width / imageSize.width * imageSize.height)
-    } else {
-      realImageViewSize = CGSize(
-        width: imageViewSize.height / imageSize.height * imageSize.width,
-        height: imageViewSize.height)
-    }
-
-    imageView.frame = CGRect(origin: CGPoint.zero, size: realImageViewSize)
-
-    centerImageView()
   }
 
   func centerImageView() {
@@ -208,7 +195,6 @@ class PageView: UIScrollView {
   }
 
   // MARK: - Action
-
   @objc func playButtonTouched(_ button: UIButton) {
     guard let videoURL = image.videoURL else { return }
 
@@ -217,7 +203,6 @@ class PageView: UIScrollView {
 }
 
 // MARK: - LayoutConfigurable
-
 extension PageView: LayoutConfigurable {
 
   @objc func configureLayout() {
@@ -231,7 +216,6 @@ extension PageView: LayoutConfigurable {
 }
 
 // MARK: - UIScrollViewDelegate
-
 extension PageView: UIScrollViewDelegate {
 
   func viewForZooming(in scrollView: UIScrollView) -> UIView? {

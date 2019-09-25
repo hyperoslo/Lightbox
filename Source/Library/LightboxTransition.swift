@@ -2,24 +2,25 @@ import UIKit
 
 class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
-  lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
-    let gesture = UIPanGestureRecognizer()
-    gesture.addTarget(self, action: #selector(handlePanGesture(_:)))
-    gesture.delegate = self
-
-    return gesture
-    }()
+//  lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
+//    let gesture = UIPanGestureRecognizer()
+//    gesture.addTarget(self, action: #selector(handlePanGesture(_:)))
+//    gesture.delegate = self
+//
+//    return gesture
+//    }()
 
   var interactive = false
   var dismissing = false
   var initialOrigin = CGPoint(x: 0, y: 0)
 
-  var scrollView: UIScrollView? {
-    didSet {
-      guard let scrollView = scrollView else { return }
-      scrollView.addGestureRecognizer(panGestureRecognizer)
-    }
-  }
+  var scrollView: UIScrollView?
+//  {
+//    didSet {
+//      guard let scrollView = scrollView else { return }
+//      scrollView.addGestureRecognizer(panGestureRecognizer)
+//    }
+//  }
 
   weak var lightboxController: LightboxController?
 
@@ -37,52 +38,52 @@ class LightboxTransition: UIPercentDrivenInteractiveTransition {
 
   // MARK: - Pan gesture recognizer
 
-  @objc func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
-    let translation = gesture.translation(in: scrollView)
-    let percentage = abs(translation.y) / UIScreen.main.bounds.height / 1.5
-    let velocity = gesture.velocity(in: scrollView)
-
-    switch gesture.state {
-    case .began:
-      interactive = true
-      lightboxController?.presented = false
-      lightboxController?.dismiss(animated: true, completion: nil)
-      if let origin = scrollView?.frame.origin { initialOrigin = origin }
-    case .changed:
-      update(percentage)
-      scrollView?.frame.origin.y = initialOrigin.y + translation.y
-    case .ended, .cancelled:
-
-      var time = translation.y * 3 / abs(velocity.y)
-      if time > 1 { time = 0.7 }
-
-      interactive = false
-      lightboxController?.presented = true
-
-      if percentage > 0.1 {
-        finish()
-        guard let controller = lightboxController else { return }
-
-        controller.headerView.alpha = 0
-        controller.footerView.alpha = 0
-
-        UIView.animate(withDuration: TimeInterval(time), delay: 0, options: [.allowUserInteraction], animations: {
-          self.scrollView?.frame.origin.y = translation.y * 3
-          controller.view.alpha = 0
-          controller.view.backgroundColor = UIColor.black.withAlphaComponent(0)
-          }, completion: { _ in })
-      } else {
-        cancel()
-
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.035) {
-          UIView.animate(withDuration: 0.35, animations: {
-            self.scrollView?.frame.origin = self.initialOrigin
-          })
-        }
-      }
-    default: break
-    }
-  }
+//  @objc func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+//    let translation = gesture.translation(in: scrollView)
+//    let percentage = abs(translation.y) / UIScreen.main.bounds.height / 1.5
+//    let velocity = gesture.velocity(in: scrollView)
+//
+//    switch gesture.state {
+//    case .began:
+//      interactive = true
+//      lightboxController?.presented = false
+//      lightboxController?.dismiss(animated: true, completion: nil)
+//      if let origin = scrollView?.frame.origin { initialOrigin = origin }
+//    case .changed:
+//      update(percentage)
+//      scrollView?.frame.origin.y = initialOrigin.y + translation.y
+//    case .ended, .cancelled:
+//
+//      var time = translation.y * 3 / abs(velocity.y)
+//      if time > 1 { time = 0.7 }
+//
+//      interactive = false
+//      lightboxController?.presented = true
+//
+//      if percentage > 0.1 {
+//        finish()
+//        guard let controller = lightboxController else { return }
+//
+//        controller.headerView.alpha = 0
+//        controller.footerView.alpha = 0
+//
+//        UIView.animate(withDuration: TimeInterval(time), delay: 0, options: [.allowUserInteraction], animations: {
+//          self.scrollView?.frame.origin.y = translation.y * 3
+//          controller.view.alpha = 0
+//          controller.view.backgroundColor = UIColor.black.withAlphaComponent(0)
+//          }, completion: { _ in })
+//      } else {
+//        cancel()
+//
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.035) {
+//          UIView.animate(withDuration: 0.35, animations: {
+//            self.scrollView?.frame.origin = self.initialOrigin
+//          })
+//        }
+//      }
+//    default: break
+//    }
+//  }
 
   override func finish() {
     super.finish()

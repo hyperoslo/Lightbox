@@ -12,7 +12,6 @@
 		D2258CC4215CD035005A9A1C /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2258CC3215CD035005A9A1C /* Color+Extensions.swift */; };
 		D229B5E61FC3123F00F04123 /* Lightbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D523B0A91C43AA2A001AD1EC /* Lightbox.framework */; };
 		D229B5ED1FC3125D00F04123 /* InfoLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D229B5EC1FC3125D00F04123 /* InfoLabelTests.swift */; };
-		D2A58F5E1F7943A30064F14E /* Imaginary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A58F5D1F7943A30064F14E /* Imaginary.framework */; };
 		D2D71BBC1D54DA77006AB907 /* AssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D71BBB1D54DA77006AB907 /* AssetManager.swift */; };
 		D5026B3C1C5BF3FD003BC1A3 /* LightboxImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */; };
 		D523B0BD1C43AA8B001AD1EC /* LightboxConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523B0B61C43AA8A001AD1EC /* LightboxConfig.swift */; };
@@ -75,7 +74,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2A58F5E1F7943A30064F14E /* Imaginary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,16 +230,17 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0910;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Hyper Interaktiv AS";
 				TargetAttributes = {
 					D229B5E01FC3123F00F04123 = {
 						CreatedOnToolsVersion = 9.1;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					D523B0A81C43AA2A001AD1EC = {
 						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -250,6 +249,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = D523B09F1C43AA2A001AD1EC;
@@ -367,6 +367,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -426,6 +427,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

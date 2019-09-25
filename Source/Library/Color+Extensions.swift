@@ -1,6 +1,6 @@
 import UIKit
 
-public extension UIColor {
+internal extension UIColor {
     /// Constructing color from hex string
     ///
     /// - Parameter hex: A hex string, can either contain # or not

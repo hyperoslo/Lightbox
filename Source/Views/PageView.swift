@@ -45,7 +45,6 @@ class PageView: UIScrollView {
   }
 
   // MARK: - Initializers
-
   init(image: LightboxImage) {
     self.image = image
     super.init(frame: CGRect.zero)
@@ -60,7 +59,6 @@ class PageView: UIScrollView {
   }
 
   // MARK: - Configuration
-
   func configure() {
     addSubview(imageView)
 
@@ -107,23 +105,25 @@ class PageView: UIScrollView {
   // MARK: - Fetch
   private func fetchImage () {
     loadingIndicator.alpha = 1
-    self.image.addImageTo(imageView) { [weak self] image in
-      guard let self = self else {
-        return
-      }
+    self.image.addImageTo(imageView) { image in
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else {
+              return
+            }
 
-      self.isUserInteractionEnabled = true
-      self.configureImageView()
-      self.pageViewDelegate?.remoteImageDidLoad(image, imageView: self.imageView)
+            strongSelf.isUserInteractionEnabled = true
+            strongSelf.configureImageView()
+            strongSelf.pageViewDelegate?.remoteImageDidLoad(image, imageView: strongSelf.imageView)
 
-      UIView.animate(withDuration: 0.4) {
-        self.loadingIndicator.alpha = 0
-      }
+            UIView.animate(withDuration: 0.4) {
+              strongSelf.loadingIndicator.alpha = 0
+            }
+        }
+      
     }
   }
 
   // MARK: - Recognizers
-
   @objc func scrollViewDoubleTapped(_ recognizer: UITapGestureRecognizer) {
     let pointInView = recognizer.location(in: imageView)
     let newZoomScale = zoomScale > minimumZoomScale
@@ -149,7 +149,6 @@ class PageView: UIScrollView {
     }
 
   // MARK: - Layout
-
   override func layoutSubviews() {
     super.layoutSubviews()
 
@@ -158,28 +157,30 @@ class PageView: UIScrollView {
   }
 
   func configureImageView() {
-    guard let image = imageView.image else {
-        centerImageView()
-        return
+    DispatchQueue.main.async { [weak self] in
+        guard let strongSelf = self, let image = self?.imageView.image else {
+            self?.centerImageView()
+            return
+        }
+
+        let imageViewSize = strongSelf.imageView.frame.size
+        let imageSize = image.size
+        let realImageViewSize: CGSize
+
+        if imageSize.width / imageSize.height > imageViewSize.width / imageViewSize.height {
+          realImageViewSize = CGSize(
+            width: imageViewSize.width,
+            height: imageViewSize.width / imageSize.width * imageSize.height)
+        } else {
+          realImageViewSize = CGSize(
+            width: imageViewSize.height / imageSize.height * imageSize.width,
+            height: imageViewSize.height)
+        }
+
+        strongSelf.imageView.frame = CGRect(origin: CGPoint.zero, size: realImageViewSize)
+
+        strongSelf.centerImageView()
     }
-
-    let imageViewSize = imageView.frame.size
-    let imageSize = image.size
-    let realImageViewSize: CGSize
-
-    if imageSize.width / imageSize.height > imageViewSize.width / imageViewSize.height {
-      realImageViewSize = CGSize(
-        width: imageViewSize.width,
-        height: imageViewSize.width / imageSize.width * imageSize.height)
-    } else {
-      realImageViewSize = CGSize(
-        width: imageViewSize.height / imageSize.height * imageSize.width,
-        height: imageViewSize.height)
-    }
-
-    imageView.frame = CGRect(origin: CGPoint.zero, size: realImageViewSize)
-
-    centerImageView()
   }
 
   func centerImageView() {
@@ -202,7 +203,6 @@ class PageView: UIScrollView {
   }
 
   // MARK: - Action
-
   @objc func playButtonTouched(_ button: UIButton) {
     guard let videoURL = image.videoURL else { return }
 
@@ -211,7 +211,6 @@ class PageView: UIScrollView {
 }
 
 // MARK: - LayoutConfigurable
-
 extension PageView: LayoutConfigurable {
 
   @objc func configureLayout() {
@@ -225,7 +224,6 @@ extension PageView: LayoutConfigurable {
 }
 
 // MARK: - UIScrollViewDelegate
-
 extension PageView: UIScrollViewDelegate {
 
   func viewForZooming(in scrollView: UIScrollView) -> UIView? {

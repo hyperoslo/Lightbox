@@ -46,6 +46,7 @@ class ViewController: UIViewController {
     LightboxConfig.DeleteButton.enabled = true
 
     let controller = LightboxController(images: images)
+//    controller.modalPresentationStyle = .fullScreen
     controller.dynamicBackground = true
     controller.imageDeleteDelegate = self
     controller.imageTouchDelegate = self

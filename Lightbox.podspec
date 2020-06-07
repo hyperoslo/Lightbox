@@ -14,6 +14,6 @@ Pod::Spec.new do |s|
 
   s.frameworks = 'UIKit', 'AVFoundation', 'AVKit'
   s.dependency 'Imaginary', '~> 4.0'
+  s.swift_version = '5.0'
 
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.2' }
 end

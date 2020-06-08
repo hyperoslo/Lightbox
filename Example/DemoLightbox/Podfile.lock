@@ -1,0 +1,27 @@
+PODS:
+  - Cache (5.3.0)
+  - Imaginary (4.3.1):
+    - Cache (~> 5.3.0)
+  - Lightbox (2.4.0):
+    - Imaginary (~> 4.3.1)
+
+DEPENDENCIES:
+  - Lightbox (from `../../`)
+
+SPEC REPOS:
+  trunk:
+    - Cache
+    - Imaginary
+
+EXTERNAL SOURCES:
+  Lightbox:
+    :path: "../../"
+
+SPEC CHECKSUMS:
+  Cache: 48762993ec44e1d93483c4d4a13edd18452326f4
+  Imaginary: 18c5bba364229eef383b925199db442e71d175e1
+  Lightbox: 8e94438c42aeec917697bc487f76f7cd44f02782
+
+PODFILE CHECKSUM: 408ae3477507a1d4b7ff06ffb3f162eda443424f
+
+COCOAPODS: 1.9.3

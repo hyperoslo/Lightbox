@@ -11,20 +11,16 @@
 		29B4A42F1C43A4320060ED52 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B4A42E1C43A4320060ED52 /* ViewController.swift */; };
 		29B4A4341C43A4320060ED52 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B4A4331C43A4320060ED52 /* Assets.xcassets */; };
 		29B4A4371C43A4320060ED52 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29B4A4351C43A4320060ED52 /* LaunchScreen.storyboard */; };
-		B89E57B7A21C44D762123511 /* Pods_DemoLightbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE4E898FD95F4D90F624B067 /* Pods_DemoLightbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		064155DBC618EBACF5C257C6 /* Pods-DemoLightbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoLightbox.release.xcconfig"; path = "Pods/Target Support Files/Pods-DemoLightbox/Pods-DemoLightbox.release.xcconfig"; sourceTree = "<group>"; };
 		29B4A4291C43A4320060ED52 /* DemoLightbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoLightbox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B4A42C1C43A4320060ED52 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29B4A42E1C43A4320060ED52 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		29B4A4331C43A4320060ED52 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		29B4A4361C43A4320060ED52 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		29B4A4381C43A4320060ED52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6096248776155BE47C0A196A /* Pods-DemoLightbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoLightbox.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoLightbox/Pods-DemoLightbox.debug.xcconfig"; sourceTree = "<group>"; };
 		DAE713340DA5D2F2EF13EA8D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EE4E898FD95F4D90F624B067 /* Pods_DemoLightbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DemoLightbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,29 +28,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B89E57B7A21C44D762123511 /* Pods_DemoLightbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0C8887567644E86396B8D885 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				6096248776155BE47C0A196A /* Pods-DemoLightbox.debug.xcconfig */,
-				064155DBC618EBACF5C257C6 /* Pods-DemoLightbox.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		29B4A4201C43A4320060ED52 = {
 			isa = PBXGroup;
 			children = (
 				29B4A42B1C43A4320060ED52 /* DemoLightbox */,
 				29B4A42A1C43A4320060ED52 /* Products */,
 				B1B2B3DADEEC7FD14D4A9FF8 /* Frameworks */,
-				0C8887567644E86396B8D885 /* Pods */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -84,7 +69,6 @@
 			isa = PBXGroup;
 			children = (
 				DAE713340DA5D2F2EF13EA8D /* Pods.framework */,
-				EE4E898FD95F4D90F624B067 /* Pods_DemoLightbox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -96,11 +80,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29B4A43B1C43A4320060ED52 /* Build configuration list for PBXNativeTarget "DemoLightbox" */;
 			buildPhases = (
-				4DE126F6B5D0C8D6C0E7D848 /* [CP] Check Pods Manifest.lock */,
 				29B4A4251C43A4320060ED52 /* Sources */,
 				29B4A4261C43A4320060ED52 /* Frameworks */,
 				29B4A4271C43A4320060ED52 /* Resources */,
-				F162948C45248BBD677112BF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -157,49 +139,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		4DE126F6B5D0C8D6C0E7D848 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-DemoLightbox-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F162948C45248BBD677112BF /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DemoLightbox/Pods-DemoLightbox-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
-				"${BUILT_PRODUCTS_DIR}/Imaginary/Imaginary.framework",
-				"${BUILT_PRODUCTS_DIR}/Lightbox/Lightbox.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Imaginary.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lightbox.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DemoLightbox/Pods-DemoLightbox-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		29B4A4251C43A4320060ED52 /* Sources */ = {
@@ -331,7 +270,6 @@
 		};
 		29B4A43C1C43A4320060ED52 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6096248776155BE47C0A196A /* Pods-DemoLightbox.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -346,7 +284,6 @@
 		};
 		29B4A43D1C43A4320060ED52 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 064155DBC618EBACF5C257C6 /* Pods-DemoLightbox.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

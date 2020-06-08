@@ -1,3 +1,5 @@
+# This project is currently unmaintained and broken under iOS 13. 
+
 # Lightbox
 
 [![CI Status](https://circleci.com/gh/hyperoslo/Lightbox.png)](https://circleci.com/gh/hyperoslo/Lightbox)

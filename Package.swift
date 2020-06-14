@@ -15,7 +15,7 @@ let package = Package(
         .target(
             name: "Lightbox",
             dependencies: ["Imaginary"],
-            path: "Sources"
+            path: "Source"
             )
     ],
     swiftLanguageVersions: [.v5]

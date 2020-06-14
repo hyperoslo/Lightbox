@@ -8,10 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		166E3BA920333E04006799C1 /* LightboxImageStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166E3BA820333E04006799C1 /* LightboxImageStub.swift */; };
+		44E6A64A2495BFAB00543CF0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E6A6492495BFAB00543CF0 /* AppDelegate.swift */; };
+		44E6A6532495BFAC00543CF0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44E6A6522495BFAC00543CF0 /* Assets.xcassets */; };
+		44E6A6562495BFAC00543CF0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44E6A6542495BFAC00543CF0 /* LaunchScreen.storyboard */; };
+		44E6A65C2495BFD400543CF0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E6A65B2495BFD400543CF0 /* ViewController.swift */; };
+		44E6A6652495C0EB00543CF0 /* Lightbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D523B0A91C43AA2A001AD1EC /* Lightbox.framework */; };
+		44E6A6662495C0EB00543CF0 /* Lightbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D523B0A91C43AA2A001AD1EC /* Lightbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		44E6A66A2495C13F00543CF0 /* Imaginary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A58F5D1F7943A30064F14E /* Imaginary.framework */; };
+		44E6A66B2495C13F00543CF0 /* Imaginary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2A58F5D1F7943A30064F14E /* Imaginary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D22006741DFB4D9700E92898 /* Lightbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D22006731DFB4D9700E92898 /* Lightbox.bundle */; };
 		D2258CC4215CD035005A9A1C /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2258CC3215CD035005A9A1C /* Color+Extensions.swift */; };
-		D229B5E61FC3123F00F04123 /* Lightbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D523B0A91C43AA2A001AD1EC /* Lightbox.framework */; };
-		D229B5ED1FC3125D00F04123 /* InfoLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D229B5EC1FC3125D00F04123 /* InfoLabelTests.swift */; };
 		D2A58F5E1F7943A30064F14E /* Imaginary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A58F5D1F7943A30064F14E /* Imaginary.framework */; };
 		D2D71BBC1D54DA77006AB907 /* AssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D71BBB1D54DA77006AB907 /* AssetManager.swift */; };
 		D5026B3C1C5BF3FD003BC1A3 /* LightboxImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */; };
@@ -28,7 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D229B5E71FC3123F00F04123 /* PBXContainerItemProxy */ = {
+		44E6A6672495C0EB00543CF0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D523B0A01C43AA2A001AD1EC /* Project object */;
 			proxyType = 1;
@@ -37,13 +43,31 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		44E6A6692495C0EB00543CF0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				44E6A66B2495C13F00543CF0 /* Imaginary.framework in Embed Frameworks */,
+				44E6A6662495C0EB00543CF0 /* Lightbox.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		166E3BA820333E04006799C1 /* LightboxImageStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightboxImageStub.swift; sourceTree = "<group>"; };
+		44E6A6472495BFAB00543CF0 /* iOSDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		44E6A6492495BFAB00543CF0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		44E6A6522495BFAC00543CF0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		44E6A6552495BFAC00543CF0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		44E6A6572495BFAC00543CF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		44E6A65B2495BFD400543CF0 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D22006731DFB4D9700E92898 /* Lightbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Lightbox.bundle; sourceTree = "<group>"; };
 		D2258CC3215CD035005A9A1C /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
-		D229B5E11FC3123F00F04123 /* Lightbox-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lightbox-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D229B5E51FC3123F00F04123 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D229B5EC1FC3125D00F04123 /* InfoLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoLabelTests.swift; sourceTree = "<group>"; };
 		D2A58F5D1F7943A30064F14E /* Imaginary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Imaginary.framework; path = Carthage/Build/iOS/Imaginary.framework; sourceTree = "<group>"; };
 		D2D71BBB1D54DA77006AB907 /* AssetManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetManager.swift; sourceTree = "<group>"; };
 		D5026B3B1C5BF3FD003BC1A3 /* LightboxImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxImage.swift; sourceTree = "<group>"; };
@@ -53,7 +77,6 @@
 		D523B0B71C43AA8A001AD1EC /* LightboxController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightboxController.swift; sourceTree = "<group>"; };
 		D54DFCBC1C5AAAD600ADEA0E /* InfoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoLabel.swift; sourceTree = "<group>"; };
 		D54DFCBD1C5AAAD600ADEA0E /* PageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
-		D54DFCC01C5AAAF100ADEA0E /* Hue.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Hue.framework; path = Carthage/Build/iOS/Hue.framework; sourceTree = "<group>"; };
 		D56F15C71E0AB79800F128AF /* LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		D573A2EF1C5B5605006053DD /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		D573A2F21C5B5C7B006053DD /* LayoutConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutConfigurable.swift; sourceTree = "<group>"; };
@@ -63,11 +86,12 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D229B5DE1FC3123F00F04123 /* Frameworks */ = {
+		44E6A6442495BFAB00543CF0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D229B5E61FC3123F00F04123 /* Lightbox.framework in Frameworks */,
+				44E6A66A2495C13F00543CF0 /* Imaginary.framework in Frameworks */,
+				44E6A6652495C0EB00543CF0 /* Lightbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,21 +106,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		44E6A6482495BFAB00543CF0 /* iOSDemo */ = {
+			isa = PBXGroup;
+			children = (
+				44E6A6492495BFAB00543CF0 /* AppDelegate.swift */,
+				44E6A65B2495BFD400543CF0 /* ViewController.swift */,
+				44E6A6522495BFAC00543CF0 /* Assets.xcassets */,
+				44E6A6542495BFAC00543CF0 /* LaunchScreen.storyboard */,
+				44E6A6572495BFAC00543CF0 /* Info.plist */,
+			);
+			path = iOSDemo;
+			sourceTree = "<group>";
+		};
 		D22006721DFB4D9700E92898 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				D22006731DFB4D9700E92898 /* Lightbox.bundle */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		D229B5E21FC3123F00F04123 /* Lightbox-iOS-Tests */ = {
-			isa = PBXGroup;
-			children = (
-				D229B5E51FC3123F00F04123 /* Info.plist */,
-				D229B5EC1FC3125D00F04123 /* InfoLabelTests.swift */,
-			);
-			path = "Lightbox-iOS-Tests";
 			sourceTree = "<group>";
 		};
 		D2A58F5C1F7943A30064F14E /* Frameworks */ = {
@@ -111,10 +138,9 @@
 			isa = PBXGroup;
 			children = (
 				D22006721DFB4D9700E92898 /* Resources */,
-				D54DFCC01C5AAAF100ADEA0E /* Hue.framework */,
 				D523B0B41C43AA8A001AD1EC /* Source */,
 				D523B0AB1C43AA2A001AD1EC /* Lightbox */,
-				D229B5E21FC3123F00F04123 /* Lightbox-iOS-Tests */,
+				44E6A6482495BFAB00543CF0 /* iOSDemo */,
 				D523B0AA1C43AA2A001AD1EC /* Products */,
 				D2A58F5C1F7943A30064F14E /* Frameworks */,
 			);
@@ -126,7 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				D523B0A91C43AA2A001AD1EC /* Lightbox.framework */,
-				D229B5E11FC3123F00F04123 /* Lightbox-iOS-Tests.xctest */,
+				44E6A6472495BFAB00543CF0 /* iOSDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -189,23 +215,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		D229B5E01FC3123F00F04123 /* Lightbox-iOS-Tests */ = {
+		44E6A6462495BFAB00543CF0 /* iOSDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D229B5E91FC3123F00F04123 /* Build configuration list for PBXNativeTarget "Lightbox-iOS-Tests" */;
+			buildConfigurationList = 44E6A6582495BFAC00543CF0 /* Build configuration list for PBXNativeTarget "iOSDemo" */;
 			buildPhases = (
-				D229B5DD1FC3123F00F04123 /* Sources */,
-				D229B5DE1FC3123F00F04123 /* Frameworks */,
-				D229B5DF1FC3123F00F04123 /* Resources */,
+				44E6A6432495BFAB00543CF0 /* Sources */,
+				44E6A6442495BFAB00543CF0 /* Frameworks */,
+				44E6A6452495BFAB00543CF0 /* Resources */,
+				44E6A6692495C0EB00543CF0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				D229B5E81FC3123F00F04123 /* PBXTargetDependency */,
+				44E6A6682495C0EB00543CF0 /* PBXTargetDependency */,
 			);
-			name = "Lightbox-iOS-Tests";
-			productName = "Lightbox-iOS-Tests";
-			productReference = D229B5E11FC3123F00F04123 /* Lightbox-iOS-Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
+			name = iOSDemo;
+			productName = iOSDemo;
+			productReference = 44E6A6472495BFAB00543CF0 /* iOSDemo.app */;
+			productType = "com.apple.product-type.application";
 		};
 		D523B0A81C43AA2A001AD1EC /* Lightbox-iOS */ = {
 			isa = PBXNativeTarget;
@@ -231,13 +258,12 @@
 		D523B0A01C43AA2A001AD1EC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0910;
+				LastSwiftUpdateCheck = 1150;
 				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = "Hyper Interaktiv AS";
 				TargetAttributes = {
-					D229B5E01FC3123F00F04123 = {
-						CreatedOnToolsVersion = 9.1;
-						LastSwiftMigration = 1150;
+					44E6A6462495BFAB00543CF0 = {
+						CreatedOnToolsVersion = 11.5;
 						ProvisioningStyle = Automatic;
 					};
 					D523B0A81C43AA2A001AD1EC = {
@@ -260,16 +286,18 @@
 			projectRoot = "";
 			targets = (
 				D523B0A81C43AA2A001AD1EC /* Lightbox-iOS */,
-				D229B5E01FC3123F00F04123 /* Lightbox-iOS-Tests */,
+				44E6A6462495BFAB00543CF0 /* iOSDemo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D229B5DF1FC3123F00F04123 /* Resources */ = {
+		44E6A6452495BFAB00543CF0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44E6A6562495BFAC00543CF0 /* LaunchScreen.storyboard in Resources */,
+				44E6A6532495BFAC00543CF0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,11 +312,12 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		D229B5DD1FC3123F00F04123 /* Sources */ = {
+		44E6A6432495BFAB00543CF0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D229B5ED1FC3125D00F04123 /* InfoLabelTests.swift in Sources */,
+				44E6A65C2495BFD400543CF0 /* ViewController.swift in Sources */,
+				44E6A64A2495BFAB00543CF0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,29 +345,47 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D229B5E81FC3123F00F04123 /* PBXTargetDependency */ = {
+		44E6A6682495C0EB00543CF0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D523B0A81C43AA2A001AD1EC /* Lightbox-iOS */;
-			targetProxy = D229B5E71FC3123F00F04123 /* PBXContainerItemProxy */;
+			targetProxy = 44E6A6672495C0EB00543CF0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		44E6A6542495BFAC00543CF0 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				44E6A6552495BFAC00543CF0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
-		D229B5EA1FC3123F00F04123 /* Debug */ = {
+		44E6A6592495BFAC00543CF0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "Lightbox-iOS-Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.fantageek.Lightbox-iOS-Tests";
+				INFOPLIST_FILE = iOSDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elvisnunez.iOSDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
@@ -346,21 +393,27 @@
 			};
 			name = Debug;
 		};
-		D229B5EB1FC3123F00F04123 /* Release */ = {
+		44E6A65A2495BFAC00543CF0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "Lightbox-iOS-Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.fantageek.Lightbox-iOS-Tests";
+				INFOPLIST_FILE = iOSDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elvisnunez.iOSDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -530,11 +583,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D229B5E91FC3123F00F04123 /* Build configuration list for PBXNativeTarget "Lightbox-iOS-Tests" */ = {
+		44E6A6582495BFAC00543CF0 /* Build configuration list for PBXNativeTarget "iOSDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D229B5EA1FC3123F00F04123 /* Debug */,
-				D229B5EB1FC3123F00F04123 /* Release */,
+				44E6A6592495BFAC00543CF0 /* Debug */,
+				44E6A65A2495BFAC00543CF0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

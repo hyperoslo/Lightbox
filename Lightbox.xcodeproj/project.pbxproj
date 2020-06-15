@@ -16,6 +16,8 @@
 		44E6A6662495C0EB00543CF0 /* Lightbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D523B0A91C43AA2A001AD1EC /* Lightbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		44E6A66A2495C13F00543CF0 /* Imaginary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A58F5D1F7943A30064F14E /* Imaginary.framework */; };
 		44E6A66B2495C13F00543CF0 /* Imaginary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2A58F5D1F7943A30064F14E /* Imaginary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CEB6B06E2497A96A00687C7C /* Cache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEB6B06D2497A96A00687C7C /* Cache.framework */; };
+		CEB6B0712497A99000687C7C /* Cache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEB6B06D2497A96A00687C7C /* Cache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D22006741DFB4D9700E92898 /* Lightbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D22006731DFB4D9700E92898 /* Lightbox.bundle */; };
 		D2258CC4215CD035005A9A1C /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2258CC3215CD035005A9A1C /* Color+Extensions.swift */; };
 		D2A58F5E1F7943A30064F14E /* Imaginary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A58F5D1F7943A30064F14E /* Imaginary.framework */; };
@@ -50,6 +52,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				CEB6B0712497A99000687C7C /* Cache.framework in Embed Frameworks */,
 				44E6A66B2495C13F00543CF0 /* Imaginary.framework in Embed Frameworks */,
 				44E6A6662495C0EB00543CF0 /* Lightbox.framework in Embed Frameworks */,
 			);
@@ -66,6 +69,7 @@
 		44E6A6552495BFAC00543CF0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		44E6A6572495BFAC00543CF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44E6A65B2495BFD400543CF0 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CEB6B06D2497A96A00687C7C /* Cache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cache.framework; path = Carthage/Build/iOS/Cache.framework; sourceTree = "<group>"; };
 		D22006731DFB4D9700E92898 /* Lightbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Lightbox.bundle; sourceTree = "<group>"; };
 		D2258CC3215CD035005A9A1C /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		D2A58F5D1F7943A30064F14E /* Imaginary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Imaginary.framework; path = Carthage/Build/iOS/Imaginary.framework; sourceTree = "<group>"; };
@@ -100,6 +104,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2A58F5E1F7943A30064F14E /* Imaginary.framework in Frameworks */,
+				CEB6B06E2497A96A00687C7C /* Cache.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +134,7 @@
 		D2A58F5C1F7943A30064F14E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEB6B06D2497A96A00687C7C /* Cache.framework */,
 				D2A58F5D1F7943A30064F14E /* Imaginary.framework */,
 			);
 			name = Frameworks;

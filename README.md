@@ -1,5 +1,3 @@
-# This project is currently unmaintained and broken under iOS 13. 
-
 # Lightbox
 
 [![CI Status](https://circleci.com/gh/hyperoslo/Lightbox.png)](https://circleci.com/gh/hyperoslo/Lightbox)
@@ -165,6 +163,11 @@ LightboxConfig.InfoLabel.ellipsisText = "Show more"
 ```
 
 ## Installation
+
+> ⚠️ SPM support is not possible yet, since resources are not supported until Swift 5.3.
+> Once that version is released, SPM will be added. Until then, only Carthage and
+> Cocoapods feature a fully working installation. In SPM installs, the play button
+> will be missing, making video playback impossible.
 
 **Lightbox** is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:

@@ -22,8 +22,20 @@ class PageView: UIScrollView {
   lazy var playButton: UIButton = {
     let button = UIButton(type: .custom)
     button.frame.size = CGSize(width: 60, height: 60)
-    button.setBackgroundImage(AssetManager.image("lightbox_play"), for: UIControl.State())
+    var buttonImage = AssetManager.image("lightbox_play")
+    
+    // Note by Elvis Nuñez on Mon 22 Jun 08:06
+    // When using SPM you might find that assets are note included. This is a workaround to provide default assets
+    // under iOS 13 so using SPM can work without problems.
+    if #available(iOS 13.0, *) {
+        if buttonImage == nil {
+            buttonImage = UIImage(systemName: "play.circle.fill")
+        }
+    }
+
+    button.setBackgroundImage(buttonImage, for: UIControl.State())
     button.addTarget(self, action: #selector(playButtonTouched(_:)), for: .touchUpInside)
+    button.tintColor = .white
 
     button.layer.shadowOffset = CGSize(width: 1, height: 1)
     button.layer.shadowColor = UIColor.gray.cgColor

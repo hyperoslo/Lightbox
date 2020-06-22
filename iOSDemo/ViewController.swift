@@ -26,29 +26,32 @@ class ViewController: UIViewController {
   
   // MARK: - Action methods
   
-  @objc func showLightbox() {
-    let images = [
-      LightboxImage(imageURL: URL(string: "https://cdn.arstechnica.net/2011/10/05/iphone4s_sample_apple-4e8c706-intro.jpg")!),
-      LightboxImage(
-        image: UIImage(named: "photo1")!,
-        text: "Photography is the science, art, application and practice of creating durable images by recording light or other electromagnetic radiation, either electronically by means of an image sensor, or chemically by means of a light-sensitive material such as photographic film"
-      ),
-      LightboxImage(
-        image: UIImage(named: "photo2")!,
-        text: "Emoji 😍 (/ɪˈmoʊdʒi/; singular emoji, plural emoji or emojis;[4] from the Japanese 絵文字えもじ, pronounced [emodʑi]) are ideograms and smileys used in electronic messages and web pages. Emoji are used much like emoticons and exist in various genres, including facial expressions, common objects, places and types of weather 🌅☔️💦, and animals 🐶🐱",
-        videoURL: URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
-      ),
-      LightboxImage(
-        image: UIImage(named: "photo3")!,
-        text: "A lightbox is a translucent surface illuminated from behind, used for situations where a shape laid upon the surface needs to be seen with high contrast."
-      )
-    ]
-    
-    let controller = LightboxController(images: images)
-    controller.modalPresentationStyle = .fullScreen
-    controller.dynamicBackground = true
-    
-    present(controller, animated: true, completion: nil)
-  }
+    @objc func showLightbox() {
+        let images = [
+            LightboxImage(
+                image: UIImage(named: "photo1")!,
+                text: "Photography is the science, art, application and practice of creating durable images by recording light or other electromagnetic radiation, either electronically by means of an image sensor, or chemically by means of a light-sensitive material such as photographic film"
+            ),
+            
+            LightboxImage(imageURL: URL(string: "https://via.placeholder.com/300.png/09f/fff")!),
+            
+            
+            LightboxImage(
+                image: UIImage(named: "photo2")!,
+                text: "Emoji 😍 (/ɪˈmoʊdʒi/; singular emoji, plural emoji or emojis;[4] from the Japanese 絵文字えもじ, pronounced [emodʑi]) are ideograms and smileys used in electronic messages and web pages. Emoji are used much like emoticons and exist in various genres, including facial expressions, common objects, places and types of weather 🌅☔️💦, and animals 🐶🐱",
+                videoURL: URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
+            ),
+            LightboxImage(
+                image: UIImage(named: "photo3")!,
+                text: "A lightbox is a translucent surface illuminated from behind, used for situations where a shape laid upon the surface needs to be seen with high contrast."
+            )
+        ]
+        
+        let controller = LightboxController(images: images)
+        controller.modalPresentationStyle = .fullScreen
+        controller.dynamicBackground = true
+        
+        present(controller, animated: true, completion: nil)
+    }
 }
 

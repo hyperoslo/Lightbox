@@ -3,7 +3,7 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-  lazy var controller: UIViewController = ViewController()
+  lazy var controller: UINavigationController = UINavigationController(rootViewController: ViewController())
 
   var window: UIWindow?
 

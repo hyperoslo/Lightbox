@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     view.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleBottomMargin]
     view.backgroundColor = UIColor.white
     view.addSubview(showButton)
+    title = "Lightbox"
   }
   
   // MARK: - Action methods

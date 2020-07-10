@@ -166,6 +166,10 @@ open class LightboxController: UIViewController {
   open override func viewDidLoad() {
     super.viewDidLoad()
 
+    // 9 July 2020: @3lvis
+    // Lightbox hasn't been optimized to be used in presentation styles other than fullscreen.
+    modalPresentationStyle = .fullScreen
+    
     statusBarHidden = UIApplication.shared.isStatusBarHidden
 
     view.backgroundColor = UIColor.black

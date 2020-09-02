@@ -46,7 +46,6 @@ packed with all the features you expect:
 To start your slideshow just instantiate `LightboxController`, set needed
 delegates and present it:
 
-
 ```swift
 
 // Create an array of images.
@@ -180,6 +179,11 @@ To install just write into your Cartfile:
 ```ruby
 github "hyperoslo/Lightbox"
 ```
+
+**Lightbox** is also available through [Swift Package Manager](https://github.com/apple/swift-package-manager).
+To integrate using Xcode:
+File -> Swift Packages -> Add Package Dependency...
+Enter package URL : https://github.com/hyperoslo/Lightbox, and select the latest release.
 
 To install **Lightbox** manually just download and drop `Sources` and
 `Images` folders in your project.

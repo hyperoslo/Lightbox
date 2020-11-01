@@ -185,14 +185,6 @@ open class LightboxController: UIViewController {
     goTo(initialPage, animated: false)
   }
 
-  open override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    if !presented {
-      presented = true
-      configureLayout(view.bounds.size)
-    }
-  }
-
   open override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
 
@@ -213,6 +205,11 @@ open class LightboxController: UIViewController {
       width: view.bounds.width,
       height: 100
     )
+    
+    if !presented {
+      presented = true
+      configureLayout(view.bounds.size)
+    }
   }
 
   open override var prefersStatusBarHidden: Bool {

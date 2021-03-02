@@ -38,8 +38,8 @@ open class LightboxImage {
       imageView.image = image
       completion?(image)
     } else if let imageURL = imageURL {
-      LightboxConfig.loadImage(imageView, imageURL) { downloadedImage in
-        self.image = downloadedImage
+      LightboxConfig.loadImage(imageView, imageURL) { [weak self] downloadedImage in
+        self?.image = downloadedImage
         completion?(downloadedImage)
       }
     } else if let imageClosure = imageClosure {

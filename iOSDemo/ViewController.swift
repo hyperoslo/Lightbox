@@ -22,12 +22,16 @@ class ViewController: UIViewController {
     view.backgroundColor = UIColor.white
     view.addSubview(showButton)
     title = "Lightbox"
+    LightboxConfig.preload = 2
   }
   
   // MARK: - Action methods
   
     @objc func showLightbox() {
         let images = [
+            LightboxImage(imageURL: URL(string: "https://media.giphy.com/media/Ku65904QQe4yez448B/giphy.gif")!),
+            LightboxImage(imageURL: URL(string: "https://media.giphy.com/media/lQDLwWUMPaAHvh8pAG/giphy.gif")!),
+            LightboxImage(imageURL: URL(string: "https://media.giphy.com/media/ontKwPWJxARsuKaKqJ/giphy.gif")!),
             LightboxImage(
                 image: UIImage(named: "photo1")!,
                 text: "Photography is the science, art, application and practice of creating durable images by recording light or other electromagnetic radiation, either electronically by means of an image sensor, or chemically by means of a light-sensitive material such as photographic film"
@@ -44,7 +48,8 @@ class ViewController: UIViewController {
             LightboxImage(
                 image: UIImage(named: "photo3")!,
                 text: "A lightbox is a translucent surface illuminated from behind, used for situations where a shape laid upon the surface needs to be seen with high contrast."
-            )
+            ),
+            LightboxImage(imageURL: URL(string: "https://c.tenor.com/kccsHXtdDn0AAAAC/alcohol-wine.gif")!)
         ]
         
         let controller = LightboxController(images: images)

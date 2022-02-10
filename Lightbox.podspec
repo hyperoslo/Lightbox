@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.ios.resource = 'Resources/Lightbox.bundle'
 
   s.frameworks = 'UIKit', 'AVFoundation', 'AVKit'
-  s.dependency 'Imaginary', '~> 5.0.0'
+  s.dependency 'SDWebImage'
   s.swift_version = '5.0'
 
 end

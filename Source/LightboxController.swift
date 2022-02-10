@@ -1,16 +1,17 @@
 import UIKit
+import SDWebImage
 
-public protocol LightboxControllerPageDelegate: class {
+public protocol LightboxControllerPageDelegate: AnyObject {
 
   func lightboxController(_ controller: LightboxController, didMoveToPage page: Int)
 }
 
-public protocol LightboxControllerDismissalDelegate: class {
+public protocol LightboxControllerDismissalDelegate: AnyObject {
 
   func lightboxControllerWillDismiss(_ controller: LightboxController)
 }
 
-public protocol LightboxControllerTouchDelegate: class {
+public protocol LightboxControllerTouchDelegate: AnyObject {
 
   func lightboxController(_ controller: LightboxController, didTouch image: LightboxImage, at index: Int)
 }
@@ -44,8 +45,8 @@ open class LightboxController: UIViewController {
     return view
   }()
 
-  lazy var backgroundView: UIImageView = {
-    let view = UIImageView()
+  lazy var backgroundView: SDAnimatedImageView = {
+    let view = SDAnimatedImageView()
     view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
     return view
@@ -383,7 +384,7 @@ extension LightboxController: UIScrollViewDelegate {
 
 extension LightboxController: PageViewDelegate {
 
-  func remoteImageDidLoad(_ image: UIImage?, imageView: UIImageView) {
+  func remoteImageDidLoad(_ image: UIImage?, imageView: SDAnimatedImageView) {
     guard let image = image, dynamicBackground else {
       return
     }

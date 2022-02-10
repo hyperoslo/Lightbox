@@ -9,12 +9,12 @@ let package = Package(
             targets: ["Lightbox"]),
     ],
     dependencies: [
-      .package(url: "https://github.com/hyperoslo/Imaginary", .branch("master"))
+      .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.1.0")
     ],
     targets: [
         .target(
             name: "Lightbox",
-            dependencies: ["Imaginary"],
+            dependencies: ["SDWebImage"],
             path: "Source"
             )
     ],

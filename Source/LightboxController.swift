@@ -1,5 +1,4 @@
 import UIKit
-import SDWebImage
 
 public protocol LightboxControllerPageDelegate: AnyObject {
 
@@ -45,8 +44,8 @@ open class LightboxController: UIViewController {
     return view
   }()
 
-  lazy var backgroundView: SDAnimatedImageView = {
-    let view = SDAnimatedImageView()
+  lazy var backgroundView: UIImageView = {
+    let view = UIImageView()
     view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
     return view
@@ -384,7 +383,7 @@ extension LightboxController: UIScrollViewDelegate {
 
 extension LightboxController: PageViewDelegate {
 
-  func remoteImageDidLoad(_ image: UIImage?, imageView: SDAnimatedImageView) {
+  func remoteImageDidLoad(_ image: UIImage?, imageView: UIImageView) {
     guard let image = image, dynamicBackground else {
       return
     }

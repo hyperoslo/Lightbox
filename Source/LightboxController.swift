@@ -179,7 +179,7 @@ open class LightboxController: UIViewController {
     
     statusBarHidden = UIApplication.shared.isStatusBarHidden
 
-    view.backgroundColor = UIColor.black
+    view.backgroundColor = LightboxConfig.imageBackgroundColor
     transitionManager.lightboxController = self
     transitionManager.scrollView = scrollView
     transitioningDelegate = transitionManager

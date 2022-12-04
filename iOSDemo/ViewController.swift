@@ -1,5 +1,6 @@
 import UIKit
 import Lightbox
+import SDWebImage
 
 class ViewController: UIViewController {
   
@@ -23,6 +24,11 @@ class ViewController: UIViewController {
     view.addSubview(showButton)
     title = "Lightbox"
     LightboxConfig.preload = 2
+    LightboxConfig.loadImage = { imageView, url, completion in
+      imageView.sd_setImage(with: url) { image, _, _ , _ in
+        completion?(image)
+      }
+    }
   }
   
   // MARK: - Action methods

@@ -1,6 +1,6 @@
 import UIKit
 
-public protocol InfoLabelDelegate: class {
+public protocol InfoLabelDelegate: AnyObject {
 
   func infoLabel(_ infoLabel: InfoLabel, didExpand expanded: Bool)
 }

@@ -1,6 +1,6 @@
 import UIKit
 
-public protocol FooterViewDelegate: class {
+public protocol FooterViewDelegate: AnyObject {
 
   func footerView(_ footerView: FooterView, didExpand expanded: Bool)
 }

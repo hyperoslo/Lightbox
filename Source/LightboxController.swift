@@ -136,7 +136,7 @@ open class LightboxController: UIViewController {
     }
   }
 
-  open weak var pageDelegate: LightboxControllerPageDelegate?
+  open var pageDelegate: LightboxControllerPageDelegate?
   open weak var dismissalDelegate: LightboxControllerDismissalDelegate?
   open weak var imageTouchDelegate: LightboxControllerTouchDelegate?
   open internal(set) var presented = false

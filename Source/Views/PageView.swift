@@ -1,12 +1,13 @@
 import UIKit
 
-protocol PageViewDelegate: class {
+protocol PageViewDelegate: AnyObject {
 
   func pageViewDidZoom(_ pageView: PageView)
   func remoteImageDidLoad(_ image: UIImage?, imageView: UIImageView)
   func pageView(_ pageView: PageView, didTouchPlayButton videoURL: URL)
   func pageViewDidTouch(_ pageView: PageView)
-}
+  func pageViewDidTap(_ pageView: PageView)
+  func pageViewDidDoubleTap(_ pageView: PageView)}
 
 class PageView: UIScrollView {
 
@@ -146,10 +147,12 @@ class PageView: UIScrollView {
     let rectToZoomTo = CGRect(x: x, y: y, width: width, height: height)
 
     zoom(to: rectToZoomTo, animated: true)
+    pageViewDelegate?.pageViewDidDoubleTap(self)
   }
 
   @objc func viewTapped(_ recognizer: UITapGestureRecognizer) {
     pageViewDelegate?.pageViewDidTouch(self)
+    pageViewDelegate?.pageViewDidTap(self)
   }
 
   // MARK: - Layout

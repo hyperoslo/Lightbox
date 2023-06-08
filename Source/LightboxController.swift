@@ -1,18 +1,30 @@
 import UIKit
 
-public protocol LightboxControllerPageDelegate: class {
+public protocol LightboxControllerPageDelegate: AnyObject {
 
   func lightboxController(_ controller: LightboxController, didMoveToPage page: Int)
 }
 
-public protocol LightboxControllerDismissalDelegate: class {
+public protocol LightboxControllerDismissalDelegate: AnyObject {
 
   func lightboxControllerWillDismiss(_ controller: LightboxController)
 }
 
-public protocol LightboxControllerTouchDelegate: class {
+public protocol LightboxControllerTouchDelegate: AnyObject {
 
   func lightboxController(_ controller: LightboxController, didTouch image: LightboxImage, at index: Int)
+}
+
+public protocol LightboxControllerTapDelegate: AnyObject {
+    
+  func lightboxController(_ controller: LightboxController, didTap image: LightboxImage, at index: Int)
+    
+  func lightboxController(_ controller: LightboxController, didDoubleTap image: LightboxImage, at index: Int)
+}
+
+public protocol LightboxControllerDeleteDelegate: AnyObject {
+
+  func lightboxController(_ controller: LightboxController, willDeleteAt index: Int)
 }
 
 open class LightboxController: UIViewController {
@@ -139,6 +151,8 @@ open class LightboxController: UIViewController {
   open weak var pageDelegate: LightboxControllerPageDelegate?
   open weak var dismissalDelegate: LightboxControllerDismissalDelegate?
   open weak var imageTouchDelegate: LightboxControllerTouchDelegate?
+  open weak var imageTapDelegate: LightboxControllerTapDelegate?
+  open weak var imageDeleteDelegate: LightboxControllerDeleteDelegate?
   open internal(set) var presented = false
   open fileprivate(set) var seen = false
 
@@ -172,7 +186,7 @@ open class LightboxController: UIViewController {
     
     statusBarHidden = UIApplication.shared.isStatusBarHidden
 
-    view.backgroundColor = UIColor.black
+    view.backgroundColor = LightboxConfig.imageBackgroundColor
     transitionManager.lightboxController = self
     transitionManager.scrollView = scrollView
     transitioningDelegate = transitionManager
@@ -413,6 +427,14 @@ extension LightboxController: PageViewDelegate {
     let visible = (headerView.alpha == 1.0)
     toggleControls(pageView: pageView, visible: !visible)
   }
+    
+  func pageViewDidTap(_ pageView: PageView) {
+    imageTapDelegate?.lightboxController(self, didTap: images[currentPage], at: currentPage)
+  }
+    
+  func pageViewDidDoubleTap(_ pageView: PageView) {
+    imageTapDelegate?.lightboxController(self, didDoubleTap: images[currentPage], at: currentPage)
+  }
 }
 
 // MARK: - HeaderViewDelegate
@@ -422,6 +444,8 @@ extension LightboxController: HeaderViewDelegate {
   func headerView(_ headerView: HeaderView, didPressDeleteButton deleteButton: UIButton) {
     deleteButton.isEnabled = false
 
+    imageDeleteDelegate?.lightboxController(self, willDeleteAt: currentPage)
+      
     guard numberOfPages != 1 else {
       pageViews.removeAll()
       self.headerView(headerView, didPressCloseButton: headerView.closeButton)

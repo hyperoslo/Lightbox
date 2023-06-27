@@ -3,6 +3,9 @@ import PackageDescription
 
 let package = Package(
     name: "Lightbox",
+    platforms: [
+        .iOS(.v16),
+    ],
     products: [
         .library(
             name: "Lightbox",

@@ -60,7 +60,7 @@ open class HeaderView: UIView {
     return button
   }()
 
-  weak var delegate: HeaderViewDelegate?
+  weak var delegate: (any HeaderViewDelegate)?
 
   // MARK: - Initializers
 

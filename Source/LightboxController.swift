@@ -148,11 +148,11 @@ open class LightboxController: UIViewController {
     }
   }
 
-  open weak var pageDelegate: LightboxControllerPageDelegate?
-  open weak var dismissalDelegate: LightboxControllerDismissalDelegate?
-  open weak var imageTouchDelegate: LightboxControllerTouchDelegate?
-  open weak var imageTapDelegate: LightboxControllerTapDelegate?
-  open weak var imageDeleteDelegate: LightboxControllerDeleteDelegate?
+  open weak var pageDelegate: (any LightboxControllerPageDelegate)?
+  open weak var dismissalDelegate: (any LightboxControllerDismissalDelegate)?
+  open weak var imageTouchDelegate: (any LightboxControllerTouchDelegate)?
+  open weak var imageTapDelegate: (any LightboxControllerTapDelegate)?
+  open weak var imageDeleteDelegate: (any LightboxControllerDeleteDelegate)?
   open internal(set) var presented = false
   open fileprivate(set) var seen = false
 
@@ -232,7 +232,7 @@ open class LightboxController: UIViewController {
 
   // MARK: - Rotation
 
-  override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+  override open func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
     super.viewWillTransition(to: size, with: coordinator)
 
     coordinator.animate(alongsideTransition: { _ in

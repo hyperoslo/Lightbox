@@ -50,7 +50,7 @@ class PageView: UIScrollView {
 
   var image: LightboxImage
   var contentFrame = CGRect.zero
-  weak var pageViewDelegate: PageViewDelegate?
+  weak var pageViewDelegate: (any PageViewDelegate)?
 
   var hasZoomed: Bool {
     return zoomScale != 1.0

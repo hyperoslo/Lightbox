@@ -1,12 +1,17 @@
 import UIKit
 
 protocol PageViewDelegate: AnyObject {
-
+  @MainActor
   func pageViewDidZoom(_ pageView: PageView)
+  @MainActor
   func remoteImageDidLoad(_ image: UIImage?, imageView: UIImageView)
+  @MainActor
   func pageView(_ pageView: PageView, didTouchPlayButton videoURL: URL)
+  @MainActor
   func pageViewDidTouch(_ pageView: PageView)
+  @MainActor
   func pageViewDidTap(_ pageView: PageView)
+  @MainActor
   func pageViewDidDoubleTap(_ pageView: PageView)}
 
 class PageView: UIScrollView {

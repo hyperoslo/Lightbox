@@ -1,7 +1,7 @@
 import UIKit
 
 public protocol InfoLabelDelegate: AnyObject {
-
+  @MainActor
   func infoLabel(_ infoLabel: InfoLabel, didExpand expanded: Bool)
 }
 

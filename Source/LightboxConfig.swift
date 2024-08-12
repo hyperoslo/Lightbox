@@ -9,6 +9,7 @@ public class LightboxConfig {
   public static var imageBackgroundColor = UIColor.black
 
   /// Provide a closure to handle selected video
+  @MainActor
   public static var handleVideo: (_ from: UIViewController, _ videoURL: URL) -> Void = { from, videoURL in
     let videoController = AVPlayerViewController()
     videoController.player = AVPlayer(url: videoURL)
@@ -22,6 +23,7 @@ public class LightboxConfig {
   public static var loadImage: ((UIImageView, URL, ((UIImage?) -> Void)?) -> Void)?
 
   /// Indicator is used to show while image is being fetched
+  @MainActor
   public static var makeLoadingIndicator: () -> UIView = {
     return LoadingIndicator()
   }

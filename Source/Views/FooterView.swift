@@ -1,7 +1,7 @@
 import UIKit
 
 public protocol FooterViewDelegate: AnyObject {
-
+  @MainActor
   func footerView(_ footerView: FooterView, didExpand expanded: Bool)
 }
 

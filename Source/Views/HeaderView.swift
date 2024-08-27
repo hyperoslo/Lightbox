@@ -1,7 +1,9 @@
 import UIKit
 
 protocol HeaderViewDelegate: AnyObject {
+  @MainActor
   func headerView(_ headerView: HeaderView, didPressDeleteButton deleteButton: UIButton)
+  @MainActor
   func headerView(_ headerView: HeaderView, didPressCloseButton closeButton: UIButton)
 }
 

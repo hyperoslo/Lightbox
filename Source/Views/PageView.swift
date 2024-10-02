@@ -1,12 +1,18 @@
 import UIKit
 
-protocol PageViewDelegate: class {
-
+protocol PageViewDelegate: AnyObject {
+  @MainActor
   func pageViewDidZoom(_ pageView: PageView)
+  @MainActor
   func remoteImageDidLoad(_ image: UIImage?, imageView: UIImageView)
+  @MainActor
   func pageView(_ pageView: PageView, didTouchPlayButton videoURL: URL)
+  @MainActor
   func pageViewDidTouch(_ pageView: PageView)
-}
+  @MainActor
+  func pageViewDidTap(_ pageView: PageView)
+  @MainActor
+  func pageViewDidDoubleTap(_ pageView: PageView)}
 
 class PageView: UIScrollView {
 
@@ -49,7 +55,7 @@ class PageView: UIScrollView {
 
   var image: LightboxImage
   var contentFrame = CGRect.zero
-  weak var pageViewDelegate: PageViewDelegate?
+  weak var pageViewDelegate: (any PageViewDelegate)?
 
   var hasZoomed: Bool {
     return zoomScale != 1.0
@@ -146,10 +152,12 @@ class PageView: UIScrollView {
     let rectToZoomTo = CGRect(x: x, y: y, width: width, height: height)
 
     zoom(to: rectToZoomTo, animated: true)
+    pageViewDelegate?.pageViewDidDoubleTap(self)
   }
 
   @objc func viewTapped(_ recognizer: UITapGestureRecognizer) {
     pageViewDelegate?.pageViewDidTouch(self)
+    pageViewDelegate?.pageViewDidTap(self)
   }
 
   // MARK: - Layout

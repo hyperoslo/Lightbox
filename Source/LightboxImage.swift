@@ -1,5 +1,4 @@
 import UIKit
-import Imaginary
 
 open class LightboxImage {
 
@@ -38,7 +37,14 @@ open class LightboxImage {
       imageView.image = image
       completion?(image)
     } else if let imageURL = imageURL {
-      LightboxConfig.loadImage(imageView, imageURL, completion)
+      guard let loadImage = LightboxConfig.loadImage else {
+        print("Lightbox: To use `imageURL`, you must use `LightboxConfig.loadImage`.")
+        imageView.image = nil
+        completion?(nil)
+        return
+      }
+
+      loadImage(imageView, imageURL, completion)
     } else if let imageClosure = imageClosure {
       let img = imageClosure()
       imageView.image = img

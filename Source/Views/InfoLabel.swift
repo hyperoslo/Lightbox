@@ -1,7 +1,7 @@
 import UIKit
 
-public protocol InfoLabelDelegate: class {
-
+public protocol InfoLabelDelegate: AnyObject {
+  @MainActor
   func infoLabel(_ infoLabel: InfoLabel, didExpand expanded: Bool)
 }
 
@@ -20,7 +20,7 @@ open class InfoLabel: UILabel {
     return "... \(LightboxConfig.InfoLabel.ellipsisText)"
   }
 
-  open weak var delegate: InfoLabelDelegate?
+  open weak var delegate: (any InfoLabelDelegate)?
   fileprivate var shortText = ""
 
   var fullText: String {

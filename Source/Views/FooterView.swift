@@ -1,7 +1,7 @@
 import UIKit
 
-public protocol FooterViewDelegate: class {
-
+public protocol FooterViewDelegate: AnyObject {
+  @MainActor
   func footerView(_ footerView: FooterView, didExpand expanded: Bool)
 }
 
@@ -35,7 +35,7 @@ open class FooterView: UIView {
   }()
 
   let gradientColors = [UIColor(hex: "040404").withAlphaComponent(0.1), UIColor(hex: "040404")]
-  open weak var delegate: FooterViewDelegate?
+  open weak var delegate: (any FooterViewDelegate)?
 
   // MARK: - Initializers
 

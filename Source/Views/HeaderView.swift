@@ -1,7 +1,9 @@
 import UIKit
 
-protocol HeaderViewDelegate: class {
+protocol HeaderViewDelegate: AnyObject {
+  @MainActor
   func headerView(_ headerView: HeaderView, didPressDeleteButton deleteButton: UIButton)
+  @MainActor
   func headerView(_ headerView: HeaderView, didPressCloseButton closeButton: UIButton)
 }
 
@@ -60,7 +62,7 @@ open class HeaderView: UIView {
     return button
   }()
 
-  weak var delegate: HeaderViewDelegate?
+  weak var delegate: (any HeaderViewDelegate)?
 
   // MARK: - Initializers
 
